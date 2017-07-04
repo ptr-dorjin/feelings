@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Feelings Helper</string>
+    <string name="title_activity_feelings_question">FeelingsQuestionActivity</string>
+    <string name="q_feelings">What do I feel now?</string>
+    <string name="q_insincerity">With whom was I insincere today?</string>
+    <string name="q_gratitude">To whom am I grateful today?</string>
+    <string name="q_do_body">What can I do for my body?</string>
+    <string name="q_preach">Whom did I preach today?</string>
+</resources>
