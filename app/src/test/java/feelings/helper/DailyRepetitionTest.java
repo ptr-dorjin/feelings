@@ -14,7 +14,7 @@ import feelings.helper.repetition.DailyRepetition;
 import static feelings.helper.DateTimeUtil.assertTime;
 import static feelings.helper.DateTimeUtil.assertToday;
 import static feelings.helper.DateTimeUtil.assertTomorrow;
-import static feelings.helper.DateTimeUtil.mockDateTime;
+import static feelings.helper.DateTimeUtil.mockTime;
 import static feelings.helper.DateTimeUtil.time;
 import static org.joda.time.DateTimeUtils.setCurrentMillisSystem;
 import static org.junit.Assert.assertTrue;
@@ -37,7 +37,7 @@ public class DailyRepetitionTest {
     public void testWithinBoundaries() {
         Collections.addAll(times, time(9, 0), time(12, 0), time(15, 0));
         DailyRepetition repetition = new DailyRepetition(times);
-        mockDateTime(11, 15);
+        mockTime(11, 15);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -50,7 +50,7 @@ public class DailyRepetitionTest {
     public void testBeforeMin() {
         Collections.addAll(times, time(9, 0), time(12, 0), time(15, 0));
         DailyRepetition repetition = new DailyRepetition(times);
-        mockDateTime(5, 0);
+        mockTime(5, 0);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -63,7 +63,7 @@ public class DailyRepetitionTest {
     public void testBeforeMaxIncluded() {
         Collections.addAll(times, time(9, 0), time(12, 0), time(15, 0));
         DailyRepetition repetition = new DailyRepetition(times);
-        mockDateTime(14, 30);
+        mockTime(14, 30);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -76,7 +76,7 @@ public class DailyRepetitionTest {
     public void testAfterMax() {
         Collections.addAll(times, time(9, 0), time(12, 0), time(15, 0));
         DailyRepetition repetition = new DailyRepetition(times);
-        mockDateTime(16, 30);
+        mockTime(16, 30);
 
         DateTime nextTime = repetition.getNextTime();
 

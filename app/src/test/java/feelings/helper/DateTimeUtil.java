@@ -11,15 +11,25 @@ import static org.junit.Assert.assertEquals;
 
 class DateTimeUtil {
 
-    static void mockDateTime(int hour, int minute) {
+    static void mockTime(int hour, int minute) {
         setCurrentMillisFixed(new DateTime()
                 .withHourOfDay(hour)
                 .withMinuteOfHour(minute)
                 .getMillis());
     }
 
-    static DateTime dateTime(int hour, int minute) {
-        return new DateTime().withHourOfDay(hour).withMinuteOfHour(minute);
+    static void mockDayOfWeek(int dayOfWeek) {
+        setCurrentMillisFixed(new DateTime()
+                .withDayOfWeek(dayOfWeek)
+                .getMillis());
+    }
+
+    static void mockDayOfWeekAndTime(int dayOfWeek, int hour, int minute) {
+        setCurrentMillisFixed(new DateTime()
+                .withDayOfWeek(dayOfWeek)
+                .withHourOfDay(hour)
+                .withMinuteOfHour(minute)
+                .getMillis());
     }
 
     static LocalTime time(int hour, int minute) {
@@ -37,5 +47,13 @@ class DateTimeUtil {
 
     static void assertTomorrow(DateTime next) {
         assertEquals(1, Days.daysBetween(DateTime.now().toLocalDate(), next.toLocalDate()).getDays());
+    }
+
+    static void assertDays(DateTime next, int diff) {
+        assertEquals(diff, Days.daysBetween(DateTime.now().toLocalDate(), next.toLocalDate()).getDays());
+    }
+
+    static void assertDayOfWeek(DateTime next, int dayOfWeek) {
+        assertEquals(dayOfWeek, next.getDayOfWeek());
     }
 }

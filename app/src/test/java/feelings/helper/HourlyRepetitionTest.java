@@ -9,7 +9,7 @@ import feelings.helper.repetition.HourlyRepetition;
 import static feelings.helper.DateTimeUtil.assertTime;
 import static feelings.helper.DateTimeUtil.assertToday;
 import static feelings.helper.DateTimeUtil.assertTomorrow;
-import static feelings.helper.DateTimeUtil.mockDateTime;
+import static feelings.helper.DateTimeUtil.mockTime;
 import static feelings.helper.DateTimeUtil.time;
 import static org.joda.time.DateTimeUtils.setCurrentMillisSystem;
 import static org.junit.Assert.assertTrue;
@@ -23,7 +23,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testNowWithinBoundaries() {
         HourlyRepetition repetition = new HourlyRepetition(2, time(8, 0), time(20, 0));
-        mockDateTime(12, 15);
+        mockTime(12, 15);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -35,7 +35,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testNowBeforeStart() {
         HourlyRepetition repetition = new HourlyRepetition(2, time(8, 0), time(20, 0));
-        mockDateTime(5, 0);
+        mockTime(5, 0);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -47,7 +47,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testNowBeforeEndIncluded() {
         HourlyRepetition repetition = new HourlyRepetition(2, time(8, 0), time(20, 0));
-        mockDateTime(19, 55);
+        mockTime(19, 55);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -59,7 +59,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testNowAfterEnd() {
         HourlyRepetition repetition = new HourlyRepetition(2, time(8, 0), time(20, 0));
-        mockDateTime(20, 30);
+        mockTime(20, 30);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -71,7 +71,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testNowBeforeEndExcluded() {
         HourlyRepetition repetition = new HourlyRepetition(2, time(8, 0), time(19, 0));
-        mockDateTime(18, 0);
+        mockTime(18, 0);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -83,7 +83,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testStartEqualsEndNowBefore() {
         HourlyRepetition repetition = new HourlyRepetition(2, time(8, 0), time(8, 0));
-        mockDateTime(7, 30);
+        mockTime(7, 30);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -95,7 +95,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testStartEqualsEndNowAfter() {
         HourlyRepetition repetition = new HourlyRepetition(2, time(8, 0), time(8, 0));
-        mockDateTime(9, 30);
+        mockTime(9, 30);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -107,7 +107,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testStartAfterEndNowBeforeStart() {
         HourlyRepetition repetition = new HourlyRepetition(1, time(21, 0), time(8, 0));
-        mockDateTime(18, 0);
+        mockTime(18, 0);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -119,7 +119,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testStartAfterEndNowInsideToday() {
         HourlyRepetition repetition = new HourlyRepetition(1, time(21, 0), time(8, 0));
-        mockDateTime(22, 30);
+        mockTime(22, 30);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -131,7 +131,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testStartAfterEndNowInsideTomorrow() {
         HourlyRepetition repetition = new HourlyRepetition(1, time(21, 0), time(8, 0));
-        mockDateTime(2, 30);
+        mockTime(2, 30);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -143,7 +143,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testStartAfterEndNowBeforeMidnight() {
         HourlyRepetition repetition = new HourlyRepetition(1, time(21, 0), time(8, 0));
-        mockDateTime(23, 45);
+        mockTime(23, 45);
 
         DateTime nextTime = repetition.getNextTime();
 
@@ -155,7 +155,7 @@ public class HourlyRepetitionTest {
     @Test
     public void testStartAfterEndNowAfterEnd() {
         HourlyRepetition repetition = new HourlyRepetition(1, time(21, 0), time(8, 0));
-        mockDateTime(10, 45);
+        mockTime(10, 45);
 
         DateTime nextTime = repetition.getNextTime();
 
