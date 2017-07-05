@@ -23,7 +23,7 @@ public class RepetitionSetting {
         isOn = on;
     }
 
-    Repetition getRepetition() {
+    public Repetition getRepetition() {
         return repetition;
     }
 

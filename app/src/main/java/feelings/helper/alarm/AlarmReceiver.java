@@ -10,21 +10,28 @@ import org.joda.time.DateTime;
 
 import feelings.helper.R;
 import feelings.helper.questions.QuestionService;
+import feelings.helper.repetition.RepetitionSetting;
+import feelings.helper.repetition.RepetitionSettingStore;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-    public static String QUESTION_ID = "question-id";
+    static final String QUESTION_ID = "question-id";
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        int questionId = intent.getIntExtra(QUESTION_ID, 0);
+        // 1. show notification
         try {
             WakeLocker.acquire(context);
             NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            int questionId = intent.getIntExtra(QUESTION_ID, 0);
             nm.notify(questionId, buildNotification(context, questionId));
         } finally {
             WakeLocker.release();
         }
+
+        // 2. set the next alarm
+        RepetitionSetting repetitionSetting = RepetitionSettingStore.getRepetitionSetting(questionId);
+        AlarmService.setAlarm(context, repetitionSetting);
     }
 
     private Notification buildNotification(Context context, int questionId) {

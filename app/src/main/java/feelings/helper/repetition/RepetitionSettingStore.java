@@ -15,7 +15,7 @@ import static feelings.helper.questions.QuestionService.GRATITUDE;
 import static feelings.helper.questions.QuestionService.INSINCERITY;
 import static feelings.helper.questions.QuestionService.PREACH;
 
-public class RepetitionSettingService {
+public class RepetitionSettingStore {
 
     private static SparseArray<RepetitionSetting> repetitionSettings = new SparseArray<>();
 
@@ -35,19 +35,17 @@ public class RepetitionSettingService {
     }
 
     //todo save into the storage
-    public static boolean saveRepetition(int questionId, boolean isOn, Repetition repetition) {
-        new RepetitionSetting(questionId, isOn, repetition);
+    public static boolean saveRepetition(RepetitionSetting repetitionSetting) {
         return true;
     }
 
     //todo get from the storage
-    public static Repetition getRepetition(int questionId) {
+    public static RepetitionSetting getRepetitionSetting(int questionId) {
         RepetitionSetting repetitionSetting = repetitionSettings.get(questionId);
-        if (repetitionSetting != null) {
-            return repetitionSetting.getRepetition();
-        } else {
+        if (repetitionSetting == null) {
             throw new RuntimeException("Unexpected questionId=" + questionId);
         }
+        return repetitionSetting;
     }
 
     public static Collection<RepetitionSetting> getAllSettings() {
