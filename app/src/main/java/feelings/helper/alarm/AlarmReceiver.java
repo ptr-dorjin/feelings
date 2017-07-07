@@ -10,8 +10,7 @@ import org.joda.time.DateTime;
 
 import feelings.helper.R;
 import feelings.helper.questions.QuestionService;
-import feelings.helper.repetition.RepetitionSetting;
-import feelings.helper.repetition.RepetitionSettingStore;
+import feelings.helper.settings.SettingsStore;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -30,8 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         // 2. set the next alarm
-        RepetitionSetting repetitionSetting = RepetitionSettingStore.getRepetitionSetting(questionId);
-        AlarmService.setAlarm(context, repetitionSetting);
+        AlarmService.setAlarm(context, SettingsStore.getSettings(context, questionId));
     }
 
     private Notification buildNotification(Context context, int questionId) {

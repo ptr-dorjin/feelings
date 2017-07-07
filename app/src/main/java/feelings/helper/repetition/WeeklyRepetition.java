@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 public class WeeklyRepetition implements Repetition {
+    static final String WEEKLY = "w";
 
     /**
      * Day of week: from 1 to 7
@@ -18,6 +19,25 @@ public class WeeklyRepetition implements Repetition {
     public WeeklyRepetition(int dayOfWeek, LocalTime time) {
         this.dayOfWeek = dayOfWeek;
         this.time = time;
+    }
+
+    /**
+     * @param asString String from toString()
+     */
+    WeeklyRepetition(String asString) {
+        String[] arr = asString.split(";");
+        dayOfWeek = Integer.valueOf(arr[0]);
+        time = TIME_FORMATTER.parseLocalTime(arr[1]);
+    }
+
+    @Override
+    public String toString() {
+        return dayOfWeek + ";" + TIME_FORMATTER.print(time);
+    }
+
+    @Override
+    public String getType() {
+        return WEEKLY;
     }
 
     @Override

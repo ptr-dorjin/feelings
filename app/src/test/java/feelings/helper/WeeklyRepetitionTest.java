@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import feelings.helper.repetition.WeeklyRepetition;
 
-import static feelings.helper.DateTimeUtil.assertDayOfWeek;
-import static feelings.helper.DateTimeUtil.assertDays;
-import static feelings.helper.DateTimeUtil.assertTime;
-import static feelings.helper.DateTimeUtil.assertToday;
-import static feelings.helper.DateTimeUtil.assertTomorrow;
-import static feelings.helper.DateTimeUtil.mockDayOfWeek;
-import static feelings.helper.DateTimeUtil.mockDayOfWeekAndTime;
-import static feelings.helper.DateTimeUtil.time;
+import static feelings.helper.TestDateTimeUtil.assertDayOfWeek;
+import static feelings.helper.TestDateTimeUtil.assertDays;
+import static feelings.helper.TestDateTimeUtil.assertTime;
+import static feelings.helper.TestDateTimeUtil.assertToday;
+import static feelings.helper.TestDateTimeUtil.assertTomorrow;
+import static feelings.helper.TestDateTimeUtil.mockDayOfWeek;
+import static feelings.helper.TestDateTimeUtil.mockDayOfWeekAndTime;
+import static feelings.helper.TestDateTimeUtil.time;
 import static org.joda.time.DateTimeConstants.MONDAY;
 import static org.joda.time.DateTimeConstants.SUNDAY;
 import static org.joda.time.DateTimeConstants.WEDNESDAY;

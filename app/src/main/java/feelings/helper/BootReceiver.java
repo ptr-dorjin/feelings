@@ -7,8 +7,8 @@ import android.content.Intent;
 
 import feelings.helper.alarm.AlarmService;
 import feelings.helper.questions.QuestionService;
-import feelings.helper.repetition.RepetitionSetting;
-import feelings.helper.repetition.RepetitionSettingStore;
+import feelings.helper.settings.Settings;
+import feelings.helper.settings.SettingsStore;
 
 public class BootReceiver extends BroadcastReceiver {
 
@@ -16,9 +16,9 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             QuestionService.init(context);
-            for (RepetitionSetting repetitionSetting : RepetitionSettingStore.getAllSettings()) {
-                if (repetitionSetting.isOn()) {
-                    AlarmService.setAlarm(context, repetitionSetting);
+            for (Settings settings : SettingsStore.getAllSettings(context)) {
+                if (settings.isOn()) {
+                    AlarmService.setAlarm(context, settings);
                 }
             }
         }

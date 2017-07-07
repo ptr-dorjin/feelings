@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 public class HourlyRepetition implements Repetition {
+    static final String HOURLY = "h";
 
     /**
      * Interval in hours
@@ -27,6 +28,26 @@ public class HourlyRepetition implements Repetition {
         this.interval = interval;
         this.start = start;
         this.end = end;
+    }
+
+    /**
+     * @param asString String from toString()
+     */
+    HourlyRepetition(String asString) {
+        String[] arr = asString.split(";");
+        interval = Integer.valueOf(arr[0]);
+        start = TIME_FORMATTER.parseLocalTime(arr[1]);
+        end = TIME_FORMATTER.parseLocalTime(arr[2]);
+    }
+
+    @Override
+    public String toString() {
+        return interval + ";" + TIME_FORMATTER.print(start) + ";" + TIME_FORMATTER.print(end);
+    }
+
+    @Override
+    public String getType() {
+        return HOURLY;
     }
 
     @Override

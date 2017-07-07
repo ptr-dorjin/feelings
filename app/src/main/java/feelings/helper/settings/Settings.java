@@ -1,11 +1,13 @@
-package feelings.helper.repetition;
+package feelings.helper.settings;
 
-public class RepetitionSetting {
+import feelings.helper.repetition.Repetition;
+
+public class Settings {
     private int questionId;
     private boolean isOn;
     private Repetition repetition;
 
-    RepetitionSetting(int questionId, boolean isOn, Repetition repetition) {
+    Settings(int questionId, boolean isOn, Repetition repetition) {
         this.questionId = questionId;
         this.isOn = isOn;
         this.repetition = repetition;

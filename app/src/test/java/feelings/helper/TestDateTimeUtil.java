@@ -9,7 +9,7 @@ import org.joda.time.LocalTime;
 import static org.joda.time.DateTimeUtils.setCurrentMillisFixed;
 import static org.junit.Assert.assertEquals;
 
-class DateTimeUtil {
+class TestDateTimeUtil {
 
     static void mockTime(int hour, int minute) {
         setCurrentMillisFixed(new DateTime()

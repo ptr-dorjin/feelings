@@ -1,5 +1,7 @@
 package feelings.helper.repetition;
 
+import android.text.TextUtils;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
@@ -7,14 +9,40 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 public class DailyRepetition implements Repetition {
+    static final String DAILY = "d";
 
     /**
      * Set of times in each day
      */
-    private TreeSet<LocalTime> times = new TreeSet<>();
+    private final TreeSet<LocalTime> times;
 
     public DailyRepetition(TreeSet<LocalTime> times) {
         this.times = times;
+    }
+
+    /**
+     * @param asString String from toString()
+     */
+    DailyRepetition(String asString) {
+        String[] arr = asString.split(",");
+        times = new TreeSet<>();
+        for (String time : arr) {
+            times.add(TIME_FORMATTER.parseLocalTime(time));
+        }
+    }
+
+    @Override
+    public String toString() {
+        TreeSet<String> timesStrings = new TreeSet<>();
+        for (LocalTime time : times) {
+            timesStrings.add(TIME_FORMATTER.print(time));
+        }
+        return TextUtils.join(",", timesStrings);
+    }
+
+    @Override
+    public String getType() {
+        return DAILY;
     }
 
     @Override
