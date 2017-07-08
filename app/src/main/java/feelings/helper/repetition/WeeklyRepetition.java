@@ -3,6 +3,8 @@ package feelings.helper.repetition;
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
+import feelings.helper.util.TextUtil;
+
 public class WeeklyRepetition implements Repetition {
     static final String WEEKLY = "w";
 
@@ -25,6 +27,9 @@ public class WeeklyRepetition implements Repetition {
      * @param asString String from toString()
      */
     WeeklyRepetition(String asString) {
+        if (TextUtil.isEmpty(asString)) {
+            throw new RuntimeException("Incorrect string value of the repetition.");
+        }
         String[] arr = asString.split(";");
         dayOfWeek = Integer.valueOf(arr[0]);
         time = TIME_FORMATTER.parseLocalTime(arr[1]);

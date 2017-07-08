@@ -1,10 +1,8 @@
-package feelings.helper;
+package feelings.helper.repetition;
 
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.Test;
-
-import feelings.helper.repetition.WeeklyRepetition;
 
 import static feelings.helper.TestDateTimeUtil.assertDayOfWeek;
 import static feelings.helper.TestDateTimeUtil.assertDays;
@@ -18,12 +16,28 @@ import static org.joda.time.DateTimeConstants.MONDAY;
 import static org.joda.time.DateTimeConstants.SUNDAY;
 import static org.joda.time.DateTimeConstants.WEDNESDAY;
 import static org.joda.time.DateTimeUtils.setCurrentMillisSystem;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class WeeklyRepetitionTest {
     @AfterClass
     public static void tearDown() {
         setCurrentMillisSystem();
+    }
+
+    @Test
+    public void testToString() {
+        WeeklyRepetition repetition = new WeeklyRepetition(2, time(8, 0));
+        String asString = repetition.toString();
+        WeeklyRepetition fromString = new WeeklyRepetition(asString);
+
+        assertEquals("2;08:00", asString);
+        assertEquals(asString, fromString.toString());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testEmptyString() {
+        new WeeklyRepetition("");
     }
 
     @Test

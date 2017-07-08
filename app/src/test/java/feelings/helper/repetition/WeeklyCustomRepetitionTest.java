@@ -1,12 +1,11 @@
-package feelings.helper;
+package feelings.helper.repetition;
 
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.TreeSet;
-
-import feelings.helper.repetition.WeeklyCustomRepetition;
 
 import static feelings.helper.TestDateTimeUtil.assertDayOfWeek;
 import static feelings.helper.TestDateTimeUtil.assertDays;
@@ -24,12 +23,30 @@ import static org.joda.time.DateTimeConstants.THURSDAY;
 import static org.joda.time.DateTimeConstants.TUESDAY;
 import static org.joda.time.DateTimeConstants.WEDNESDAY;
 import static org.joda.time.DateTimeUtils.setCurrentMillisSystem;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class WeeklyCustomRepetitionTest {
     @AfterClass
     public static void tearDown() {
         setCurrentMillisSystem();
+    }
+
+    @Test
+    public void testToString() {
+        TreeSet<Integer> daysOfWeek = new TreeSet<>();
+        Collections.addAll(daysOfWeek, 1, 3, 5);
+        WeeklyCustomRepetition repetition = new WeeklyCustomRepetition(daysOfWeek, time(21, 0));
+        String asString = repetition.toString();
+        WeeklyCustomRepetition fromString = new WeeklyCustomRepetition(asString);
+
+        assertEquals("1,3,5;21:00", asString);
+        assertEquals(asString, fromString.toString());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testEmptyString() {
+        new WeeklyCustomRepetition("");
     }
 
     @Test

@@ -1,11 +1,11 @@
 package feelings.helper.repetition;
 
-import android.text.TextUtils;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 import java.util.TreeSet;
+
+import feelings.helper.util.TextUtil;
 
 public class WeeklyCustomRepetition implements Repetition {
     static final String WEEKLY_CUSTOM = "wc";
@@ -26,6 +26,9 @@ public class WeeklyCustomRepetition implements Repetition {
     }
 
     WeeklyCustomRepetition(String asString) {
+        if (TextUtil.isEmpty(asString)) {
+            throw new RuntimeException("Incorrect string value of the repetition.");
+        }
         String[] arr = asString.split(";");
         String[] days = arr[0].split(",");
         daysOfWeek = new TreeSet<>();
@@ -37,7 +40,7 @@ public class WeeklyCustomRepetition implements Repetition {
 
     @Override
     public String toString() {
-        return TextUtils.join(",", daysOfWeek) + ";" + TIME_FORMATTER.print(time);
+        return TextUtil.join(",", daysOfWeek) + ";" + TIME_FORMATTER.print(time);
     }
 
     @Override

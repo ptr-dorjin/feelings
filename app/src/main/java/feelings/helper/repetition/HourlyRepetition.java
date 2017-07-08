@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
+import feelings.helper.util.TextUtil;
+
 public class HourlyRepetition implements Repetition {
     static final String HOURLY = "h";
 
@@ -34,6 +36,9 @@ public class HourlyRepetition implements Repetition {
      * @param asString String from toString()
      */
     HourlyRepetition(String asString) {
+        if (TextUtil.isEmpty(asString)) {
+            throw new RuntimeException("Incorrect string value of the repetition.");
+        }
         String[] arr = asString.split(";");
         interval = Integer.valueOf(arr[0]);
         start = TIME_FORMATTER.parseLocalTime(arr[1]);

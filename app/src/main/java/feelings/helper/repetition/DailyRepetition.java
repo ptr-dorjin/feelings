@@ -1,12 +1,12 @@
 package feelings.helper.repetition;
 
-import android.text.TextUtils;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 import java.util.Iterator;
 import java.util.TreeSet;
+
+import feelings.helper.util.TextUtil;
 
 public class DailyRepetition implements Repetition {
     static final String DAILY = "d";
@@ -24,6 +24,9 @@ public class DailyRepetition implements Repetition {
      * @param asString String from toString()
      */
     DailyRepetition(String asString) {
+        if (TextUtil.isEmpty(asString)) {
+            throw new RuntimeException("Incorrect string value of the repetition.");
+        }
         String[] arr = asString.split(",");
         times = new TreeSet<>();
         for (String time : arr) {
@@ -37,7 +40,7 @@ public class DailyRepetition implements Repetition {
         for (LocalTime time : times) {
             timesStrings.add(TIME_FORMATTER.print(time));
         }
-        return TextUtils.join(",", timesStrings);
+        return TextUtil.join(",", timesStrings);
     }
 
     @Override

@@ -7,7 +7,7 @@ public class Settings {
     private boolean isOn;
     private Repetition repetition;
 
-    Settings(int questionId, boolean isOn, Repetition repetition) {
+    public Settings(int questionId, boolean isOn, Repetition repetition) {
         this.questionId = questionId;
         this.isOn = isOn;
         this.repetition = repetition;
