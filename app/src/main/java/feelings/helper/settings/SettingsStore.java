@@ -23,8 +23,7 @@ public class SettingsStore {
      * Create or update
      */
     public static boolean saveSettings(Context context, Settings settings) {
-        SettingsDbHelper dbHelper = new SettingsDbHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = new SettingsDbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_QUESTION_ID, settings.getQuestionId());
@@ -49,29 +48,25 @@ public class SettingsStore {
      * Create or update only on/off flag
      */
     public static boolean switchOnOff(Context context, int questionId, boolean isOn) {
-        SettingsDbHelper dbHelper = new SettingsDbHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = new SettingsDbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_QUESTION_ID, questionId);
         values.put(COLUMN_NAME_IS_ON, isOn);
 
-        if (!exists(context, questionId)) {
-            // create a new
-            long newRowId = db.insert(TABLE_NAME, null, values);
-            return newRowId != -1;
-        } else {
+        if (exists(context, questionId)) {
             // update the existing
             String selection = COLUMN_NAME_QUESTION_ID + " = ?";
             String[] selectionArgs = {String.valueOf(questionId)};
             int count = db.update(SettingsContract.TABLE_NAME, values, selection, selectionArgs);
             return count == 1;
+        } else {
+            throw new RuntimeException("Attempt to switch repetition on/off in the DB, while repetition not exists.");
         }
     }
 
     private static boolean exists(Context context, int questionId) {
-        SettingsDbHelper dbHelper = new SettingsDbHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = new SettingsDbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID};
 
@@ -82,16 +77,11 @@ public class SettingsStore {
         try {
             cursor = db.query(TABLE_NAME, projection, selection, selectionArgs, null, null, null);
             return cursor.moveToFirst();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
+        } finally { if (cursor != null) cursor.close(); }
     }
 
     public static Settings getSettings(Context context, int questionId) {
-        SettingsDbHelper dbHelper = new SettingsDbHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = new SettingsDbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPETITION};
 
@@ -110,16 +100,21 @@ public class SettingsStore {
             } else {
                 return null;
             }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
+        } finally { if (cursor != null) cursor.close(); }
+    }
+
+    // for use in tests
+    static int delete(Context context, int questionId) {
+        SQLiteDatabase db = new SettingsDbHelper(context).getWritableDatabase();
+
+        String selection = COLUMN_NAME_QUESTION_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(questionId)};
+
+        return db.delete(TABLE_NAME, selection, selectionArgs);
     }
 
     public static Collection<Settings> getAllSettings(Context context) {
-        SettingsDbHelper dbHelper = new SettingsDbHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = new SettingsDbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPETITION};
 
@@ -136,10 +131,6 @@ public class SettingsStore {
                 list.add(new Settings(questionId, isOn, RepetitionFactory.create(repType, repetition)));
             }
             return list;
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
+        } finally { if (cursor != null) cursor.close(); }
     }
 }
