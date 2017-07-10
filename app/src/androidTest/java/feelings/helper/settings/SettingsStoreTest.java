@@ -10,13 +10,9 @@ import org.junit.runner.RunWith;
 
 import java.util.Collection;
 
-import feelings.helper.questions.QuestionService;
 import feelings.helper.repetition.HourlyRepetition;
 
 import static feelings.helper.TestDateTimeUtil.time;
-import static feelings.helper.questions.QuestionService.FEELINGS;
-import static feelings.helper.questions.QuestionService.GRATITUDE;
-import static feelings.helper.questions.QuestionService.INSINCERITY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -25,19 +21,14 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class SettingsStoreTest {
     private static final HourlyRepetition REPETITION = new HourlyRepetition(2, time(8, 0), time(20, 0));
-    private static final int QUESTION_ID;
-
-    static {
-        QuestionService.init(InstrumentationRegistry.getTargetContext());
-        QUESTION_ID = FEELINGS.getId();
-    }
+    private static final int QUESTION_ID = 1;
 
     @After
     public void tearDown() {
         Context context = InstrumentationRegistry.getTargetContext();
         SettingsStore.delete(context, QUESTION_ID);
-        SettingsStore.delete(context, INSINCERITY.getId());
-        SettingsStore.delete(context, GRATITUDE.getId());
+        SettingsStore.delete(context, 2);
+        SettingsStore.delete(context, 3);
     }
 
     @Test
@@ -84,8 +75,8 @@ public class SettingsStoreTest {
     public void testGetAll() {
         Context context = InstrumentationRegistry.getTargetContext();
         SettingsStore.saveSettings(context, new Settings(QUESTION_ID, false, REPETITION));
-        SettingsStore.saveSettings(context, new Settings(INSINCERITY.getId(), false, REPETITION));
-        SettingsStore.saveSettings(context, new Settings(GRATITUDE.getId(), false, REPETITION));
+        SettingsStore.saveSettings(context, new Settings(2, false, REPETITION));
+        SettingsStore.saveSettings(context, new Settings(3, false, REPETITION));
 
         Collection<Settings> allSettings = SettingsStore.getAllSettings(context);
 

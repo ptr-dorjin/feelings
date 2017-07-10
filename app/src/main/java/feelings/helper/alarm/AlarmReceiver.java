@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v7.app.NotificationCompat;
 
 import org.joda.time.DateTime;
 
@@ -33,10 +35,15 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     private Notification buildNotification(Context context, int questionId) {
-        Notification.Builder builder = new Notification.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle(DateTime.now().toString());
-        builder.setContentText(QuestionService.getQuestionText(questionId));
+        builder.setContentText(QuestionService.getQuestionText(context, questionId));
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        return builder.build();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return builder.build();
+        } else {
+            //noinspection deprecation
+            return builder.getNotification();
+        }
     }
 }

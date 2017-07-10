@@ -1,6 +1,8 @@
 package feelings.helper.questions;
 
-public class Question {
+import android.support.annotation.NonNull;
+
+public class Question implements Comparable<Question> {
     /**
      * Question ID.
      * [0, 100] range is for built-in questions
@@ -12,7 +14,7 @@ public class Question {
      */
     private String text;
     /**
-     * Is user defined question
+     * Is user-defined question
      */
     private final boolean isUser;
 
@@ -23,24 +25,8 @@ public class Question {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Question)) return false;
-
-        Question question = (Question) o;
-
-        if (id != question.id) return false;
-        if (isUser != question.isUser) return false;
-        return text.equals(question.text);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + text.hashCode();
-        result = 31 * result + (isUser ? 1 : 0);
-        return result;
+    public int compareTo(@NonNull Question o) {
+        return Integer.valueOf(id).compareTo(o.id);
     }
 
     public int getId() {

@@ -1,44 +1,42 @@
 package feelings.helper.questions;
 
 import android.content.Context;
-import android.util.SparseArray;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import feelings.helper.R;
 
 public class QuestionService {
-    public static Question FEELINGS;
-    public static Question INSINCERITY;
-    public static Question GRATITUDE;
-    public static Question DO_BODY;
-    public static Question PREACH;
-
-    private static SparseArray<Question> questions = new SparseArray<>();
+    private static List<Question> questions = new ArrayList<>();
+    private static Map<Integer, Question> questionsMap = new HashMap<>();
     private static volatile boolean initialized = false;
 
-    public static void init(Context context) {
+    private static void init(Context context) {
         if (!initialized) {
             synchronized (QuestionService.class) {
                 if (!initialized) {
-                    FEELINGS = new Question(1, context.getString(R.string.q_feelings));
-                    INSINCERITY = new Question(2, context.getString(R.string.q_insincerity));
-                    GRATITUDE = new Question(3, context.getString(R.string.q_gratitude));
-                    DO_BODY = new Question(4, context.getString(R.string.q_do_body));
-                    PREACH = new Question(5, context.getString(R.string.q_preach));
+                    questions.add(new Question(1, context.getString(R.string.q_feelings)));
+                    questions.add(new Question(2, context.getString(R.string.q_insincerity)));
+                    questions.add(new Question(3, context.getString(R.string.q_gratitude)));
+                    questions.add(new Question(4, context.getString(R.string.q_do_body)));
+                    questions.add(new Question(5, context.getString(R.string.q_preach)));
 
-                    questions.append(FEELINGS.getId(), FEELINGS);
-                    questions.append(INSINCERITY.getId(), INSINCERITY);
-                    questions.append(GRATITUDE.getId(), GRATITUDE);
-                    questions.append(DO_BODY.getId(), DO_BODY);
-                    questions.append(PREACH.getId(), PREACH);
+                    for (Question question : questions) {
+                        questionsMap.put(question.getId(), question);
+                    }
                     initialized = true;
                 }
             }
         }
     }
 
-    public static String getQuestionText(int questionId) {
-        checkInit();
-        Question question = questions.get(questionId);
+    public static String getQuestionText(Context context, int questionId) {
+        init(context);
+        Question question = questionsMap.get(questionId);
         if (question != null) {
             return question.getText();
         } else {
@@ -46,8 +44,9 @@ public class QuestionService {
         }
     }
 
-    private static void checkInit() {
-        if (!initialized) throw new RuntimeException("QuestionService is not initialized!");
+    public static List<Question> getAllQuestions(Context context) {
+        init(context);
+        Collections.sort(questions);
+        return questions;
     }
-
 }
