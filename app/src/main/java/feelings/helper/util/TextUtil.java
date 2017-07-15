@@ -26,4 +26,19 @@ public class TextUtil {
     public static boolean isBlank(@Nullable String str) {
         return isEmpty(str) || str.trim().isEmpty();
     }
+
+    public static String getPluralText(int number, String one, String two, String five) {
+        if (number > 10 && number < 20) {
+            return five;
+        }
+        int mod = number % 10;
+        if (mod == 1) {
+            return one;
+        } else if (mod >= 2 && mod <= 4) {
+            return two;
+        } else {
+            return five;
+        }
+    }
+
 }

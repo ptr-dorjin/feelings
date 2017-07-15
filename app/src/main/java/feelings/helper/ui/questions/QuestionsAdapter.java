@@ -24,19 +24,19 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
     static final class QuestionViewHolder extends RecyclerView.ViewHolder {
         TextView questionText;
-        TextView repetition;
+        TextView repeat;
         Switch switchOnOff;
 
         private QuestionViewHolder(View itemView) {
             super(itemView);
             questionText = (TextView) itemView.findViewById(R.id.question_text);
-            repetition = (TextView) itemView.findViewById(R.id.repetition);
+            repeat = (TextView) itemView.findViewById(R.id.repeat);
             switchOnOff = (Switch) itemView.findViewById(R.id.switchOnOff);
         }
     }
 
     public QuestionsAdapter(Context context) {
-        // The responsibility of this class is also to set question's repetition settings by values from the DB.
+        // The responsibility of this class is also to set question's repeat settings by values from the DB.
         Collection<Settings> allSettings = SettingsStore.getAllSettings(context);
         for (Question question : QuestionService.getAllQuestions(context)) {
             // find settings in all settings from the DB
@@ -68,8 +68,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         Context context = holder.questionText.getContext();
 
         holder.questionText.setText(cardItem.getQuestion().getText());
-        holder.repetition.setText(settings != null
-                ? settings.getRepetition().toString()
+        holder.repeat.setText(settings != null
+                ? settings.getRepeat().toString()
                 : context.getString(R.string.not_configured));
         holder.switchOnOff.setEnabled(settings != null);
         holder.switchOnOff.setChecked(settings != null && settings.isOn());

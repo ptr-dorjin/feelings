@@ -1,59 +1,71 @@
 package feelings.helper;
 
-import junit.framework.Assert;
+import org.threeten.bp.Clock;
+import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.ZoneId;
 
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.LocalTime;
+import feelings.helper.repeat.Repeat;
 
-import static org.joda.time.DateTimeUtils.setCurrentMillisFixed;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.threeten.bp.LocalDateTime.now;
 
 public class TestDateTimeUtil {
 
-    public static void mockTime(int hour, int minute) {
-        setCurrentMillisFixed(new DateTime()
-                .withHourOfDay(hour)
-                .withMinuteOfHour(minute)
-                .getMillis());
+    public static Clock mockTime(int hour, int minute, Repeat repeat) {
+        return mock(repeat, LocalDateTime.now()
+                .withHour(hour)
+                .withMinute(minute)
+        );
     }
 
-    public static void mockDayOfWeek(int dayOfWeek) {
-        setCurrentMillisFixed(new DateTime()
-                .withDayOfWeek(dayOfWeek)
-                .getMillis());
+    public static Clock mockDayOfWeek(DayOfWeek dayOfWeek, Repeat repeat) {
+        return mock(repeat, LocalDateTime.now()
+                .with(dayOfWeek)
+        );
     }
 
-    public static void mockDayOfWeekAndTime(int dayOfWeek, int hour, int minute) {
-        setCurrentMillisFixed(new DateTime()
-                .withDayOfWeek(dayOfWeek)
-                .withHourOfDay(hour)
-                .withMinuteOfHour(minute)
-                .getMillis());
+    public static Clock mockDayOfWeekAndTime(DayOfWeek dayOfWeek, int hour, int minute, Repeat repeat) {
+        return mock(repeat, LocalDateTime.now()
+                .with(dayOfWeek)
+                .withHour(hour)
+                .withMinute(minute)
+        );
     }
 
-    public static LocalTime time(int hour, int minute) {
-        return new LocalTime(hour, minute);
+    private static Clock mock(Repeat repeat, LocalDateTime localDateTime) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        Instant fixedInstant = localDateTime.atZone(zoneId).toInstant();
+        Clock fixed = Clock.fixed(fixedInstant, zoneId);
+        repeat.setClock(fixed);
+        return fixed;
     }
 
-    public static void assertTime(int hour, int minute, DateTime dateTime) {
-        Assert.assertEquals(hour, dateTime.getHourOfDay());
-        Assert.assertEquals(minute, dateTime.getMinuteOfHour());
+    public static void assertFuture(LocalDateTime nextTime, Clock clock) {
+        assertTrue(nextTime.isAfter(now(clock)));
     }
 
-    public static void assertToday(DateTime next) {
-        assertEquals(DateTime.now().getDayOfYear(), next.getDayOfYear());
+    public static void assertTime(int hour, int minute, LocalDateTime dateTime) {
+        assertEquals(hour, dateTime.getHour());
+        assertEquals(minute, dateTime.getMinute());
     }
 
-    public static void assertTomorrow(DateTime next) {
-        assertEquals(1, Days.daysBetween(DateTime.now().toLocalDate(), next.toLocalDate()).getDays());
+    public static void assertToday(LocalDateTime next, Clock clock) {
+        assertEquals(LocalDateTime.now(clock).getDayOfYear(), next.getDayOfYear());
     }
 
-    public static void assertDays(DateTime next, int diff) {
-        assertEquals(diff, Days.daysBetween(DateTime.now().toLocalDate(), next.toLocalDate()).getDays());
+    public static void assertTomorrow(LocalDateTime next, Clock clock) {
+        assertEquals(LocalDate.now(clock).plusDays(1), next.toLocalDate());
     }
 
-    public static void assertDayOfWeek(DateTime next, int dayOfWeek) {
+    public static void assertDays(LocalDateTime next, int diff, Clock clock) {
+        assertEquals(LocalDate.now(clock).plusDays(diff), next.toLocalDate());
+    }
+
+    public static void assertDayOfWeek(LocalDateTime next, DayOfWeek dayOfWeek) {
         assertEquals(dayOfWeek, next.getDayOfWeek());
     }
 }

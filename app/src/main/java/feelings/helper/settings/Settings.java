@@ -1,16 +1,16 @@
 package feelings.helper.settings;
 
-import feelings.helper.repetition.Repetition;
+import feelings.helper.repeat.Repeat;
 
 public class Settings {
     private int questionId;
     private boolean isOn;
-    private Repetition repetition;
+    private Repeat repeat;
 
-    public Settings(int questionId, boolean isOn, Repetition repetition) {
+    public Settings(int questionId, boolean isOn, Repeat repeat) {
         this.questionId = questionId;
         this.isOn = isOn;
-        this.repetition = repetition;
+        this.repeat = repeat;
     }
 
     public int getQuestionId() {
@@ -25,11 +25,11 @@ public class Settings {
         isOn = on;
     }
 
-    public Repetition getRepetition() {
-        return repetition;
+    public Repeat getRepeat() {
+        return repeat;
     }
 
-    public void setRepetition(Repetition repetition) {
-        this.repetition = repetition;
+    public void setRepeat(Repeat repeat) {
+        this.repeat = repeat;
     }
 }

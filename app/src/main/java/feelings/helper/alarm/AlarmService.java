@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import org.threeten.bp.ZoneId;
+
 import feelings.helper.settings.Settings;
 
 public class AlarmService {
@@ -17,7 +19,10 @@ public class AlarmService {
         intent.putExtra(AlarmReceiver.QUESTION_ID, questionId);
         PendingIntent pintent = PendingIntent.getBroadcast(context, questionId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long timeMillis = settings.getRepetition().getNextTime().getMillis();
+        long timeMillis = settings.getRepeat().getNextTime()
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli();
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -27,7 +32,7 @@ public class AlarmService {
         }
     }
 
-    //todo call when user sets repetition off
+    //todo call when user sets repeat off
     public static void cancelAlarm(Context context, int questionId) {
         Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent pintent = PendingIntent.getBroadcast(context, questionId, intent, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import feelings.helper.repetition.RepetitionFactory;
+import feelings.helper.repeat.RepeatFactory;
 
 import static feelings.helper.settings.SettingsContract.COLUMN_NAME_IS_ON;
 import static feelings.helper.settings.SettingsContract.COLUMN_NAME_QUESTION_ID;
-import static feelings.helper.settings.SettingsContract.COLUMN_NAME_REPETITION;
+import static feelings.helper.settings.SettingsContract.COLUMN_NAME_REPEAT;
 import static feelings.helper.settings.SettingsContract.COLUMN_NAME_REP_TYPE;
 import static feelings.helper.settings.SettingsContract.TABLE_NAME;
 
@@ -28,8 +28,8 @@ public class SettingsStore {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_QUESTION_ID, settings.getQuestionId());
         values.put(COLUMN_NAME_IS_ON, settings.isOn());
-        values.put(COLUMN_NAME_REP_TYPE, settings.getRepetition().getType());
-        values.put(COLUMN_NAME_REPETITION, settings.getRepetition().toString());
+        values.put(COLUMN_NAME_REP_TYPE, settings.getRepeat().getType());
+        values.put(COLUMN_NAME_REPEAT, settings.getRepeat().toString());
 
         if (!exists(context, settings.getQuestionId())) {
             // create a new
@@ -61,7 +61,7 @@ public class SettingsStore {
             int count = db.update(SettingsContract.TABLE_NAME, values, selection, selectionArgs);
             return count == 1;
         } else {
-            throw new RuntimeException("Attempt to switch repetition on/off in the DB, while repetition not exists.");
+            throw new RuntimeException("Attempt to switch repeat on/off in the DB, while repeat not exists.");
         }
     }
 
@@ -83,7 +83,7 @@ public class SettingsStore {
     public static Settings getSettings(Context context, int questionId) {
         SQLiteDatabase db = new SettingsDbHelper(context).getReadableDatabase();
 
-        String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPETITION};
+        String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPEAT};
 
         String selection = COLUMN_NAME_QUESTION_ID + " = ?";
         String[] selectionArgs = {String.valueOf(questionId)};
@@ -95,8 +95,8 @@ public class SettingsStore {
             if (cursor.moveToFirst()) {
                 boolean isOn = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_IS_ON));
                 String repType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REP_TYPE));
-                String repetition = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REPETITION));
-                return new Settings(questionId, isOn, RepetitionFactory.create(repType, repetition));
+                String repeat = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REPEAT));
+                return new Settings(questionId, isOn, RepeatFactory.create(repType, repeat));
             } else {
                 return null;
             }
@@ -116,7 +116,7 @@ public class SettingsStore {
     public static Collection<Settings> getAllSettings(Context context) {
         SQLiteDatabase db = new SettingsDbHelper(context).getReadableDatabase();
 
-        String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPETITION};
+        String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPEAT};
 
         Cursor cursor = null;
         try {
@@ -127,8 +127,8 @@ public class SettingsStore {
                 int questionId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_QUESTION_ID));
                 boolean isOn = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_IS_ON));
                 String repType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REP_TYPE));
-                String repetition = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REPETITION));
-                list.add(new Settings(questionId, isOn, RepetitionFactory.create(repType, repetition)));
+                String repeat = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REPEAT));
+                list.add(new Settings(questionId, isOn, RepeatFactory.create(repType, repeat)));
             }
             return list;
         } finally { if (cursor != null) cursor.close(); }

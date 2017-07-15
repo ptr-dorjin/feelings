@@ -7,12 +7,12 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.threeten.bp.LocalTime;
 
 import java.util.Collection;
 
-import feelings.helper.repetition.HourlyRepetition;
+import feelings.helper.repeat.HourlyRepeat;
 
-import static feelings.helper.TestDateTimeUtil.time;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class SettingsStoreTest {
-    private static final HourlyRepetition REPETITION = new HourlyRepetition(2, time(8, 0), time(20, 0));
+    private static final HourlyRepeat REPEAT = new HourlyRepeat(2, LocalTime.of(8, 0), LocalTime.of(20, 0));
     private static final int QUESTION_ID = 1;
 
     @After
@@ -34,7 +34,7 @@ public class SettingsStoreTest {
     @Test
     public void testCreate() {
         Context context = InstrumentationRegistry.getTargetContext();
-        Settings settings = new Settings(QUESTION_ID, true, REPETITION);
+        Settings settings = new Settings(QUESTION_ID, true, REPEAT);
 
         boolean created = SettingsStore.saveSettings(context, settings);
         assertTrue(created);
@@ -46,37 +46,37 @@ public class SettingsStoreTest {
     @Test
     public void testUpdate() {
         Context context = InstrumentationRegistry.getTargetContext();
-        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, true, REPETITION));
-        HourlyRepetition updatedRepetition = new HourlyRepetition(2, time(8, 0), time(21, 0));
+        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, true, REPEAT));
+        HourlyRepeat updatedRepeat = new HourlyRepeat(2, LocalTime.of(8, 0), LocalTime.of(21, 0));
 
         boolean updated = SettingsStore.saveSettings(context,
-                new Settings(QUESTION_ID, true, updatedRepetition));
+                new Settings(QUESTION_ID, true, updatedRepeat));
         assertTrue(updated);
 
         Settings fromDB = SettingsStore.getSettings(context, QUESTION_ID);
         assertNotNull(fromDB);
-        assertEquals(updatedRepetition.toString(), fromDB.getRepetition().toString());
+        assertEquals(updatedRepeat.toString(), fromDB.getRepeat().toString());
     }
 
     @Test
     public void testGetOne() {
         Context context = InstrumentationRegistry.getTargetContext();
-        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, false, REPETITION));
+        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, false, REPEAT));
 
         Settings fromDB = SettingsStore.getSettings(context, QUESTION_ID);
 
         assertNotNull(fromDB);
         assertEquals(QUESTION_ID, fromDB.getQuestionId());
         assertFalse(fromDB.isOn());
-        assertEquals("2;08:00;20:00", fromDB.getRepetition().toString());
+        assertEquals("2;08:00;20:00", fromDB.getRepeat().toString());
     }
 
     @Test
     public void testGetAll() {
         Context context = InstrumentationRegistry.getTargetContext();
-        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, false, REPETITION));
-        SettingsStore.saveSettings(context, new Settings(2, false, REPETITION));
-        SettingsStore.saveSettings(context, new Settings(3, false, REPETITION));
+        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, false, REPEAT));
+        SettingsStore.saveSettings(context, new Settings(2, false, REPEAT));
+        SettingsStore.saveSettings(context, new Settings(3, false, REPEAT));
 
         Collection<Settings> allSettings = SettingsStore.getAllSettings(context);
 
@@ -86,7 +86,7 @@ public class SettingsStoreTest {
     @Test
     public void testSwitchOff() {
         Context context = InstrumentationRegistry.getTargetContext();
-        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, true, REPETITION));
+        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, true, REPEAT));
 
         boolean updated = SettingsStore.switchOnOff(context, QUESTION_ID, false);
         assertTrue(updated);
@@ -99,7 +99,7 @@ public class SettingsStoreTest {
     @Test
     public void testSwitchOn() {
         Context context = InstrumentationRegistry.getTargetContext();
-        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, false, REPETITION));
+        SettingsStore.saveSettings(context, new Settings(QUESTION_ID, false, REPEAT));
 
         boolean updated = SettingsStore.switchOnOff(context, QUESTION_ID, true);
         assertTrue(updated);

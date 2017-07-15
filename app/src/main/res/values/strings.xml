@@ -1,9 +1,30 @@
 <resources>
     <string name="app_name">Feelings Helper</string>
-    <string name="q_feelings">What do I feel now?</string>
-    <string name="q_insincerity">With whom was I insincere today?</string>
-    <string name="q_gratitude">Who am I grateful to today?</string>
-    <string name="q_do_body">What can I do for my body?</string>
-    <string name="q_preach">Whom did I preach today?</string>
-    <string name="not_configured">Not configured</string>
+
+    <string name="q_feelings">Что я сейчас чувствую?</string>
+    <string name="q_insincerity">С кем я был неискренен сегодня?</string>
+    <string name="q_gratitude">Кого я могу поблагодарить?</string>
+    <string name="q_preach">С кем я «поумничал» сегодня (вслух или про себя)?</string>
+    <string name="q_lie">В чем я себе вру? (чувствую одно, а говорю, делаю другое)</string>
+    <string name="q_irresponsibility">В чем моя безответственность? (несоответствие мыслей, слов, поступков)</string>
+    <string name="q_do_body">Что я могу сделать для своего тела?</string>
+    <string name="q_do_close">Что я могу сделать для своих близких?</string>
+    <string name="q_do_others">Что я могу сделать для других людей?</string>
+
+    <string name="right_now">сейчас</string>
+    <string name="not_configured">настроить</string>
+
+    <string name="every1">каждый</string>
+    <string name="every2">каждые</string>
+    <string name="every5">каждые</string>
+
+    <string name="hour1">час</string>
+    <string name="hour2">часа</string>
+    <string name="hour5">часов</string>
+
+    <string name="hourly">%1$s %2$s %3$s с %4$s по %5$s</string>
+    <string name="daily">каждый день в %s</string>
+    <string name="weekly">по %1$s в %2$s</string>
+    <string name="weekly_custom">по %1$s в %2$s</string>
+
 </resources>

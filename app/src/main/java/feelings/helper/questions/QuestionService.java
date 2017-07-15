@@ -22,8 +22,12 @@ public class QuestionService {
                     questions.add(new Question(1, context.getString(R.string.q_feelings)));
                     questions.add(new Question(2, context.getString(R.string.q_insincerity)));
                     questions.add(new Question(3, context.getString(R.string.q_gratitude)));
-                    questions.add(new Question(4, context.getString(R.string.q_do_body)));
-                    questions.add(new Question(5, context.getString(R.string.q_preach)));
+                    questions.add(new Question(4, context.getString(R.string.q_preach)));
+                    questions.add(new Question(5, context.getString(R.string.q_lie)));
+                    questions.add(new Question(6, context.getString(R.string.q_irresponsibility)));
+                    questions.add(new Question(7, context.getString(R.string.q_do_body)));
+                    questions.add(new Question(8, context.getString(R.string.q_do_close)));
+                    questions.add(new Question(9, context.getString(R.string.q_do_others)));
 
                     for (Question question : questions) {
                         questionsMap.put(question.getId(), question);
