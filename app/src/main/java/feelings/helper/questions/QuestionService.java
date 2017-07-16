@@ -11,6 +11,9 @@ import java.util.Map;
 import feelings.helper.R;
 
 public class QuestionService {
+
+    public static int FEELINGS_ID = 1;
+
     private static List<Question> questions = new ArrayList<>();
     private static Map<Integer, Question> questionsMap = new HashMap<>();
     private static volatile boolean initialized = false;
@@ -19,7 +22,7 @@ public class QuestionService {
         if (!initialized) {
             synchronized (QuestionService.class) {
                 if (!initialized) {
-                    questions.add(new Question(1, context.getString(R.string.q_feelings)));
+                    questions.add(new Question(FEELINGS_ID, context.getString(R.string.q_feelings)));
                     questions.add(new Question(2, context.getString(R.string.q_insincerity)));
                     questions.add(new Question(3, context.getString(R.string.q_gratitude)));
                     questions.add(new Question(4, context.getString(R.string.q_preach)));

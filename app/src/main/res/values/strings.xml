@@ -11,8 +11,10 @@
     <string name="q_do_close">Что я могу сделать для своих близких?</string>
     <string name="q_do_others">Что я могу сделать для других людей?</string>
 
-    <string name="right_now">сейчас</string>
-    <string name="not_configured">настроить</string>
+    <string name="answer">Ответить:</string>
+    <string name="right_now"><u>сейчас</u></string>
+    <string name="or">или</string>
+    <string name="configure"><u>настроить</u></string>
 
     <string name="every1">каждый</string>
     <string name="every2">каждые</string>

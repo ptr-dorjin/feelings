@@ -2,6 +2,8 @@ package feelings.helper.ui.questions;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         private QuestionViewHolder(View itemView) {
             super(itemView);
             questionText = (TextView) itemView.findViewById(R.id.question_text);
-            repeat = (TextView) itemView.findViewById(R.id.repeat);
+            repeat = (TextView) itemView.findViewById(R.id.setup_repeat);
             switchOnOff = (Switch) itemView.findViewById(R.id.switchOnOff);
         }
     }
@@ -68,11 +70,18 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         Context context = holder.questionText.getContext();
 
         holder.questionText.setText(cardItem.getQuestion().getText());
-        holder.repeat.setText(settings != null
-                ? settings.getRepeat().toString()
-                : context.getString(R.string.not_configured));
+        holder.repeat.setText(getRepeat(settings, context));
         holder.switchOnOff.setEnabled(settings != null);
         holder.switchOnOff.setChecked(settings != null && settings.isOn());
+    }
+
+    private CharSequence getRepeat(Settings settings, Context context) {
+        String text = settings != null
+                ? settings.getRepeat().toHumanReadableString(context)
+                : context.getString(R.string.configure);
+        SpannableString content = new SpannableString(text);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        return content;
     }
 
     @Override
