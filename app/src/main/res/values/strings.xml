@@ -34,5 +34,12 @@
     
     <string name="msg_repeat_switched_on">Повтор включен</string>
     <string name="msg_repeat_switched_off">Повтор выключен</string>
+    
+    <string-array name="repeat_type_array">
+        <item>Каждые N часов</item>
+        <item>Каждый день</item>
+        <item>Раз в неделю</item>
+        <item>По дням недели</item>
+    </string-array>
 
 </resources>

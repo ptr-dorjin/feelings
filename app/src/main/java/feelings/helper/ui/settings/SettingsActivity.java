@@ -2,7 +2,9 @@ package feelings.helper.ui.settings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 import feelings.helper.R;
@@ -32,4 +34,8 @@ public class SettingsActivity extends AppCompatActivity {
             ToastUtil.showError("Settings are null!", this);
         }
     }
-}
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }}
