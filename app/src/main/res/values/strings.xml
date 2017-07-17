@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Feelings Helper</string>
+    
+    <string name="settings_activity_title">Повтор</string>
+    <string name="answer_activity_title">Ответ</string>
 
     <string name="q_feelings">Что я сейчас чувствую?</string>
     <string name="q_insincerity">С кем я был неискренен сегодня?</string>
@@ -11,10 +14,10 @@
     <string name="q_do_close">Что я могу сделать для своих близких?</string>
     <string name="q_do_others">Что я могу сделать для других людей?</string>
 
-    <string name="answer">Ответить:</string>
-    <string name="right_now"><u>сейчас</u></string>
-    <string name="or">или</string>
-    <string name="configure"><u>настроить</u></string>
+    <string name="card_answer_label">Ответить:</string>
+    <string name="card_right_now_link"><u>сейчас</u></string>
+    <string name="card_or">или</string>
+    <string name="card_configure"><u>настроить</u></string>
 
     <string name="every1">каждый</string>
     <string name="every2">каждые</string>
@@ -28,5 +31,8 @@
     <string name="daily">каждый день в %s</string>
     <string name="weekly">по %1$s в %2$s</string>
     <string name="weekly_custom">по %1$s в %2$s</string>
+    
+    <string name="msg_repeat_switched_on">Повтор включен</string>
+    <string name="msg_repeat_switched_off">Повтор выключен</string>
 
 </resources>

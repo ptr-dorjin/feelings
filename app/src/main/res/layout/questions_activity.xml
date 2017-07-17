@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    tools:context="feelings.helper.QuestionsActivity">
+    tools:context="feelings.helper.ui.questions.QuestionsActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/questions_recycler_view"

@@ -20,12 +20,30 @@
         <meta-data android:name="com.google.android.gms.games.APP_ID"
             android:value="123456789012" />
 
-        <activity android:name=".QuestionsActivity">
+        <activity android:name=".ui.questions.QuestionsActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.settings.SettingsActivity"
+            android:parentActivityName=".ui.questions.QuestionsActivity"
+            android:label="@string/settings_activity_title">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.questions.QuestionsActivity" />
+        </activity>
+
+        <activity android:name=".ui.answers.AnswerActivity"
+            android:parentActivityName=".ui.questions.QuestionsActivity"
+            android:label="@string/answer_activity_title">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.questions.QuestionsActivity" />
         </activity>
 
         <receiver android:name=".alarm.AlarmReceiver" />
