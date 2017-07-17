@@ -121,6 +121,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
         holder.questionText.setText(cardItem.getQuestion().getText());
         holder.repeat.setText(getRepeat(settings, context));
+        holder.switchOnOff.setEnabled(settings != null);
         holder.switchOnOff.setChecked(settings != null && settings.isOn());
     }
 
