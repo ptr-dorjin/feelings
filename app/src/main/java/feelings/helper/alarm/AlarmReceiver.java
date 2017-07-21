@@ -11,8 +11,8 @@ import android.util.Log;
 
 import feelings.helper.R;
 import feelings.helper.questions.QuestionService;
-import feelings.helper.settings.Settings;
-import feelings.helper.settings.SettingsStore;
+import feelings.helper.schedule.Schedule;
+import feelings.helper.schedule.ScheduleStore;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -33,11 +33,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         // 2. set the next alarm
-        Settings settings = SettingsStore.getSettings(context, questionId);
-        if (settings != null) {
-            AlarmService.setAlarm(context, settings);
+        Schedule schedule = ScheduleStore.getSchedule(context, questionId);
+        if (schedule != null) {
+            AlarmService.setAlarm(context, schedule);
         } else {
-            Log.e(TAG, "No settings in the DB with id=" + questionId + ". Next alarm has not been set.");
+            Log.e(TAG, "No schedule in the DB with id=" + questionId + ". Next alarm has not been set.");
         }
     }
 

@@ -6,17 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 
 import feelings.helper.alarm.AlarmService;
-import feelings.helper.settings.Settings;
-import feelings.helper.settings.SettingsStore;
+import feelings.helper.schedule.Schedule;
+import feelings.helper.schedule.ScheduleStore;
 
 public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            for (Settings settings : SettingsStore.getAllSettings(context)) {
-                if (settings.isOn()) {
-                    AlarmService.setAlarm(context, settings);
+            for (Schedule schedule : ScheduleStore.getAllSchedules(context)) {
+                if (schedule.isOn()) {
+                    AlarmService.setAlarm(context, schedule);
                 }
             }
         }

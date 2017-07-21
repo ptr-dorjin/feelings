@@ -8,18 +8,18 @@ import android.os.Build;
 
 import org.threeten.bp.ZoneId;
 
-import feelings.helper.settings.Settings;
+import feelings.helper.schedule.Schedule;
 
 public class AlarmService {
 
-    public static void setAlarm(Context context, Settings settings) {
-        int questionId = settings.getQuestionId();
+    public static void setAlarm(Context context, Schedule schedule) {
+        int questionId = schedule.getQuestionId();
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(AlarmReceiver.QUESTION_ID, questionId);
         PendingIntent pintent = PendingIntent.getBroadcast(context, questionId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long timeMillis = settings.getRepeat().getNextTime()
+        long timeMillis = schedule.getRepeat().getNextTime()
                 .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli();

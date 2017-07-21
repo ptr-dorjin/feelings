@@ -27,7 +27,7 @@ public interface Repeat {
     /**
      * @return String representation to store in the DB.
      */
-    String toString();
+    String toDbString();
 
     /**
      * @return String representation to show to a user.

@@ -36,7 +36,7 @@ public class HourlyRepeat extends AbstractRepeat {
     }
 
     /**
-     * @param asString String from toString()
+     * @param asString String from toDbString()
      */
     HourlyRepeat(String asString) {
         if (TextUtil.isEmpty(asString)) {
@@ -49,7 +49,7 @@ public class HourlyRepeat extends AbstractRepeat {
     }
 
     @Override
-    public String toString() {
+    public String toDbString() {
         return interval + ";" + start.format(TIME_FORMATTER) + ";" + end.format(TIME_FORMATTER);
     }
 

@@ -26,15 +26,15 @@ import static org.threeten.bp.LocalTime.of;
 
 public class WeeklyCustomRepeatTest {
     @Test
-    public void testToString() {
+    public void testToDbString() {
         WeeklyCustomRepeat repeat = new WeeklyCustomRepeat(
                 new TreeSet<>(asList(MONDAY, WEDNESDAY, FRIDAY)), of(21, 0));
 
-        String asString = repeat.toString();
+        String asString = repeat.toDbString();
         WeeklyCustomRepeat fromString = new WeeklyCustomRepeat(asString);
 
         assertEquals("1,3,5;21:00", asString);
-        assertEquals(asString, fromString.toString());
+        assertEquals(asString, fromString.toDbString());
     }
 
     @Test(expected = RuntimeException.class)

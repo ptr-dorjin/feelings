@@ -14,14 +14,14 @@ import static org.threeten.bp.LocalTime.of;
 
 public class HourlyRepeatTest {
     @Test
-    public void testToString() {
+    public void testToDbString() {
         HourlyRepeat repeat = new HourlyRepeat(2, of(8, 0), of(20, 0));
 
-        String asString = repeat.toString();
+        String asString = repeat.toDbString();
         HourlyRepeat fromString = new HourlyRepeat(asString);
 
         assertEquals("2;08:00;20:00", asString);
-        assertEquals(asString, fromString.toString());
+        assertEquals(asString, fromString.toDbString());
     }
 
     @Test(expected = RuntimeException.class)

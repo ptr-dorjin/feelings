@@ -28,9 +28,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.settings.SettingsActivity"
+        <activity android:name=".ui.schedule.ScheduleActivity"
             android:parentActivityName=".ui.questions.QuestionsActivity"
-            android:label="@string/settings_activity_title">
+            android:label="@string/schedule_activity_title">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

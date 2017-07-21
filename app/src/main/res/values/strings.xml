@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Feelings Helper</string>
     
-    <string name="settings_activity_title">Повтор</string>
+    <string name="schedule_activity_title">Повтор</string>
     <string name="answer_activity_title">Ответ</string>
 
     <string name="q_feelings">Что я сейчас чувствую?</string>
@@ -27,7 +27,7 @@
     <string name="hour2">часа</string>
     <string name="hour5">часов</string>
 
-    <string name="hourly">%1$s %2$s %3$s с %4$s по %5$s</string>
+    <string name="hourly">%1$s %2$d %3$s с %4$s по %5$s</string>
     <string name="daily">каждый день в %s</string>
     <string name="weekly">по %1$s в %2$s</string>
     <string name="weekly_custom">по %1$s в %2$s</string>

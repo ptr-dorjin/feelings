@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <TextView android:id="@+id/card_question_text"
+        <TextView android:id="@+id/question_text_on_card"
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:text="@string/card_answer_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card_question_text"
+            android:layout_below="@+id/question_text_on_card"
             />
 
         <TextView android:id="@+id/link_to_answer_now"

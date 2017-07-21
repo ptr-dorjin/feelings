@@ -33,6 +33,9 @@ public class WeeklyCustomRepeat extends AbstractRepeat {
         this.time = time;
     }
 
+    /**
+     * @param asString String from toDbString()
+     */
     WeeklyCustomRepeat(String asString) {
         if (TextUtil.isEmpty(asString)) {
             throw new RuntimeException("Incorrect string value of the repeat.");
@@ -47,7 +50,7 @@ public class WeeklyCustomRepeat extends AbstractRepeat {
     }
 
     @Override
-    public String toString() {
+    public String toDbString() {
         TreeSet<Integer> daysOfWeekInts = new TreeSet<>();
         for (DayOfWeek dayOfWeek : daysOfWeek) {
             daysOfWeekInts.add(dayOfWeek.getValue());

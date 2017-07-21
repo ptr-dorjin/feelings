@@ -27,15 +27,15 @@ public class DailyRepeatTest {
     }
 
     @Test
-    public void testToStringOne() {
+    public void testToDbStringOne() {
         Collections.addAll(times, of(9, 0));
-        testToString(times, "09:00");
+        testToDbString(times, "09:00");
     }
 
     @Test
-    public void testToStringMultiple() {
+    public void testToDbStringMultiple() {
         Collections.addAll(times, of(9, 0), of(12, 0), of(15, 0));
-        testToString(times, "09:00,12:00,15:00");
+        testToDbString(times, "09:00,12:00,15:00");
     }
 
     @Test(expected = RuntimeException.class)
@@ -43,14 +43,14 @@ public class DailyRepeatTest {
         new DailyRepeat("");
     }
 
-    private static void testToString(TreeSet<LocalTime> times, String expected) {
+    private static void testToDbString(TreeSet<LocalTime> times, String expected) {
         DailyRepeat repeat = new DailyRepeat(times);
 
-        String asString = repeat.toString();
+        String asString = repeat.toDbString();
         DailyRepeat fromString = new DailyRepeat(asString);
 
         assertEquals(expected, asString);
-        assertEquals(asString, fromString.toString());
+        assertEquals(asString, fromString.toDbString());
     }
 
     @Test

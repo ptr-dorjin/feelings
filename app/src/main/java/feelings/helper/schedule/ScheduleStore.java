@@ -1,4 +1,4 @@
-package feelings.helper.settings;
+package feelings.helper.schedule;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,35 +11,35 @@ import java.util.List;
 
 import feelings.helper.repeat.RepeatFactory;
 
-import static feelings.helper.settings.SettingsContract.COLUMN_NAME_IS_ON;
-import static feelings.helper.settings.SettingsContract.COLUMN_NAME_QUESTION_ID;
-import static feelings.helper.settings.SettingsContract.COLUMN_NAME_REPEAT;
-import static feelings.helper.settings.SettingsContract.COLUMN_NAME_REP_TYPE;
-import static feelings.helper.settings.SettingsContract.TABLE_NAME;
+import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_IS_ON;
+import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_QUESTION_ID;
+import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_REPEAT;
+import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_REP_TYPE;
+import static feelings.helper.schedule.ScheduleContract.TABLE_NAME;
 
-public class SettingsStore {
+public class ScheduleStore {
 
     /**
      * Create or update
      */
-    public static boolean saveSettings(Context context, Settings settings) {
-        SQLiteDatabase db = new SettingsDbHelper(context).getWritableDatabase();
+    public static boolean saveSchedule(Context context, Schedule schedule) {
+        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_QUESTION_ID, settings.getQuestionId());
-        values.put(COLUMN_NAME_IS_ON, settings.isOn());
-        values.put(COLUMN_NAME_REP_TYPE, settings.getRepeat().getType());
-        values.put(COLUMN_NAME_REPEAT, settings.getRepeat().toString());
+        values.put(COLUMN_NAME_QUESTION_ID, schedule.getQuestionId());
+        values.put(COLUMN_NAME_IS_ON, schedule.isOn());
+        values.put(COLUMN_NAME_REP_TYPE, schedule.getRepeat().getType());
+        values.put(COLUMN_NAME_REPEAT, schedule.getRepeat().toDbString());
 
-        if (!exists(context, settings.getQuestionId())) {
+        if (!exists(context, schedule.getQuestionId())) {
             // create a new
             long newRowId = db.insert(TABLE_NAME, null, values);
             return newRowId != -1;
         } else {
             // update the existing
             String selection = COLUMN_NAME_QUESTION_ID + " = ?";
-            String[] selectionArgs = {String.valueOf(settings.getQuestionId())};
-            int count = db.update(SettingsContract.TABLE_NAME, values, selection, selectionArgs);
+            String[] selectionArgs = {String.valueOf(schedule.getQuestionId())};
+            int count = db.update(ScheduleContract.TABLE_NAME, values, selection, selectionArgs);
             return count == 1;
         }
     }
@@ -48,7 +48,7 @@ public class SettingsStore {
      * Create or update only on/off flag
      */
     public static boolean switchOnOff(Context context, int questionId, boolean isOn) {
-        SQLiteDatabase db = new SettingsDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_QUESTION_ID, questionId);
@@ -58,7 +58,7 @@ public class SettingsStore {
             // update the existing
             String selection = COLUMN_NAME_QUESTION_ID + " = ?";
             String[] selectionArgs = {String.valueOf(questionId)};
-            int count = db.update(SettingsContract.TABLE_NAME, values, selection, selectionArgs);
+            int count = db.update(ScheduleContract.TABLE_NAME, values, selection, selectionArgs);
             return count == 1;
         } else {
             throw new RuntimeException("Attempt to switch repeat on/off in the DB, while repeat not exists.");
@@ -66,7 +66,7 @@ public class SettingsStore {
     }
 
     private static boolean exists(Context context, int questionId) {
-        SQLiteDatabase db = new SettingsDbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID};
 
@@ -80,8 +80,8 @@ public class SettingsStore {
         } finally { if (cursor != null) cursor.close(); }
     }
 
-    public static Settings getSettings(Context context, int questionId) {
-        SQLiteDatabase db = new SettingsDbHelper(context).getReadableDatabase();
+    public static Schedule getSchedule(Context context, int questionId) {
+        SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPEAT};
 
@@ -96,7 +96,7 @@ public class SettingsStore {
                 boolean isOn = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_IS_ON));
                 String repType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REP_TYPE));
                 String repeat = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REPEAT));
-                return new Settings(questionId, isOn, RepeatFactory.create(repType, repeat));
+                return new Schedule(questionId, isOn, RepeatFactory.create(repType, repeat));
             } else {
                 return null;
             }
@@ -105,7 +105,7 @@ public class SettingsStore {
 
     // for use in tests
     static int delete(Context context, int questionId) {
-        SQLiteDatabase db = new SettingsDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
 
         String selection = COLUMN_NAME_QUESTION_ID + " = ?";
         String[] selectionArgs = {String.valueOf(questionId)};
@@ -113,8 +113,8 @@ public class SettingsStore {
         return db.delete(TABLE_NAME, selection, selectionArgs);
     }
 
-    public static Collection<Settings> getAllSettings(Context context) {
-        SQLiteDatabase db = new SettingsDbHelper(context).getReadableDatabase();
+    public static Collection<Schedule> getAllSchedules(Context context) {
+        SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPEAT};
 
@@ -122,13 +122,13 @@ public class SettingsStore {
         try {
             cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
 
-            List<Settings> list = new ArrayList<>();
+            List<Schedule> list = new ArrayList<>();
             while (cursor.moveToNext()) {
                 int questionId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_QUESTION_ID));
                 boolean isOn = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_IS_ON));
                 String repType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REP_TYPE));
                 String repeat = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REPEAT));
-                list.add(new Settings(questionId, isOn, RepeatFactory.create(repType, repeat)));
+                list.add(new Schedule(questionId, isOn, RepeatFactory.create(repType, repeat)));
             }
             return list;
         } finally { if (cursor != null) cursor.close(); }

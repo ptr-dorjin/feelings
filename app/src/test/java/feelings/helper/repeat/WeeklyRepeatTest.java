@@ -21,14 +21,14 @@ import static org.threeten.bp.DayOfWeek.WEDNESDAY;
 
 public class WeeklyRepeatTest {
     @Test
-    public void testToString() {
+    public void testToDbString() {
         WeeklyRepeat repeat = new WeeklyRepeat(TUESDAY, LocalTime.of(8, 0));
 
-        String asString = repeat.toString();
+        String asString = repeat.toDbString();
         WeeklyRepeat fromString = new WeeklyRepeat(asString);
 
         assertEquals("2;08:00", asString);
-        assertEquals(asString, fromString.toString());
+        assertEquals(asString, fromString.toDbString());
     }
 
     @Test(expected = RuntimeException.class)

@@ -24,7 +24,7 @@ public class DailyRepeat extends AbstractRepeat {
     }
 
     /**
-     * @param asString String from toString()
+     * @param asString String from toDbString()
      */
     DailyRepeat(String asString) {
         if (TextUtil.isEmpty(asString)) {
@@ -38,7 +38,7 @@ public class DailyRepeat extends AbstractRepeat {
     }
 
     @Override
-    public String toString() {
+    public String toDbString() {
         TreeSet<String> timesStrings = new TreeSet<>();
         for (LocalTime time : times) {
             timesStrings.add(time.format(TIME_FORMATTER));

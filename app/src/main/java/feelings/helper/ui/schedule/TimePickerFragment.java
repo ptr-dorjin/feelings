@@ -1,4 +1,4 @@
-package feelings.helper.ui.settings;
+package feelings.helper.ui.schedule;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

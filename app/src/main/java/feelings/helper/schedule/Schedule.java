@@ -1,13 +1,13 @@
-package feelings.helper.settings;
+package feelings.helper.schedule;
 
 import feelings.helper.repeat.Repeat;
 
-public class Settings {
+public class Schedule {
     private int questionId;
     private boolean isOn;
     private Repeat repeat;
 
-    public Settings(int questionId, boolean isOn, Repeat repeat) {
+    public Schedule(int questionId, boolean isOn, Repeat repeat) {
         this.questionId = questionId;
         this.isOn = isOn;
         this.repeat = repeat;

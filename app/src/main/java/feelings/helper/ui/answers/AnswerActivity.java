@@ -19,7 +19,7 @@ public class AnswerActivity extends AppCompatActivity {
 
         int questionId = getIntent().getIntExtra(QUESTION_ID_PARAM, 0);
 
-        TextView questionView = (TextView) findViewById(R.id.answer_question_text);
+        TextView questionView = (TextView) findViewById(R.id.question_text_on_answer);
         questionView.setText(QuestionService.getQuestionText(this, questionId));
     }
 }

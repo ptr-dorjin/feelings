@@ -19,10 +19,10 @@ import java.util.List;
 import feelings.helper.R;
 import feelings.helper.questions.Question;
 import feelings.helper.questions.QuestionService;
-import feelings.helper.settings.Settings;
-import feelings.helper.settings.SettingsStore;
+import feelings.helper.schedule.Schedule;
+import feelings.helper.schedule.ScheduleStore;
 import feelings.helper.ui.answers.AnswerActivity;
-import feelings.helper.ui.settings.SettingsActivity;
+import feelings.helper.ui.schedule.ScheduleActivity;
 import feelings.helper.util.ToastUtil;
 
 import static feelings.helper.ui.questions.QuestionsActivity.QUESTION_ID_PARAM;
@@ -41,7 +41,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
         private QuestionViewHolder(View itemView) {
             super(itemView);
-            questionText = (TextView) itemView.findViewById(R.id.card_question_text);
+            questionText = (TextView) itemView.findViewById(R.id.question_text_on_card);
             linkToAnswerNow = (TextView) itemView.findViewById(R.id.link_to_answer_now);
             repeat = (TextView) itemView.findViewById(R.id.setup_repeat);
             switchOnOff = (Switch) itemView.findViewById(R.id.switchOnOff);
@@ -49,7 +49,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, SettingsActivity.class);
+                    Intent intent = new Intent(context, ScheduleActivity.class);
                     intent.putExtra(QUESTION_ID_PARAM, currentItem.getQuestion().getId());
                     context.startActivity(intent);
                 }
@@ -67,13 +67,13 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (currentItem.getSettings() == null) {
-                        // go to settings
-                        Intent intent = new Intent(context, SettingsActivity.class);
+                    if (currentItem.getSchedule() == null) {
+                        // go to schedule set up
+                        Intent intent = new Intent(context, ScheduleActivity.class);
                         intent.putExtra(QUESTION_ID_PARAM, currentItem.getQuestion().getId());
                         context.startActivity(intent);
                     } else {
-                        SettingsStore.switchOnOff(context, currentItem.getQuestion().getId(), isChecked);
+                        ScheduleStore.switchOnOff(context, currentItem.getQuestion().getId(), isChecked);
                         ToastUtil.showShortMessage(context.getString(isChecked
                                 ? R.string.msg_repeat_switched_on
                                 : R.string.msg_repeat_switched_off
@@ -86,14 +86,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
     QuestionsAdapter(Context context) {
         this.context = context;
-        // The responsibility of this class is also to set question's repeat settings by values from the DB.
-        Collection<Settings> allSettings = SettingsStore.getAllSettings(context);
+        // The responsibility of this class is also to set question's schedules by values from the DB.
+        Collection<Schedule> allSchedules = ScheduleStore.getAllSchedules(context);
         for (Question question : QuestionService.getAllQuestions(context)) {
-            // find settings in all settings from the DB
-            Settings found = null;
-            for (Settings settings : allSettings) {
-                if (settings.getQuestionId() == question.getId()) {
-                    found = settings;
+            // find schedule in all schedules from the DB
+            Schedule found = null;
+            for (Schedule schedule : allSchedules) {
+                if (schedule.getQuestionId() == question.getId()) {
+                    found = schedule;
                     break;
                 }
             }
@@ -114,20 +114,20 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
     @Override
     public void onBindViewHolder(QuestionViewHolder holder, int i) {
         CardItem cardItem = cardItems.get(i);
-        Settings settings = cardItem.getSettings();
+        Schedule schedule = cardItem.getSchedule();
         Context context = holder.questionText.getContext();
 
         holder.currentItem = cardItems.get(i);
 
         holder.questionText.setText(cardItem.getQuestion().getText());
-        holder.repeat.setText(getRepeat(settings, context));
-        holder.switchOnOff.setEnabled(settings != null);
-        holder.switchOnOff.setChecked(settings != null && settings.isOn());
+        holder.repeat.setText(getRepeat(schedule, context));
+        holder.switchOnOff.setEnabled(schedule != null);
+        holder.switchOnOff.setChecked(schedule != null && schedule.isOn());
     }
 
-    private CharSequence getRepeat(Settings settings, Context context) {
-        String text = settings != null
-                ? settings.getRepeat().toHumanReadableString(context)
+    private CharSequence getRepeat(Schedule schedule, Context context) {
+        String text = schedule != null
+                ? schedule.getRepeat().toHumanReadableString(context)
                 : context.getString(R.string.card_configure);
         SpannableString content = new SpannableString(text);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);

@@ -29,7 +29,7 @@ public class WeeklyRepeat extends AbstractRepeat {
     }
 
     /**
-     * @param asString String from toString()
+     * @param asString String from toDbString()
      */
     WeeklyRepeat(String asString) {
         if (TextUtil.isEmpty(asString)) {
@@ -41,7 +41,7 @@ public class WeeklyRepeat extends AbstractRepeat {
     }
 
     @Override
-    public String toString() {
+    public String toDbString() {
         return dayOfWeek.getValue() + ";" + time.format(TIME_FORMATTER);
     }
 
