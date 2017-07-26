@@ -1,15 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
+    android:layout_height="wrap_content"
     >
 
-    <TextView
+    <RelativeLayout android:id="@+id/interval_group"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hourly repeat"
-        android:textSize="30sp"
-        />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        >
+        <TextView android:id="@+id/label_every"
+            android:text="@string/every5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            />
+        <NumberPicker android:id="@+id/hour_interval"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/label_every"/>
+        <TextView android:id="@+id/label_hour"
+            android:text="@string/hour5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/hour_interval"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/start_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/interval_group"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        >
+        <TextView android:id="@+id/label_start"
+            android:text="@string/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            />
+        <TextView android:id="@+id/start_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_toRightOf="@+id/label_start"
+            android:layout_alignBaseline="@+id/label_start"
+            />
+        <TextView android:id="@+id/label_colon"
+            android:text=":"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/start_hour"
+            android:layout_alignBaseline="@+id/label_start"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            />
+        <TextView android:id="@+id/start_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_toRightOf="@+id/label_colon"
+            android:layout_alignBaseline="@+id/label_start"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/end_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_group"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        >
+        <TextView android:id="@+id/label_end"
+            android:text="@string/end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            />
+        <TextView android:id="@+id/end_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_toRightOf="@+id/label_end"
+            android:layout_alignBaseline="@+id/label_end"
+            />
+        <TextView android:id="@+id/label_colon_end"
+            android:text=":"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/end_hour"
+            android:layout_alignBaseline="@+id/label_end"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            />
+        <TextView android:id="@+id/end_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_toRightOf="@+id/label_colon_end"
+            android:layout_alignBaseline="@+id/label_end"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

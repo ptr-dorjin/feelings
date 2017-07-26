@@ -13,11 +13,8 @@ import org.threeten.bp.format.DateTimeFormatter;
 public interface Repeat {
 
     DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
-
-    /**
-     * @return Type of this repeat.
-     */
-    String getType();
+    DateTimeFormatter HOUR_FORMATTER = DateTimeFormatter.ofPattern("HH");
+    DateTimeFormatter MINUTE_FORMATTER = DateTimeFormatter.ofPattern("mm");
 
     /**
      * @return Next DateTime when alarm should trigger.

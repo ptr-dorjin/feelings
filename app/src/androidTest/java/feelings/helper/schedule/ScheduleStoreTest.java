@@ -13,6 +13,7 @@ import java.util.Collection;
 
 import feelings.helper.repeat.HourlyRepeat;
 
+import static feelings.helper.repeat.RepeatType.HOURLY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -34,7 +35,7 @@ public class ScheduleStoreTest {
     @Test
     public void testCreate() {
         Context context = InstrumentationRegistry.getTargetContext();
-        Schedule schedule = new Schedule(QUESTION_ID, true, REPEAT);
+        Schedule schedule = new Schedule(QUESTION_ID, true, HOURLY, REPEAT);
 
         boolean created = ScheduleStore.saveSchedule(context, schedule);
         assertTrue(created);
@@ -46,11 +47,11 @@ public class ScheduleStoreTest {
     @Test
     public void testUpdate() {
         Context context = InstrumentationRegistry.getTargetContext();
-        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, true, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, true, HOURLY, REPEAT));
         HourlyRepeat updatedRepeat = new HourlyRepeat(2, LocalTime.of(8, 0), LocalTime.of(21, 0));
 
         boolean updated = ScheduleStore.saveSchedule(context,
-                new Schedule(QUESTION_ID, true, updatedRepeat));
+                new Schedule(QUESTION_ID, true, HOURLY, updatedRepeat));
         assertTrue(updated);
 
         Schedule fromDB = ScheduleStore.getSchedule(context, QUESTION_ID);
@@ -61,7 +62,7 @@ public class ScheduleStoreTest {
     @Test
     public void testGetOne() {
         Context context = InstrumentationRegistry.getTargetContext();
-        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, false, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, false, HOURLY, REPEAT));
 
         Schedule fromDB = ScheduleStore.getSchedule(context, QUESTION_ID);
 
@@ -74,9 +75,9 @@ public class ScheduleStoreTest {
     @Test
     public void testGetAll() {
         Context context = InstrumentationRegistry.getTargetContext();
-        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, false, REPEAT));
-        ScheduleStore.saveSchedule(context, new Schedule(2, false, REPEAT));
-        ScheduleStore.saveSchedule(context, new Schedule(3, false, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, false, HOURLY, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(2, false, HOURLY, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(3, false, HOURLY, REPEAT));
 
         Collection<Schedule> allSchedules = ScheduleStore.getAllSchedules(context);
 
@@ -86,7 +87,7 @@ public class ScheduleStoreTest {
     @Test
     public void testSwitchOff() {
         Context context = InstrumentationRegistry.getTargetContext();
-        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, true, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, true, HOURLY, REPEAT));
 
         boolean updated = ScheduleStore.switchOnOff(context, QUESTION_ID, false);
         assertTrue(updated);
@@ -99,7 +100,7 @@ public class ScheduleStoreTest {
     @Test
     public void testSwitchOn() {
         Context context = InstrumentationRegistry.getTargetContext();
-        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, false, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, false, HOURLY, REPEAT));
 
         boolean updated = ScheduleStore.switchOnOff(context, QUESTION_ID, true);
         assertTrue(updated);

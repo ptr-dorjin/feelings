@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import feelings.helper.repeat.RepeatFactory;
+import feelings.helper.repeat.RepeatType;
 
 import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_IS_ON;
 import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_QUESTION_ID;
@@ -28,7 +29,7 @@ public class ScheduleStore {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_QUESTION_ID, schedule.getQuestionId());
         values.put(COLUMN_NAME_IS_ON, schedule.isOn());
-        values.put(COLUMN_NAME_REP_TYPE, schedule.getRepeat().getType());
+        values.put(COLUMN_NAME_REP_TYPE, schedule.getRepeatType().name());
         values.put(COLUMN_NAME_REPEAT, schedule.getRepeat().toDbString());
 
         if (!exists(context, schedule.getQuestionId())) {
@@ -94,9 +95,9 @@ public class ScheduleStore {
 
             if (cursor.moveToFirst()) {
                 boolean isOn = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_IS_ON));
-                String repType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REP_TYPE));
+                RepeatType repType = RepeatType.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REP_TYPE)));
                 String repeat = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REPEAT));
-                return new Schedule(questionId, isOn, RepeatFactory.create(repType, repeat));
+                return new Schedule(questionId, isOn, repType, RepeatFactory.create(repType, repeat));
             } else {
                 return null;
             }
@@ -126,9 +127,9 @@ public class ScheduleStore {
             while (cursor.moveToNext()) {
                 int questionId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_QUESTION_ID));
                 boolean isOn = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_IS_ON));
-                String repType = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REP_TYPE));
+                RepeatType repType = RepeatType.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REP_TYPE)));
                 String repeat = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_REPEAT));
-                list.add(new Schedule(questionId, isOn, RepeatFactory.create(repType, repeat)));
+                list.add(new Schedule(questionId, isOn, repType, RepeatFactory.create(repType, repeat)));
             }
             return list;
         } finally { if (cursor != null) cursor.close(); }

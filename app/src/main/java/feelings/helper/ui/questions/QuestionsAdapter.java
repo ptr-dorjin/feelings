@@ -2,10 +2,12 @@ package feelings.helper.ui.questions;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -29,7 +31,7 @@ import static feelings.helper.ui.questions.QuestionsActivity.QUESTION_ID_PARAM;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.QuestionViewHolder> {
 
-    private Context context;
+    private AppCompatActivity context;
     private List<CardItem> cardItems = new ArrayList<>();
 
     final class QuestionViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +53,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ScheduleActivity.class);
                     intent.putExtra(QUESTION_ID_PARAM, currentItem.getQuestion().getId());
-                    context.startActivity(intent);
+                    // set position as a requestCode. This requestCode will be passed to this activity's onActivityResult
+                    context.startActivityForResult(intent, getAdapterPosition());
                 }
             });
 
@@ -64,27 +67,33 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                 }
             });
 
-            switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (currentItem.getSchedule() == null) {
-                        // go to schedule set up
-                        Intent intent = new Intent(context, ScheduleActivity.class);
-                        intent.putExtra(QUESTION_ID_PARAM, currentItem.getQuestion().getId());
-                        context.startActivity(intent);
-                    } else {
-                        ScheduleStore.switchOnOff(context, currentItem.getQuestion().getId(), isChecked);
-                        ToastUtil.showShortMessage(context.getString(isChecked
-                                ? R.string.msg_repeat_switched_on
-                                : R.string.msg_repeat_switched_off
-                        ), context);
-                    }
-                }
-            });
+            switchOnOff.setOnCheckedChangeListener(listener);
+            switchOnOff.setOnTouchListener(swipeListener);
         }
+
+        private CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!buttonView.isPressed()) {
+                    return;
+                }
+                if (currentItem.getSchedule() == null) {
+                    // go to schedule set up
+                    Intent intent = new Intent(context, ScheduleActivity.class);
+                    intent.putExtra(QUESTION_ID_PARAM, currentItem.getQuestion().getId());
+                    context.startActivity(intent);
+                } else {
+                    ScheduleStore.switchOnOff(context, currentItem.getQuestion().getId(), isChecked);
+                    ToastUtil.showShort(context.getString(isChecked
+                            ? R.string.msg_repeat_switched_on
+                            : R.string.msg_repeat_switched_off
+                    ), context);
+                }
+            }
+        };
     }
 
-    QuestionsAdapter(Context context) {
+    QuestionsAdapter(AppCompatActivity context) {
         this.context = context;
         // The responsibility of this class is also to set question's schedules by values from the DB.
         Collection<Schedule> allSchedules = ScheduleStore.getAllSchedules(context);
@@ -111,21 +120,46 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         return new QuestionViewHolder(view);
     }
 
+    /**
+     * This one is almost never called.
+     */
     @Override
-    public void onBindViewHolder(QuestionViewHolder holder, int i) {
-        CardItem cardItem = cardItems.get(i);
+    public void onBindViewHolder(QuestionViewHolder holder, int position) {
+        bindCardItem(holder, cardItems.get(position));
+    }
+
+    /**
+     * This one is called almost in all cases rather than onBindViewHolder(QuestionViewHolder, int).
+     */
+    @Override
+    public void onBindViewHolder(QuestionViewHolder holder, int position, List<Object> payloads) {
+        if (!payloads.isEmpty()) {
+            // comes from ScheduleActivity on Save button pressed
+            Schedule schedule = (Schedule) payloads.get(0);
+            for (CardItem cardItem : cardItems) {
+                if (cardItem.getQuestion().getId() == schedule.getQuestionId()) {
+                    cardItem.setSchedule(schedule);
+                    bindCardItem(holder, cardItem);
+                    return;
+                }
+            }
+        } else {
+            bindCardItem(holder, cardItems.get(position));
+        }
+    }
+
+    private void bindCardItem(QuestionViewHolder holder, CardItem cardItem) {
         Schedule schedule = cardItem.getSchedule();
         Context context = holder.questionText.getContext();
 
-        holder.currentItem = cardItems.get(i);
+        holder.currentItem = cardItem;
 
         holder.questionText.setText(cardItem.getQuestion().getText());
-        holder.repeat.setText(getRepeat(schedule, context));
-        holder.switchOnOff.setEnabled(schedule != null);
+        holder.repeat.setText(getHumanReadableRepeat(schedule, context));
         holder.switchOnOff.setChecked(schedule != null && schedule.isOn());
     }
 
-    private CharSequence getRepeat(Schedule schedule, Context context) {
+    private CharSequence getHumanReadableRepeat(Schedule schedule, Context context) {
         String text = schedule != null
                 ? schedule.getRepeat().toHumanReadableString(context)
                 : context.getString(R.string.card_configure);
@@ -138,4 +172,13 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
     public int getItemCount() {
         return cardItems.size();
     }
+
+    private static final View.OnTouchListener swipeListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            // need this listener to support swipe on the Switch
+            return event.getActionMasked() == MotionEvent.ACTION_MOVE;
+        }
+    };
+
 }

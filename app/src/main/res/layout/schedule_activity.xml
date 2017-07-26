@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    >
 
-    <TextView
-        android:id="@+id/question_text_on_schedule"
+    <TextView android:id="@+id/question_text_on_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textSize="25sp"
-        >
-    </TextView>
+        android:textSize="20sp"
+        />
 
-    <Spinner
-        android:id="@+id/repeat_type_spinner"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        >
+        <TextView android:id="@+id/label_on_off"
+            android:text="@string/on_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            />
+        <Switch android:id="@+id/switchOnOff_on_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/label_on_off"
+            />
+    </RelativeLayout>
+
+    <Spinner android:id="@+id/repeat_type_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:entries="@array/repeat_type_array"
+        android:layout_marginTop="16dp"
+        android:padding="0dp"
         />
 
-    <FrameLayout
+    <ScrollView android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_container"
         />
 
-</LinearLayout>
+</android.support.v7.widget.LinearLayoutCompat>

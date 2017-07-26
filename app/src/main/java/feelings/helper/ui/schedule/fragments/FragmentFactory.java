@@ -1,29 +1,39 @@
 package feelings.helper.ui.schedule.fragments;
 
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
+
+import feelings.helper.repeat.RepeatType;
+import feelings.helper.schedule.Schedule;
+import feelings.helper.ui.schedule.ScheduleActivity;
 
 public class FragmentFactory {
-    static final String HOURLY_TAG = "hourly_fragment";
-    static final String DAILY_TAG = "daily_fragment";
-    static final String WEEKLY_TAG = "weekly_fragment";
-    static final String WEEKLY_CUSTOM_TAG = "weekly_custom_fragment";
-
-    private static final String[] arr = new String[] {
-        HOURLY_TAG, DAILY_TAG, WEEKLY_TAG, WEEKLY_CUSTOM_TAG
-    };
-
     public static String getTag(int position) {
-        return arr[position];
+        return RepeatType.values()[position].name();
     }
 
-    public static Fragment create(int position) {
+    public static AbstractFragment create(int position, Schedule schedule) {
         // order must be as in R.arrays.repeat_type_array
+        AbstractFragment fragment;
         switch (position) {
-            case 0: return new HourlyFragment();
-            case 1: return new DailyFragment();
-            case 2: return new WeeklyFragment();
-            case 3: return new WeeklyCustomFragment();
+            case 0:
+                fragment = new HourlyFragment();
+                break;
+            case 1:
+                fragment = new DailyFragment();
+                break;
+            case 2:
+                fragment = new WeeklyFragment();
+                break;
+            case 3:
+                fragment = new WeeklyCustomFragment();
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected position: " + position);
         }
-        throw new RuntimeException("Unexpected position=" + position);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ScheduleActivity.SCHEDULE_PARCEL_KEY, schedule);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 }

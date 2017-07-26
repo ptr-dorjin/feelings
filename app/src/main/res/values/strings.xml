@@ -34,12 +34,21 @@
     
     <string name="msg_repeat_switched_on">Повтор включен</string>
     <string name="msg_repeat_switched_off">Повтор выключен</string>
-    
+    <string name="msg_schedule_saved_success">Параметры сохранены</string>
+    <string name="msg_schedule_saved_error">Ошибка при сохранении</string>
+
     <string-array name="repeat_type_array">
         <item>Каждые N часов</item>
         <item>Каждый день</item>
         <item>Раз в неделю</item>
         <item>По дням недели</item>
     </string-array>
+
+    <string name="on_off">Включить нотификации</string>
+    <string name="start">с</string>
+    <string name="end">по</string>
+    <string name="at">в</string>
+
+    <string name="btn_save">Сохранить</string>
 
 </resources>

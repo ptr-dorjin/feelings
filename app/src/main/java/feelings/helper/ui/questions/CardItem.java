@@ -33,4 +33,8 @@ class CardItem {
     Schedule getSchedule() {
         return schedule;
     }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
 }

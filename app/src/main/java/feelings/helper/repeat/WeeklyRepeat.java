@@ -11,8 +11,6 @@ import feelings.helper.util.DateTimeUtil;
 import feelings.helper.util.TextUtil;
 
 public class WeeklyRepeat extends AbstractRepeat {
-    static final String WEEKLY = "w";
-
     /**
      * Day of week: from 1 to 7
      */
@@ -53,11 +51,6 @@ public class WeeklyRepeat extends AbstractRepeat {
     }
 
     @Override
-    public String getType() {
-        return WEEKLY;
-    }
-
-    @Override
     public LocalDateTime getNextTime() {
         LocalDateTime now = LocalDateTime.now(clock);
         DayOfWeek dayOfWeekNow = now.getDayOfWeek();
@@ -77,5 +70,13 @@ public class WeeklyRepeat extends AbstractRepeat {
                     : 7 - dayOfWeekNow.getValue() + dayOfWeek.getValue();
             return todayAt(time).plusDays(daysDiff);
         }
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public LocalTime getTime() {
+        return time;
     }
 }

@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import feelings.helper.R;
-
-import static feelings.helper.ui.schedule.fragments.FragmentFactory.DAILY_TAG;
+import feelings.helper.repeat.RepeatType;
 
 public class DailyFragment extends AbstractFragment {
 
     @Override
-    String getFragmentTag() {
-        return DAILY_TAG;
+    public String getFragmentTag() {
+        return RepeatType.DAILY.name();
     }
 
     @Override

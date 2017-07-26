@@ -1,30 +1,43 @@
 package feelings.helper.ui.schedule;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import feelings.helper.R;
 import feelings.helper.questions.QuestionService;
 import feelings.helper.repeat.HourlyRepeat;
+import feelings.helper.repeat.RepeatType;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleStore;
+import feelings.helper.ui.schedule.fragments.AbstractFragment;
+import feelings.helper.util.ToastUtil;
 
 import static feelings.helper.ui.questions.QuestionsActivity.QUESTION_ID_PARAM;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.create;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getTag;
 import static org.threeten.bp.LocalTime.of;
 
-public class ScheduleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ScheduleActivity extends AppCompatActivity {
+    public static final String SCHEDULE_PARCEL_KEY = "schedule-parcel";
+
     private Schedule schedule;
+    private Spinner repeatTypeSpinner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,38 +49,97 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         TextView questionView = (TextView) findViewById(R.id.question_text_on_schedule);
         questionView.setText(QuestionService.getQuestionText(this, questionId));
 
-        schedule = ScheduleStore.getSchedule(this, questionId);
+        schedule = ScheduleStore.getSchedule(this, questionId); //can be null
         if (schedule == null) {
             // no schedule in the DB => create it
-            schedule = new Schedule(questionId, true, new HourlyRepeat(1, of(8, 0), of(20, 0)));
+            schedule = new Schedule(questionId, true, RepeatType.HOURLY, new HourlyRepeat(1, of(8, 0), of(20, 0)));
         }
+        setUpSwitchOnOff();
         setUpRepeatTypeSpinner();
     }
 
-    private void setUpRepeatTypeSpinner() {
-        Spinner spinner = (Spinner) findViewById(R.id.repeat_type_spinner);
-        spinner.setOnItemSelectedListener(this);
+    private void setUpSwitchOnOff() {
+        Switch switchOnOff = (Switch) findViewById(R.id.switchOnOff_on_schedule);
+        switchOnOff.setChecked(schedule.isOn());
+        switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                schedule.setOn(isChecked);
+                repeatTypeSpinner.setEnabled(isChecked);
+                disableEnableControls(isChecked, (ViewGroup) findViewById(R.id.fragment_container));
+            }
+        });
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        FragmentManager fManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fManager.beginTransaction();
-
-        Fragment fragment = fManager.findFragmentByTag(getTag(pos));
-        if (fragment == null) {
-            fragment = create(pos);
+    private void disableEnableControls(boolean enable, ViewGroup vg) {
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            View child = vg.getChildAt(i);
+            child.setEnabled(enable);
+            if (child instanceof ViewGroup) {
+                disableEnableControls(enable, (ViewGroup) child);
+            }
         }
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    }
+
+    private void setUpRepeatTypeSpinner() {
+        repeatTypeSpinner = (Spinner) findViewById(R.id.repeat_type_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.repeat_type_array, R.layout.repeat_type_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        repeatTypeSpinner.setAdapter(adapter);
+        repeatTypeSpinner.setOnItemSelectedListener(repeatTypeChangeListener);
+    }
+
+    private AdapterView.OnItemSelectedListener repeatTypeChangeListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            FragmentManager fManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fManager.beginTransaction();
+
+            Fragment fragment = fManager.findFragmentByTag(getTag(pos));
+            if (fragment == null) {
+                AbstractFragment newFragment = create(pos, schedule);
+                transaction.replace(R.id.fragment_container, newFragment, newFragment.getFragmentTag());
+            } else {
+                transaction.replace(R.id.fragment_container, fragment);
+            }
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            //transaction.addToBackStack(null);
+            transaction.commit();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.save, menu);
+        return true;
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) { }
-
-    public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
-    }}
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Save button is pressed
+        if (item.getItemId() == R.id.save) {
+            boolean saved = ScheduleStore.saveSchedule(this, schedule);
+            //todo also need to start alarm if schedule.isOn. Either here or somewhere else
+            if (saved) {
+                // show message
+                ToastUtil.showShort(getString(R.string.msg_schedule_saved_success), this);
+                // and send result to parent activity to refresh updated item on UI
+                Intent data = new Intent();
+                data.putExtra(SCHEDULE_PARCEL_KEY, schedule);
+                setResult(RESULT_OK, data);
+                finish();
+            } else {
+                ToastUtil.showLong(getString(R.string.msg_schedule_saved_error), this);
+            }
+            return saved;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+}

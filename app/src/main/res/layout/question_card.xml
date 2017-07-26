@@ -3,20 +3,22 @@
     android:id="@+id/question_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:layout_margin="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        >
 
         <TextView android:id="@+id/question_text_on_card"
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             />
 
@@ -34,10 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/label_answer"
-            android:layout_toEndOf="@+id/label_answer"
             android:layout_alignBottom="@id/label_answer"
             android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
             />
 
         <TextView android:id="@+id/label_or"
@@ -45,10 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/link_to_answer_now"
-            android:layout_toEndOf="@+id/link_to_answer_now"
             android:layout_alignBottom="@+id/link_to_answer_now"
             android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
             />
 
         <TextView android:id="@+id/setup_repeat"
@@ -56,12 +54,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/label_answer"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/switchOnOff"
             />
 
         <Switch android:id="@+id/switchOnOff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             />

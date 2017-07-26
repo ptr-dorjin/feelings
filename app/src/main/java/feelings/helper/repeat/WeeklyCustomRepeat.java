@@ -16,8 +16,6 @@ import feelings.helper.util.TextUtil;
 import static feelings.helper.util.DateTimeUtil.getDayOfWeekAsText;
 
 public class WeeklyCustomRepeat extends AbstractRepeat {
-    static final String WEEKLY_CUSTOM = "wc";
-
     /**
      * Set of days of week
      */
@@ -70,11 +68,6 @@ public class WeeklyCustomRepeat extends AbstractRepeat {
     }
 
     @Override
-    public String getType() {
-        return WEEKLY_CUSTOM;
-    }
-
-    @Override
     public LocalDateTime getNextTime() {
         LocalDateTime now = LocalDateTime.now(clock);
         DayOfWeek dayOfWeekNow = now.getDayOfWeek();
@@ -110,5 +103,13 @@ public class WeeklyCustomRepeat extends AbstractRepeat {
             // have future day appointed within this week
             return todayAt(time).with(nextDayOnThisWeek);
         }
+    }
+
+    public TreeSet<DayOfWeek> getDaysOfWeek() {
+        return daysOfWeek;
+    }
+
+    public LocalTime getTime() {
+        return time;
     }
 }

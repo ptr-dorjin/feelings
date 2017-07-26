@@ -12,8 +12,6 @@ import feelings.helper.R;
 import feelings.helper.util.TextUtil;
 
 public class DailyRepeat extends AbstractRepeat {
-    static final String DAILY = "d";
-
     /**
      * Set of times in each day
      */
@@ -57,11 +55,6 @@ public class DailyRepeat extends AbstractRepeat {
     }
 
     @Override
-    public String getType() {
-        return DAILY;
-    }
-
-    @Override
     public LocalDateTime getNextTime() {
         if (times.isEmpty()) {
             throw new RuntimeException("Times should not be empty.");
@@ -83,5 +76,9 @@ public class DailyRepeat extends AbstractRepeat {
         }
 
         return todayAt(iter);
+    }
+
+    public TreeSet<LocalTime> getTimes() {
+        return times;
     }
 }

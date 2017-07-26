@@ -12,22 +12,20 @@ import feelings.helper.R;
 import feelings.helper.util.TextUtil;
 
 public class HourlyRepeat extends AbstractRepeat {
-    static final String HOURLY = "h";
-
     /**
      * Interval in hours
      */
-    private final int interval;
+    private int interval;
 
     /**
      * Starting time of day
      */
-    private final LocalTime start;
+    private LocalTime start;
 
     /**
      * Ending time of day
      */
-    private final LocalTime end;
+    private LocalTime end;
 
     public HourlyRepeat(int interval, LocalTime start, LocalTime end) {
         this.interval = interval;
@@ -65,11 +63,6 @@ public class HourlyRepeat extends AbstractRepeat {
                         context.getString(R.string.hour2),
                         context.getString(R.string.hour5)),
                 start.format(TIME_FORMATTER), end.format(TIME_FORMATTER));
-    }
-
-    @Override
-    public String getType() {
-        return HOURLY;
     }
 
     @Override
@@ -136,5 +129,29 @@ public class HourlyRepeat extends AbstractRepeat {
         }
 
         return iter;
+    }
+
+    public int getInterval() {
+        return interval;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
+    public LocalTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalTime start) {
+        this.start = start;
+    }
+
+    public LocalTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalTime end) {
+        this.end = end;
     }
 }
