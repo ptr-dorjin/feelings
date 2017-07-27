@@ -78,7 +78,9 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                     return;
                 }
                 if (currentItem.getSchedule() == null) {
-                    // go to schedule set up
+                    // do not set value
+                    switchOnOff.setChecked(!isChecked);
+                    // and go to schedule set up
                     Intent intent = new Intent(context, ScheduleActivity.class);
                     intent.putExtra(QUESTION_ID_PARAM, currentItem.getQuestion().getId());
                     context.startActivity(intent);
