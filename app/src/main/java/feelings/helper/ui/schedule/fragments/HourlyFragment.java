@@ -13,13 +13,14 @@ import org.threeten.bp.LocalTime;
 
 import feelings.helper.R;
 import feelings.helper.repeat.HourlyRepeat;
+import feelings.helper.repeat.Repeat;
 import feelings.helper.repeat.RepeatType;
-import feelings.helper.ui.schedule.ScheduleActivity;
+import feelings.helper.ui.UiUtil;
 import feelings.helper.util.TextUtil;
-import feelings.helper.util.ToastUtil;
 
 import static feelings.helper.repeat.Repeat.HOUR_FORMATTER;
 import static feelings.helper.repeat.Repeat.MINUTE_FORMATTER;
+import static org.threeten.bp.LocalTime.of;
 
 public class HourlyFragment extends AbstractFragment {
 
@@ -40,12 +41,10 @@ public class HourlyFragment extends AbstractFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        schedule = getArguments().getParcelable(ScheduleActivity.SCHEDULE_PARCEL_KEY);
-        if (schedule == null) {
-            ToastUtil.showLong("Schedule is null!", getContext());
+        if (!initSchedule()) {
             return null;
         }
-        repeat = (HourlyRepeat) schedule.getRepeat();
+        initRepeat();
 
         fragmentRoot = inflater.inflate(R.layout.fragment_hourly_repeat, container, false);
         labelEvery = (TextView) fragmentRoot.findViewById(R.id.label_every);
@@ -59,7 +58,17 @@ public class HourlyFragment extends AbstractFragment {
         setUpHourIntervalPicker();
         setUpStartTime();
         setUpEndTime();
+        UiUtil.disableEnableControls(schedule.isOn(), fragmentRoot);
         return fragmentRoot;
+    }
+
+    private void initRepeat() {
+        Repeat repeat = schedule.getRepeat();
+        if (!(repeat instanceof HourlyRepeat)) {
+            repeat = new HourlyRepeat(1, of(8, 0), of(20, 0));
+        }
+        this.repeat = (HourlyRepeat) repeat;
+        schedule.setRepeat(repeat);
     }
 
     private void setUpHourIntervalPicker() {

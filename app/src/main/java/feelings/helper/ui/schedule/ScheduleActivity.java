@@ -3,7 +3,6 @@ package feelings.helper.ui.schedule;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -21,15 +19,19 @@ import android.widget.TextView;
 
 import feelings.helper.R;
 import feelings.helper.questions.QuestionService;
+import feelings.helper.repeat.DailyRepeat;
 import feelings.helper.repeat.HourlyRepeat;
 import feelings.helper.repeat.RepeatType;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleStore;
+import feelings.helper.ui.UiUtil;
 import feelings.helper.ui.schedule.fragments.AbstractFragment;
 import feelings.helper.util.ToastUtil;
 
 import static feelings.helper.ui.questions.QuestionsActivity.QUESTION_ID_PARAM;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.create;
+import static feelings.helper.ui.schedule.fragments.FragmentFactory.fromPosition;
+import static feelings.helper.ui.schedule.fragments.FragmentFactory.getPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getTag;
 import static org.threeten.bp.LocalTime.of;
 
@@ -38,6 +40,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private Schedule schedule;
     private Spinner repeatTypeSpinner;
+    private AbstractFragment currentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class ScheduleActivity extends AppCompatActivity {
             // no schedule in the DB => create it
             schedule = new Schedule(questionId, true, RepeatType.HOURLY, new HourlyRepeat(1, of(8, 0), of(20, 0)));
         }
+
         setUpSwitchOnOff();
         setUpRepeatTypeSpinner();
     }
@@ -66,19 +70,14 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 schedule.setOn(isChecked);
                 repeatTypeSpinner.setEnabled(isChecked);
-                disableEnableControls(isChecked, (ViewGroup) findViewById(R.id.fragment_container));
+                // this should disable almost all children
+                UiUtil.disableEnableControls(isChecked, findViewById(R.id.fragment_container));
+                // specific actions
+                if (currentFragment != null) {
+                    currentFragment.onSwitchOnOffChanged(isChecked);
+                }
             }
         });
-    }
-
-    private void disableEnableControls(boolean enable, ViewGroup vg) {
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            View child = vg.getChildAt(i);
-            child.setEnabled(enable);
-            if (child instanceof ViewGroup) {
-                disableEnableControls(enable, (ViewGroup) child);
-            }
-        }
     }
 
     private void setUpRepeatTypeSpinner() {
@@ -88,6 +87,8 @@ public class ScheduleActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         repeatTypeSpinner.setAdapter(adapter);
         repeatTypeSpinner.setOnItemSelectedListener(repeatTypeChangeListener);
+        repeatTypeSpinner.setSelection(getPosition(schedule.getRepeatType()));
+        repeatTypeSpinner.setEnabled(schedule.isOn());
     }
 
     private AdapterView.OnItemSelectedListener repeatTypeChangeListener = new AdapterView.OnItemSelectedListener() {
@@ -96,15 +97,16 @@ public class ScheduleActivity extends AppCompatActivity {
             FragmentManager fManager = getSupportFragmentManager();
             FragmentTransaction transaction = fManager.beginTransaction();
 
-            Fragment fragment = fManager.findFragmentByTag(getTag(pos));
-            if (fragment == null) {
-                AbstractFragment newFragment = create(pos, schedule);
-                transaction.replace(R.id.fragment_container, newFragment, newFragment.getFragmentTag());
+            currentFragment = (AbstractFragment) fManager.findFragmentByTag(getTag(pos));
+            if (currentFragment == null) {
+                currentFragment = create(pos, schedule);
+                transaction.replace(R.id.fragment_container, currentFragment, currentFragment.getFragmentTag());
             } else {
-                transaction.replace(R.id.fragment_container, fragment);
+                transaction.replace(R.id.fragment_container, currentFragment);
             }
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             //transaction.addToBackStack(null);
+            schedule.setRepeatType(fromPosition(pos));
             transaction.commit();
         }
 
@@ -124,6 +126,9 @@ public class ScheduleActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Save button is pressed
         if (item.getItemId() == R.id.save) {
+            if (isInvalid()) {
+                return false;
+            }
             boolean saved = ScheduleStore.saveSchedule(this, schedule);
             //todo also need to start alarm if schedule.isOn. Either here or somewhere else
             if (saved) {
@@ -141,5 +146,19 @@ public class ScheduleActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Validation
+     */
+    private boolean isInvalid() {
+        if (schedule.getRepeatType() == RepeatType.DAILY) {
+            DailyRepeat dailyRepeat = (DailyRepeat) schedule.getRepeat();
+            if (dailyRepeat.getTimes().isEmpty()) {
+                ToastUtil.showLong(getString(R.string.msg_daily_repeat_empty), this);
+                return true;
+            }
+        }
+        return false;
     }
 }

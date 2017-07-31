@@ -104,16 +104,6 @@ public class ScheduleStore {
         } finally { if (cursor != null) cursor.close(); }
     }
 
-    // for use in tests
-    static int delete(Context context, int questionId) {
-        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
-
-        String selection = COLUMN_NAME_QUESTION_ID + " = ?";
-        String[] selectionArgs = {String.valueOf(questionId)};
-
-        return db.delete(TABLE_NAME, selection, selectionArgs);
-    }
-
     public static Collection<Schedule> getAllSchedules(Context context) {
         SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
 
@@ -133,5 +123,20 @@ public class ScheduleStore {
             }
             return list;
         } finally { if (cursor != null) cursor.close(); }
+    }
+
+    // for use in tests
+    static int delete(Context context, int questionId) {
+        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
+
+        String selection = COLUMN_NAME_QUESTION_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(questionId)};
+
+        return db.delete(TABLE_NAME, selection, selectionArgs);
+    }
+
+    static int deleteAll(Context context) {
+        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
+        return db.delete(TABLE_NAME, null, null);
     }
 }

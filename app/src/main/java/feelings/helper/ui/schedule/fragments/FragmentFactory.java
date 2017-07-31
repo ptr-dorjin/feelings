@@ -36,4 +36,20 @@ public class FragmentFactory {
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    /**
+     * Intended to determine RepeatType by selected position in repeatTypeSpinner.
+     * Assumes that order of the values in the spinner is the same as in RepeatType enum.
+     */
+    public static RepeatType fromPosition(int position) {
+        return RepeatType.values()[position];
+    }
+
+    /**
+     * Intended to set selection to repeatTypeSpinner.
+     * Assumes that order of the values in the spinner is the same as in RepeatType enum.
+     */
+    public static int getPosition(RepeatType repeatType) {
+        return repeatType.ordinal();
+    }
 }

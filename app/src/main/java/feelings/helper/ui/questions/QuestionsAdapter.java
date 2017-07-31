@@ -122,17 +122,11 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         return new QuestionViewHolder(view);
     }
 
-    /**
-     * This one is almost never called.
-     */
     @Override
     public void onBindViewHolder(QuestionViewHolder holder, int position) {
         bindCardItem(holder, cardItems.get(position));
     }
 
-    /**
-     * This one is called almost in all cases rather than onBindViewHolder(QuestionViewHolder, int).
-     */
     @Override
     public void onBindViewHolder(QuestionViewHolder holder, int position, List<Object> payloads) {
         if (!payloads.isEmpty()) {
@@ -146,7 +140,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                 }
             }
         } else {
-            bindCardItem(holder, cardItems.get(position));
+            onBindViewHolder(holder, position);
         }
     }
 

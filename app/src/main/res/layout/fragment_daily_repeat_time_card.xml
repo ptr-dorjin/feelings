@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/question_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    >
+
+    <TextView android:id="@+id/label_at"
+        android:text="@string/at"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBaseline="@+id/daily_time_hour"
+        android:layout_marginRight="8dp"
+        />
+    <TextView android:id="@+id/daily_time_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_toRightOf="@+id/label_at"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        />
+    <TextView android:id="@+id/label_colon"
+        android:text=":"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/daily_time_hour"
+        android:layout_alignBaseline="@+id/daily_time_hour"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        />
+    <TextView android:id="@+id/daily_time_minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_toRightOf="@+id/label_colon"
+        android:layout_alignBaseline="@+id/daily_time_hour"
+        />
+
+    <ImageView android:id="@+id/daily_time_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_delete"
+        />
+
+</RelativeLayout>

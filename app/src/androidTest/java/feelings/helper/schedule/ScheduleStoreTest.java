@@ -5,6 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.threeten.bp.LocalTime;
@@ -22,14 +23,21 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class ScheduleStoreTest {
     private static final HourlyRepeat REPEAT = new HourlyRepeat(2, LocalTime.of(8, 0), LocalTime.of(20, 0));
-    private static final int QUESTION_ID = 1;
+    private static final int QUESTION_ID = 100;
+    private static final int QUESTION_ID_2 = 101;
+    private static final int QUESTION_ID_3 = 102;
+
+    @BeforeClass
+    public static void beforeClass() {
+        ScheduleStore.deleteAll(InstrumentationRegistry.getTargetContext());
+    }
 
     @After
     public void tearDown() {
         Context context = InstrumentationRegistry.getTargetContext();
         ScheduleStore.delete(context, QUESTION_ID);
-        ScheduleStore.delete(context, 2);
-        ScheduleStore.delete(context, 3);
+        ScheduleStore.delete(context, QUESTION_ID_2);
+        ScheduleStore.delete(context, QUESTION_ID_3);
     }
 
     @Test
@@ -76,8 +84,8 @@ public class ScheduleStoreTest {
     public void testGetAll() {
         Context context = InstrumentationRegistry.getTargetContext();
         ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID, false, HOURLY, REPEAT));
-        ScheduleStore.saveSchedule(context, new Schedule(2, false, HOURLY, REPEAT));
-        ScheduleStore.saveSchedule(context, new Schedule(3, false, HOURLY, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID_2, false, HOURLY, REPEAT));
+        ScheduleStore.saveSchedule(context, new Schedule(QUESTION_ID_3, false, HOURLY, REPEAT));
 
         Collection<Schedule> allSchedules = ScheduleStore.getAllSchedules(context);
 
