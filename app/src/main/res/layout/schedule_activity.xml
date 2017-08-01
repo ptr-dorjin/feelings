@@ -19,6 +19,7 @@
         >
         <TextView android:id="@+id/label_on_off"
             android:text="@string/on_off"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -31,8 +32,8 @@
             />
     </RelativeLayout>
 
-    <Spinner android:id="@+id/repeat_type_spinner"
-        android:layout_width="fill_parent"
+    <android.support.v7.widget.AppCompatSpinner android:id="@+id/repeat_type_spinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:padding="0dp"

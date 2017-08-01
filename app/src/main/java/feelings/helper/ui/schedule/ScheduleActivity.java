@@ -83,8 +83,8 @@ public class ScheduleActivity extends AppCompatActivity {
     private void setUpRepeatTypeSpinner() {
         repeatTypeSpinner = (Spinner) findViewById(R.id.repeat_type_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.repeat_type_array, R.layout.repeat_type_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.repeat_type_array, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         repeatTypeSpinner.setAdapter(adapter);
         repeatTypeSpinner.setOnItemSelectedListener(repeatTypeChangeListener);
         repeatTypeSpinner.setSelection(getPosition(schedule.getRepeatType()));

@@ -1,15 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     >
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Weekly repeat"
-        android:textSize="30sp"
-        />
-</android.support.v7.widget.LinearLayoutCompat>
+        android:layout_height="wrap_content">
+
+        <RelativeLayout android:id="@+id/weekly_day_of_week_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            >
+
+            <TextView android:id="@+id/label_at_weekly_day"
+                android:text="@string/at"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBaseline="@+id/day_of_week_spinner"
+                android:layout_marginRight="8dp"
+                />
+            <android.support.v7.widget.AppCompatSpinner android:id="@+id/day_of_week_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/label_at_weekly_day"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout android:id="@+id/weekly_time_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/weekly_day_of_week_group"
+            android:layout_marginTop="8dp"
+            >
+
+            <TextView android:id="@+id/label_at_weekly_time"
+                android:text="@string/at"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBaseline="@+id/weekly_time_hour"
+                android:layout_marginRight="8dp"
+                />
+            <TextView android:id="@+id/weekly_time_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_toRightOf="@+id/label_at_weekly_time"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                />
+            <TextView android:id="@+id/label_colon"
+                android:text=":"
+                android:textSize="25sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/weekly_time_hour"
+                android:layout_alignBaseline="@+id/weekly_time_hour"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                />
+            <TextView android:id="@+id/weekly_time_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_toRightOf="@+id/label_colon"
+                android:layout_alignBaseline="@+id/weekly_time_hour"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

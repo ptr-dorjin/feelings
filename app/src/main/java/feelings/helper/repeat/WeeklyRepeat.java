@@ -14,12 +14,12 @@ public class WeeklyRepeat extends AbstractRepeat {
     /**
      * Day of week: from 1 to 7
      */
-    private final DayOfWeek dayOfWeek;
+    private DayOfWeek dayOfWeek;
 
     /**
      * Time of the day of week
      */
-    private final LocalTime time;
+    private LocalTime time;
 
     public WeeklyRepeat(DayOfWeek dayOfWeek, LocalTime time) {
         this.dayOfWeek = dayOfWeek;
@@ -76,7 +76,15 @@ public class WeeklyRepeat extends AbstractRepeat {
         return dayOfWeek;
     }
 
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
     public LocalTime getTime() {
         return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }

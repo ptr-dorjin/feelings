@@ -66,9 +66,9 @@ public class HourlyFragment extends AbstractFragment {
         Repeat repeat = schedule.getRepeat();
         if (!(repeat instanceof HourlyRepeat)) {
             repeat = new HourlyRepeat(1, of(8, 0), of(20, 0));
+            schedule.setRepeat(repeat);
         }
         this.repeat = (HourlyRepeat) repeat;
-        schedule.setRepeat(repeat);
     }
 
     private void setUpHourIntervalPicker() {
@@ -104,7 +104,14 @@ public class HourlyFragment extends AbstractFragment {
         startGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(getContext(), startTimeListener,
+                new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hour, int minute) {
+                                repeat.setStart(LocalTime.of(hour, minute));
+                                updateStartTime();
+                            }
+                        },
                         repeat.getStart().getHour(), repeat.getStart().getMinute(), true)
                         .show();
             }
@@ -117,28 +124,19 @@ public class HourlyFragment extends AbstractFragment {
         endGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(getContext(), endTimeListener,
+                new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hour, int minute) {
+                                repeat.setEnd(LocalTime.of(hour, minute));
+                                updateEndTime();
+                            }
+                        },
                         repeat.getEnd().getHour(), repeat.getEnd().getMinute(), true)
                         .show();
             }
         });
     }
-
-    private TimePickerDialog.OnTimeSetListener startTimeListener = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hour, int minute) {
-            repeat.setStart(LocalTime.of(hour, minute));
-            updateStartTime();
-        }
-    };
-
-    private TimePickerDialog.OnTimeSetListener endTimeListener = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hour, int minute) {
-            repeat.setEnd(LocalTime.of(hour, minute));
-            updateEndTime();
-        }
-    };
 
     private void updateStartTime() {
         startHour.setText(repeat.getStart().format(HOUR_FORMATTER));

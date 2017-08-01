@@ -52,9 +52,9 @@ public class DailyFragment extends AbstractFragment {
         Repeat repeat = schedule.getRepeat();
         if (!(repeat instanceof DailyRepeat)) {
             repeat = new DailyRepeat(new TreeSet<LocalTime>());
+            schedule.setRepeat(repeat);
         }
         this.repeat = (DailyRepeat) repeat;
-        schedule.setRepeat(repeat);
     }
 
     private void setUpTimesList() {

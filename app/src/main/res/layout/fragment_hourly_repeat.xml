@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:gravity="center"
             >
             <TextView android:id="@+id/label_every"
                 android:text="@string/every5"
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/interval_group"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             >
             <TextView android:id="@+id/label_start"
                 android:text="@string/start"
@@ -77,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/start_group"
             android:layout_marginTop="16dp"
+            android:gravity="center"
             >
             <TextView android:id="@+id/label_end"
                 android:text="@string/end"
