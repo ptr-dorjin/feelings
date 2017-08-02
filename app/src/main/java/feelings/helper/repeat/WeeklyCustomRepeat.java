@@ -24,7 +24,7 @@ public class WeeklyCustomRepeat extends AbstractRepeat {
     /**
      * Time of the days of week
      */
-    private final LocalTime time;
+    private LocalTime time;
 
     public WeeklyCustomRepeat(TreeSet<DayOfWeek> daysOfWeek, LocalTime time) {
         this.daysOfWeek = daysOfWeek;
@@ -111,5 +111,9 @@ public class WeeklyCustomRepeat extends AbstractRepeat {
 
     public LocalTime getTime() {
         return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }
