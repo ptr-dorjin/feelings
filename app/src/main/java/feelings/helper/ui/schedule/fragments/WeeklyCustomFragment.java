@@ -21,6 +21,7 @@ import feelings.helper.R;
 import feelings.helper.repeat.Repeat;
 import feelings.helper.repeat.RepeatType;
 import feelings.helper.repeat.WeeklyCustomRepeat;
+import feelings.helper.ui.UiUtil;
 import feelings.helper.util.DateTimeUtil;
 
 import static feelings.helper.repeat.Repeat.HOUR_FORMATTER;
@@ -66,6 +67,8 @@ public class WeeklyCustomFragment extends AbstractFragment {
 
         setUpDaysOfWeek();
         setUpTime();
+
+        UiUtil.disableEnableControls(schedule.isOn(), fragmentRoot);
         return fragmentRoot;
     }
 

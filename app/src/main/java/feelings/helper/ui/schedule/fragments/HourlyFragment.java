@@ -58,6 +58,7 @@ public class HourlyFragment extends AbstractFragment {
         setUpHourIntervalPicker();
         setUpStartTime();
         setUpEndTime();
+
         UiUtil.disableEnableControls(schedule.isOn(), fragmentRoot);
         return fragmentRoot;
     }

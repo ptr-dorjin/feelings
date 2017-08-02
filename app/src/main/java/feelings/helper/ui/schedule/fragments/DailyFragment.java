@@ -20,6 +20,7 @@ import feelings.helper.R;
 import feelings.helper.repeat.DailyRepeat;
 import feelings.helper.repeat.Repeat;
 import feelings.helper.repeat.RepeatType;
+import feelings.helper.ui.UiUtil;
 
 public class DailyFragment extends AbstractFragment {
 
@@ -45,6 +46,8 @@ public class DailyFragment extends AbstractFragment {
         setUpTimesList();
         setUpFab();
         updateFabColor(schedule.isOn());
+
+        UiUtil.disableEnableControls(schedule.isOn(), fragmentRoot);
         return fragmentRoot;
     }
 
