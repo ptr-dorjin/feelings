@@ -1,1 +1,0 @@
-1. Controls are still clickable despite switchOnOff is off.
