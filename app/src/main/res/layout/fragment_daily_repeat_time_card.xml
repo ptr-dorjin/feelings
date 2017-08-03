@@ -40,7 +40,8 @@
         android:layout_alignBaseline="@+id/daily_time_hour"
         />
 
-    <ImageView android:id="@+id/daily_time_delete"
+    <ImageView
+        android:id="@+id/daily_time_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

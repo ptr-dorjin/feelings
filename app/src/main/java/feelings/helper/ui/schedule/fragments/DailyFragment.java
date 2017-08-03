@@ -105,7 +105,7 @@ public class DailyFragment extends AbstractFragment {
     }
 
     private void updateFabColor(boolean isOn) {
-        int color = isOn ? R.color.colorAccent : R.color.colorGrey;
+        int color = isOn ? R.color.colorAccent : R.color.colorDisabled;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             color = getResources().getColor(color, null);
         } else {
