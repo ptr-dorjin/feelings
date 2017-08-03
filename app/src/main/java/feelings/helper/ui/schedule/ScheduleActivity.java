@@ -24,6 +24,7 @@ import feelings.helper.repeat.HourlyRepeat;
 import feelings.helper.repeat.RepeatType;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleStore;
+import feelings.helper.ui.UiUtil;
 import feelings.helper.ui.schedule.fragments.AbstractFragment;
 import feelings.helper.util.ToastUtil;
 
@@ -69,6 +70,8 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 schedule.setOn(isChecked);
                 repeatTypeSpinner.setEnabled(isChecked);
+                // this should disable almost all children
+                UiUtil.disableEnableControls(isChecked, findViewById(R.id.fragment_container));
                 // specific actions
                 if (currentFragment != null) {
                     currentFragment.onSwitchOnOffChanged(isChecked);

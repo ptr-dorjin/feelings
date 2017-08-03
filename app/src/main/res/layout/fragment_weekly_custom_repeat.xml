@@ -4,82 +4,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        >
 
-        <RelativeLayout android:id="@+id/weekly_custom_days_of_week_group_1"
+        <RelativeLayout
+            android:id="@+id/weekly_custom_days_of_week_group_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             >
-            <ToggleButton android:id="@+id/weekly_custom_monday"
+
+            <ToggleButton
+                android:id="@+id/weekly_custom_monday"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:background = "@drawable/toggle_button"
+                android:background="@drawable/toggle_button"
                 android:textColor="@color/toggle_button"
                 />
-            <ToggleButton android:id="@+id/weekly_custom_tuesday"
+
+            <ToggleButton
+                android:id="@+id/weekly_custom_tuesday"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@id/weekly_custom_monday"
-                android:background = "@drawable/toggle_button"
+                android:background="@drawable/toggle_button"
                 android:textColor="@color/toggle_button"
                 />
-            <ToggleButton android:id="@+id/weekly_custom_wednesday"
+
+            <ToggleButton
+                android:id="@+id/weekly_custom_wednesday"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@id/weekly_custom_tuesday"
-                android:background = "@drawable/toggle_button"
+                android:background="@drawable/toggle_button"
                 android:textColor="@color/toggle_button"
                 />
-            <ToggleButton android:id="@+id/weekly_custom_thursday"
+
+            <ToggleButton
+                android:id="@+id/weekly_custom_thursday"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@id/weekly_custom_wednesday"
-                android:background = "@drawable/toggle_button"
+                android:background="@drawable/toggle_button"
                 android:textColor="@color/toggle_button"
                 />
         </RelativeLayout>
 
-        <RelativeLayout android:id="@+id/weekly_custom_days_of_week_group_2"
+        <RelativeLayout
+            android:id="@+id/weekly_custom_days_of_week_group_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/weekly_custom_days_of_week_group_1"
             android:layout_marginTop="8dp"
             android:gravity="center"
             >
-            <ToggleButton android:id="@+id/weekly_custom_friday"
+
+            <ToggleButton
+                android:id="@+id/weekly_custom_friday"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:background = "@drawable/toggle_button"
+                android:background="@drawable/toggle_button"
                 android:textColor="@color/toggle_button"
                 />
-            <ToggleButton android:id="@+id/weekly_custom_saturday"
+
+            <ToggleButton
+                android:id="@+id/weekly_custom_saturday"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@id/weekly_custom_friday"
-                android:background = "@drawable/toggle_button"
+                android:background="@drawable/toggle_button"
                 android:textColor="@color/toggle_button"
                 />
-            <ToggleButton android:id="@+id/weekly_custom_sunday"
+
+            <ToggleButton
+                android:id="@+id/weekly_custom_sunday"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@id/weekly_custom_saturday"
-                android:background = "@drawable/toggle_button"
+                android:background="@drawable/toggle_button"
                 android:textColor="@color/toggle_button"
                 />
         </RelativeLayout>
 
-        <android.support.constraint.ConstraintLayout android:id="@+id/weekly_custom_time_group"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/weekly_custom_time_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/weekly_custom_days_of_week_group_2"
@@ -90,9 +108,9 @@
                 android:id="@+id/label_at_weekly_custom_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="16dp"
                 android:text="@string/at"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/label_colon"
                 app:layout_constraintRight_toLeftOf="@+id/weekly_custom_time_hour"
                 />

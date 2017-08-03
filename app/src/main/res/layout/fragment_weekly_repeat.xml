@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -8,69 +10,93 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout android:id="@+id/weekly_day_of_week_group"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/weekly_day_of_week_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             >
 
-            <TextView android:id="@+id/label_at_weekly_day"
-                android:text="@string/at"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignBaseline="@+id/day_of_week_spinner"
-                android:layout_marginRight="8dp"
-                />
-            <android.support.v7.widget.AppCompatSpinner android:id="@+id/day_of_week_spinner"
+            <TextView
+                android:id="@+id/label_at_weekly_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/label_at_weekly_day"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                />
-        </RelativeLayout>
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="0dp"
+                android:text="@string/at"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/day_of_week_spinner"
+                app:layout_constraintRight_toLeftOf="@+id/day_of_week_spinner"
+                app:layout_constraintTop_toTopOf="@+id/day_of_week_spinner"/>
 
-        <RelativeLayout android:id="@+id/weekly_time_group"
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/day_of_week_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/weekly_time_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/weekly_day_of_week_group"
-            android:layout_marginTop="8dp"
             >
 
-            <TextView android:id="@+id/label_at_weekly_time"
+            <TextView
+                android:id="@+id/label_at_weekly_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:text="@string/at"
-                android:layout_width="32dp"
+                android:textSize="20sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/label_colon"
+                app:layout_constraintRight_toLeftOf="@+id/weekly_time_hour"
+                />
+
+            <TextView
+                android:id="@+id/weekly_time_hour"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignBaseline="@+id/weekly_time_hour"
                 android:layout_marginRight="8dp"
+                android:textSize="32sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/label_colon"
+                app:layout_constraintRight_toLeftOf="@+id/label_colon"
                 />
-            <TextView android:id="@+id/weekly_time_hour"
+
+            <TextView
+                android:id="@+id/label_colon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:layout_toRightOf="@+id/label_at_weekly_time"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                />
-            <TextView android:id="@+id/label_colon"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
                 android:text=":"
-                android:textSize="25sp"
+                android:textSize="32sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                />
+
+            <TextView
+                android:id="@+id/weekly_time_minute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/weekly_time_hour"
-                android:layout_alignBaseline="@+id/weekly_time_hour"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginLeft="8dp"
+                android:textSize="32sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/label_colon"
+                app:layout_constraintLeft_toRightOf="@+id/label_colon"
                 />
-            <TextView android:id="@+id/weekly_time_minute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:layout_toRightOf="@+id/label_colon"
-                android:layout_alignBaseline="@+id/weekly_time_hour"
-                />
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
+
 </android.support.v4.widget.NestedScrollView>
