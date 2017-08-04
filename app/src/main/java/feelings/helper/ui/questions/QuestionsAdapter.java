@@ -19,8 +19,8 @@ import java.util.Collection;
 import java.util.List;
 
 import feelings.helper.R;
-import feelings.helper.questions.Question;
-import feelings.helper.questions.QuestionService;
+import feelings.helper.question.Question;
+import feelings.helper.question.QuestionService;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleService;
 import feelings.helper.ui.answers.AnswerActivity;

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static feelings.helper.answers.AnswerContract.SQL_CREATE_ANSWER_TABLE;
+import static feelings.helper.answer.AnswerContract.SQL_CREATE_ANSWER_TABLE;
 import static feelings.helper.schedule.ScheduleContract.SQL_CREATE_SCHEDULE_TABLE;
 
 public class DbHelper extends SQLiteOpenHelper {

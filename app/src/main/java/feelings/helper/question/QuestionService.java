@@ -1,4 +1,4 @@
-package feelings.helper.questions;
+package feelings.helper.question;
 
 import android.content.Context;
 import android.util.Log;

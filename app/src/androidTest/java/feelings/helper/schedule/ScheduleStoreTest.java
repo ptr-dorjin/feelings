@@ -33,7 +33,7 @@ public class ScheduleStoreTest {
     }
 
     @After
-    public void tearDown() {
+    public void after() {
         Context context = InstrumentationRegistry.getTargetContext();
         ScheduleStore.delete(context, QUESTION_ID);
         ScheduleStore.delete(context, QUESTION_ID_2);
@@ -118,9 +118,10 @@ public class ScheduleStoreTest {
         assertTrue(fromDB.isOn());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testFailOnSwitchNonExistent() {
         Context context = InstrumentationRegistry.getTargetContext();
-        ScheduleStore.switchOnOff(context, QUESTION_ID, true);
+        boolean updated = ScheduleStore.switchOnOff(context, QUESTION_ID, true);
+        assertFalse(updated);
     }
 }

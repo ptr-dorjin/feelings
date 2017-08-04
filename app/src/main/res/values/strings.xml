@@ -36,7 +36,7 @@
     <string name="msg_repeat_switched_off_success">Нотификации выключены</string>
     <string name="msg_repeat_switched_on_error">Ошибка при включении нотификаций</string>
     <string name="msg_repeat_switched_off_error">Ошибка при выключении нотификаций</string>
-    <string name="msg_schedule_saved_on_success">Следущая нотификация - %s</string>
+    <string name="msg_schedule_saved_on_success">Следущая нотификация в %s</string>
     <string name="msg_schedule_saved_off_success">Параметры сохранены</string>
     <string name="msg_schedule_saved_error">Ошибка при сохранении</string>
     <string name="msg_daily_repeat_empty">Добавьте хотя бы одно время</string>

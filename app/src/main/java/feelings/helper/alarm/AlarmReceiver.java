@@ -10,7 +10,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import feelings.helper.R;
-import feelings.helper.questions.QuestionService;
+import feelings.helper.question.QuestionService;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleService;
 

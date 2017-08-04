@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import feelings.helper.R;
-import feelings.helper.questions.QuestionService;
+import feelings.helper.question.QuestionService;
 
 import static feelings.helper.ui.questions.QuestionsActivity.QUESTION_ID_PARAM;
 

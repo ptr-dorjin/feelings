@@ -1,4 +1,4 @@
-package feelings.helper.answers;
+package feelings.helper.answer;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,15 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import org.threeten.bp.LocalDateTime;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import feelings.helper.db.DbHelper;
 
-import static feelings.helper.answers.AnswerContract.COLUMN_NAME_ANSWER;
-import static feelings.helper.answers.AnswerContract.COLUMN_NAME_DATE_TIME;
-import static feelings.helper.answers.AnswerContract.COLUMN_NAME_QUESTION_ID;
-import static feelings.helper.answers.AnswerContract.TABLE_NAME;
+import static feelings.helper.answer.AnswerContract.COLUMN_NAME_ANSWER;
+import static feelings.helper.answer.AnswerContract.COLUMN_NAME_DATE_TIME;
+import static feelings.helper.answer.AnswerContract.COLUMN_NAME_QUESTION_ID;
+import static feelings.helper.answer.AnswerContract.TABLE_NAME;
 import static feelings.helper.util.DateTimeUtil.DB_FORMATTER;
 
 class AnswerStore {
@@ -34,7 +33,7 @@ class AnswerStore {
         return newRowId != -1;
     }
 
-    static Collection<Answer> getAllAnswers(Context context) {
+    static List<Answer> getAllAnswers(Context context) {
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};

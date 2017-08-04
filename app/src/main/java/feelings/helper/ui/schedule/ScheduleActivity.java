@@ -17,8 +17,10 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.threeten.bp.LocalDateTime;
+
 import feelings.helper.R;
-import feelings.helper.questions.QuestionService;
+import feelings.helper.question.QuestionService;
 import feelings.helper.repeat.DailyRepeat;
 import feelings.helper.repeat.HourlyRepeat;
 import feelings.helper.repeat.RepeatType;
@@ -33,7 +35,7 @@ import static feelings.helper.ui.schedule.fragments.FragmentFactory.create;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.fromPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getTag;
-import static feelings.helper.util.DateTimeUtil.FULL_FORMATTER;
+import static feelings.helper.util.DateTimeUtil.DATE_TIME_FORMATTER;
 import static org.threeten.bp.LocalTime.of;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -134,9 +136,10 @@ public class ScheduleActivity extends AppCompatActivity {
             if (saved) {
                 // show message
                 if (schedule.isOn()) {
+                    LocalDateTime nextTime = schedule.getRepeat().getNextTime();
                     ToastUtil.showLong(this, String.format(
                             getString(R.string.msg_schedule_saved_on_success),
-                            schedule.getRepeat().getNextTime().format(FULL_FORMATTER)));
+                            nextTime.format(DATE_TIME_FORMATTER)));
                 } else {
                     ToastUtil.showShort(this, getString(R.string.msg_schedule_saved_off_success));
                 }

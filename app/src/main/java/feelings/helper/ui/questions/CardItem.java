@@ -3,7 +3,7 @@ package feelings.helper.ui.questions;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import feelings.helper.questions.Question;
+import feelings.helper.question.Question;
 import feelings.helper.schedule.Schedule;
 
 /**

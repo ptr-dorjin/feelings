@@ -28,7 +28,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/day_of_week_spinner"
                 app:layout_constraintTop_toTopOf="@+id/day_of_week_spinner"/>
 
-            <android.support.v7.widget.AppCompatSpinner
+            <Spinner
                 android:id="@+id/day_of_week_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
