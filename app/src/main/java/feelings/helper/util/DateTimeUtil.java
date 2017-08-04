@@ -14,6 +14,7 @@ import static org.threeten.bp.format.DateTimeFormatter.ofPattern;
 public class DateTimeUtil {
 
     public static final DateTimeFormatter FULL_FORMATTER = ofPattern("dd.MM HH:mm");
+    public static final DateTimeFormatter DB_FORMATTER = ofPattern("yyyy-MM-dd HH:mm:ss");
     public static final DateTimeFormatter TIME_FORMATTER = ofPattern("HH:mm");
     public static final DateTimeFormatter HOUR_FORMATTER = ofPattern("HH");
     public static final DateTimeFormatter MINUTE_FORMATTER = ofPattern("mm");

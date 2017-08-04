@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import feelings.helper.db.DbHelper;
 import feelings.helper.repeat.RepeatFactory;
 import feelings.helper.repeat.RepeatType;
 
@@ -26,7 +27,7 @@ class ScheduleStore {
      * Create or update
      */
     static boolean saveSchedule(Context context, Schedule schedule) {
-        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_QUESTION_ID, schedule.getQuestionId());
@@ -51,7 +52,7 @@ class ScheduleStore {
      * Create or update only on/off flag
      */
     static boolean switchOnOff(Context context, int questionId, boolean isOn) {
-        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_QUESTION_ID, questionId);
@@ -70,7 +71,7 @@ class ScheduleStore {
     }
 
     private static boolean exists(Context context, int questionId) {
-        SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID};
 
@@ -85,7 +86,7 @@ class ScheduleStore {
     }
 
     static Schedule getSchedule(Context context, int questionId) {
-        SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPEAT};
 
@@ -108,7 +109,7 @@ class ScheduleStore {
     }
 
     static Collection<Schedule> getAllSchedules(Context context) {
-        SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPEAT};
 
@@ -130,7 +131,7 @@ class ScheduleStore {
 
     // for use in tests
     static int delete(Context context, int questionId) {
-        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
         String selection = COLUMN_NAME_QUESTION_ID + " = ?";
         String[] selectionArgs = {String.valueOf(questionId)};
@@ -139,7 +140,7 @@ class ScheduleStore {
     }
 
     static int deleteAll(Context context) {
-        SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
         return db.delete(TABLE_NAME, null, null);
     }
 }
