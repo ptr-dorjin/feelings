@@ -18,8 +18,8 @@ import feelings.helper.repeat.RepeatType;
 import feelings.helper.ui.UiUtil;
 import feelings.helper.util.TextUtil;
 
-import static feelings.helper.repeat.Repeat.HOUR_FORMATTER;
-import static feelings.helper.repeat.Repeat.MINUTE_FORMATTER;
+import static feelings.helper.util.DateTimeUtil.HOUR_FORMATTER;
+import static feelings.helper.util.DateTimeUtil.MINUTE_FORMATTER;
 import static org.threeten.bp.LocalTime.of;
 
 public class HourlyFragment extends AbstractFragment {

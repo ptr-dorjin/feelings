@@ -32,7 +32,6 @@ public class AlarmService {
         }
     }
 
-    //todo call when user sets repeat off
     public static void cancelAlarm(Context context, int questionId) {
         Intent intent = new Intent(context, AlarmReceiver.class);
         PendingIntent pintent = PendingIntent.getBroadcast(context, questionId, intent, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -11,6 +11,8 @@ import org.threeten.bp.LocalTime;
 import feelings.helper.R;
 import feelings.helper.util.TextUtil;
 
+import static feelings.helper.util.DateTimeUtil.TIME_FORMATTER;
+
 public class HourlyRepeat extends AbstractRepeat {
     /**
      * Interval in hours

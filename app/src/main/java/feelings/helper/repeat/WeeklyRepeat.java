@@ -10,6 +10,8 @@ import feelings.helper.R;
 import feelings.helper.util.DateTimeUtil;
 import feelings.helper.util.TextUtil;
 
+import static feelings.helper.util.DateTimeUtil.TIME_FORMATTER;
+
 public class WeeklyRepeat extends AbstractRepeat {
     /**
      * Day of week: from 1 to 7

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,12 +19,13 @@ import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_REPEAT;
 import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_REP_TYPE;
 import static feelings.helper.schedule.ScheduleContract.TABLE_NAME;
 
-public class ScheduleStore {
+class ScheduleStore {
+    private static final String TAG = "ScheduleStore";
 
     /**
      * Create or update
      */
-    public static boolean saveSchedule(Context context, Schedule schedule) {
+    static boolean saveSchedule(Context context, Schedule schedule) {
         SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -48,7 +50,7 @@ public class ScheduleStore {
     /**
      * Create or update only on/off flag
      */
-    public static boolean switchOnOff(Context context, int questionId, boolean isOn) {
+    static boolean switchOnOff(Context context, int questionId, boolean isOn) {
         SQLiteDatabase db = new ScheduleDbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -62,7 +64,8 @@ public class ScheduleStore {
             int count = db.update(ScheduleContract.TABLE_NAME, values, selection, selectionArgs);
             return count == 1;
         } else {
-            throw new RuntimeException("Attempt to switch repeat on/off in the DB, while repeat not exists.");
+            Log.e(TAG, "switchOnOff: Attempt to switch repeat on/off in the DB, while repeat not exists.");
+            return false;
         }
     }
 
@@ -81,7 +84,7 @@ public class ScheduleStore {
         } finally { if (cursor != null) cursor.close(); }
     }
 
-    public static Schedule getSchedule(Context context, int questionId) {
+    static Schedule getSchedule(Context context, int questionId) {
         SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPEAT};
@@ -104,7 +107,7 @@ public class ScheduleStore {
         } finally { if (cursor != null) cursor.close(); }
     }
 
-    public static Collection<Schedule> getAllSchedules(Context context) {
+    static Collection<Schedule> getAllSchedules(Context context) {
         SQLiteDatabase db = new ScheduleDbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_IS_ON, COLUMN_NAME_REP_TYPE, COLUMN_NAME_REPEAT};

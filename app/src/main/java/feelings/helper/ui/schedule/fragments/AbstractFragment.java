@@ -14,7 +14,7 @@ public abstract class AbstractFragment extends Fragment {
     boolean initSchedule() {
         schedule = getArguments().getParcelable(ScheduleActivity.SCHEDULE_PARCEL_KEY);
         if (schedule == null) {
-            ToastUtil.showLong("Schedule is null!", getContext());
+            ToastUtil.showLong(getContext(), "Schedule is null!");
             return false;
         }
         return true;

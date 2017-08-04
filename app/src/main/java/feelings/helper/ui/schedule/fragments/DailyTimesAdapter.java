@@ -17,8 +17,8 @@ import java.util.TreeSet;
 import feelings.helper.R;
 import feelings.helper.ui.UiUtil;
 
-import static feelings.helper.repeat.Repeat.HOUR_FORMATTER;
-import static feelings.helper.repeat.Repeat.MINUTE_FORMATTER;
+import static feelings.helper.util.DateTimeUtil.HOUR_FORMATTER;
+import static feelings.helper.util.DateTimeUtil.MINUTE_FORMATTER;
 
 class DailyTimesAdapter extends RecyclerView.Adapter<DailyTimesAdapter.DailyTimeViewHolder> {
 

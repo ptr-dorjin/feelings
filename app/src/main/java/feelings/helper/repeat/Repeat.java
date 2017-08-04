@@ -4,17 +4,12 @@ import android.content.Context;
 
 import org.threeten.bp.Clock;
 import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.format.DateTimeFormatter;
 
 /**
  * Base class for all types of repeats
  */
 
 public interface Repeat {
-
-    DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
-    DateTimeFormatter HOUR_FORMATTER = DateTimeFormatter.ofPattern("HH");
-    DateTimeFormatter MINUTE_FORMATTER = DateTimeFormatter.ofPattern("mm");
 
     /**
      * @return Next DateTime when alarm should trigger.

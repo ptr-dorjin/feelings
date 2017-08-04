@@ -22,7 +22,7 @@ import feelings.helper.R;
 import feelings.helper.questions.Question;
 import feelings.helper.questions.QuestionService;
 import feelings.helper.schedule.Schedule;
-import feelings.helper.schedule.ScheduleStore;
+import feelings.helper.schedule.ScheduleService;
 import feelings.helper.ui.answers.AnswerActivity;
 import feelings.helper.ui.schedule.ScheduleActivity;
 import feelings.helper.util.ToastUtil;
@@ -85,11 +85,19 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                     intent.putExtra(QUESTION_ID_PARAM, currentItem.getQuestion().getId());
                     context.startActivity(intent);
                 } else {
-                    ScheduleStore.switchOnOff(context, currentItem.getQuestion().getId(), isChecked);
-                    ToastUtil.showShort(context.getString(isChecked
-                            ? R.string.msg_repeat_switched_on
-                            : R.string.msg_repeat_switched_off
-                    ), context);
+                    currentItem.getSchedule().setOn(isChecked);
+                    boolean success = ScheduleService.switchOnOff(context, currentItem.getSchedule());
+                    if (success) {
+                        ToastUtil.showShort(context, context.getString(isChecked
+                                ? R.string.msg_repeat_switched_on_success
+                                : R.string.msg_repeat_switched_off_success
+                        ));
+                    } else {
+                        ToastUtil.showLong(context, context.getString(isChecked
+                                ? R.string.msg_repeat_switched_on_error
+                                : R.string.msg_repeat_switched_off_error
+                        ));
+                    }
                 }
             }
         };
@@ -98,7 +106,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
     QuestionsAdapter(AppCompatActivity context) {
         this.context = context;
         // The responsibility of this class is also to set question's schedules by values from the DB.
-        Collection<Schedule> allSchedules = ScheduleStore.getAllSchedules(context);
+        Collection<Schedule> allSchedules = ScheduleService.getAllSchedules(context);
         for (Question question : QuestionService.getAllQuestions(context)) {
             // find schedule in all schedules from the DB
             Schedule found = null;

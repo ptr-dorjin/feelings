@@ -23,7 +23,7 @@ import feelings.helper.repeat.DailyRepeat;
 import feelings.helper.repeat.HourlyRepeat;
 import feelings.helper.repeat.RepeatType;
 import feelings.helper.schedule.Schedule;
-import feelings.helper.schedule.ScheduleStore;
+import feelings.helper.schedule.ScheduleService;
 import feelings.helper.ui.UiUtil;
 import feelings.helper.ui.schedule.fragments.AbstractFragment;
 import feelings.helper.util.ToastUtil;
@@ -33,6 +33,7 @@ import static feelings.helper.ui.schedule.fragments.FragmentFactory.create;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.fromPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getTag;
+import static feelings.helper.util.DateTimeUtil.FULL_FORMATTER;
 import static org.threeten.bp.LocalTime.of;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -52,7 +53,7 @@ public class ScheduleActivity extends AppCompatActivity {
         TextView questionView = (TextView) findViewById(R.id.question_text_on_schedule);
         questionView.setText(QuestionService.getQuestionText(this, questionId));
 
-        schedule = ScheduleStore.getSchedule(this, questionId); //can be null
+        schedule = ScheduleService.getSchedule(this, questionId); //can be null
         if (schedule == null) {
             // no schedule in the DB => create it
             schedule = new Schedule(questionId, true, RepeatType.HOURLY, new HourlyRepeat(1, of(8, 0), of(20, 0)));
@@ -129,18 +130,23 @@ public class ScheduleActivity extends AppCompatActivity {
             if (isInvalid()) {
                 return false;
             }
-            boolean saved = ScheduleStore.saveSchedule(this, schedule);
-            //todo also need to start alarm if schedule.isOn. Either here or somewhere else
+            boolean saved = ScheduleService.saveSchedule(this, schedule);
             if (saved) {
                 // show message
-                ToastUtil.showShort(getString(R.string.msg_schedule_saved_success), this);
+                if (schedule.isOn()) {
+                    ToastUtil.showLong(this, String.format(
+                            getString(R.string.msg_schedule_saved_on_success),
+                            schedule.getRepeat().getNextTime().format(FULL_FORMATTER)));
+                } else {
+                    ToastUtil.showShort(this, getString(R.string.msg_schedule_saved_off_success));
+                }
                 // and send result to parent activity to refresh updated item on UI
                 Intent data = new Intent();
                 data.putExtra(SCHEDULE_PARCEL_KEY, schedule);
                 setResult(RESULT_OK, data);
                 finish();
             } else {
-                ToastUtil.showLong(getString(R.string.msg_schedule_saved_error), this);
+                ToastUtil.showLong(this, getString(R.string.msg_schedule_saved_error));
             }
             return saved;
         } else {
@@ -155,7 +161,7 @@ public class ScheduleActivity extends AppCompatActivity {
         if (schedule.getRepeatType() == RepeatType.DAILY) {
             DailyRepeat dailyRepeat = (DailyRepeat) schedule.getRepeat();
             if (dailyRepeat.getTimes().isEmpty()) {
-                ToastUtil.showLong(getString(R.string.msg_daily_repeat_empty), this);
+                ToastUtil.showLong(this, getString(R.string.msg_daily_repeat_empty));
                 return true;
             }
         }

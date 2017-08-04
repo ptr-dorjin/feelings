@@ -11,6 +11,8 @@ import java.util.TreeSet;
 import feelings.helper.R;
 import feelings.helper.util.TextUtil;
 
+import static feelings.helper.util.DateTimeUtil.TIME_FORMATTER;
+
 public class DailyRepeat extends AbstractRepeat {
     /**
      * Set of times in each day

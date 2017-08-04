@@ -13,6 +13,7 @@ import java.util.TreeSet;
 import feelings.helper.R;
 import feelings.helper.util.TextUtil;
 
+import static feelings.helper.util.DateTimeUtil.TIME_FORMATTER;
 import static feelings.helper.util.DateTimeUtil.getDayOfWeekAsText;
 
 public class WeeklyCustomRepeat extends AbstractRepeat {

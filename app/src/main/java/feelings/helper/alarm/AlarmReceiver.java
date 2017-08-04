@@ -12,7 +12,7 @@ import android.util.Log;
 import feelings.helper.R;
 import feelings.helper.questions.QuestionService;
 import feelings.helper.schedule.Schedule;
-import feelings.helper.schedule.ScheduleStore;
+import feelings.helper.schedule.ScheduleService;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -33,7 +33,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         // 2. set the next alarm
-        Schedule schedule = ScheduleStore.getSchedule(context, questionId);
+        Schedule schedule = ScheduleService.getSchedule(context, questionId);
         if (schedule != null) {
             AlarmService.setAlarm(context, schedule);
         } else {
