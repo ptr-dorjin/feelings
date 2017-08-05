@@ -30,7 +30,7 @@ import feelings.helper.ui.UiUtil;
 import feelings.helper.ui.schedule.fragments.AbstractFragment;
 import feelings.helper.util.ToastUtil;
 
-import static feelings.helper.ui.questions.QuestionsActivity.QUESTION_ID_PARAM;
+import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.create;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.fromPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getPosition;

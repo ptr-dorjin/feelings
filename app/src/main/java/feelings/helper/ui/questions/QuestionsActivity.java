@@ -13,7 +13,6 @@ import static feelings.helper.ui.schedule.ScheduleActivity.SCHEDULE_PARCEL_KEY;
 
 public class QuestionsActivity extends AppCompatActivity {
 
-    public static final String QUESTION_ID_PARAM = "question_id";
     private QuestionsAdapter adapter;
 
     @Override

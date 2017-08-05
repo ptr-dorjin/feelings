@@ -48,7 +48,7 @@
 
         <receiver android:name=".alarm.AlarmReceiver" />
 
-        <receiver android:name=".BootReceiver"
+        <receiver android:name=".alarm.BootReceiver"
             android:label="FeelingsHelperOnBootAlarmRefresher">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>

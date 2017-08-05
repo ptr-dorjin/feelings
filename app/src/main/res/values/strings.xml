@@ -40,6 +40,9 @@
     <string name="msg_schedule_saved_off_success">Параметры сохранены</string>
     <string name="msg_schedule_saved_error">Ошибка при сохранении</string>
     <string name="msg_daily_repeat_empty">Добавьте хотя бы одно время</string>
+    <string name="msg_answer_text_empty">Введите ответ</string>
+    <string name="msg_answer_saved_success">Ответ сохранен в журнал</string>
+    <string name="msg_answer_saved_error">Ошибка при сохранении ответа</string>
 
     <string-array name="repeat_type_array">
         <item>Каждые N часов</item>

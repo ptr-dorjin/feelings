@@ -48,7 +48,7 @@ public class QuestionService {
             return question.getText();
         } else {
             Log.e(TAG, "Unexpected questionId=" + questionId);
-            return "Error while getting question text";
+            return "Couldn't get question text";
         }
     }
 

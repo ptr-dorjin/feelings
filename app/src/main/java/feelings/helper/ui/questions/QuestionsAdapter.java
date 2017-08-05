@@ -27,7 +27,7 @@ import feelings.helper.ui.answers.AnswerActivity;
 import feelings.helper.ui.schedule.ScheduleActivity;
 import feelings.helper.util.ToastUtil;
 
-import static feelings.helper.ui.questions.QuestionsActivity.QUESTION_ID_PARAM;
+import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.QuestionViewHolder> {
 

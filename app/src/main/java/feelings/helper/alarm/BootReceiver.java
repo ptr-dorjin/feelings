@@ -1,11 +1,9 @@
-package feelings.helper;
-
+package feelings.helper.alarm;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import feelings.helper.alarm.AlarmService;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleService;
 

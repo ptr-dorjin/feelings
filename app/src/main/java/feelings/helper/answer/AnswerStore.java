@@ -18,10 +18,9 @@ import static feelings.helper.answer.AnswerContract.COLUMN_NAME_QUESTION_ID;
 import static feelings.helper.answer.AnswerContract.TABLE_NAME;
 import static feelings.helper.util.DateTimeUtil.DB_FORMATTER;
 
-class AnswerStore {
-    private static final String TAG = "AnswerStore";
+public class AnswerStore {
 
-    static boolean saveAnswer(Context context, Answer answer) {
+    public static boolean saveAnswer(Context context, Answer answer) {
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -33,7 +32,7 @@ class AnswerStore {
         return newRowId != -1;
     }
 
-    static List<Answer> getAllAnswers(Context context) {
+    public static List<Answer> getAllAnswers(Context context) {
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
         String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};

@@ -10,13 +10,15 @@ import org.threeten.bp.ZoneId;
 
 import feelings.helper.schedule.Schedule;
 
+import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
+
 public class AlarmService {
 
     public static void setAlarm(Context context, Schedule schedule) {
         int questionId = schedule.getQuestionId();
 
         Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra(AlarmReceiver.QUESTION_ID, questionId);
+        intent.putExtra(QUESTION_ID_PARAM, questionId);
         PendingIntent pintent = PendingIntent.getBroadcast(context, questionId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         long timeMillis = schedule.getRepeat().getNextTime()

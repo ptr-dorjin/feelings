@@ -2,6 +2,7 @@ package feelings.helper.alarm;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,16 +14,17 @@ import feelings.helper.R;
 import feelings.helper.question.QuestionService;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleService;
+import feelings.helper.ui.answers.AnswerActivity;
+
+import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
 
 public class AlarmReceiver extends BroadcastReceiver {
-
-    static final String QUESTION_ID = "question-id";
 
     private static final String TAG = AlarmReceiver.class.getSimpleName();
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int questionId = intent.getIntExtra(QUESTION_ID, 0);
+        int questionId = intent.getIntExtra(QUESTION_ID_PARAM, 0);
         // 1. show notification
         try {
             WakeLocker.acquire(context);
@@ -45,6 +47,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle(QuestionService.getQuestionText(context, questionId));
         builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setAutoCancel(true);
+
+        Intent intent = new Intent(context, AnswerActivity.class);
+        intent.putExtra(QUESTION_ID_PARAM, questionId);
+        PendingIntent pintent = PendingIntent.getActivity(context, questionId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pintent);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             return builder.build();
         } else {
