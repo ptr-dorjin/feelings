@@ -1,4 +1,4 @@
-package feelings.helper.ui.questions;
+package feelings.helper.ui.question;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

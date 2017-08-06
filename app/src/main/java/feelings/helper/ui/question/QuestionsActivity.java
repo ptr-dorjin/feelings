@@ -1,4 +1,4 @@
-package feelings.helper.ui.questions;
+package feelings.helper.ui.question;
 
 import android.content.Intent;
 import android.os.Bundle;

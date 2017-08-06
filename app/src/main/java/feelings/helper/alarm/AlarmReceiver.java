@@ -14,7 +14,7 @@ import feelings.helper.R;
 import feelings.helper.question.QuestionService;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleService;
-import feelings.helper.ui.answers.AnswerActivity;
+import feelings.helper.ui.answer.AnswerActivity;
 
 import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
 

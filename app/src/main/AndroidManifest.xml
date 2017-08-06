@@ -20,7 +20,7 @@
         <meta-data android:name="com.google.android.gms.games.APP_ID"
             android:value="123456789012" />
 
-        <activity android:name=".ui.questions.QuestionsActivity"
+        <activity android:name=".ui.question.QuestionsActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,21 +29,21 @@
         </activity>
 
         <activity android:name=".ui.schedule.ScheduleActivity"
-            android:parentActivityName=".ui.questions.QuestionsActivity"
+            android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/schedule_activity_title">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.questions.QuestionsActivity" />
+                android:value=".ui.question.QuestionsActivity" />
         </activity>
 
-        <activity android:name=".ui.answers.AnswerActivity"
-            android:parentActivityName=".ui.questions.QuestionsActivity"
+        <activity android:name=".ui.answer.AnswerActivity"
+            android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/answer_activity_title">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.questions.QuestionsActivity" />
+                android:value=".ui.question.QuestionsActivity" />
         </activity>
 
         <receiver android:name=".alarm.AlarmReceiver" />

@@ -1,4 +1,4 @@
-package feelings.helper.ui.questions;
+package feelings.helper.ui.question;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import feelings.helper.question.Question;
 import feelings.helper.question.QuestionService;
 import feelings.helper.schedule.Schedule;
 import feelings.helper.schedule.ScheduleService;
-import feelings.helper.ui.answers.AnswerActivity;
+import feelings.helper.ui.answer.AnswerActivity;
 import feelings.helper.ui.schedule.ScheduleActivity;
 import feelings.helper.util.ToastUtil;
 
