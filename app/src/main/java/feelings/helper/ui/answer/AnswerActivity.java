@@ -53,8 +53,8 @@ public class AnswerActivity extends AppCompatActivity {
 
     private void setUpAnswerText() {
         answerText = (EditText) findViewById(R.id.answer_text);
-        if (questionId == QuestionService.FEELINGS_ID) {
-            answerText.clearFocus();
+        if (questionId != QuestionService.FEELINGS_ID) {
+            answerText.requestFocus();
         }
     }
 
@@ -82,7 +82,6 @@ public class AnswerActivity extends AppCompatActivity {
                     return true;
                 }
             });
-            feelingsListView.requestFocus();
             feelingsListView.setVisibility(View.VISIBLE);
         }
     }
