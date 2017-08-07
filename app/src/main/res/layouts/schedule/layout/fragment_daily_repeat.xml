@@ -6,17 +6,21 @@
     android:layout_marginTop="16dp"
     >
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/daily_times_recycler_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/daily_times_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/daily_add"
-        android:src="@drawable/ic_add_white_24dp"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/daily_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:elevation="4dp"
         android:layout_gravity="bottom|right"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_add_white_24dp"
+        app:elevation="4dp"
         app:layout_anchorGravity="bottom|right"
         />
 
