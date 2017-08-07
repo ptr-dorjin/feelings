@@ -21,7 +21,7 @@ import static feelings.helper.schedule.ScheduleContract.COLUMN_NAME_REP_TYPE;
 import static feelings.helper.schedule.ScheduleContract.TABLE_NAME;
 
 class ScheduleStore {
-    private static final String TAG = "ScheduleStore";
+    private static final String TAG = ScheduleStore.class.getSimpleName();
 
     /**
      * Create or update

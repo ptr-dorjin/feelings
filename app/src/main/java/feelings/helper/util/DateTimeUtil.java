@@ -13,7 +13,8 @@ import static org.threeten.bp.format.DateTimeFormatter.ofPattern;
 
 public class DateTimeUtil {
 
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = ofPattern("HH:mm d MMM", Profile.getLocale());
+    public static final DateTimeFormatter DATE_TIME_SHORT_FORMATTER = ofPattern("HH:mm d MMM", Profile.getLocale());
+    public static final DateTimeFormatter DATE_TIME_FULL_FORMATTER = ofPattern("d MMM yyyy HH:mm", Profile.getLocale());
     public static final DateTimeFormatter DB_FORMATTER = ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     public static final DateTimeFormatter TIME_FORMATTER = ofPattern("HH:mm");
     public static final DateTimeFormatter HOUR_FORMATTER = ofPattern("HH");

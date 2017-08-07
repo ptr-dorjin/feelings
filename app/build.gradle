@@ -24,6 +24,7 @@ android {
                     'src/main/res/layouts/question',
                     'src/main/res/layouts/schedule',
                     'src/main/res/layouts/answer',
+                    'src/main/res/layouts/log',
                     'src/main/res/layouts',
                     'src/main/res'
             ]

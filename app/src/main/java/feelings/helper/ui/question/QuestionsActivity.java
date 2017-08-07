@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import feelings.helper.R;
 import feelings.helper.schedule.Schedule;
+import feelings.helper.ui.log.AnswerLogActivity;
 
 import static feelings.helper.ui.schedule.ScheduleActivity.SCHEDULE_PARCEL_KEY;
 
@@ -36,6 +40,24 @@ public class QuestionsActivity extends AppCompatActivity {
             Schedule schedule = data.getParcelableExtra(SCHEDULE_PARCEL_KEY);
             // requestCode = item position from adapter
             adapter.notifyItemChanged(requestCode, schedule);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.questions_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Log button pressed
+        if (item.getItemId() == R.id.show_log) {
+            startActivity(new Intent(this, AnswerLogActivity.class));
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 }

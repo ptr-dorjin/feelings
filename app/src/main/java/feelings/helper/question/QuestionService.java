@@ -12,7 +12,7 @@ import java.util.Map;
 import feelings.helper.R;
 
 public class QuestionService {
-    private static final String TAG = "QuestionService";
+    private static final String TAG = QuestionService.class.getSimpleName();
 
     public static final int FEELINGS_ID = 1;
 

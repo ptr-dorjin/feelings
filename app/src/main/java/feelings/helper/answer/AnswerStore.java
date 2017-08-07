@@ -12,6 +12,7 @@ import java.util.List;
 
 import feelings.helper.db.DbHelper;
 
+import static android.provider.BaseColumns._ID;
 import static feelings.helper.answer.AnswerContract.COLUMN_NAME_ANSWER;
 import static feelings.helper.answer.AnswerContract.COLUMN_NAME_DATE_TIME;
 import static feelings.helper.answer.AnswerContract.COLUMN_NAME_QUESTION_ID;
@@ -33,13 +34,9 @@ public class AnswerStore {
     }
 
     public static List<Answer> getAllAnswers(Context context) {
-        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
-
-        String[] projection = {COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};
-
         Cursor cursor = null;
         try {
-            cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
+            cursor = getCursor(context);
 
             List<Answer> list = new ArrayList<>();
             while (cursor.moveToNext()) {
@@ -52,6 +49,15 @@ public class AnswerStore {
             }
             return list;
         } finally { if (cursor != null) cursor.close(); }
+    }
+
+    public static Cursor getCursor(Context context) {
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String[] projection = {_ID, COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};
+        String orderBy = COLUMN_NAME_DATE_TIME + " DESC";
+
+        return db.query(TABLE_NAME, projection, null, null, null, null, orderBy);
     }
 
     static int deleteAll(Context context) {

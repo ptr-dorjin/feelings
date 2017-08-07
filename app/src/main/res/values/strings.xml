@@ -3,6 +3,7 @@
     
     <string name="schedule_activity_title">Повтор</string>
     <string name="answer_activity_title">Ответ</string>
+    <string name="answer_log_activity_title">Журнал</string>
 
     <string name="q_feelings">Что я сейчас чувствую?</string>
     <string name="q_insincerity">С кем я был неискренен сегодня?</string>
@@ -57,5 +58,6 @@
     <string name="at">в</string>
 
     <string name="btn_save">Сохранить</string>
+    <string name="btn_show_log">Журнал</string>
 
 </resources>

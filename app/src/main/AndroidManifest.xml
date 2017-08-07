@@ -40,7 +40,14 @@
         <activity android:name=".ui.answer.AnswerActivity"
             android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/answer_activity_title">
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.question.QuestionsActivity" />
+        </activity>
+
+        <activity android:name=".ui.log.AnswerLogActivity"
+            android:parentActivityName=".ui.question.QuestionsActivity"
+            android:label="@string/answer_log_activity_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.question.QuestionsActivity" />

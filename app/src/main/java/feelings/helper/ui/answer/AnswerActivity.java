@@ -96,14 +96,14 @@ public class AnswerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.save, menu);
+        inflater.inflate(R.menu.schedule_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Save button is pressed
-        if (item.getItemId() == R.id.save) {
+        if (item.getItemId() == R.id.save_schedule) {
             if (isInvalid()) {
                 return false;
             }

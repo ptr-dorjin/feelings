@@ -35,7 +35,7 @@ import static feelings.helper.ui.schedule.fragments.FragmentFactory.create;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.fromPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getTag;
-import static feelings.helper.util.DateTimeUtil.DATE_TIME_FORMATTER;
+import static feelings.helper.util.DateTimeUtil.DATE_TIME_SHORT_FORMATTER;
 import static org.threeten.bp.LocalTime.of;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -121,14 +121,14 @@ public class ScheduleActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.save, menu);
+        inflater.inflate(R.menu.schedule_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Save button is pressed
-        if (item.getItemId() == R.id.save) {
+        // Save button pressed
+        if (item.getItemId() == R.id.save_schedule) {
             if (isInvalid()) {
                 return false;
             }
@@ -139,7 +139,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     LocalDateTime nextTime = schedule.getRepeat().getNextTime();
                     ToastUtil.showLong(this, String.format(
                             getString(R.string.msg_schedule_saved_on_success),
-                            nextTime.format(DATE_TIME_FORMATTER)));
+                            nextTime.format(DATE_TIME_SHORT_FORMATTER)));
                 } else {
                     ToastUtil.showShort(this, getString(R.string.msg_schedule_saved_off_success));
                 }

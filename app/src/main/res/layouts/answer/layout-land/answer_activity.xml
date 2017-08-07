@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:maxLength="512"
-        android:maxLines="7"
-        android:minLines="3"
+        android:maxLines="4"
+        android:minLines="2"
         android:scrollbars="vertical"
         android:theme="@style/EditTextTheme"
         />
