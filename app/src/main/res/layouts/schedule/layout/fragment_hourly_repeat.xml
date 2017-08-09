@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:showDividers="middle|end"
+        >
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/interval_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             >
 
             <TextView
@@ -48,8 +50,8 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:textSize="20sp"
                 android:text="@string/hour5"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/hour_interval"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -59,7 +61,6 @@
             android:id="@+id/start_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/interval_group"
             >
 
             <TextView
@@ -115,7 +116,6 @@
             android:id="@+id/end_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/start_group"
             >
 
             <TextView
@@ -166,7 +166,7 @@
                 app:layout_constraintLeft_toRightOf="@+id/label_colon_end"
                 />
         </android.support.constraint.ConstraintLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </android.support.v4.widget.NestedScrollView>

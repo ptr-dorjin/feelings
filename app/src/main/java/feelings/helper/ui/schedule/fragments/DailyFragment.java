@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,7 +63,11 @@ public class DailyFragment extends AbstractFragment {
 
     private void setUpTimesList() {
         RecyclerView rv = (RecyclerView) fragmentRoot.findViewById(R.id.daily_times_recycler_view);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rv.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),
+                layoutManager.getOrientation());
+        rv.addItemDecoration(dividerItemDecoration);
         adapter = new DailyTimesAdapter(repeat.getTimes(), schedule.isOn());
         rv.setAdapter(adapter);
         rv.addOnScrollListener(new RecyclerView.OnScrollListener(){

@@ -3,6 +3,7 @@ package feelings.helper.ui.log;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -18,7 +19,11 @@ public class AnswerLogActivity extends AppCompatActivity {
         setContentView(R.layout.answer_log_activity);
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.answer_log_recycler_view);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rv.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),
+                layoutManager.getOrientation());
+        rv.addItemDecoration(dividerItemDecoration);
         adapter = new AnswerLogAdapter(this);
         rv.setAdapter(adapter);
     }

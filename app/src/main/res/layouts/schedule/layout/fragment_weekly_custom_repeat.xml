@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="16dp"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:showDividers="middle|end"
         >
 
         <RelativeLayout
             android:id="@+id/weekly_custom_days_of_week_group_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             >
 
@@ -62,8 +65,8 @@
             android:id="@+id/weekly_custom_days_of_week_group_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/weekly_custom_days_of_week_group_1"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             >
 
@@ -100,8 +103,6 @@
             android:id="@+id/weekly_custom_time_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/weekly_custom_days_of_week_group_2"
-            android:layout_marginTop="8dp"
             >
 
             <TextView
@@ -152,6 +153,6 @@
                 app:layout_constraintLeft_toRightOf="@+id/label_colon"
                 />
         </android.support.constraint.ConstraintLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

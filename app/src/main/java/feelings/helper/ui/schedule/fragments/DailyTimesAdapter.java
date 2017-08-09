@@ -74,7 +74,7 @@ class DailyTimesAdapter extends RecyclerView.Adapter<DailyTimesAdapter.DailyTime
 
     @Override
     public DailyTimeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_daily_repeat_time_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_daily_repeat_time_item, parent, false);
         return new DailyTimeViewHolder(view);
     }
 
