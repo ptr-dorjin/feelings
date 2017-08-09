@@ -21,7 +21,9 @@
             android:value="123456789012" />
 
         <activity android:name=".ui.question.QuestionsActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,7 +32,9 @@
 
         <activity android:name=".ui.schedule.ScheduleActivity"
             android:parentActivityName=".ui.question.QuestionsActivity"
-            android:label="@string/schedule_activity_title">
+            android:label="@string/schedule_activity_title"
+            android:screenOrientation="portrait"
+            >
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -39,7 +43,9 @@
 
         <activity android:name=".ui.answer.AnswerActivity"
             android:parentActivityName=".ui.question.QuestionsActivity"
-            android:label="@string/answer_activity_title">
+            android:label="@string/answer_activity_title"
+            android:screenOrientation="portrait"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.question.QuestionsActivity" />
@@ -47,7 +53,9 @@
 
         <activity android:name=".ui.log.AnswerLogActivity"
             android:parentActivityName=".ui.question.QuestionsActivity"
-            android:label="@string/answer_log_activity_title">
+            android:label="@string/answer_log_activity_title"
+            android:screenOrientation="portrait"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.question.QuestionsActivity" />
