@@ -35,7 +35,7 @@ import static feelings.helper.ui.schedule.fragments.FragmentFactory.create;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.fromPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getPosition;
 import static feelings.helper.ui.schedule.fragments.FragmentFactory.getTag;
-import static feelings.helper.util.DateTimeUtil.DATE_TIME_SHORT_FORMATTER;
+import static feelings.helper.util.DateTimeUtil.DATE_TIME_TOAST_FORMATTER;
 import static org.threeten.bp.LocalTime.of;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -139,7 +139,7 @@ public class ScheduleActivity extends AppCompatActivity {
                     LocalDateTime nextTime = schedule.getRepeat().getNextTime();
                     ToastUtil.showLong(this, String.format(
                             getString(R.string.msg_schedule_saved_on_success),
-                            nextTime.format(DATE_TIME_SHORT_FORMATTER)));
+                            nextTime.format(DATE_TIME_TOAST_FORMATTER)));
                 } else {
                     ToastUtil.showShort(this, getString(R.string.msg_schedule_saved_off_success));
                 }

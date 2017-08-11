@@ -25,6 +25,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         int questionId = intent.getIntExtra(QUESTION_ID_PARAM, 0);
+        Log.i(TAG, "onReceive: qId=" + questionId);
+
         // 1. show notification
         try {
             WakeLocker.acquire(context);
