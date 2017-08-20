@@ -47,4 +47,11 @@ dependencies {
     testCompile ('org.threeten:threetenbp:1.3.1') {
         exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
     }
+    compile ('com.github.tony19:logback-android-classic:1.1.1-3') {
+        exclude module: 'android'
+    }
+    compile ('com.github.tony19:logback-android-core:1.1.1-3')  {
+        exclude module: 'android'
+    }
+    compile 'org.slf4j:slf4j-api:1.7.7'
 }

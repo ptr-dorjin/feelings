@@ -1,7 +1,9 @@
 package feelings.helper.question;
 
 import android.content.Context;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,9 +14,10 @@ import java.util.Map;
 import feelings.helper.R;
 
 public class QuestionService {
-    private static final String TAG = QuestionService.class.getSimpleName();
 
     public static final int FEELINGS_ID = 1;
+
+    private static final Logger log = LoggerFactory.getLogger(QuestionService.class);
 
     private static List<Question> questions = new ArrayList<>();
     private static Map<Integer, Question> questionsMap = new HashMap<>();
@@ -49,7 +52,7 @@ public class QuestionService {
         if (question != null) {
             return question.getText();
         } else {
-            Log.e(TAG, "Unexpected questionId=" + questionId);
+            log.error("Unexpected question {}", questionId);
             return "Couldn't get question text";
         }
     }

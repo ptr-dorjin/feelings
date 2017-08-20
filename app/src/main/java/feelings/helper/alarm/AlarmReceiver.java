@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import feelings.helper.R;
 import feelings.helper.question.QuestionService;
@@ -20,12 +22,12 @@ import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-    private static final String TAG = AlarmReceiver.class.getSimpleName();
+    private static final Logger log = LoggerFactory.getLogger(AlarmService.class);
 
     @Override
     public void onReceive(Context context, Intent intent) {
         int questionId = intent.getIntExtra(QUESTION_ID_PARAM, 0);
-        Log.i(TAG, "onReceive: qId=" + questionId);
+        log.info("Received for question {}", questionId);
 
         // 1. show notification
         try {
@@ -41,7 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (schedule != null) {
             AlarmService.setAlarm(context, schedule);
         } else {
-            Log.e(TAG, "No schedule in the DB with id=" + questionId + ". Next alarm has not been set.");
+            log.error("No schedule in the DB for question {}. Next alarm has not been set.", questionId);
         }
     }
 

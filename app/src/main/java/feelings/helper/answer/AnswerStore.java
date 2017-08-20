@@ -22,18 +22,21 @@ import static feelings.helper.util.DateTimeUtil.DB_FORMATTER;
 public class AnswerStore {
 
     public static boolean saveAnswer(Context context, Answer answer) {
-        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_NAME_QUESTION_ID, answer.getQuestionId());
+            values.put(COLUMN_NAME_DATE_TIME, answer.getDateTime().format(DB_FORMATTER));
+            values.put(COLUMN_NAME_ANSWER, answer.getAnswerText());
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_QUESTION_ID, answer.getQuestionId());
-        values.put(COLUMN_NAME_DATE_TIME, answer.getDateTime().format(DB_FORMATTER));
-        values.put(COLUMN_NAME_ANSWER, answer.getAnswerText());
-
-        long newRowId = db.insert(TABLE_NAME, null, values);
-        return newRowId != -1;
+            long newRowId = db.insert(TABLE_NAME, null, values);
+            return newRowId != -1;
+        } finally {
+            db.close();
+        }
     }
 
-    public static List<Answer> getAllAnswers(Context context) {
+    static List<Answer> getAllAnswers(Context context) {
         Cursor cursor = null;
         try {
             cursor = getCursor(context);
@@ -52,16 +55,23 @@ public class AnswerStore {
     }
 
     public static Cursor getCursor(Context context) {
-        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
+        try {
+            String[] projection = {_ID, COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};
+            String orderBy = COLUMN_NAME_DATE_TIME + " DESC";
 
-        String[] projection = {_ID, COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};
-        String orderBy = COLUMN_NAME_DATE_TIME + " DESC";
-
-        return db.query(TABLE_NAME, projection, null, null, null, null, orderBy);
+            return db.query(TABLE_NAME, projection, null, null, null, null, orderBy);
+        } finally {
+            db.close();
+        }
     }
 
     static int deleteAll(Context context) {
-        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
-        return db.delete(TABLE_NAME, null, null);
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+        try {
+            return db.delete(TABLE_NAME, null, null);
+        } finally {
+            db.close();
+        }
     }
 }

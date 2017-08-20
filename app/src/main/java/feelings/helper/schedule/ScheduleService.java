@@ -24,7 +24,7 @@ public class ScheduleService {
     }
 
     /**
-     * Create or update only on/off flag
+     * Update only on/off flag
      */
     public static boolean switchOnOff(Context context, Schedule schedule) {
         boolean success = ScheduleStore.switchOnOff(context, schedule.getQuestionId(), schedule.isOn());

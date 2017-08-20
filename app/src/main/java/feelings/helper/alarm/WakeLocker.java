@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.PowerManager;
 
 class WakeLocker {
+    private static final String APP_TAG = "FeelingsHelper";
     private static PowerManager.WakeLock wakeLock;
-    private static String APP_TAG = "SimpleQuestions";
 
     static void acquire(Context ctx) {
         if (wakeLock != null) wakeLock.release();
@@ -18,6 +18,9 @@ class WakeLocker {
     }
 
     static void release() {
-        if (wakeLock != null) wakeLock.release(); wakeLock = null;
+        if (wakeLock != null) {
+            wakeLock.release();
+        }
+        wakeLock = null;
     }
 }

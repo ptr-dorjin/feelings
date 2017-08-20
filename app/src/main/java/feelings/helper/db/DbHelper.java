@@ -11,7 +11,16 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "FeelingsHelper.db";
 
-    public DbHelper(Context context) {
+    private static DbHelper instance = null;
+
+    public static DbHelper getInstance(Context context) {
+        if (instance == null) {
+            instance = new DbHelper(context);
+        }
+        return instance;
+    }
+
+    private DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
