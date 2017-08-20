@@ -51,19 +51,17 @@ public class AnswerStore {
                 list.add(new Answer(questionId, dateTime, answerText));
             }
             return list;
-        } finally { if (cursor != null) cursor.close(); }
+        } finally {
+            if (cursor != null) cursor.close();
+        }
     }
 
     public static Cursor getCursor(Context context) {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
-        try {
-            String[] projection = {_ID, COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};
-            String orderBy = COLUMN_NAME_DATE_TIME + " DESC";
+        String[] projection = {_ID, COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};
+        String orderBy = COLUMN_NAME_DATE_TIME + " DESC";
 
-            return db.query(TABLE_NAME, projection, null, null, null, null, orderBy);
-        } finally {
-            db.close();
-        }
+        return db.query(TABLE_NAME, projection, null, null, null, null, orderBy);
     }
 
     static int deleteAll(Context context) {
