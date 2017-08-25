@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.util.Pair;
 import android.support.v7.app.NotificationCompat;
 
 import org.slf4j.Logger;
@@ -22,11 +23,12 @@ import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-    private static final Logger log = LoggerFactory.getLogger(AlarmService.class);
+    private static final Logger log = LoggerFactory.getLogger(AlarmReceiver.class);
+    public static final int SPLIT_INDEX = 30;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int questionId = intent.getIntExtra(QUESTION_ID_PARAM, 0);
+        int questionId = intent.getIntExtra(QUESTION_ID_PARAM, -1);
         log.info("Received for question {}", questionId);
 
         // 1. show notification
@@ -49,9 +51,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private Notification buildNotification(Context context, int questionId) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentTitle(QuestionService.getQuestionText(context, questionId));
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setAutoCancel(true);
+
+        Pair<String, String> splittedQuestionText = splitQuestionText(context, questionId);
+        builder.setContentTitle(splittedQuestionText.first)
+                .setContentText(splittedQuestionText.second)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true);
 
         Intent intent = new Intent(context, AnswerActivity.class);
         intent.putExtra(QUESTION_ID_PARAM, questionId);
@@ -64,5 +69,20 @@ public class AlarmReceiver extends BroadcastReceiver {
             //noinspection deprecation
             return builder.getNotification();
         }
+    }
+
+    private Pair<String, String> splitQuestionText(Context context, int questionId) {
+        String questionText = QuestionService.getQuestionText(context, questionId);
+        if (questionText == null) {
+            return new Pair<>(context.getString(R.string.app_name), null);
+        }
+        if (questionText.length() <= SPLIT_INDEX) {
+            return new Pair<>(questionText, null);
+        }
+        int lastSpace = questionText.lastIndexOf(" ", SPLIT_INDEX);
+        if (lastSpace == -1) {
+            return new Pair<>(questionText, null);
+        }
+        return new Pair<>(questionText.substring(0, lastSpace), questionText.substring(lastSpace + 1));
     }
 }

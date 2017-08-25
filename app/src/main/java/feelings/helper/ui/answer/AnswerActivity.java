@@ -42,7 +42,7 @@ public class AnswerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.answer_activity);
 
-        questionId = getIntent().getIntExtra(QUESTION_ID_PARAM, 0);
+        questionId = getIntent().getIntExtra(QUESTION_ID_PARAM, -1);
 
         TextView questionView = (TextView) findViewById(R.id.question_text_on_answer);
         questionView.setText(QuestionService.getQuestionText(this, questionId));

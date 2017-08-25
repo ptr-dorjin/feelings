@@ -50,7 +50,7 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_activity);
 
-        int questionId = getIntent().getIntExtra(QUESTION_ID_PARAM, 0);
+        int questionId = getIntent().getIntExtra(QUESTION_ID_PARAM, -1);
 
         TextView questionView = (TextView) findViewById(R.id.question_text_on_schedule);
         questionView.setText(QuestionService.getQuestionText(this, questionId));

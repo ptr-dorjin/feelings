@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Feelings Helper</string>
+
+    <string name="foreground_notification_text">is keeping an eye on you.</string>
     
     <string name="schedule_activity_title">Повтор</string>
     <string name="answer_activity_title">Ответ</string>
