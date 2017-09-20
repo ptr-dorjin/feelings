@@ -12,7 +12,7 @@ abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> ext
     private boolean isDataValid;
     private int rowIdColumn;
 
-    public RecyclerViewCursorAdapter(Cursor cursor) {
+    RecyclerViewCursorAdapter(Cursor cursor) {
         setHasStableIds(true);
         swapCursor(cursor);
     }

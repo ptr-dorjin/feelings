@@ -22,49 +22,5 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             />
-
-        <TextView android:id="@+id/label_answer"
-            android:text="@string/card_answer_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/question_text_on_card"
-            />
-
-        <TextView android:id="@+id/link_to_answer_now"
-            android:text="@string/card_right_now_link"
-            android:textSize="15sp"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/label_answer"
-            android:layout_alignBottom="@id/label_answer"
-            android:layout_marginLeft="10dp"
-            />
-
-        <TextView android:id="@+id/label_or"
-            android:text="@string/card_or"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/link_to_answer_now"
-            android:layout_alignBottom="@+id/link_to_answer_now"
-            android:layout_marginLeft="10dp"
-            />
-
-        <TextView android:id="@+id/setup_repeat"
-            android:textSize="15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/label_answer"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/switchOnOff"
-            />
-
-        <Switch android:id="@+id/switchOnOff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            />
-
     </RelativeLayout>
 </android.support.v7.widget.CardView>

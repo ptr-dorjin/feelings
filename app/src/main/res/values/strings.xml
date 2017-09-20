@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Feelings Helper</string>
 
-    <string name="foreground_notification_text">is keeping an eye on you.</string>
-    
-    <string name="schedule_activity_title">Повтор</string>
     <string name="answer_activity_title">Ответ</string>
     <string name="answer_log_activity_title">Журнал</string>
 
@@ -17,47 +14,9 @@
     <string name="q_do_close">Что я могу сделать для своих близких?</string>
     <string name="q_do_others">Что я могу сделать для других людей?</string>
 
-    <string name="card_answer_label">Ответить:</string>
-    <string name="card_right_now_link"><u>сейчас</u></string>
-    <string name="card_or">или</string>
-    <string name="card_configure"><u>настроить</u></string>
-
-    <string name="every1">каждый</string>
-    <string name="every2">каждые</string>
-    <string name="every5">каждые</string>
-
-    <string name="hour1">час</string>
-    <string name="hour2">часа</string>
-    <string name="hour5">часов</string>
-
-    <string name="hourly">%1$s %2$d %3$s с %4$s по %5$s</string>
-    <string name="daily">каждый день в %s</string>
-    <string name="weekly">по %1$s в %2$s</string>
-    <string name="weekly_custom">по %1$s в %2$s</string>
-    
-    <string name="msg_repeat_switched_on_success">Нотификации включены</string>
-    <string name="msg_repeat_switched_off_success">Нотификации выключены</string>
-    <string name="msg_repeat_switched_on_error">Ошибка при включении нотификаций</string>
-    <string name="msg_repeat_switched_off_error">Ошибка при выключении нотификаций</string>
-    <string name="msg_schedule_saved_on_success">Следующая нотификация в %s</string>
-    <string name="msg_schedule_saved_off_success">Параметры сохранены</string>
-    <string name="msg_schedule_saved_error">Ошибка при сохранении</string>
-    <string name="msg_daily_repeat_empty">Добавьте хотя бы одно время</string>
     <string name="msg_answer_text_empty">Введите ответ</string>
     <string name="msg_answer_saved_success">Ответ сохранен в журнал</string>
     <string name="msg_answer_saved_error">Ошибка при сохранении ответа</string>
-
-    <string-array name="repeat_type_array">
-        <item>Каждые N часов</item>
-        <item>Каждый день</item>
-        <item>Раз в неделю</item>
-        <item>По дням недели</item>
-    </string-array>
-
-    <string name="on_off">Включить нотификации</string>
-    <string name="start">с</string>
-    <string name="end">по</string>
-    <string name="at">в</string>
 
     <string name="btn_save">Сохранить</string>
     <string name="btn_show_log">Журнал</string>

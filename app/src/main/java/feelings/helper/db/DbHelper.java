@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import static feelings.helper.answer.AnswerContract.SQL_CREATE_ANSWER_TABLE;
-import static feelings.helper.schedule.ScheduleContract.SQL_CREATE_SCHEDULE_TABLE;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -26,7 +25,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_SCHEDULE_TABLE);
         db.execSQL(SQL_CREATE_ANSWER_TABLE);
     }
 

@@ -17,7 +17,7 @@ import feelings.helper.question.QuestionService;
 import static feelings.helper.answer.AnswerContract.COLUMN_NAME_ANSWER;
 import static feelings.helper.answer.AnswerContract.COLUMN_NAME_DATE_TIME;
 import static feelings.helper.answer.AnswerContract.COLUMN_NAME_QUESTION_ID;
-import static feelings.helper.util.DateTimeUtil.DATE_TIME_ANSWER_LOG_FORMATTER;
+import static feelings.helper.util.DateTimeUtil.ANSWER_LOG_FORMATTER;
 import static feelings.helper.util.DateTimeUtil.DB_FORMATTER;
 
 class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.AnswerLogHolder> {
@@ -37,7 +37,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
         }
     }
 
-    public AnswerLogAdapter(Context context) {
+    AnswerLogAdapter(Context context) {
         super(null);
         this.context = context;
         swapCursor(AnswerStore.getCursor(context));
@@ -57,7 +57,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
                 DB_FORMATTER);
         String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_ANSWER));
 
-        holder.dateTime.setText(dateTime.format(DATE_TIME_ANSWER_LOG_FORMATTER));
+        holder.dateTime.setText(dateTime.format(ANSWER_LOG_FORMATTER));
         holder.question.setText(QuestionService.getQuestionText(context, questionId));
         holder.answer.setText(answerText);
     }
