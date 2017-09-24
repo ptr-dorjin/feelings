@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,10 +27,12 @@ class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.QuestionVie
     final class QuestionViewHolder extends RecyclerView.ViewHolder {
         Question currentQuestion;
         TextView questionText;
+        ImageButton popupMenu;
 
         private QuestionViewHolder(View itemView) {
             super(itemView);
             questionText = (TextView) itemView.findViewById(R.id.question_text_on_card);
+            popupMenu = (ImageButton) itemView.findViewById(R.id.popupMenu);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -62,6 +65,7 @@ class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.QuestionVie
     private void bindCardItem(QuestionViewHolder holder, Question question) {
         holder.currentQuestion = question;
         holder.questionText.setText(question.getText());
+        holder.popupMenu.setTag(question.getId());
     }
 
     @Override

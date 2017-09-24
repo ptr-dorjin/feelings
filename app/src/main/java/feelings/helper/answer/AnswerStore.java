@@ -5,11 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import org.threeten.bp.LocalDateTime;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import feelings.helper.db.DbHelper;
 
 import static android.provider.BaseColumns._ID;
@@ -36,27 +31,7 @@ public class AnswerStore {
         }
     }
 
-    static List<Answer> getAllAnswers(Context context) {
-        Cursor cursor = null;
-        try {
-            cursor = getCursor(context);
-
-            List<Answer> list = new ArrayList<>();
-            while (cursor.moveToNext()) {
-                int questionId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_QUESTION_ID));
-                LocalDateTime dateTime = LocalDateTime.parse(
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DATE_TIME)),
-                        DB_FORMATTER);
-                String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_ANSWER));
-                list.add(new Answer(questionId, dateTime, answerText));
-            }
-            return list;
-        } finally {
-            if (cursor != null) cursor.close();
-        }
-    }
-
-    public static Cursor getCursor(Context context) {
+    public static Cursor getAll(Context context) {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
         String[] projection = {_ID, COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};
         String orderBy = COLUMN_NAME_DATE_TIME + " DESC";
@@ -64,6 +39,18 @@ public class AnswerStore {
         return db.query(TABLE_NAME, projection, null, null, null, null, orderBy);
     }
 
+    public static Cursor getByQuestionId(Context context, int questionId) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
+        String[] projection = {_ID, COLUMN_NAME_QUESTION_ID, COLUMN_NAME_DATE_TIME, COLUMN_NAME_ANSWER};
+        String orderBy = COLUMN_NAME_DATE_TIME + " DESC";
+
+        String selection = COLUMN_NAME_QUESTION_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(questionId)};
+
+        return db.query(TABLE_NAME, projection, selection, selectionArgs, null, null, orderBy);
+    }
+
+    // for tests only
     static int deleteAll(Context context) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {

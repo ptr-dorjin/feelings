@@ -20,5 +20,8 @@
 
     <string name="btn_save">Сохранить</string>
     <string name="btn_show_log">Журнал</string>
+    <string name="popup_menu_descr">Popup Menu</string>
+
+    <string name="answer_log_empty_text">Журнал пуст.</string>
 
 </resources>

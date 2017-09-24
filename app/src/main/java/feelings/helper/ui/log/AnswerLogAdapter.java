@@ -11,7 +11,6 @@ import android.widget.TextView;
 import org.threeten.bp.LocalDateTime;
 
 import feelings.helper.R;
-import feelings.helper.answer.AnswerStore;
 import feelings.helper.question.QuestionService;
 
 import static feelings.helper.answer.AnswerContract.COLUMN_NAME_ANSWER;
@@ -20,9 +19,15 @@ import static feelings.helper.answer.AnswerContract.COLUMN_NAME_QUESTION_ID;
 import static feelings.helper.util.DateTimeUtil.ANSWER_LOG_FORMATTER;
 import static feelings.helper.util.DateTimeUtil.DB_FORMATTER;
 
+/**
+ * Used on
+ * - answer log by one question
+ * - full answer log (for all questions)
+ */
 class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.AnswerLogHolder> {
 
     private final Context context;
+    private final boolean isFull;
 
     static final class AnswerLogHolder extends RecyclerView.ViewHolder {
         TextView dateTime;
@@ -37,15 +42,19 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
         }
     }
 
-    AnswerLogAdapter(Context context) {
+    AnswerLogAdapter(Context context, boolean isFull, Cursor cursor) {
         super(null);
         this.context = context;
-        swapCursor(AnswerStore.getCursor(context));
+        this.isFull = isFull;
+        swapCursor(cursor);
     }
 
     @Override
     public AnswerLogHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.answer_log_item, parent, false);
+        int itemViewId = isFull
+                ? R.layout.full_answer_log_item
+                : R.layout.answer_log_by_question_item;
+        View view = LayoutInflater.from(context).inflate(itemViewId, parent, false);
         return new AnswerLogHolder(view);
     }
 
@@ -58,7 +67,9 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
         String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_ANSWER));
 
         holder.dateTime.setText(dateTime.format(ANSWER_LOG_FORMATTER));
-        holder.question.setText(QuestionService.getQuestionText(context, questionId));
+        if (holder.question != null) {
+            holder.question.setText(QuestionService.getQuestionText(context, questionId));
+        }
         holder.answer.setText(answerText);
     }
 }
