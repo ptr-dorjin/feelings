@@ -3,17 +3,17 @@ package feelings.helper.answer;
 import org.threeten.bp.LocalDateTime;
 
 public class Answer {
-    private final int questionId;
+    private final long questionId;
     private final LocalDateTime dateTime;
     private final String answerText;
 
-    public Answer(int questionId, LocalDateTime dateTime, String answerText) {
+    public Answer(long questionId, LocalDateTime dateTime, String answerText) {
         this.questionId = questionId;
         this.dateTime = dateTime;
         this.answerText = answerText;
     }
 
-    public int getQuestionId() {
+    public long getQuestionId() {
         return questionId;
     }
 

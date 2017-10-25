@@ -1,4 +1,4 @@
-package feelings.helper.ui.log;
+package feelings.helper.ui;
 
 import android.database.Cursor;
 import android.database.DataSetObserver;
@@ -6,13 +6,13 @@ import android.support.v7.widget.RecyclerView;
 
 import static android.provider.BaseColumns._ID;
 
-abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     private Cursor cursor;
     private boolean isDataValid;
     private int rowIdColumn;
 
-    RecyclerViewCursorAdapter(Cursor cursor) {
+    public RecyclerViewCursorAdapter(Cursor cursor) {
         setHasStableIds(true);
         swapCursor(cursor);
     }

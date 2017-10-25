@@ -1,14 +1,10 @@
 package feelings.helper.question;
 
-import android.support.annotation.NonNull;
-
-public class Question implements Comparable<Question> {
+public class Question {
     /**
      * Question ID.
-     * [0, 100] range is for built-in questions
-     * [100, ...) range is for user-defined questions
      */
-    private final int id;
+    private long id;
     /**
      * Question text.
      */
@@ -17,20 +13,35 @@ public class Question implements Comparable<Question> {
      * Is user-defined question
      */
     private final boolean isUser;
+    /**
+     * Is deleted
+     */
+    private boolean isDeleted = false;
 
-    Question(int id, String text) {
+    public Question(String text) {
+        this.text = text;
+        isUser = true;
+    }
+
+    public Question(long id, String text) {
         this.id = id;
         this.text = text;
-        this.isUser = false;
+        isUser = true;
     }
 
-    @Override
-    public int compareTo(@NonNull Question o) {
-        return Integer.valueOf(id).compareTo(o.id);
+    Question(long id, String text, boolean isUser, boolean isDeleted) {
+        this.id = id;
+        this.text = text;
+        this.isUser = isUser;
+        this.isDeleted = isDeleted;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getText() {
@@ -41,7 +52,11 @@ public class Question implements Comparable<Question> {
         this.text = text;
     }
 
-    public boolean isUser() {
+    boolean isUser() {
         return isUser;
+    }
+
+    boolean isDeleted() {
+        return isDeleted;
     }
 }

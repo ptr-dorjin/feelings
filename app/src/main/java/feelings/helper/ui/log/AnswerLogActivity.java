@@ -18,8 +18,8 @@ import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
 
 public class AnswerLogActivity extends AppCompatActivity {
 
-    private static final int DEFAULT_QUESTION_ID = -1;
-    private int questionId;
+    private static final long DEFAULT_QUESTION_ID = -1;
+    private long questionId;
     private boolean isFull;
     private Cursor cursor;
     private AnswerLogAdapter adapter;
@@ -28,7 +28,7 @@ public class AnswerLogActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        questionId = getIntent().getIntExtra(QUESTION_ID_PARAM, DEFAULT_QUESTION_ID);
+        questionId = getIntent().getLongExtra(QUESTION_ID_PARAM, DEFAULT_QUESTION_ID);
         isFull = questionId == DEFAULT_QUESTION_ID;
 
         setContentView(isFull

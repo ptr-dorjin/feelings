@@ -1,59 +1,51 @@
 package feelings.helper.question;
 
 import android.content.Context;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import feelings.helper.R;
+import android.database.Cursor;
+import android.util.Log;
 
 public class QuestionService {
 
-    public static final int FEELINGS_ID = 1;
+    private static final String TAG = QuestionService.class.getSimpleName();
 
-    private static List<Question> questions = new ArrayList<>();
-    private static Map<Integer, Question> questionsMap = new HashMap<>();
-    private static volatile boolean initialized = false;
+    public static final long FEELINGS_ID = 1;
 
-    private static void init(Context context) {
-        if (!initialized) {
-            synchronized (QuestionService.class) {
-                if (!initialized) {
-                    questions.add(new Question(FEELINGS_ID, context.getString(R.string.q_feelings)));
-                    questions.add(new Question(2, context.getString(R.string.q_insincerity)));
-                    questions.add(new Question(3, context.getString(R.string.q_gratitude)));
-                    questions.add(new Question(4, context.getString(R.string.q_preach)));
-                    questions.add(new Question(5, context.getString(R.string.q_lie)));
-                    questions.add(new Question(6, context.getString(R.string.q_irresponsibility)));
-                    questions.add(new Question(7, context.getString(R.string.q_do_body)));
-                    questions.add(new Question(8, context.getString(R.string.q_do_close)));
-                    questions.add(new Question(9, context.getString(R.string.q_do_others)));
-
-                    for (Question question : questions) {
-                        questionsMap.put(question.getId(), question);
-                    }
-                    initialized = true;
-                }
-            }
-        }
+    public static String getQuestionText(Context context, long questionId) {
+        Question question = QuestionStore.getById(context, questionId);
+        return question != null
+                ? question.getText()
+                : "Couldn't get question text";
     }
 
-    public static String getQuestionText(Context context, int questionId) {
-        init(context);
-        Question question = questionsMap.get(questionId);
-        if (question != null) {
-            return question.getText();
-        } else {
-            return "Couldn't get question text";
-        }
+    public static long createQuestion(Context context, Question question) {
+        return QuestionStore.createQuestion(context, question);
     }
 
-    public static List<Question> getAllQuestions(Context context) {
-        init(context);
-        Collections.sort(questions);
-        return questions;
+    public static boolean updateQuestion(Context context, Question question) {
+        if (question.getId() == FEELINGS_ID) {
+            Log.e(TAG, "updateQuestion: attempt to update feelings question!");
+            return false;
+        }
+        return QuestionStore.updateQuestion(context, question);
+    }
+
+    public static boolean deleteQuestion(Context context, long questionId) {
+        if (questionId == FEELINGS_ID) {
+            Log.e(TAG, "deleteQuestion: attempt to delete feelings question!");
+            return false;
+        }
+        return QuestionStore.deleteQuestion(context, questionId);
+    }
+
+    public static Cursor getAllQuestions(Context context) {
+        return QuestionStore.getAll(context);
+    }
+
+    public static Question getById(Context context, long questionId) {
+        Question question = QuestionStore.getById(context, questionId);
+        if (question == null) {
+            Log.e(TAG, "getById: couldn't find question by id=" + questionId);
+        }
+        return question;
     }
 }

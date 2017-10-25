@@ -6,6 +6,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,33 +17,39 @@ import java.util.List;
 
 import feelings.helper.util.DateTimeUtil;
 
-import static feelings.helper.answer.AnswerContract.COLUMN_NAME_ANSWER;
-import static feelings.helper.answer.AnswerContract.COLUMN_NAME_DATE_TIME;
-import static feelings.helper.answer.AnswerContract.COLUMN_NAME_QUESTION_ID;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
+import static feelings.helper.answer.AnswerContract.COLUMN_ANSWER;
+import static feelings.helper.answer.AnswerContract.COLUMN_DATE_TIME;
+import static feelings.helper.answer.AnswerContract.COLUMN_QUESTION_ID;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class AnswerStoreTest {
-    private static final int QUESTION_ID = 1;
+    private static final long QUESTION_ID = 1;
     private static final LocalDateTime DATE_TIME = LocalDateTime.now();
     private static final String ANSWER_TEXT = "test answer";
+
+    private Context context;
 
     @BeforeClass
     public static void beforeClass() {
         AnswerStore.deleteAll(InstrumentationRegistry.getTargetContext());
     }
 
+    @Before
+    public void before() {
+        context = InstrumentationRegistry.getTargetContext();
+    }
+
     @After
-    public void tearDown() {
-        Context context = InstrumentationRegistry.getTargetContext();
+    public void after() {
         AnswerStore.deleteAll(context);
+        context = null;
     }
 
     @Test
     public void testCreate() {
-        Context context = InstrumentationRegistry.getTargetContext();
         Answer answer = new Answer(QUESTION_ID, DATE_TIME, ANSWER_TEXT);
 
         boolean created = AnswerStore.saveAnswer(context, answer);
@@ -51,13 +58,15 @@ public class AnswerStoreTest {
 
     @Test
     public void testGetAll() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        // given
         AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT));
         AnswerStore.saveAnswer(context, new Answer(2, DATE_TIME.minusMinutes(1), "another one"));
         AnswerStore.saveAnswer(context, new Answer(3, DATE_TIME.minusMinutes(2), "one more"));
 
+        // when
         List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
 
+        // then
         assertEquals(3, answers.size());
         Answer fromDb = answers.get(0);
         assertEquals(2, fromDb.getQuestionId());
@@ -77,13 +86,15 @@ public class AnswerStoreTest {
 
     @Test
     public void testGetByQuestionId() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        // given
         AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT));
         AnswerStore.saveAnswer(context, new Answer(2, DATE_TIME.minusMinutes(1), "another one"));
         AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(2), "one more"));
 
+        // when
         List<Answer> answers = cursorToAnswers(AnswerStore.getByQuestionId(context, QUESTION_ID));
 
+        // then
         assertEquals(2, answers.size());
         Answer fromDb = answers.get(0);
         assertEquals(QUESTION_ID, fromDb.getQuestionId());
@@ -101,11 +112,11 @@ public class AnswerStoreTest {
         try {
             List<Answer> list = new ArrayList<>();
             while (cursor.moveToNext()) {
-                int questionId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_QUESTION_ID));
+                long questionId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_QUESTION_ID));
                 LocalDateTime dateTime = LocalDateTime.parse(
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DATE_TIME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
                         DateTimeUtil.DB_FORMATTER);
-                String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_ANSWER));
+                String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ANSWER));
                 list.add(new Answer(questionId, dateTime, answerText));
             }
             return list;

@@ -28,7 +28,7 @@
 
         <activity android:name=".ui.answer.AnswerActivity"
             android:parentActivityName=".ui.question.QuestionsActivity"
-            android:label="@string/answer_activity_title"
+            android:label="@string/title_answer_activity"
             android:screenOrientation="portrait"
             >
             <meta-data
@@ -38,7 +38,7 @@
 
         <activity android:name=".ui.log.AnswerLogActivity"
             android:parentActivityName=".ui.question.QuestionsActivity"
-            android:label="@string/answer_log_activity_title"
+            android:label="@string/title_answer_log_activity"
             android:screenOrientation="portrait"
             >
             <meta-data

@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Feelings Helper</string>
 
-    <string name="answer_activity_title">Ответ</string>
-    <string name="answer_log_activity_title">Журнал</string>
+    <string name="title_answer_activity">Ответ</string>
+    <string name="title_answer_log_activity">Журнал</string>
+    <string name="title_edit_question_dialog">Введите вопрос</string>
+    <string name="title_delete_question_dialog">Удалить вопрос?</string>
 
     <string name="q_feelings">Что я сейчас чувствую?</string>
     <string name="q_insincerity">С кем я был неискренен сегодня?</string>
@@ -14,12 +16,23 @@
     <string name="q_do_close">Что я могу сделать для своих близких?</string>
     <string name="q_do_others">Что я могу сделать для других людей?</string>
 
+    <string name="msg_question_text_empty">Текст не должен быть пустым</string>
+    <string name="msg_question_create_success">Вопрос создан</string>
+    <string name="msg_question_create_error">Ошибка при создании вопроса</string>
+    <string name="msg_question_edit_success">Вопрос изменен</string>
+    <string name="msg_question_edit_error">Ошибка при изменении вопроса</string>
+    <string name="msg_question_delete_success">Вопрос удален</string>
+    <string name="msg_question_delete_error">Ошибка при удалении вопроса</string>
     <string name="msg_answer_text_empty">Введите ответ</string>
     <string name="msg_answer_saved_success">Ответ сохранен в журнал</string>
     <string name="msg_answer_saved_error">Ошибка при сохранении ответа</string>
 
     <string name="btn_save">Сохранить</string>
+    <string name="btn_cancel">Отмена</string>
+    <string name="btn_edit">Редактировать</string>
+    <string name="btn_delete">Удалить</string>
     <string name="btn_show_log">Журнал</string>
+
     <string name="popup_menu_descr">Popup Menu</string>
 
     <string name="answer_log_empty_text">Журнал пуст.</string>

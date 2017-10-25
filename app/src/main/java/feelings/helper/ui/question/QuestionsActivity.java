@@ -2,6 +2,9 @@ package feelings.helper.ui.question;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -10,24 +13,59 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import feelings.helper.R;
+import feelings.helper.question.Question;
+import feelings.helper.question.QuestionService;
 import feelings.helper.ui.log.AnswerLogActivity;
+import feelings.helper.util.ToastUtil;
 
 import static feelings.helper.FeelingsApplication.QUESTION_ID_PARAM;
 
-public class QuestionsActivity extends AppCompatActivity {
+public class QuestionsActivity extends AppCompatActivity implements
+        QuestionEditDialogFragment.QuestionEditDialogListener,
+        QuestionDeleteDialogFragment.QuestionDeleteDialogListener {
 
+    private QuestionsAdapter adapter;
+    private FloatingActionButton fab;
+    private Long changeQuestionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.questions_activity);
 
+        setUpFab();
+        setUpRv();
+    }
+
+    private void setUpFab() {
+        fab = (FloatingActionButton) findViewById(R.id.question_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEditQuestionDialog(null);
+            }
+        });
+    }
+
+    private void setUpRv() {
         RecyclerView rv = (RecyclerView) findViewById(R.id.questions_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setHasFixedSize(true);
-        rv.setAdapter(new QuestionsAdapter(this));
+        adapter = new QuestionsAdapter(this);
+        adapter.setHasStableIds(true);
+        rv.setAdapter(adapter);
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0) {
+                    fab.hide();
+                } else {
+                    fab.show();
+                }
+            }
+        });
     }
 
     @Override
@@ -39,7 +77,6 @@ public class QuestionsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Log button pressed
         if (item.getItemId() == R.id.show_log) {
             return showAnswerLog(null);
         } else {
@@ -49,27 +86,92 @@ public class QuestionsActivity extends AppCompatActivity {
 
     public void showPopupMenu(final View v) {
         PopupMenu popup = new PopupMenu(this, v);
-        popup.inflate(R.menu.questions_menu);
+        final long questionId = (long) v.getTag();
+        popup.inflate(questionId == QuestionService.FEELINGS_ID
+                ? R.menu.questions_menu
+                : R.menu.questions_popup_menu);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.show_log) {
-                    int questionId = (int) v.getTag();
-                    return showAnswerLog(questionId);
-                } else {
-                    return false;
+                switch (item.getItemId()) {
+                    case R.id.show_log:
+                        return showAnswerLog(questionId);
+                    case R.id.edit:
+                        return showEditQuestionDialog(questionId);
+                    case R.id.delete:
+                        return showDeleteConfirmation(questionId);
+                    default:
+                        return false;
                 }
             }
         });
         popup.show();
     }
 
-    private boolean showAnswerLog(Integer questionId) {
+    private boolean showEditQuestionDialog(Long questionId) {
+        changeQuestionId = questionId;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogFragment dialogFragment = new QuestionEditDialogFragment();
+        dialogFragment.setCancelable(false);
+        dialogFragment.show(fragmentManager, QuestionEditDialogFragment.class.getSimpleName());
+        fragmentManager.executePendingTransactions();
+        if (questionId != null) {
+            EditText questionEditText = (EditText) dialogFragment.getDialog().findViewById(R.id.question_text_edit);
+            questionEditText.setText(QuestionService.getQuestionText(this, questionId));
+        }
+        return true;
+    }
+
+    private boolean showDeleteConfirmation(long questionId) {
+        changeQuestionId = questionId;
+        DialogFragment dialogFragment = new QuestionDeleteDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), QuestionDeleteDialogFragment.class.getSimpleName());
+        return true;
+    }
+
+    private boolean showAnswerLog(Long questionId) {
         Intent intent = new Intent(this, AnswerLogActivity.class);
         if (questionId != null) {
             intent.putExtra(QUESTION_ID_PARAM, questionId);
         }
         startActivity(intent);
         return true;
+    }
+
+    @Override
+    public void onSaveClick(DialogFragment dialogFragment) {
+        EditText questionEditText = (EditText) dialogFragment.getDialog().findViewById(R.id.question_text_edit);
+        String text = questionEditText.getText().toString().trim();
+        if (text.isEmpty()) {
+            ToastUtil.showLong(this, getString(R.string.msg_question_text_empty));
+            return;
+        }
+
+        if (changeQuestionId == null) {
+            performServiceAction(QuestionService.createQuestion(this, new Question(text)) != -1,
+                    R.string.msg_question_create_success,
+                    R.string.msg_question_create_error);
+        } else {
+            performServiceAction(QuestionService.updateQuestion(this, new Question(changeQuestionId, text)),
+                    R.string.msg_question_edit_success,
+                    R.string.msg_question_edit_error);
+        }
+        adapter.refreshAll();
+    }
+
+    @Override
+    public void onDeleteClick(DialogFragment dialogFragment) {
+        performServiceAction(QuestionService.deleteQuestion(this, changeQuestionId),
+                R.string.msg_question_delete_success,
+                R.string.msg_question_delete_error);
+        adapter.refreshAll();
+    }
+
+    private void performServiceAction(boolean success, int successMessageId, int errorMessageId) {
+        if (success) {
+            ToastUtil.showShort(this, getString(successMessageId));
+        } else {
+            ToastUtil.showLong(this, getString(errorMessageId));
+        }
     }
 }

@@ -12,10 +12,11 @@ import org.threeten.bp.LocalDateTime;
 
 import feelings.helper.R;
 import feelings.helper.question.QuestionService;
+import feelings.helper.ui.RecyclerViewCursorAdapter;
 
-import static feelings.helper.answer.AnswerContract.COLUMN_NAME_ANSWER;
-import static feelings.helper.answer.AnswerContract.COLUMN_NAME_DATE_TIME;
-import static feelings.helper.answer.AnswerContract.COLUMN_NAME_QUESTION_ID;
+import static feelings.helper.answer.AnswerContract.COLUMN_ANSWER;
+import static feelings.helper.answer.AnswerContract.COLUMN_DATE_TIME;
+import static feelings.helper.answer.AnswerContract.COLUMN_QUESTION_ID;
 import static feelings.helper.util.DateTimeUtil.ANSWER_LOG_FORMATTER;
 import static feelings.helper.util.DateTimeUtil.DB_FORMATTER;
 
@@ -60,11 +61,11 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
 
     @Override
     protected void onBindViewHolder(AnswerLogHolder holder, Cursor cursor) {
-        int questionId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NAME_QUESTION_ID));
+        long questionId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_QUESTION_ID));
         LocalDateTime dateTime = LocalDateTime.parse(
-                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_DATE_TIME)),
+                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
                 DB_FORMATTER);
-        String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME_ANSWER));
+        String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ANSWER));
 
         holder.dateTime.setText(dateTime.format(ANSWER_LOG_FORMATTER));
         if (holder.question != null) {
