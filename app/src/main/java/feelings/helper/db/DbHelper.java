@@ -16,7 +16,7 @@ import static feelings.helper.question.QuestionContract.QUESTION_TABLE;
 import static feelings.helper.question.QuestionContract.SQL_CREATE_QUESTION_TABLE;
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2; //todo 1
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "FeelingsHelper.db";
 
     @SuppressLint("StaticFieldLeak")
@@ -45,8 +45,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_CREATE_QUESTION_TABLE); //todo delete
-        populateQuestions(db); //todo delete
     }
 
     private void populateQuestions(SQLiteDatabase db) {
