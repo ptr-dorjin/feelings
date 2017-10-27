@@ -1,18 +1,24 @@
 package feelings.helper.ui.question;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import feelings.helper.R;
@@ -114,12 +120,33 @@ public class QuestionsActivity extends AppCompatActivity implements
         DialogFragment dialogFragment = new QuestionEditDialogFragment();
         dialogFragment.setCancelable(false);
         dialogFragment.show(fragmentManager, QuestionEditDialogFragment.class.getSimpleName());
-        fragmentManager.executePendingTransactions();
-        if (questionId != null) {
-            EditText questionEditText = (EditText) dialogFragment.getDialog().findViewById(R.id.question_text_edit);
-            questionEditText.setText(QuestionService.getQuestionText(this, questionId));
-        }
+        fragmentManager.executePendingTransactions(); // to fetch inflated dialog
+        setUpEditDialog(questionId, dialogFragment);
         return true;
+    }
+
+    private void setUpEditDialog(Long questionId, DialogFragment dialogFragment) {
+        Dialog dialog = dialogFragment.getDialog();
+        EditText questionEditText = (EditText) dialog.findViewById(R.id.question_text_edit);
+        final Button saveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+
+        if (questionId != null) {
+            questionEditText.setText(QuestionService.getQuestionText(this, questionId));
+        } else {
+            saveButton.setEnabled(false);
+        }
+        questionEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                saveButton.setEnabled(!TextUtils.isEmpty(s));
+            }
+        });
     }
 
     private boolean showDeleteConfirmation(long questionId) {

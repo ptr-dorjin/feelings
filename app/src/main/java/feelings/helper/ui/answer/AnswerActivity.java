@@ -33,7 +33,6 @@ public class AnswerActivity extends AppCompatActivity {
 
     private long questionId;
     private EditText answerText;
-    private ExpandableListView feelingsListView;
     private List<String> feelingsGroups = new ArrayList<>();
     private Map<String, List<String>> mapFeelingsByGroup = new HashMap<>();
 
@@ -59,7 +58,7 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     private void setUpFeelingsList() {
-        feelingsListView = (ExpandableListView) findViewById(R.id.feelings_list_view);
+        ExpandableListView feelingsListView = (ExpandableListView) findViewById(R.id.feelings_list_view);
         if (questionId == QuestionService.FEELINGS_ID) {
             setUpFeelingsGroup(R.string.anger, R.array.anger_array);
             setUpFeelingsGroup(R.string.fear, R.array.fear_array);
@@ -126,7 +125,7 @@ public class AnswerActivity extends AppCompatActivity {
      */
     private boolean isInvalid() {
         if (answerText.getText().length() == 0) {
-            ToastUtil.showLong(this, getString(R.string.msg_answer_text_empty));
+            ToastUtil.showShortTop(this, getString(R.string.msg_answer_text_empty));
             return true;
         }
         return false;
