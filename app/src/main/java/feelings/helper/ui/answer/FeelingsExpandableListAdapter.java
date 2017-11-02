@@ -32,7 +32,7 @@ class FeelingsExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.feelings_group, parent, false);
         }
 
-        TextView labelFeelingsGroup = (TextView) convertView.findViewById(R.id.label_feelings_group);
+        TextView labelFeelingsGroup = convertView.findViewById(R.id.label_feelings_group);
         labelFeelingsGroup.setTypeface(null, Typeface.BOLD);
         labelFeelingsGroup.setText((String) getGroup(groupPosition));
 
@@ -61,7 +61,7 @@ class FeelingsExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.feeling_item, parent, false);
         }
 
-        TextView labelFeeling = (TextView) convertView.findViewById(R.id.label_feeling_item);
+        TextView labelFeeling = convertView.findViewById(R.id.label_feeling_item);
         labelFeeling.setText((String) getChild(groupPosition, childPosition));
         return convertView;
     }

@@ -37,9 +37,9 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
 
         AnswerLogHolder(View itemView) {
             super(itemView);
-            dateTime = (TextView) itemView.findViewById(R.id.answer_log_date_time);
-            question = (TextView) itemView.findViewById(R.id.answer_log_question);
-            answer = (TextView) itemView.findViewById(R.id.answer_log_answer);
+            dateTime = itemView.findViewById(R.id.answer_log_date_time);
+            question = itemView.findViewById(R.id.answer_log_question);
+            answer = itemView.findViewById(R.id.answer_log_answer);
         }
     }
 

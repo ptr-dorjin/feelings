@@ -39,8 +39,8 @@ public class AnswerLogActivity extends AppCompatActivity {
                 ? AnswerStore.getAll(this)
                 : AnswerStore.getByQuestionId(this, questionId);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.answer_log_recycler_view);
-        TextView emptyLogText = (TextView) findViewById(R.id.answer_log_empty);
+        RecyclerView recyclerView = findViewById(R.id.answer_log_recycler_view);
+        TextView emptyLogText = findViewById(R.id.answer_log_empty);
 
         if (cursor.getCount() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
@@ -68,7 +68,7 @@ public class AnswerLogActivity extends AppCompatActivity {
         if (isFull) {
             return;
         }
-        TextView questionText= (TextView) findViewById(R.id.question_text_on_answer_log);
+        TextView questionText= findViewById(R.id.question_text_on_answer_log);
         questionText.setText(QuestionService.getQuestionText(this, questionId));
     }
 

@@ -30,8 +30,8 @@ class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.Questi
 
         private QuestionViewHolder(View itemView) {
             super(itemView);
-            questionText = (TextView) itemView.findViewById(R.id.question_text_on_card);
-            popupMenu = (ImageButton) itemView.findViewById(R.id.popupMenu);
+            questionText = itemView.findViewById(R.id.question_text_on_card);
+            popupMenu = itemView.findViewById(R.id.popupMenu);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

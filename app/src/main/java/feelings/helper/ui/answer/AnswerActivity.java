@@ -43,7 +43,7 @@ public class AnswerActivity extends AppCompatActivity {
 
         questionId = getIntent().getLongExtra(QUESTION_ID_PARAM, -1);
 
-        TextView questionView = (TextView) findViewById(R.id.question_text_on_answer);
+        TextView questionView = findViewById(R.id.question_text_on_answer);
         questionView.setText(QuestionService.getQuestionText(this, questionId));
 
         setUpAnswerText();
@@ -51,14 +51,14 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     private void setUpAnswerText() {
-        answerText = (EditText) findViewById(R.id.answer_text);
+        answerText = findViewById(R.id.answer_text);
         if (questionId != QuestionService.FEELINGS_ID) {
             answerText.requestFocus();
         }
     }
 
     private void setUpFeelingsList() {
-        ExpandableListView feelingsListView = (ExpandableListView) findViewById(R.id.feelings_list_view);
+        ExpandableListView feelingsListView = findViewById(R.id.feelings_list_view);
         if (questionId == QuestionService.FEELINGS_ID) {
             setUpFeelingsGroup(R.string.anger, R.array.anger_array);
             setUpFeelingsGroup(R.string.fear, R.array.fear_array);

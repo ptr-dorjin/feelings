@@ -47,7 +47,7 @@ public class QuestionsActivity extends AppCompatActivity implements
     }
 
     private void setUpFab() {
-        fab = (FloatingActionButton) findViewById(R.id.question_add);
+        fab = findViewById(R.id.question_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +57,7 @@ public class QuestionsActivity extends AppCompatActivity implements
     }
 
     private void setUpRv() {
-        RecyclerView rv = (RecyclerView) findViewById(R.id.questions_recycler_view);
+        RecyclerView rv = findViewById(R.id.questions_recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new QuestionsAdapter(this);
         adapter.setHasStableIds(true);
@@ -127,7 +127,7 @@ public class QuestionsActivity extends AppCompatActivity implements
 
     private void setUpEditDialog(Long questionId, DialogFragment dialogFragment) {
         Dialog dialog = dialogFragment.getDialog();
-        EditText questionEditText = (EditText) dialog.findViewById(R.id.question_text_edit);
+        EditText questionEditText = dialog.findViewById(R.id.question_text_edit);
         final Button saveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
 
         if (questionId != null) {
@@ -167,7 +167,7 @@ public class QuestionsActivity extends AppCompatActivity implements
 
     @Override
     public void onSaveClick(DialogFragment dialogFragment) {
-        EditText questionEditText = (EditText) dialogFragment.getDialog().findViewById(R.id.question_text_edit);
+        EditText questionEditText = dialogFragment.getDialog().findViewById(R.id.question_text_edit);
         String text = questionEditText.getText().toString().trim();
         if (text.isEmpty()) {
             ToastUtil.showLong(this, getString(R.string.msg_question_text_empty));
