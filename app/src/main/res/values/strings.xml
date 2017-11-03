@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Feelings Helper</string>
+    <string name="app_name">Feelings Guide</string>
 
     <string name="title_answer_activity">Ответ</string>
     <string name="title_answer_log_activity">Журнал</string>
