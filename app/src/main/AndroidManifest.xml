@@ -13,9 +13,6 @@
         android:name=".FeelingsApplication"
         >
 
-        <meta-data android:name="com.google.android.gms.games.APP_ID"
-            android:value="123456789012" />
-
         <activity android:name=".ui.question.QuestionsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
