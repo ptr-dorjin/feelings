@@ -1,8 +1,3 @@
-1. When user deletes a question:
-- ask users confirmation
-- mark question as deleted=1
-- answers on this question are still displayed in the log.
-
-2. When user edits a question:
-- save new question text to the DB
-- as answer table is not denormalized and keeps only question id, the log should display only last question text. It means that if old answers don't correspond to the new question text, then it's solely user's responsibility.
+Version 2.0 backlog
+1. Add English language support
+2. Add settings screen
