@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024px" height="500px" viewBox="0 0 1024 500">
+<defs>
+<style type="text/css"> @import url(http://fonts.googleapis.com/css?family=Coda:normal); </style>
+</defs>
+<clipPath id="cp9">
+<path d="M 0,0 L 1024,0 L1024,500 L 0,500 z M 0,0 L 1133,0 L 1133,550 L 0,550 z" fill-rule="evenodd">
+</path>
+</clipPath>
+<g clip-path="url(#cp9)">
+</g>
+<rect x="0" y="0" width="1133" height="550" opacity="1" fill="rgb(255,255,255)" fill-opacity="1" stroke="none">
+</rect>
+<text x="-424.241943359375" y="7.298437988281236" style="font: normal 102.64274999999998px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="40.570256916996044" opacity="1" fill="#54354c" stroke="none" transform="translate(510, 245) rotate(-1800)">Feelings Guide</text>
+<text x="-93.58409118652344" y="3.9123315429687437" style="font: normal 54.98718749999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="21.734066205533594" opacity="1" fill="rgb(225, 73, 60)" stroke="none" transform="translate(490, 185) rotate(-13320)">любовь</text>
+<text x="-104.01332092285156" y="3.3903972167968703" style="font: normal 47.655562499999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="18.83619071146245" opacity="1" fill="rgb(119, 112, 179)" stroke="none" transform="translate(535, 325) rotate(-3600)">служение</text>
+<text x="-85.86536407470703" y="3.3903972167968703" style="font: normal 47.655562499999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="18.83619071146245" opacity="1" fill="rgb(244, 217, 104)" stroke="none" transform="translate(475, 135) rotate(-14759.999999999998)">радость</text>
+<text x="-76.34220123291016" y="3.131581542968746" style="font: normal 43.989749999999994px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="17.387252964426878" opacity="1" fill="rgb(244, 217, 104)" stroke="none" transform="translate(510, 370) rotate(-360)">счастье</text>
+<text x="-75.21479797363281" y="3.131581542968746" style="font: normal 43.989749999999994px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="17.387252964426878" opacity="1" fill="rgb(251, 174, 66)" stroke="none" transform="translate(510, 410) rotate(-11520)">чувства</text>
+<text x="-84.15896606445312" y="3.131581542968746" style="font: normal 43.989749999999994px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="17.387252964426878" opacity="1" fill="rgb(251, 174, 66)" stroke="none" transform="translate(460, 90) rotate(-11160)">гордыня</text>
+<text x="-132.6641845703125" y="2.8684689941406205" style="font: normal 40.32393749999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="15.938315217391303" opacity="1" fill="rgb(251, 174, 66)" stroke="none" transform="translate(505, 450) rotate(-14039.999999999998)">благодарность</text>
+<text x="-62.05498504638672" y="2.8684689941406205" style="font: normal 40.32393749999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="15.938315217391303" opacity="1" fill="rgb(90, 194, 171)" stroke="none" transform="translate(365, 300) rotate(-5040)">ученик</text>
+<text x="-102.97966003417969" y="2.6096472167968727" style="font: normal 36.658125px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="14.489377470355732" opacity="1" fill="rgb(244, 217, 104)" stroke="none" transform="translate(670, 155) rotate(-3600)">искренность</text>
+<text x="-100.34723663330078" y="2.3465407714843725" style="font: normal 32.9923125px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="13.040439723320159" opacity="1" fill="#ee5665" stroke="none" transform="translate(325, 330) rotate(-17639.999999999996)">осознанность</text>
+<text x="-50.83808898925781" y="2.3465407714843725" style="font: normal 32.9923125px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="13.040439723320159" opacity="1" fill="rgb(225, 73, 60)" stroke="none" transform="translate(615, 120) rotate(-9720)">мысли</text>
+<text x="-108.06735229492188" y="2.087718994140623" style="font: normal 29.326499999999996px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.591501976284585" opacity="1" fill="rgb(57, 107, 215)" stroke="none" transform="translate(475, 55) rotate(-10080)">ответственность</text>
+<text x="-88.4825210571289" y="2.087718994140623" style="font: normal 29.326499999999996px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.591501976284585" opacity="1" fill="rgb(244, 217, 104)" stroke="none" transform="translate(645, 95) rotate(-720)">раздражение</text>
+<text x="-61.610626220703125" y="2.087718994140623" style="font: normal 29.326499999999996px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.591501976284585" opacity="1" fill="rgb(90, 194, 171)" stroke="none" transform="translate(660, 365) rotate(-14039.999999999998)">действия</text>
+<text x="-45.49751281738281" y="2.087718994140623" style="font: normal 29.326499999999996px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.591501976284585" opacity="1" fill="rgb(244, 217, 104)" stroke="none" transform="translate(385, 365) rotate(-12240.000000000002)">эгоизм</text>
+<text x="-34.910545349121094" y="2.087718994140623" style="font: normal 29.326499999999996px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.591501976284585" opacity="1" fill="rgb(244, 217, 104)" stroke="none" transform="translate(360, 170) rotate(-10440)">страх</text>
+<text x="-30.93773651123047" y="2.087718994140623" style="font: normal 29.326499999999996px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.591501976284585" opacity="1" fill="rgb(244, 217, 104)" stroke="none" transform="translate(680, 305) rotate(-12959.999999999998)">вина</text>
+<text x="-45.506378173828125" y="1.8246125488281209" style="font: normal 25.660687499999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="10.142564229249011" opacity="1" fill="rgb(225, 73, 60)" stroke="none" transform="translate(340, 150) rotate(-14759.999999999998)">учитель</text>
+<text x="-33.16502380371094" y="1.8246125488281209" style="font: normal 25.660687499999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="10.142564229249011" opacity="1" fill="rgb(57, 107, 215)" stroke="none" transform="translate(550, 300) rotate(-17280)">слова</text>
+<text x="-29.919944763183594" y="1.8246125488281209" style="font: normal 25.660687499999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="10.142564229249011" opacity="1" fill="rgb(90, 194, 171)" stroke="none" transform="translate(665, 190) rotate(-7200)">стыд</text>
+<text x="-84.17501831054688" y="1.565790771484373" style="font: normal 21.994874999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="8.693626482213439" opacity="1" fill="rgb(238, 86, 101)" stroke="none" transform="translate(675, 395) rotate(-10080)">бессознательное</text>
+<text x="-53.89048767089844" y="1.565790771484373" style="font: normal 21.994874999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="8.693626482213439" opacity="1" fill="rgb(225, 73, 60)" stroke="none" transform="translate(695, 325) rotate(-13320)">отношения</text>
+<text x="-37.00609588623047" y="1.565790771484373" style="font: normal 21.994874999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="8.693626482213439" opacity="1" fill="rgb(225, 73, 60)" stroke="none" transform="translate(390, 385) rotate(-16200.000000000002)">эмоции</text>
+<text x="-20.932357788085938" y="1.565790771484373" style="font: normal 21.994874999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="8.693626482213439" opacity="1" fill="rgb(238, 86, 101)" stroke="none" transform="translate(360, 125) rotate(-4320)">гнев</text>
+<text x="-25.27496337890625" y="1.3069689941406244" style="font: normal 18.3290625px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="7.244688735177866" opacity="1" fill="rgb(119, 112, 179)" stroke="none" transform="translate(620, 415) rotate(-15480)">грусть</text>
+</svg>
