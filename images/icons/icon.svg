@@ -10,14 +10,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="48px"
-   height="48px"
+   width="48"
+   height="48"
    viewBox="0 0 48 48"
    version="1.1"
    id="SVGRoot"
    inkscape:version="0.92.1 r15371"
    sodipodi:docname="48.svg"
-   inkscape:export-filename="C:\Users\Vera\Desktop\Feelings guide\icons\компас\test.png"
+   inkscape:export-filename="C:\Users\Vera\Desktop\Feelings guide\icons\icon-new\512.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <sodipodi:namedview
@@ -28,10 +28,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="15.895833"
-     inkscape:cx="11.103538"
-     inkscape:cy="27.399008"
+     inkscape:cx="24"
+     inkscape:cy="24"
      inkscape:document-units="px"
-     inkscape:current-layer="g5133"
+     inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="986"
@@ -216,7 +216,7 @@
        id="guide4577"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="48,0"
+       position="7.9895152,-0.12581914"
        orientation="0,1"
        id="guide4581"
        inkscape:locked="false"
@@ -274,7 +274,23 @@
   <g
      inkscape:groupmode="layer"
      id="layer5"
-     inkscape:label="Подложка 48*8">
+     inkscape:label="Подложка 48*8" />
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Внешний круг и сектора" />
+  <g
+     inkscape:label="Внутренний круг"
+     inkscape:groupmode="layer"
+     id="g5133" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Стрелка" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Гвоздик">
     <rect
        style="fill:none;fill-rule:evenodd"
        id="rect4583"
@@ -282,11 +298,6 @@
        height="48"
        x="0"
        y="0" />
-  </g>
-  <g
-     id="layer1"
-     inkscape:groupmode="layer"
-     inkscape:label="Внешний круг и сектора">
     <path
        style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.03779528;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path5124"
@@ -300,7 +311,7 @@
        sodipodi:open="true"
        d="M 45.99811,24 A 21.99811,21.99811 0 0 1 24.008542,45.998108 21.99811,21.99811 0 0 1 2.0018968,24.017085 21.99811,21.99811 0 0 1 23.974373,2.0019051 21.99811,21.99811 0 0 1 45.998083,23.96583" />
     <path
-       style="fill:#fbae42;stroke:none;stroke-width:0.03779528;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       style="fill:#fbae42;fill-opacity:1;stroke:none;stroke-width:0.03779528;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 35.0047,4.9393094 C 41.847102,9.2561407 45.699093,15.489903 46,24 H 24 Z"
        id="path6924"
        inkscape:connector-curvature="0"
@@ -324,7 +335,7 @@
        d="M 13.018521,4.9394 C 6.1761191,9.256232 2.3241281,15.489994 2.0232211,24.000091 H 24.023221 Z"
        style="fill:#7770b3;fill-opacity:1;stroke:none;stroke-width:0.03779528;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
-       style="fill:#ee5665;stroke:none;stroke-width:0.03779528;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       style="fill:#ee5665;fill-opacity:1;stroke:none;stroke-width:0.03779528;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 13.018521,4.9394 C 20.387816,0.9671502 27.71355,1.0702535 34.998924,4.9493138 L 24,24 Z"
        id="path6962"
        inkscape:connector-curvature="0"
@@ -335,79 +346,69 @@
        id="path6964"
        d="m 13.018521,43.0606 c 7.369295,3.972249 14.695029,3.869146 21.980403,-0.0099 L 24,24 Z"
        style="fill:#5ac2ab;fill-opacity:1;stroke:none;stroke-width:0.03779528;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
-  <g
-     inkscape:label="Внутренний круг"
-     inkscape:groupmode="layer"
-     id="g5133">
     <circle
        id="path5131"
-       style="opacity:0.72899996;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.02577172;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:0.72899996;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.02920796;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        transform="rotate(-90)"
        cx="-24"
        cy="24"
-       r="15" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Стрелка">
-    <path
-       style="fill:#e1493c;fill-opacity:1;stroke:none;stroke-width:0.10012567;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 18.803848,27 18,13.607695 24,24 Z"
-       id="path5187"
-       inkscape:connector-curvature="0" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path5189"
-       d="M 29.196152,21 18,13.607695 24,24 Z"
-       style="fill:#c64539;fill-opacity:1;stroke:none;stroke-width:0.10012567;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <path
-       style="fill:#396bd7;fill-opacity:1;stroke:none;stroke-width:0.10012567;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 29.196152,21 30,34.392305 24,24 Z"
-       id="path5191"
-       inkscape:connector-curvature="0" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path5193"
-       d="M 18.803848,27 30,34.392305 24,24 Z"
-       style="fill:#4788f4;fill-opacity:1;stroke:none;stroke-width:0.10012567;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer4"
-     inkscape:label="Гвоздик">
+       r="17" />
+    <g
+       id="g4566"
+       transform="matrix(0.83333334,-0.28867507,-0.28867516,1.1666667,10.928203,2.9282)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5187"
+         d="M 18.803848,21 30,13.607695 24,24 Z"
+         style="fill:#e1493c;fill-opacity:1;stroke:none;stroke-width:0.10012567;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="fill:#c64539;fill-opacity:1;stroke:none;stroke-width:0.10012567;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 29.196152,27 30,13.607695 24,24 Z"
+         id="path5189"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5191"
+         d="M 29.196152,27 18,34.392305 24,24 Z"
+         style="fill:#396bd7;fill-opacity:1;stroke:none;stroke-width:0.10012567;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="fill:#4788f4;fill-opacity:1;stroke:none;stroke-width:0.10012567;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 18.803848,21 18,34.392305 24,24 Z"
+         id="path5193"
+         inkscape:connector-curvature="0" />
+    </g>
     <path
        style="fill:#c64539;fill-opacity:1;fill-rule:evenodd;stroke-width:0.99139184"
        id="path5224"
        sodipodi:type="arc"
-       sodipodi:cx="8.7845707"
-       sodipodi:cy="32.819302"
+       sodipodi:cx="32.784599"
+       sodipodi:cy="8.819272"
        sodipodi:rx="3.0109732"
        sodipodi:ry="3.0363882"
        sodipodi:start="3.1530212"
        sodipodi:end="6.2747963"
        sodipodi:open="true"
-       d="M 5.7737941,32.784601 A 3.0109732,3.0363882 0 0 1 8.7891467,29.782917 3.0109732,3.0363882 0 0 1 11.795438,32.79383"
-       transform="matrix(0.866026,-0.49999896,0.50000104,0.8660248,0,0)" />
+       d="m 29.773823,8.7845713 a 3.0109732,3.0363882 0 0 1 3.015352,-3.0016839 3.0109732,3.0363882 0 0 1 3.006292,3.0109127"
+       transform="matrix(0.8660248,0.50000104,-0.49999896,0.866026,0,0)" />
     <path
-       d="m 5.7737941,-32.784602 a 3.0109732,3.0363882 0 0 1 3.0153526,-3.001683 3.0109732,3.0363882 0 0 1 3.0062913,3.010912"
+       d="m 29.773823,-8.784572 a 3.0109732,3.0363882 0 0 1 3.015352,-3.001684 3.0109732,3.0363882 0 0 1 3.006292,3.0109128"
        sodipodi:open="true"
        sodipodi:end="6.2747963"
        sodipodi:start="3.1530212"
        sodipodi:ry="3.0363882"
        sodipodi:rx="3.0109732"
-       sodipodi:cy="-32.749901"
-       sodipodi:cx="8.7845707"
+       sodipodi:cy="-8.7498713"
+       sodipodi:cx="32.784599"
        sodipodi:type="arc"
        id="path5226"
        style="fill:#396bd7;fill-opacity:1;fill-rule:evenodd;stroke-width:0.99139184"
-       transform="matrix(0.866026,-0.49999896,-0.50000104,-0.8660248,0,0)" />
+       transform="matrix(0.8660248,0.50000104,0.49999896,-0.866026,0,0)" />
     <circle
        style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:0.98608381"
        id="path5242"
-       cx="24"
-       cy="24"
-       r="1.8" />
+       cx="32.784611"
+       cy="-8.7846098"
+       r="1.8"
+       transform="rotate(60)" />
   </g>
 </svg>

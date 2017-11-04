@@ -16,7 +16,7 @@ import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
 import static feelings.guide.question.QuestionContract.SQL_CREATE_QUESTION_TABLE;
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "FeelingsGuide.db";
 
     @SuppressLint("StaticFieldLeak")
