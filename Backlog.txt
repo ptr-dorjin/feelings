@@ -1,0 +1,4 @@
+Version 2.0.0
+1. Add English language support
+2. Add settings screen
+3. Clean log

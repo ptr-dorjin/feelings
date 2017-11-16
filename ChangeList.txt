@@ -1,0 +1,13 @@
+Version 1.1.0
+<ru-RU>
+1. Теперь нельзя редактировать и удалять предустановленные вопросы
+2. Добавлены описания к некоторым предустановленным вопросам
+3. Изменены формулировки некоторых предустановленных вопросов
+</ru-RU>
+
+<en-US>
+1. Built-in questions can't be edited and deleted now.
+2. Added description for some built-in questions.
+3. Changed wording of some built-in questions'.
+</en-US>
+
