@@ -1,21 +1,11 @@
 package feelings.guide.question;
 
 public class Question {
-    /**
-     * Question ID.
-     */
     private long id;
-    /**
-     * Question text.
-     */
+    private String code;
     private String text;
-    /**
-     * Is user-defined question
-     */
+    private String description;
     private final boolean isUser;
-    /**
-     * Is deleted
-     */
     private boolean isDeleted = false;
 
     public Question(String text) {
@@ -36,6 +26,15 @@ public class Question {
         this.isDeleted = isDeleted;
     }
 
+    Question(long id, String code, String text, String description, boolean isUser, boolean isDeleted) {
+        this.id = id;
+        this.code = code;
+        this.text = text;
+        this.description = description;
+        this.isUser = isUser;
+        this.isDeleted = isDeleted;
+    }
+
     public long getId() {
         return id;
     }
@@ -50,6 +49,10 @@ public class Question {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     boolean isUser() {

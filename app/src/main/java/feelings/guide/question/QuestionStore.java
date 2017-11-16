@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import feelings.guide.db.DbHelper;
 
 import static android.provider.BaseColumns._ID;
+import static feelings.guide.question.QuestionContract.COLUMN_CODE;
+import static feelings.guide.question.QuestionContract.COLUMN_DESCRIPTION;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_DELETED;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
 import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
@@ -17,7 +19,7 @@ class QuestionStore {
 
     static Question getById(Context context, long questionId) {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
-        String[] projection = {_ID, COLUMN_TEXT, COLUMN_IS_USER, COLUMN_IS_DELETED};
+        String[] projection = {_ID, COLUMN_CODE, COLUMN_TEXT, COLUMN_DESCRIPTION, COLUMN_IS_USER, COLUMN_IS_DELETED};
 
         String selection = _ID + " = ?";
         String[] selectionArgs = {String.valueOf(questionId)};
@@ -26,10 +28,12 @@ class QuestionStore {
         try {
             cursor = db.query(QUESTION_TABLE, projection, selection, selectionArgs, null, null, null);
             if (cursor.moveToFirst()) {
+                String code = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CODE));
                 String text = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXT));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION));
                 boolean isUser = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_USER));
                 boolean isDeleted = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_DELETED));
-                return new Question(questionId, text, isUser, isDeleted);
+                return new Question(questionId, code, text, description, isUser, isDeleted);
             } else {
                 return null;
             }

@@ -19,7 +19,7 @@
         <item>Недовольство</item>
         <item>Ненависть</item>
         <item>Неприязнь</item>
-        <item>Обида, чувство несправедливости</item>
+        <item>Обида</item>
         <item>Отвращение</item>
         <item>Презрение</item>
         <item>Превосходство</item>
@@ -28,12 +28,12 @@
         <item>Сердитость</item>
         <item>Сопротивление</item>
         <item>Уязвленность</item>
+        <item>Чувство несправедливости</item>
         <item>Ярость</item>
     </string-array>
     
     <string-array name="fear_array">
         <item>Апатия</item>
-        <item>Безразличие</item>
         <item>Беспокойство</item>
         <item>Боязнь</item>
         <item>Вина</item>
@@ -64,6 +64,7 @@
     <string-array name="melancholy_array">
         <item>Грусть</item>
         <item>Безнадежность</item>
+        <item>Безразличие</item>
         <item>Беспомощность</item>
         <item>Безучастность</item>
         <item>Безысходность</item>

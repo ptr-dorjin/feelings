@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Tags keys to be associated with views-->
+    <item type="id" name="tag_question_id"/>
+    <item type="id" name="tag_is_user"/>
+</resources>

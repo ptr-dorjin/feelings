@@ -17,6 +17,7 @@ import feelings.guide.ui.answer.AnswerActivity;
 
 import static android.provider.BaseColumns._ID;
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
+import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
 import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
 
 class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.QuestionViewHolder> {
@@ -60,9 +61,11 @@ class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.Questi
     @Override
     public void onBindViewHolder(QuestionViewHolder holder, Cursor cursor) {
         long questionId = cursor.getLong(cursor.getColumnIndexOrThrow(_ID));
+        boolean isUser = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_USER));
         holder.questionId = questionId;
         holder.questionText.setText(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXT)));
-        holder.popupMenu.setTag(questionId);
+        holder.popupMenu.setTag(R.id.tag_question_id, questionId);
+        holder.popupMenu.setTag(R.id.tag_is_user, isUser);
     }
 
     void refreshAll() {

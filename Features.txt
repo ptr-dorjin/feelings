@@ -1,3 +1,8 @@
+Version 1.1.0 backlog
+1. Don't allow to edit and delete built-in questions.
+2. Add description for each question.
+3. Shorten questions' texts
+
 Version 2.0.0 backlog
 1. Add English language support
 2. Add settings screen

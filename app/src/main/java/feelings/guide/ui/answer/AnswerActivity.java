@@ -23,6 +23,7 @@ import java.util.Map;
 import feelings.guide.R;
 import feelings.guide.answer.Answer;
 import feelings.guide.answer.AnswerStore;
+import feelings.guide.question.Question;
 import feelings.guide.question.QuestionService;
 import feelings.guide.util.ToastUtil;
 
@@ -42,12 +43,26 @@ public class AnswerActivity extends AppCompatActivity {
         setContentView(R.layout.answer_activity);
 
         questionId = getIntent().getLongExtra(QUESTION_ID_PARAM, -1);
+        Question question = QuestionService.getById(this, questionId);
 
-        TextView questionView = findViewById(R.id.question_text_on_answer);
-        questionView.setText(QuestionService.getQuestionText(this, questionId));
-
+        setUpQuestionText(question);
+        setUpQuestionDescription(question);
         setUpAnswerText();
         setUpFeelingsList();
+    }
+
+    private void setUpQuestionText(Question question) {
+        TextView questionText = findViewById(R.id.question_text_on_answer);
+        questionText.setText(question.getText());
+    }
+
+    private void setUpQuestionDescription(Question question) {
+        TextView questionDescription = findViewById(R.id.question_description_on_answer);
+        String description = question.getDescription();
+        if (description != null && !description.isEmpty()) {
+            questionDescription.setText(description);
+            questionDescription.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setUpAnswerText() {

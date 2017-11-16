@@ -15,6 +15,16 @@
         android:focusableInTouchMode="true"
         />
 
+    <TextView
+        android:id="@+id/question_description_on_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone"
+        />
+
     <EditText
         android:id="@+id/answer_text"
         android:layout_width="match_parent"

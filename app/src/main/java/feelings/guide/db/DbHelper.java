@@ -7,16 +7,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import feelings.guide.R;
+import feelings.guide.question.QuestionContract;
 
 import static feelings.guide.answer.AnswerContract.SQL_CREATE_ANSWER_TABLE;
+import static feelings.guide.question.QuestionContract.COLUMN_CODE;
+import static feelings.guide.question.QuestionContract.COLUMN_DESCRIPTION;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_DELETED;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
 import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
+import static feelings.guide.question.QuestionContract.QUESTION_CODE_MAP;
 import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
 import static feelings.guide.question.QuestionContract.SQL_CREATE_QUESTION_TABLE;
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "FeelingsGuide.db";
 
     @SuppressLint("StaticFieldLeak")
@@ -45,6 +49,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 2) {
+            new UpgraderTo2(context).upgrade(db);
+        }
     }
 
     private void populateQuestions(SQLiteDatabase db) {
@@ -59,10 +66,13 @@ public class DbHelper extends SQLiteOpenHelper {
         populateQuestion(db, R.string.q_do_others);
     }
 
-    private void populateQuestion(SQLiteDatabase db, int resourceId) {
+    private void populateQuestion(SQLiteDatabase db, int code) {
         ContentValues values = new ContentValues();
 
-        values.put(COLUMN_TEXT, context.getString(resourceId));
+        QuestionContract.QuestionCode questionCode = QUESTION_CODE_MAP.get(code);
+        values.put(COLUMN_CODE, context.getString(code));
+        values.put(COLUMN_TEXT, context.getString(questionCode.getTextId()));
+        values.put(COLUMN_DESCRIPTION, context.getString(questionCode.getDescriptionId()));
         values.put(COLUMN_IS_USER, false);
         values.put(COLUMN_IS_DELETED, false);
 

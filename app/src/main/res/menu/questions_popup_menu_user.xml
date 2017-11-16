@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/show_log"
+    <item android:id="@+id/show_log_by_question"
         android:title="@string/btn_show_log"
         app:showAsAction="ifRoom"/>
     <item android:id="@+id/edit"

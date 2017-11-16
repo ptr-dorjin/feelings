@@ -92,15 +92,16 @@ public class QuestionsActivity extends AppCompatActivity implements
 
     public void showPopupMenu(final View v) {
         PopupMenu popup = new PopupMenu(this, v);
-        final long questionId = (long) v.getTag();
-        popup.inflate(questionId == QuestionService.FEELINGS_ID
-                ? R.menu.questions_menu
-                : R.menu.questions_popup_menu);
+        final long questionId = (long) v.getTag(R.id.tag_question_id);
+        final boolean isUser = (boolean) v.getTag(R.id.tag_is_user);
+        popup.inflate(isUser
+                ? R.menu.questions_popup_menu_user
+                : R.menu.questions_popup_menu_system);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.show_log:
+                    case R.id.show_log_by_question:
                         return showAnswerLog(questionId);
                     case R.id.edit:
                         return showEditQuestionDialog(questionId);
