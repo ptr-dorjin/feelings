@@ -122,7 +122,7 @@ public class AnswerActivity extends AppCompatActivity {
                 return false;
             }
             boolean saved = AnswerStore.saveAnswer(this,
-                    new Answer(questionId, LocalDateTime.now(), answerText.getText().toString()));
+                    new Answer(questionId, LocalDateTime.now(), answerText.getText().toString().trim()));
             if (saved) {
                 ToastUtil.showShort(this, getString(R.string.msg_answer_saved_success));
                 finish();
@@ -139,7 +139,7 @@ public class AnswerActivity extends AppCompatActivity {
      * Validation
      */
     private boolean isInvalid() {
-        if (answerText.getText().length() == 0) {
+        if (answerText.getText().toString().trim().isEmpty()) {
             ToastUtil.showShortTop(this, getString(R.string.msg_answer_text_empty));
             return true;
         }
