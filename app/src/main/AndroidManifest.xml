@@ -10,10 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="feelings.guide.FeelingsApplication"
+        android:name=".FeelingsApplication"
         >
 
-        <activity android:name="feelings.guide.ui.question.QuestionsActivity"
+        <activity android:name=".ui.question.QuestionsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             >
@@ -23,24 +23,33 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="feelings.guide.ui.answer.AnswerActivity"
-            android:parentActivityName="feelings.guide.ui.question.QuestionsActivity"
+        <activity android:name=".ui.answer.AnswerActivity"
+            android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/title_answer_activity"
             android:screenOrientation="portrait"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="feelings.guide.ui.question.QuestionsActivity" />
+                android:value=".ui.question.QuestionsActivity" />
         </activity>
 
-        <activity android:name="feelings.guide.ui.log.AnswerLogActivity"
-            android:parentActivityName="feelings.guide.ui.question.QuestionsActivity"
+        <activity android:name=".ui.log.AnswerLogActivity"
+            android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/title_answer_log_activity"
             android:screenOrientation="portrait"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="feelings.guide.ui.question.QuestionsActivity" />
+                android:value=".ui.question.QuestionsActivity" />
+        </activity>
+
+        <activity android:name=".ui.settings.SettingsActivity"
+            android:parentActivityName=".ui.question.QuestionsActivity"
+            android:label="@string/title_settings_activity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.question.QuestionsActivity" />
         </activity>
 
     </application>

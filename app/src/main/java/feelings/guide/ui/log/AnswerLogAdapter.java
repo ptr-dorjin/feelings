@@ -13,12 +13,13 @@ import org.threeten.bp.LocalDateTime;
 import feelings.guide.R;
 import feelings.guide.question.QuestionService;
 import feelings.guide.ui.RecyclerViewCursorAdapter;
+import feelings.guide.util.DateTimeUtil;
 
 import static feelings.guide.answer.AnswerContract.COLUMN_ANSWER;
 import static feelings.guide.answer.AnswerContract.COLUMN_DATE_TIME;
 import static feelings.guide.answer.AnswerContract.COLUMN_QUESTION_ID;
-import static feelings.guide.util.DateTimeUtil.ANSWER_LOG_FORMATTER;
 import static feelings.guide.util.DateTimeUtil.DB_FORMATTER;
+import static org.threeten.bp.format.DateTimeFormatter.ofPattern;
 
 /**
  * Used on
@@ -67,7 +68,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
                 DB_FORMATTER);
         String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ANSWER));
 
-        holder.dateTime.setText(dateTime.format(ANSWER_LOG_FORMATTER));
+        holder.dateTime.setText(dateTime.format(ofPattern(DateTimeUtil.ANSWER_LOG_FORMAT)));
         if (holder.question != null) {
             holder.question.setText(QuestionService.getQuestionText(context, questionId));
         }

@@ -1,50 +1,65 @@
 <resources>
     <string name="app_name">Feelings Guide</string>
 
-    <string name="title_answer_activity">Ответ</string>
-    <string name="title_answer_log_activity">Журнал</string>
-    <string name="title_edit_question_dialog">Введите вопрос</string>
-    <string name="title_delete_question_dialog">Удалить вопрос?</string>
+    <string-array name="lang_values">
+        <item>en</item>
+        <item>ru</item>
+    </string-array>
 
-    <string name="q_text_feelings">Что я сейчас чувствую?</string>
-    <string name="q_text_insincerity">С кем я был не собой?</string>
-    <string name="q_text_gratitude">Кого я могу поблагодарить?</string>
-    <string name="q_text_preach">С кем я «поумничал» сегодня?</string>
-    <string name="q_text_lie">В чем моя неискренность?</string>
-    <string name="q_text_irresponsibility">В чем моя безответственность?</string>
-    <string name="q_text_do_body">Что я могу сделать для своего тела?</string>
-    <string name="q_text_do_close">Что я могу сделать для своих близких?</string>
-    <string name="q_text_do_others">Что я могу сделать для других людей?</string>
+    <string-array name="lang_titles">
+        <item>English</item>
+        <item>Русский</item>
+    </string-array>
+
+    <string name="title_answer_activity">Answer</string>
+    <string name="title_answer_log_activity">Log</string>
+    <string name="title_settings_activity">Settings</string>
+
+    <string name="title_settings_language">Language</string>
+
+    <string name="title_edit_question_dialog">Enter a question</string>
+    <string name="title_delete_question_dialog">Delete the question?</string>
+
+    <string name="q_text_feelings">en Что я сейчас чувствую?</string>
+    <string name="q_text_insincerity">en С кем я был не собой?</string>
+    <string name="q_text_gratitude">en Кого я могу поблагодарить?</string>
+    <string name="q_text_preach">en С кем я «поумничал» сегодня?</string>
+    <string name="q_text_lie">en В чем моя неискренность?</string>
+    <string name="q_text_irresponsibility">en В чем моя безответственность?</string>
+    <string name="q_text_do_body">en Что я могу сделать для своего тела?</string>
+    <string name="q_text_do_close">en Что я могу сделать для своих близких?</string>
+    <string name="q_text_do_others">en Что я могу сделать для других людей?</string>
 
     <string name="q_description_feelings"></string>
-    <string name="q_description_insincerity">С кем я веду себя как судья/гуру/психолог/«мамочка» и т. д.,  а не как сын/жена/друг/коллега и т. д.? С кем я играю чужие роли («муж» для мамы и др.)?</string>
+    <string name="q_description_insincerity">en С кем я веду себя как судья/гуру/психолог/«мамочка» и т. д.,  а не как сын/жена/друг/коллега и т. д.? С кем я играю чужие роли («муж» для мамы и др.)?</string>
     <string name="q_description_gratitude"></string>
-    <string name="q_description_preach">Кого я учил жизни, кому доказывал вслух или про себя?</string>
-    <string name="q_description_lie">Где я чувствую одно, а говорю и делаю другое? Например, чувствую злость или обиду, а говорю, что все нормально, улыбаюсь. Или чувствую благодарность, любовь, но никак не выражаю.</string>
-    <string name="q_description_irresponsibility">Несоответствие мыслей, слов и поступков. В чем я даю слово себе или кому-то, но не держу его? Принимаю решение, но не выполняю?</string>
+    <string name="q_description_preach">en Кого я учил жизни, кому доказывал вслух или про себя?</string>
+    <string name="q_description_lie">en Где я чувствую одно, а говорю и делаю другое? Например, чувствую злость или обиду, а говорю, что все нормально, улыбаюсь. Или чувствую благодарность, любовь, но никак не выражаю.</string>
+    <string name="q_description_irresponsibility">en Несоответствие мыслей, слов и поступков. В чем я даю слово себе или кому-то, но не держу его? Принимаю решение, но не выполняю?</string>
     <string name="q_description_do_body"></string>
     <string name="q_description_do_close"></string>
     <string name="q_description_do_others"></string>
 
-    <string name="msg_question_text_empty">Текст не должен быть пустым</string>
-    <string name="msg_question_create_success">Вопрос создан</string>
-    <string name="msg_question_create_error">Ошибка при создании вопроса</string>
-    <string name="msg_question_edit_success">Вопрос изменен</string>
-    <string name="msg_question_edit_error">Ошибка при изменении вопроса</string>
-    <string name="msg_question_delete_success">Вопрос удален</string>
-    <string name="msg_question_delete_error">Ошибка при удалении вопроса</string>
-    <string name="msg_answer_text_empty">Введите ответ</string>
-    <string name="msg_answer_saved_success">Ответ сохранен в журнал</string>
-    <string name="msg_answer_saved_error">Ошибка при сохранении ответа</string>
+    <string name="msg_question_text_empty">Text must not be empty</string>
+    <string name="msg_question_create_success">The question is created</string>
+    <string name="msg_question_create_error">Error while creating the question</string>
+    <string name="msg_question_edit_success">The question is changed</string>
+    <string name="msg_question_edit_error">Error while changing the question</string>
+    <string name="msg_question_delete_success">The question is deleted</string>
+    <string name="msg_question_delete_error">Error while deleting the question</string>
+    <string name="msg_answer_text_empty">Enter an answer</string>
+    <string name="msg_answer_saved_success">The answer is saved to the log</string>
+    <string name="msg_answer_saved_error">Error while saving the answer</string>
+    <string name="msg_change_language_restart">Please restart the app to fully apply the changes.</string>
 
-    <string name="btn_save">Сохранить</string>
-    <string name="btn_cancel">Отмена</string>
-    <string name="btn_edit">Редактировать</string>
-    <string name="btn_delete">Удалить</string>
-    <string name="btn_show_log">Журнал</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_show_log">Log</string>
 
     <string name="popup_menu_descr">Popup Menu</string>
 
-    <string name="answer_log_empty_text">Журнал пуст.</string>
+    <string name="answer_log_empty_text">The log is empty.</string>
 
 </resources>

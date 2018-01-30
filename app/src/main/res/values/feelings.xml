@@ -1,165 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="anger">Гнев</string>
-    <string name="fear">Страх</string>
-    <string name="melancholy">Грусть</string>
-    <string name="joy">Радость</string>
-    <string name="love">Любовь</string>
+    <string name="anger">en_Гнев</string>
+    <string name="fear">en_Страх</string>
+    <string name="melancholy">en_Грусть</string>
+    <string name="joy">en_Радость</string>
+    <string name="love">en_Любовь</string>
 
     <string-array name="anger_array">
-        <item>Бешенство</item>
-        <item>Возмущение</item>
-        <item>Гнев</item>
-        <item>Досада</item>
-        <item>Зависть</item>
-        <item>Злость</item>
-        <item>Истерия</item>
-        <item>Негодование</item>
-        <item>Недовольство</item>
-        <item>Ненависть</item>
-        <item>Неприязнь</item>
-        <item>Обида</item>
-        <item>Отвращение</item>
-        <item>Презрение</item>
-        <item>Превосходство</item>
-        <item>Раздражение</item>
-        <item>Ревность</item>
-        <item>Сердитость</item>
-        <item>Сопротивление</item>
-        <item>Уязвленность</item>
-        <item>Чувство несправедливости</item>
-        <item>Ярость</item>
+        <item>en_Бешенство</item>
+        <item>en_Возмущение</item>
+        <item>en_Гнев</item>
+        <item>en_Досада</item>
+        <item>en_Зависть</item>
+        <item>en_Злость</item>
+        <item>en_Истерия</item>
+        <item>en_Негодование</item>
+        <item>en_Недовольство</item>
+        <item>en_Ненависть</item>
+        <item>en_Неприязнь</item>
+        <item>en_Обида</item>
+        <item>en_Отвращение</item>
+        <item>en_Презрение</item>
+        <item>en_Превосходство</item>
+        <item>en_Раздражение</item>
+        <item>en_Ревность</item>
+        <item>en_Сердитость</item>
+        <item>en_Сопротивление</item>
+        <item>en_Уязвленность</item>
+        <item>en_Чувство несправедливости</item>
+        <item>en_Ярость</item>
     </string-array>
     
     <string-array name="fear_array">
-        <item>Апатия</item>
-        <item>Беспокойство</item>
-        <item>Боязнь</item>
-        <item>Вина</item>
-        <item>Замешательство</item>
-        <item>Застенчивость</item>
-        <item>Испуг</item>
-        <item>Надменность</item>
-        <item>Неловкость</item>
-        <item>Неуверенность</item>
-        <item>Опасение</item>
-        <item>Отчаяние</item>
-        <item>Оцепенение</item>
-        <item>Ошарашенность</item>
-        <item>Ошеломленность</item>
-        <item>Подозрение</item>
-        <item>Подвох</item>
-        <item>Растерянность</item>
-        <item>Сломленность</item>
-        <item>Смущение</item>
-        <item>Сомнение</item>
-        <item>Страх</item>
-        <item>Стыд</item>
-        <item>Тревога</item>
-        <item>Ужас</item>
-        <item>Унижение</item>
+        <item>en_Апатия</item>
+        <item>en_Беспокойство</item>
+        <item>en_Боязнь</item>
+        <item>en_Вина</item>
+        <item>en_Замешательство</item>
+        <item>en_Застенчивость</item>
+        <item>en_Испуг</item>
+        <item>en_Надменность</item>
+        <item>en_Неловкость</item>
+        <item>en_Неуверенность</item>
+        <item>en_Опасение</item>
+        <item>en_Отчаяние</item>
+        <item>en_Оцепенение</item>
+        <item>en_Ошарашенность</item>
+        <item>en_Ошеломленность</item>
+        <item>en_Подозрение</item>
+        <item>en_Подвох</item>
+        <item>en_Растерянность</item>
+        <item>en_Сломленность</item>
+        <item>en_Смущение</item>
+        <item>en_Сомнение</item>
+        <item>en_Страх</item>
+        <item>en_Стыд</item>
+        <item>en_Тревога</item>
+        <item>en_Ужас</item>
+        <item>en_Унижение</item>
     </string-array>
     
     <string-array name="melancholy_array">
-        <item>Грусть</item>
-        <item>Безнадежность</item>
-        <item>Безразличие</item>
-        <item>Беспомощность</item>
-        <item>Безучастность</item>
-        <item>Безысходность</item>
-        <item>Горечь</item>
-        <item>Душевная боль</item>
-        <item>Жалость (к другим или к себе)</item>
-        <item>Загнанность</item>
-        <item>Лень</item>
-        <item>Опустошенность</item>
-        <item>Отрешенность</item>
-        <item>Отчаяние</item>
-        <item>Отчужденность</item>
-        <item>Печаль</item>
-        <item>Подавленность</item>
-        <item>Покинутость</item>
-        <item>Потрясение</item>
-        <item>Равнодушие (отсутствие сострадания)</item>
-        <item>Разочарование</item>
-        <item>Расстройство</item>
-        <item>Скука</item>
-        <item>Сожаление</item>
-        <item>Тоска</item>
+        <item>en_Грусть</item>
+        <item>en_Безнадежность</item>
+        <item>en_Безразличие</item>
+        <item>en_Беспомощность</item>
+        <item>en_Безучастность</item>
+        <item>en_Безысходность</item>
+        <item>en_Горечь</item>
+        <item>en_Душевная боль</item>
+        <item>en_Жалость (к другим или к себе)</item>
+        <item>en_Загнанность</item>
+        <item>en_Лень</item>
+        <item>en_Опустошенность</item>
+        <item>en_Отрешенность</item>
+        <item>en_Отчаяние</item>
+        <item>en_Отчужденность</item>
+        <item>en_Печаль</item>
+        <item>en_Подавленность</item>
+        <item>en_Покинутость</item>
+        <item>en_Потрясение</item>
+        <item>en_Равнодушие (отсутствие сострадания)</item>
+        <item>en_Разочарование</item>
+        <item>en_Расстройство</item>
+        <item>en_Скука</item>
+        <item>en_Сожаление</item>
+        <item>en_Тоска</item>
     </string-array>
     
     <string-array name="joy_array">
-        <item>Вера</item>
-        <item>Возбуждение</item>
-        <item>Восторг</item>
-        <item>Довольство</item>
-        <item>Забота</item>
-        <item>Изумление</item>
-        <item>Интерес (заинтересованность)</item>
-        <item>Ликование</item>
-        <item>Любопытство</item>
-        <item>Надежда</item>
-        <item>Нетерпение</item>
-        <item>Облегчение</item>
-        <item>Ободренность</item>
-        <item>Оживление</item>
-        <item>Ожидание</item>
-        <item>Окрыленность</item>
-        <item>Освобождение</item>
-        <item>Предвкушение</item>
-        <item>Принятие</item>
-        <item>Приподнятость</item>
-        <item>Приятие</item>
-        <item>Радость</item>
-        <item>Решимость</item>
-        <item>Счастье</item>
-        <item>Торжествование</item>
-        <item>Триумф</item>
-        <item>Уверенность</item>
-        <item>Увлеченность</item>
-        <item>Удивление</item>
-        <item>Удовлетворение</item>
-        <item>Удовольствие</item>
-        <item>Умиротворение</item>
-        <item>Эйфория</item>
-        <item>Энтузиазм</item>
+        <item>en_Вера</item>
+        <item>en_Возбуждение</item>
+        <item>en_Восторг</item>
+        <item>en_Довольство</item>
+        <item>en_Забота</item>
+        <item>en_Изумление</item>
+        <item>en_Интерес (заинтересованность)</item>
+        <item>en_Ликование</item>
+        <item>en_Любопытство</item>
+        <item>en_Надежда</item>
+        <item>en_Нетерпение</item>
+        <item>en_Облегчение</item>
+        <item>en_Ободренность</item>
+        <item>en_Оживление</item>
+        <item>en_Ожидание</item>
+        <item>en_Окрыленность</item>
+        <item>en_Освобождение</item>
+        <item>en_Предвкушение</item>
+        <item>en_Принятие</item>
+        <item>en_Приподнятость</item>
+        <item>en_Приятие</item>
+        <item>en_Радость</item>
+        <item>en_Решимость</item>
+        <item>en_Счастье</item>
+        <item>en_Торжествование</item>
+        <item>en_Триумф</item>
+        <item>en_Уверенность</item>
+        <item>en_Увлеченность</item>
+        <item>en_Удивление</item>
+        <item>en_Удовлетворение</item>
+        <item>en_Удовольствие</item>
+        <item>en_Умиротворение</item>
+        <item>en_Эйфория</item>
+        <item>en_Энтузиазм</item>
     </string-array>
     
     <string-array name="love_array">
-        <item>Безмятежность</item>
-        <item>Безопасность</item>
-        <item>Благоговение, трепет</item>
-        <item>Благодарность</item>
-        <item>Блаженство</item>
-        <item>Вдохновение</item>
-        <item>Взаимовыручка</item>
-        <item>Влюбленность</item>
-        <item>Воодушевление</item>
-        <item>Восхищение</item>
-        <item>Гармония</item>
-        <item>Гордость</item>
-        <item>Доброта</item>
-        <item>Доверие</item>
-        <item>Дружелюбие</item>
-        <item>Единство</item>
-        <item>Идентичность</item>
-        <item>Любовь</item>
-        <item>Нежность</item>
-        <item>Очарованность</item>
-        <item>Привязанность</item>
-        <item>Признательность</item>
-        <item>Расслабленность</item>
-        <item>Самоценность</item>
-        <item>Симпатия</item>
-        <item>Смирение</item>
-        <item>Смятение</item>
-        <item>Сопереживание</item>
-        <item>Сопричастность</item>
-        <item>Сочувствие</item>
-        <item>Спокойствие</item>
-        <item>Теплота</item>
-        <item>Уважение</item>
-        <item>Уравновешенность</item>
+        <item>en_Безмятежность</item>
+        <item>en_Безопасность</item>
+        <item>en_Благоговение, трепет</item>
+        <item>en_Благодарность</item>
+        <item>en_Блаженство</item>
+        <item>en_Вдохновение</item>
+        <item>en_Взаимовыручка</item>
+        <item>en_Влюбленность</item>
+        <item>en_Воодушевление</item>
+        <item>en_Восхищение</item>
+        <item>en_Гармония</item>
+        <item>en_Гордость</item>
+        <item>en_Доброта</item>
+        <item>en_Доверие</item>
+        <item>en_Дружелюбие</item>
+        <item>en_Единство</item>
+        <item>en_Идентичность</item>
+        <item>en_Любовь</item>
+        <item>en_Нежность</item>
+        <item>en_Очарованность</item>
+        <item>en_Привязанность</item>
+        <item>en_Признательность</item>
+        <item>en_Расслабленность</item>
+        <item>en_Самоценность</item>
+        <item>en_Симпатия</item>
+        <item>en_Смирение</item>
+        <item>en_Смятение</item>
+        <item>en_Сопереживание</item>
+        <item>en_Сопричастность</item>
+        <item>en_Сочувствие</item>
+        <item>en_Спокойствие</item>
+        <item>en_Теплота</item>
+        <item>en_Уважение</item>
+        <item>en_Уравновешенность</item>
     </string-array>
 </resources>

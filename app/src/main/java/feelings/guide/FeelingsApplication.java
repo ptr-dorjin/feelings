@@ -1,8 +1,12 @@
 package feelings.guide;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.res.Configuration;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
+
+import feelings.guide.profile.LocaleUtil;
 
 public class FeelingsApplication extends Application {
 
@@ -13,4 +17,16 @@ public class FeelingsApplication extends Application {
         super.onCreate();
         AndroidThreeTen.init(this);
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleUtil.setLocale(base));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleUtil.setLocale(this);
+    }
 }
+

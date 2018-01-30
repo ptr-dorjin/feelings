@@ -48,4 +48,8 @@ public class QuestionService {
         }
         return question;
     }
+
+    public static boolean changeLanguage(Context context) {
+        return QuestionStore.changeLanguage(context);
+    }
 }

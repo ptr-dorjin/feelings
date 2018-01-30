@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -24,12 +23,14 @@ import android.widget.EditText;
 import feelings.guide.R;
 import feelings.guide.question.Question;
 import feelings.guide.question.QuestionService;
+import feelings.guide.ui.BaseActivity;
 import feelings.guide.ui.log.AnswerLogActivity;
+import feelings.guide.ui.settings.SettingsActivity;
 import feelings.guide.util.ToastUtil;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
 
-public class QuestionsActivity extends AppCompatActivity implements
+public class QuestionsActivity extends BaseActivity implements
         QuestionEditDialogFragment.QuestionEditDialogListener,
         QuestionDeleteDialogFragment.QuestionDeleteDialogListener {
 
@@ -85,6 +86,8 @@ public class QuestionsActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.show_log) {
             return showAnswerLog(null);
+        } else if (item.getItemId() == R.id.show_settings) {
+            return showSettings();
         } else {
             return super.onOptionsItemSelected(item);
         }
@@ -162,6 +165,12 @@ public class QuestionsActivity extends AppCompatActivity implements
         if (questionId != null) {
             intent.putExtra(QUESTION_ID_PARAM, questionId);
         }
+        startActivity(intent);
+        return true;
+    }
+
+    private boolean showSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
         return true;
     }

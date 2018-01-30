@@ -3,7 +3,6 @@ package feelings.guide.ui.log;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +12,11 @@ import android.widget.TextView;
 import feelings.guide.R;
 import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.QuestionService;
+import feelings.guide.ui.BaseActivity;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
 
-public class AnswerLogActivity extends AppCompatActivity {
+public class AnswerLogActivity extends BaseActivity {
 
     private static final long DEFAULT_QUESTION_ID = -1;
     private long questionId;

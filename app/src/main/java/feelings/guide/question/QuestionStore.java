@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import feelings.guide.R;
 import feelings.guide.db.DbHelper;
 
 import static android.provider.BaseColumns._ID;
@@ -13,6 +14,7 @@ import static feelings.guide.question.QuestionContract.COLUMN_DESCRIPTION;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_DELETED;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
 import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
+import static feelings.guide.question.QuestionContract.QUESTION_CODE_MAP;
 import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
 
 class QuestionStore {
@@ -99,5 +101,38 @@ class QuestionStore {
         String[] selectionArgs = {String.valueOf(0)};
 
         return db.query(QUESTION_TABLE, projection, selection, selectionArgs, null, null, orderBy);
+    }
+
+    static boolean changeLanguage(Context context) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+        try {
+            boolean result;
+            result = changeLanguage(context, db, R.string.q_feelings);
+            result = result && changeLanguage(context, db, R.string.q_insincerity);
+            result = result && changeLanguage(context, db, R.string.q_gratitude);
+            result = result && changeLanguage(context, db, R.string.q_preach);
+            result = result && changeLanguage(context, db, R.string.q_lie);
+            result = result && changeLanguage(context, db, R.string.q_irresponsibility);
+            result = result && changeLanguage(context, db, R.string.q_do_body);
+            result = result && changeLanguage(context, db, R.string.q_do_close);
+            result = result && changeLanguage(context, db, R.string.q_do_others);
+            return result;
+        } finally {
+            db.close();
+        }
+    }
+
+    private static boolean changeLanguage(Context context, SQLiteDatabase db, int code) {
+        ContentValues values = new ContentValues();
+
+        QuestionContract.QuestionCode questionCode = QUESTION_CODE_MAP.get(code);
+        values.put(COLUMN_TEXT, context.getString(questionCode.getTextId()));
+        values.put(COLUMN_DESCRIPTION, context.getString(questionCode.getDescriptionId()));
+
+        String selection = COLUMN_CODE + " = ?";
+        String[] selectionArgs = { context.getString(code) };
+
+        int count = db.update(QUESTION_TABLE, values, selection, selectionArgs);
+        return count == 1;
     }
 }

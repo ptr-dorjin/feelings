@@ -3,7 +3,6 @@ package feelings.guide.ui.answer;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +24,13 @@ import feelings.guide.answer.Answer;
 import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.Question;
 import feelings.guide.question.QuestionService;
+import feelings.guide.ui.BaseActivity;
 import feelings.guide.util.ToastUtil;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
 import static java.util.Arrays.asList;
 
-public class AnswerActivity extends AppCompatActivity {
+public class AnswerActivity extends BaseActivity {
 
     private long questionId;
     private EditText answerText;
