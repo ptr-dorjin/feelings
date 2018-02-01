@@ -16,9 +16,12 @@
     <string name="title_settings_activity">Settings</string>
 
     <string name="title_settings_language">Language</string>
+    <string name="title_settings_clear_log">Clear log</string>
 
     <string name="title_edit_question_dialog">Enter a question</string>
     <string name="title_delete_question_dialog">Delete the question?</string>
+    <string name="title_confirm_clear_log_full_dialog">Delete all answers from log?</string>
+    <string name="title_confirm_clear_log_by_question_dialog">Delete answers on this question?</string>
 
     <string name="q_text_feelings">en Что я сейчас чувствую?</string>
     <string name="q_text_insincerity">en С кем я был не собой?</string>
@@ -41,16 +44,18 @@
     <string name="q_description_do_others"></string>
 
     <string name="msg_question_text_empty">Text must not be empty</string>
-    <string name="msg_question_create_success">The question is created</string>
+    <string name="msg_question_create_success">The question has been created</string>
     <string name="msg_question_create_error">Error while creating the question</string>
-    <string name="msg_question_edit_success">The question is changed</string>
+    <string name="msg_question_edit_success">The question has been changed</string>
     <string name="msg_question_edit_error">Error while changing the question</string>
-    <string name="msg_question_delete_success">The question is deleted</string>
+    <string name="msg_question_delete_success">The question has been deleted</string>
     <string name="msg_question_delete_error">Error while deleting the question</string>
     <string name="msg_answer_text_empty">Enter an answer</string>
-    <string name="msg_answer_saved_success">The answer is saved to the log</string>
+    <string name="msg_answer_saved_success">The answer has been saved to the log</string>
     <string name="msg_answer_saved_error">Error while saving the answer</string>
-    <string name="msg_change_language_restart">Please restart the app to fully apply the changes.</string>
+    <string name="msg_change_language_restart">Please restart the app to fully apply the changes</string>
+    <string name="msg_clear_log_full_success">Answer log has been cleared</string>
+    <string name="msg_clear_log_by_question_success">The question answers has been deleted</string>
 
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>

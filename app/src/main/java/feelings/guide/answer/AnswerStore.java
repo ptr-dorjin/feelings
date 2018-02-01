@@ -50,11 +50,10 @@ public class AnswerStore {
         return db.query(ANSWER_TABLE, projection, selection, selectionArgs, null, null, orderBy);
     }
 
-    // for tests only
-    static int deleteAll(Context context) {
+    public static void deleteAll(Context context) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {
-            return db.delete(ANSWER_TABLE, null, null);
+            db.delete(ANSWER_TABLE, null, null);
         } finally {
             db.close();
         }

@@ -5,6 +5,8 @@
         android:title="@string/title_settings_language"
         android:entries="@array/lang_titles"
         android:entryValues="@array/lang_values"
-        android:defaultValue="en"
-        />
+        android:defaultValue="en"/>
+    <Preference
+        android:title="@string/title_settings_clear_log"
+        android:key="Feelings.Guide.Clear.Log"/>
 </PreferenceScreen>
