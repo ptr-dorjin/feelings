@@ -19,9 +19,9 @@
     <string name="title_settings_clear_log">Clear log</string>
 
     <string name="title_edit_question_dialog">Enter a question</string>
-    <string name="title_delete_question_dialog">Delete the question?</string>
+    <string name="title_confirm_delete_question_dialog">Delete the question?</string>
     <string name="title_confirm_clear_log_full_dialog">Delete all answers from log?</string>
-    <string name="title_confirm_clear_log_by_question_dialog">Delete answers on this question?</string>
+    <string name="title_confirm_clear_log_by_question_dialog">Delete answers to this question?</string>
 
     <string name="q_text_feelings">en Что я сейчас чувствую?</string>
     <string name="q_text_insincerity">en С кем я был не собой?</string>
@@ -55,13 +55,14 @@
     <string name="msg_answer_saved_error">Error while saving the answer</string>
     <string name="msg_change_language_restart">Please restart the app to fully apply the changes</string>
     <string name="msg_clear_log_full_success">Answer log has been cleared</string>
-    <string name="msg_clear_log_by_question_success">The question answers has been deleted</string>
+    <string name="msg_clear_log_by_question_success">The question answers have been deleted</string>
 
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_edit">Edit</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_show_log">Log</string>
+    <string name="btn_clear_log">Clear log</string>
 
     <string name="popup_menu_descr">Popup Menu</string>
 

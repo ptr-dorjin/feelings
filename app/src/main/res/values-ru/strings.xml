@@ -7,9 +7,9 @@
     <string name="title_settings_clear_log">Очистить журнал</string>
 
     <string name="title_edit_question_dialog">Введите вопрос</string>
-    <string name="title_delete_question_dialog">Удалить вопрос?</string>
+    <string name="title_confirm_delete_question_dialog">Удалить вопрос?</string>
     <string name="title_confirm_clear_log_full_dialog">Удалить все ответы из журнала?</string>
-    <string name="title_confirm_clear_log_by_question_dialog">Удалить ответы на данный вопрос?</string>
+    <string name="title_confirm_clear_log_by_question_dialog">Удалить ответы на этот вопрос?</string>
 
     <string name="q_text_feelings">Что я сейчас чувствую?</string>
     <string name="q_text_insincerity">С кем я был не собой?</string>
@@ -50,6 +50,7 @@
     <string name="btn_edit">Редактировать</string>
     <string name="btn_delete">Удалить</string>
     <string name="btn_show_log">Журнал</string>
+    <string name="btn_clear_log">Очистить журнал</string>
 
     <string name="answer_log_empty_text">Журнал пуст.</string>
 

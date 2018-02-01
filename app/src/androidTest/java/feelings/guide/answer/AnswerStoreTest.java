@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class AnswerStoreTest {
     private static final long QUESTION_ID = 1;
+    private static final int QUESTION_ID_2 = 2;
     private static final LocalDateTime DATE_TIME = LocalDateTime.now();
     private static final String ANSWER_TEXT = "test answer";
 
@@ -60,7 +61,7 @@ public class AnswerStoreTest {
     public void testGetAll() {
         // given
         AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT));
-        AnswerStore.saveAnswer(context, new Answer(2, DATE_TIME.minusMinutes(1), "another one"));
+        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one"));
         AnswerStore.saveAnswer(context, new Answer(3, DATE_TIME.minusMinutes(2), "one more"));
 
         // when
@@ -69,7 +70,7 @@ public class AnswerStoreTest {
         // then
         assertEquals(3, answers.size());
         Answer fromDb = answers.get(0);
-        assertEquals(2, fromDb.getQuestionId());
+        assertEquals(QUESTION_ID_2, fromDb.getQuestionId());
         assertEquals(DATE_TIME.minusMinutes(1), fromDb.getDateTime());
         assertEquals("another one", fromDb.getAnswerText());
 
@@ -88,7 +89,7 @@ public class AnswerStoreTest {
     public void testGetByQuestionId() {
         // given
         AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT));
-        AnswerStore.saveAnswer(context, new Answer(2, DATE_TIME.minusMinutes(1), "another one"));
+        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one"));
         AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(2), "one more"));
 
         // when
@@ -105,6 +106,22 @@ public class AnswerStoreTest {
         assertEquals(QUESTION_ID, fromDb.getQuestionId());
         assertEquals(DATE_TIME.minusMinutes(3), fromDb.getDateTime());
         assertEquals(ANSWER_TEXT, fromDb.getAnswerText());
+    }
+
+    @Test
+    public void testDeleteByQuestionId() {
+        // given
+        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT));
+        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one"));
+        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(2), "one more"));
+
+        // when
+        AnswerStore.deleteByQuestionId(context, QUESTION_ID);
+
+        // then
+        List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
+        assertEquals(1, answers.size());
+        assertEquals(QUESTION_ID_2, answers.get(0).getQuestionId());
     }
 
     private List<Answer> cursorToAnswers(Cursor cursor) {

@@ -58,4 +58,16 @@ public class AnswerStore {
             db.close();
         }
     }
+
+    public static void deleteByQuestionId(Context context, long questionId) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+        try {
+            String selection = COLUMN_QUESTION_ID + " = ?";
+            String[] selectionArgs = {String.valueOf(questionId)};
+
+            db.delete(ANSWER_TABLE, selection, selectionArgs);
+        } finally {
+            db.close();
+        }
+    }
 }

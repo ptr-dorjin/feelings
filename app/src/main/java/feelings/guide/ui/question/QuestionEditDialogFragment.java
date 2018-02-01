@@ -23,9 +23,9 @@ public class QuestionEditDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         FragmentActivity activity = getActivity();
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.question_edit_dialog, null))
+        return new AlertDialog.Builder(activity)
+                .setView(inflater.inflate(R.layout.question_edit_dialog, null))
                 .setTitle(R.string.title_edit_question_dialog)
                 .setPositiveButton(R.string.btn_save, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -37,8 +37,8 @@ public class QuestionEditDialogFragment extends DialogFragment {
                         dismiss();
                     }
                 })
-                .setCancelable(false);
-        return builder.create();
+                .setCancelable(false)
+                .create();
     }
 
     @Override

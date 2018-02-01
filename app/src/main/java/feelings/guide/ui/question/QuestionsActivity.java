@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import feelings.guide.R;
+import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.Question;
 import feelings.guide.question.QuestionService;
 import feelings.guide.ui.BaseActivity;
@@ -32,7 +33,8 @@ import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
 
 public class QuestionsActivity extends BaseActivity implements
         QuestionEditDialogFragment.QuestionEditDialogListener,
-        QuestionDeleteDialogFragment.QuestionDeleteDialogListener {
+        QuestionDeleteDialogFragment.QuestionDeleteDialogListener,
+        QuestionClearLogDialogFragment.QuestionClearLogDialogListener {
 
     private QuestionsAdapter adapter;
     private FloatingActionButton fab;
@@ -110,6 +112,8 @@ public class QuestionsActivity extends BaseActivity implements
                         return showEditQuestionDialog(questionId);
                     case R.id.delete:
                         return showDeleteConfirmation(questionId);
+                    case R.id.clear_log:
+                        return showClearLogConfirmation(questionId);
                     default:
                         return false;
                 }
@@ -160,6 +164,13 @@ public class QuestionsActivity extends BaseActivity implements
         return true;
     }
 
+    private boolean showClearLogConfirmation(long questionId) {
+        changeQuestionId = questionId;
+        DialogFragment dialogFragment = new QuestionClearLogDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), QuestionClearLogDialogFragment.class.getSimpleName());
+        return true;
+    }
+
     private boolean showAnswerLog(Long questionId) {
         Intent intent = new Intent(this, AnswerLogActivity.class);
         if (questionId != null) {
@@ -197,11 +208,17 @@ public class QuestionsActivity extends BaseActivity implements
     }
 
     @Override
-    public void onDeleteClick(DialogFragment dialogFragment) {
+    public void onDeleteClick() {
         performServiceAction(QuestionService.deleteQuestion(this, changeQuestionId),
                 R.string.msg_question_delete_success,
                 R.string.msg_question_delete_error);
         adapter.refreshAll();
+    }
+
+    @Override
+    public void onClearLogClick() {
+        AnswerStore.deleteByQuestionId(this, changeQuestionId);
+        ToastUtil.showShort(this, getString(R.string.msg_clear_log_by_question_success));
     }
 
     private void performServiceAction(boolean success, int successMessageId, int errorMessageId) {

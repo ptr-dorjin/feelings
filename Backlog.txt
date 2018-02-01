@@ -3,6 +3,7 @@ Version 2.0.0
 2. Add settings screen +
 2.1. Clear log +
 2.2. Restore system questions visibility
-3. Clear log per question
+3. Clear log per question +
 4. Hide system questions
 5. Answer log date format
+6. Clear log while deleting a question
