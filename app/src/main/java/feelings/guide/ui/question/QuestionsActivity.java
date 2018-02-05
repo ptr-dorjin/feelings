@@ -30,10 +30,12 @@ import feelings.guide.ui.settings.SettingsActivity;
 import feelings.guide.util.ToastUtil;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
+import static feelings.guide.question.QuestionService.FEELINGS_ID;
 
 public class QuestionsActivity extends BaseActivity implements
         QuestionEditDialogFragment.QuestionEditDialogListener,
         QuestionDeleteDialogFragment.QuestionDeleteDialogListener,
+        QuestionHideDialogFragment.QuestionHideDialogListener,
         QuestionClearLogDialogFragment.QuestionClearLogDialogListener {
 
     private QuestionsAdapter adapter;
@@ -101,7 +103,9 @@ public class QuestionsActivity extends BaseActivity implements
         final boolean isUser = (boolean) v.getTag(R.id.tag_is_user);
         popup.inflate(isUser
                 ? R.menu.questions_popup_menu_user
-                : R.menu.questions_popup_menu_system);
+                : questionId == FEELINGS_ID
+                    ? R.menu.questions_popup_menu_feelings
+                    : R.menu.questions_popup_menu_system);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -112,6 +116,8 @@ public class QuestionsActivity extends BaseActivity implements
                         return showEditQuestionDialog(questionId);
                     case R.id.delete:
                         return showDeleteConfirmation(questionId);
+                    case R.id.hide:
+                        return showHideConfirmation(questionId);
                     case R.id.clear_log:
                         return showClearLogConfirmation(questionId);
                     default:
@@ -164,6 +170,13 @@ public class QuestionsActivity extends BaseActivity implements
         return true;
     }
 
+    private boolean showHideConfirmation(long questionId) {
+        changeQuestionId = questionId;
+        DialogFragment dialogFragment = new QuestionHideDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), QuestionHideDialogFragment.class.getSimpleName());
+        return true;
+    }
+
     private boolean showClearLogConfirmation(long questionId) {
         changeQuestionId = questionId;
         DialogFragment dialogFragment = new QuestionClearLogDialogFragment();
@@ -212,6 +225,14 @@ public class QuestionsActivity extends BaseActivity implements
         performServiceAction(QuestionService.deleteQuestion(this, changeQuestionId),
                 R.string.msg_question_delete_success,
                 R.string.msg_question_delete_error);
+        adapter.refreshAll();
+    }
+
+    @Override
+    public void onHideClick() {
+        performServiceAction(QuestionService.hideSystemQuestion(this, changeQuestionId),
+                R.string.msg_question_hide_success,
+                R.string.msg_question_hide_error);
         adapter.refreshAll();
     }
 

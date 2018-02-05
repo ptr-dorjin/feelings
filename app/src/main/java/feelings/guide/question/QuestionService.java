@@ -37,6 +37,14 @@ public class QuestionService {
         return QuestionStore.deleteQuestion(context, questionId);
     }
 
+    public static boolean hideSystemQuestion(Context context, long questionId) {
+        if (questionId == FEELINGS_ID) {
+            Log.e(TAG, "hideQuestion: attempt to hide feelings question!");
+            return false;
+        }
+        return QuestionStore.hideSystemQuestion(context, questionId);
+    }
+
     public static Cursor getAllQuestions(Context context) {
         return QuestionStore.getAll(context);
     }

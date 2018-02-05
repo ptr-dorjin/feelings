@@ -14,14 +14,19 @@ public class QuestionContract implements BaseColumns {
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_IS_USER = "is_user";
     public static final String COLUMN_IS_DELETED = "is_deleted";
+    public static final String COLUMN_IS_HIDDEN = "is_hidden";
+
+    static final String[] ALL_COLUMNS = {_ID, COLUMN_CODE, COLUMN_TEXT, COLUMN_DESCRIPTION,
+            COLUMN_IS_USER, COLUMN_IS_DELETED, COLUMN_IS_HIDDEN};
 
     public static final String SQL_CREATE_QUESTION_TABLE = "CREATE TABLE " + QUESTION_TABLE + " (" +
-            _ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-            COLUMN_CODE + " TEXT," +
-            COLUMN_TEXT + " TEXT," +
-            COLUMN_DESCRIPTION + " TEXT," +
-            COLUMN_IS_USER + " INTEGER," +
-            COLUMN_IS_DELETED + " INTEGER" +
+            _ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            COLUMN_CODE + " TEXT, " +
+            COLUMN_TEXT + " TEXT, " +
+            COLUMN_DESCRIPTION + " TEXT, " +
+            COLUMN_IS_USER + " INTEGER, " +
+            COLUMN_IS_DELETED + " INTEGER, " +
+            COLUMN_IS_HIDDEN + " INTEGER" +
             ")";
 
     public static final Map<Integer, QuestionCode> QUESTION_CODE_MAP = new HashMap<>();

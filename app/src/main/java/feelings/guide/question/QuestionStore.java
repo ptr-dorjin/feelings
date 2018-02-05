@@ -4,38 +4,36 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 
 import feelings.guide.R;
 import feelings.guide.db.DbHelper;
 
 import static android.provider.BaseColumns._ID;
+import static feelings.guide.question.QuestionContract.ALL_COLUMNS;
 import static feelings.guide.question.QuestionContract.COLUMN_CODE;
 import static feelings.guide.question.QuestionContract.COLUMN_DESCRIPTION;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_DELETED;
+import static feelings.guide.question.QuestionContract.COLUMN_IS_HIDDEN;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
 import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
 import static feelings.guide.question.QuestionContract.QUESTION_CODE_MAP;
 import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
+import static java.lang.String.valueOf;
 
 class QuestionStore {
 
     static Question getById(Context context, long questionId) {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
-        String[] projection = {_ID, COLUMN_CODE, COLUMN_TEXT, COLUMN_DESCRIPTION, COLUMN_IS_USER, COLUMN_IS_DELETED};
 
         String selection = _ID + " = ?";
-        String[] selectionArgs = {String.valueOf(questionId)};
+        String[] selectionArgs = {valueOf(questionId)};
 
         Cursor cursor = null;
         try {
-            cursor = db.query(QUESTION_TABLE, projection, selection, selectionArgs, null, null, null);
+            cursor = db.query(QUESTION_TABLE, ALL_COLUMNS, selection, selectionArgs, null, null, null);
             if (cursor.moveToFirst()) {
-                String code = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CODE));
-                String text = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXT));
-                String description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION));
-                boolean isUser = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_USER));
-                boolean isDeleted = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_DELETED));
-                return new Question(questionId, code, text, description, isUser, isDeleted);
+                return cursorToQuestion(cursor);
             } else {
                 return null;
             }
@@ -45,6 +43,19 @@ class QuestionStore {
         }
     }
 
+    @NonNull
+    static Question cursorToQuestion(Cursor cursor) {
+        Question question = new Question();
+        question.setId(cursor.getLong(cursor.getColumnIndexOrThrow(_ID)));
+        question.setCode(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CODE)));
+        question.setText(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXT)));
+        question.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)));
+        question.setUser(1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_USER)));
+        question.setDeleted(1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_DELETED)));
+        question.setHidden(1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_HIDDEN)));
+        return question;
+    }
+
     static long createQuestion(Context context, Question question) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {
@@ -52,6 +63,7 @@ class QuestionStore {
             values.put(COLUMN_TEXT, question.getText());
             values.put(COLUMN_IS_USER, question.isUser());
             values.put(COLUMN_IS_DELETED, false);
+            values.put(COLUMN_IS_HIDDEN, false);
 
             return db.insert(QUESTION_TABLE, null, values);
         } finally {
@@ -66,7 +78,7 @@ class QuestionStore {
             values.put(COLUMN_TEXT, question.getText());
 
             String selection = _ID + " = ?";
-            String[] selectionArgs = {String.valueOf(question.getId())};
+            String[] selectionArgs = {valueOf(question.getId())};
             int count = db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
             return count == 1;
         } finally {
@@ -83,8 +95,23 @@ class QuestionStore {
             ContentValues values = new ContentValues();
             values.put(COLUMN_IS_DELETED, true);
 
-            String selection = _ID + " = ?";
-            String[] selectionArgs = {String.valueOf(questionId)};
+            String selection = _ID + " = ? AND " + COLUMN_IS_USER + " = ?";
+            String[] selectionArgs = {valueOf(questionId), valueOf(1)};
+            int count = db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
+            return count == 1;
+        } finally {
+            db.close();
+        }
+    }
+
+    static boolean hideSystemQuestion(Context context, long questionId) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_IS_HIDDEN, true);
+
+            String selection = _ID + " = ? AND " + COLUMN_IS_USER + " = ?";
+            String[] selectionArgs = {valueOf(questionId), valueOf(0)};
             int count = db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
             return count == 1;
         } finally {
@@ -94,13 +121,12 @@ class QuestionStore {
 
     static Cursor getAll(Context context) {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
-        String[] projection = {_ID, COLUMN_TEXT, COLUMN_IS_USER, COLUMN_IS_DELETED};
         String orderBy = _ID + " ASC";
 
-        String selection = COLUMN_IS_DELETED + " = ?";
-        String[] selectionArgs = {String.valueOf(0)};
+        String selection = COLUMN_IS_DELETED + " = ? and " + COLUMN_IS_HIDDEN + " = ?";
+        String[] selectionArgs = {valueOf(0), valueOf(0)};
 
-        return db.query(QUESTION_TABLE, projection, selection, selectionArgs, null, null, orderBy);
+        return db.query(QUESTION_TABLE, ALL_COLUMNS, selection, selectionArgs, null, null, orderBy);
     }
 
     static boolean changeLanguage(Context context) {

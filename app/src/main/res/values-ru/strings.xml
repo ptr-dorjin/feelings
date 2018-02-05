@@ -8,6 +8,7 @@
 
     <string name="title_edit_question_dialog">Введите вопрос</string>
     <string name="title_confirm_delete_question_dialog">Удалить вопрос?</string>
+    <string name="title_confirm_hide_question_dialog">Скрыть вопрос?</string>
     <string name="title_confirm_clear_log_full_dialog">Удалить все ответы из журнала?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Удалить ответы на этот вопрос?</string>
 
@@ -38,6 +39,8 @@
     <string name="msg_question_edit_error">Ошибка при изменении вопроса</string>
     <string name="msg_question_delete_success">Вопрос удален</string>
     <string name="msg_question_delete_error">Ошибка при удалении вопроса</string>
+    <string name="msg_question_hide_success">Вопрос скрыт</string>
+    <string name="msg_question_hide_error">Ошибка при скрытии вопроса</string>
     <string name="msg_answer_text_empty">Введите ответ</string>
     <string name="msg_answer_saved_success">Ответ сохранен в журнал</string>
     <string name="msg_answer_saved_error">Ошибка при сохранении ответа</string>
@@ -49,6 +52,7 @@
     <string name="btn_cancel">Отмена</string>
     <string name="btn_edit">Редактировать</string>
     <string name="btn_delete">Удалить</string>
+    <string name="btn_hide">Скрыть</string>
     <string name="btn_show_log">Журнал</string>
     <string name="btn_clear_log">Очистить журнал</string>
 

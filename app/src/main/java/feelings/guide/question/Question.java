@@ -2,11 +2,12 @@ package feelings.guide.question;
 
 public class Question {
     private long id;
-    private String code;
+    private String code; //only for system questions
     private String text;
-    private String description;
-    private final boolean isUser;
-    private boolean isDeleted = false;
+    private String description; //only for system questions
+    private boolean isUser;
+    private boolean isDeleted; //can be set for user questions - by user, for system questions - only during app update
+    private boolean isHidden; //only for system questions. can be done by user
 
     public Question(String text) {
         this.text = text;
@@ -19,20 +20,8 @@ public class Question {
         isUser = true;
     }
 
-    Question(long id, String text, boolean isUser, boolean isDeleted) {
-        this.id = id;
-        this.text = text;
-        this.isUser = isUser;
-        this.isDeleted = isDeleted;
-    }
+    Question() {
 
-    Question(long id, String code, String text, String description, boolean isUser, boolean isDeleted) {
-        this.id = id;
-        this.code = code;
-        this.text = text;
-        this.description = description;
-        this.isUser = isUser;
-        this.isDeleted = isDeleted;
     }
 
     public long getId() {
@@ -41,6 +30,14 @@ public class Question {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getText() {
@@ -55,11 +52,31 @@ public class Question {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     boolean isUser() {
         return isUser;
     }
 
+    public void setUser(boolean user) {
+        isUser = user;
+    }
+
     boolean isDeleted() {
         return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
     }
 }

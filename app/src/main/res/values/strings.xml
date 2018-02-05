@@ -20,6 +20,7 @@
 
     <string name="title_edit_question_dialog">Enter a question</string>
     <string name="title_confirm_delete_question_dialog">Delete the question?</string>
+    <string name="title_confirm_hide_question_dialog">Hide the question?</string>
     <string name="title_confirm_clear_log_full_dialog">Delete all answers from log?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Delete answers to this question?</string>
 
@@ -50,6 +51,8 @@
     <string name="msg_question_edit_error">Error while changing the question</string>
     <string name="msg_question_delete_success">The question has been deleted</string>
     <string name="msg_question_delete_error">Error while deleting the question</string>
+    <string name="msg_question_hide_success">The question has been hidden</string>
+    <string name="msg_question_hide_error">Error while hiding the question</string>
     <string name="msg_answer_text_empty">Enter an answer</string>
     <string name="msg_answer_saved_success">The answer has been saved to the log</string>
     <string name="msg_answer_saved_error">Error while saving the answer</string>
@@ -61,6 +64,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_edit">Edit</string>
     <string name="btn_delete">Delete</string>
+    <string name="btn_hide">Hide</string>
     <string name="btn_show_log">Log</string>
     <string name="btn_clear_log">Clear log</string>
 

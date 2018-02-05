@@ -1,8 +1,10 @@
 package feelings.guide.question;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -16,12 +18,16 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.provider.BaseColumns._ID;
+import feelings.guide.db.DbHelper;
+
+import static feelings.guide.question.QuestionContract.COLUMN_CODE;
+import static feelings.guide.question.QuestionContract.COLUMN_DESCRIPTION;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_DELETED;
+import static feelings.guide.question.QuestionContract.COLUMN_IS_HIDDEN;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
 import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
+import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -32,11 +38,14 @@ public class QuestionStoreTest {
 
     private static final String TO_BE_OR_NOT_TO_BE = "To be or not to be?";
     private static final String WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING = "Would you like to understand nothing?";
+    private static final String SOME_SYSTEM_QUESTION = "Some system question";
+    private static final String TEST_SYSTEM_QUESTION_CODE = "test_code";
 
     @SuppressLint("StaticFieldLeak")
     private static Context context;
     private long questionId;
     private long questionId2;
+    private long questionId3;
 
     @BeforeClass
     public static void beforeClass() {
@@ -52,6 +61,7 @@ public class QuestionStoreTest {
     public void before() {
         questionId = 0;
         questionId2 = 0;
+        questionId3 = 0;
     }
 
     @After
@@ -62,10 +72,15 @@ public class QuestionStoreTest {
         if (questionId2 != 0) {
             QuestionStore.deleteQuestion(context, questionId2);
         }
+        if (questionId3 != 0) {
+            QuestionStore.deleteQuestion(context, questionId3);
+        }
+
+        deleteSystemQuestion(TEST_SYSTEM_QUESTION_CODE);
     }
 
     @Test
-    public void testGetById() {
+    public void shouldGetById() {
         // given
         questionId = QuestionStore.createQuestion(context, new Question(TO_BE_OR_NOT_TO_BE));
 
@@ -79,7 +94,7 @@ public class QuestionStoreTest {
     }
 
     @Test
-    public void testCreation() {
+    public void shouldCreate() {
         // when
         questionId = QuestionStore.createQuestion(context, new Question(TO_BE_OR_NOT_TO_BE));
         questionId2 = QuestionStore.createQuestion(context, new Question(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING));
@@ -91,7 +106,7 @@ public class QuestionStoreTest {
     }
 
     @Test
-    public void testUpdate() {
+    public void shouldUpdate() {
         // given
         Question question = new Question(TO_BE_OR_NOT_TO_BE);
         questionId = QuestionStore.createQuestion(context, question);
@@ -109,7 +124,7 @@ public class QuestionStoreTest {
     }
 
     @Test
-    public void testDelete() {
+    public void shouldDelete() {
         // given
         questionId = QuestionStore.createQuestion(context, new Question(TO_BE_OR_NOT_TO_BE));
 
@@ -124,30 +139,53 @@ public class QuestionStoreTest {
     }
 
     @Test
-    public void testGetAll() {
+    public void shouldHideSystemQuestion() {
+        // given
+        Question systemQuestion = new Question();
+        systemQuestion.setCode(TEST_SYSTEM_QUESTION_CODE);
+        systemQuestion.setText(SOME_SYSTEM_QUESTION);
+        questionId = createSystemQuestion(systemQuestion);
+
+        // when
+        boolean hidden = QuestionStore.hideSystemQuestion(context, questionId);
+
+        // then
+        assertTrue(hidden);
+        Question fromDB = QuestionStore.getById(context, questionId);
+        assertNotNull(fromDB);
+        assertTrue(fromDB.isHidden());
+    }
+
+    @Test
+    public void shouldGetAll() {
         // given
         questionId = QuestionStore.createQuestion(context, new Question(TO_BE_OR_NOT_TO_BE));
+
         questionId2 = QuestionStore.createQuestion(context, new Question(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING));
         QuestionStore.deleteQuestion(context, questionId2);
+
+        Question systemQuestion = new Question();
+        systemQuestion.setCode(TEST_SYSTEM_QUESTION_CODE);
+        systemQuestion.setText(SOME_SYSTEM_QUESTION);
+        questionId3 = createSystemQuestion(systemQuestion);
+        QuestionStore.hideSystemQuestion(context, questionId3);
 
         // when
         Cursor cursor = QuestionStore.getAll(context);
 
         // then
         List<Question> questions = cursorToQuestions(cursor);
-        assertTrue(questions.size() > 0);
+        assertTrue(questions.size() > 0); //also contains real app's questions
 
         boolean containsQuestion1 = false;
-        boolean containsQuestion2 = false;
         for (Question question : questions) {
             if (question.getId() == questionId) {
                 containsQuestion1 = true;
-            } else if (question.getId() == questionId2) {
-                containsQuestion2 = true;
             }
+            assertNotEquals(questionId2, question.getId());
+            assertNotEquals(questionId3, question.getId());
         }
         assertTrue(containsQuestion1);
-        assertFalse(containsQuestion2);
     }
 
     private List<Question> cursorToQuestions(Cursor cursor) {
@@ -155,15 +193,42 @@ public class QuestionStoreTest {
         try {
             List<Question> list = new ArrayList<>();
             while (cursor.moveToNext()) {
-                long id = cursor.getLong(cursor.getColumnIndexOrThrow(_ID));
-                String text = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXT));
-                boolean isUser = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_USER));
-                boolean isDeleted = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_DELETED));
-                list.add(new Question(id, text, isUser, isDeleted));
+                list.add(QuestionStore.cursorToQuestion(cursor));
             }
             return list;
         } finally {
             cursor.close();
         }
+    }
+
+    private static long createSystemQuestion(Question question) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_TEXT, question.getText());
+            values.put(COLUMN_CODE, question.getCode());
+            values.put(COLUMN_DESCRIPTION, question.getDescription());
+            values.put(COLUMN_IS_USER, false);
+            values.put(COLUMN_IS_DELETED, false);
+            values.put(COLUMN_IS_HIDDEN, false);
+
+            return db.insert(QUESTION_TABLE, null, values);
+        } finally {
+            db.close();
+        }
+    }
+
+    private static void deleteSystemQuestion(String questionCode) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+
+        String selection = COLUMN_CODE + " = ?";
+        String[] selectionArgs = {questionCode};
+
+        try {
+            db.delete(QUESTION_TABLE,selection, selectionArgs);
+        } finally {
+            db.close();
+        }
+
     }
 }
