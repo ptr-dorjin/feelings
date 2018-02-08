@@ -38,6 +38,9 @@ public class QuestionsActivity extends BaseActivity implements
         QuestionHideDialogFragment.QuestionHideDialogListener,
         QuestionClearLogDialogFragment.QuestionClearLogDialogListener {
 
+    public static final String REFRESH_QUESTIONS_KEY = "should-refresh-questions";
+    private static final int SETTINGS_REQUEST_CODE = 777;
+
     private QuestionsAdapter adapter;
     private FloatingActionButton fab;
     private Long changeQuestionId;
@@ -105,7 +108,7 @@ public class QuestionsActivity extends BaseActivity implements
                 ? R.menu.questions_popup_menu_user
                 : questionId == FEELINGS_ID
                     ? R.menu.questions_popup_menu_feelings
-                    : R.menu.questions_popup_menu_system);
+                    : R.menu.questions_popup_menu_built_in);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -195,8 +198,18 @@ public class QuestionsActivity extends BaseActivity implements
 
     private boolean showSettings() {
         Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, SETTINGS_REQUEST_CODE);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode >= 0) {
+            boolean refresh = data.getBooleanExtra(REFRESH_QUESTIONS_KEY, false);
+            if (refresh) {
+                adapter.refreshAll();
+            }
+        }
     }
 
     @Override
@@ -230,7 +243,7 @@ public class QuestionsActivity extends BaseActivity implements
 
     @Override
     public void onHideClick() {
-        performServiceAction(QuestionService.hideSystemQuestion(this, changeQuestionId),
+        performServiceAction(QuestionService.hideQuestion(this, changeQuestionId),
                 R.string.msg_question_hide_success,
                 R.string.msg_question_hide_error);
         adapter.refreshAll();

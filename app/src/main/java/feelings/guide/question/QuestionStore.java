@@ -56,6 +56,9 @@ class QuestionStore {
         return question;
     }
 
+    /**
+     * Only for user's question
+     */
     static long createQuestion(Context context, Question question) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {
@@ -71,6 +74,9 @@ class QuestionStore {
         }
     }
 
+    /**
+     * Only for user's question
+     */
     static boolean updateQuestion(Context context, Question question) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {
@@ -88,6 +94,7 @@ class QuestionStore {
 
     /**
      * Actually doesn't delete, but marks question as deleted
+     * Only for user's question
      */
     static boolean deleteQuestion(Context context, long questionId) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
@@ -104,7 +111,10 @@ class QuestionStore {
         }
     }
 
-    static boolean hideSystemQuestion(Context context, long questionId) {
+    /**
+     * Only for built-in questions
+     */
+    static boolean hideQuestion(Context context, long questionId) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -114,6 +124,23 @@ class QuestionStore {
             String[] selectionArgs = {valueOf(questionId), valueOf(0)};
             int count = db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
             return count == 1;
+        } finally {
+            db.close();
+        }
+    }
+
+    /**
+     * Only for built-in questions
+     */
+    static void restoreHidden(Context context) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_IS_HIDDEN, false);
+
+            String selection = COLUMN_IS_USER + " = ?";
+            String[] selectionArgs = {valueOf(0)};
+            db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
         } finally {
             db.close();
         }
@@ -129,6 +156,9 @@ class QuestionStore {
         return db.query(QUESTION_TABLE, ALL_COLUMNS, selection, selectionArgs, null, null, orderBy);
     }
 
+    /**
+     * Change language of built-in questions
+     */
     static boolean changeLanguage(Context context) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {

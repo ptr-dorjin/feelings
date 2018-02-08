@@ -38,8 +38,8 @@ public class QuestionStoreTest {
 
     private static final String TO_BE_OR_NOT_TO_BE = "To be or not to be?";
     private static final String WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING = "Would you like to understand nothing?";
-    private static final String SOME_SYSTEM_QUESTION = "Some system question";
-    private static final String TEST_SYSTEM_QUESTION_CODE = "test_code";
+    private static final String SOME_BUILT_IN_QUESTION = "Some built-in question";
+    private static final String TEST_BUILT_IN_QUESTION_CODE = "test_code";
 
     @SuppressLint("StaticFieldLeak")
     private static Context context;
@@ -76,7 +76,7 @@ public class QuestionStoreTest {
             QuestionStore.deleteQuestion(context, questionId3);
         }
 
-        deleteSystemQuestion(TEST_SYSTEM_QUESTION_CODE);
+        deleteBuiltInQuestion(TEST_BUILT_IN_QUESTION_CODE);
     }
 
     @Test
@@ -139,15 +139,15 @@ public class QuestionStoreTest {
     }
 
     @Test
-    public void shouldHideSystemQuestion() {
+    public void shouldHideBuiltInQuestion() {
         // given
-        Question systemQuestion = new Question();
-        systemQuestion.setCode(TEST_SYSTEM_QUESTION_CODE);
-        systemQuestion.setText(SOME_SYSTEM_QUESTION);
-        questionId = createSystemQuestion(systemQuestion);
+        Question builtInQuestion = new Question();
+        builtInQuestion.setCode(TEST_BUILT_IN_QUESTION_CODE);
+        builtInQuestion.setText(SOME_BUILT_IN_QUESTION);
+        questionId = createBuiltInQuestion(builtInQuestion);
 
         // when
-        boolean hidden = QuestionStore.hideSystemQuestion(context, questionId);
+        boolean hidden = QuestionStore.hideQuestion(context, questionId);
 
         // then
         assertTrue(hidden);
@@ -164,11 +164,11 @@ public class QuestionStoreTest {
         questionId2 = QuestionStore.createQuestion(context, new Question(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING));
         QuestionStore.deleteQuestion(context, questionId2);
 
-        Question systemQuestion = new Question();
-        systemQuestion.setCode(TEST_SYSTEM_QUESTION_CODE);
-        systemQuestion.setText(SOME_SYSTEM_QUESTION);
-        questionId3 = createSystemQuestion(systemQuestion);
-        QuestionStore.hideSystemQuestion(context, questionId3);
+        Question builtInQuestion = new Question();
+        builtInQuestion.setCode(TEST_BUILT_IN_QUESTION_CODE);
+        builtInQuestion.setText(SOME_BUILT_IN_QUESTION);
+        questionId3 = createBuiltInQuestion(builtInQuestion);
+        QuestionStore.hideQuestion(context, questionId3);
 
         // when
         Cursor cursor = QuestionStore.getAll(context);
@@ -201,7 +201,7 @@ public class QuestionStoreTest {
         }
     }
 
-    private static long createSystemQuestion(Question question) {
+    private static long createBuiltInQuestion(Question question) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -218,7 +218,7 @@ public class QuestionStoreTest {
         }
     }
 
-    private static void deleteSystemQuestion(String questionCode) {
+    private static void deleteBuiltInQuestion(String questionCode) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
 
         String selection = COLUMN_CODE + " = ?";

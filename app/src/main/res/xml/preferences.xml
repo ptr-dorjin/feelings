@@ -9,4 +9,7 @@
     <Preference
         android:title="@string/title_settings_clear_log"
         android:key="Feelings.Guide.Clear.Log"/>
+    <Preference
+        android:title="@string/title_settings_restore_built_in_questions"
+        android:key="Feelings.Guide.Restore.Built.In.Questions"/>
 </PreferenceScreen>

@@ -2,12 +2,12 @@ package feelings.guide.question;
 
 public class Question {
     private long id;
-    private String code; //only for system questions
+    private String code; //only for built-in questions
     private String text;
-    private String description; //only for system questions
+    private String description; //only for built-in questions
     private boolean isUser;
-    private boolean isDeleted; //can be set for user questions - by user, for system questions - only during app update
-    private boolean isHidden; //only for system questions. can be done by user
+    private boolean isDeleted; //can be set for user questions - by user, for built-in questions - only during app update
+    private boolean isHidden; //only for built-in questions. can be done by user
 
     public Question(String text) {
         this.text = text;

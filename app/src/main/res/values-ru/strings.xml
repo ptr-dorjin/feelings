@@ -5,12 +5,14 @@
 
     <string name="title_settings_language">Язык</string>
     <string name="title_settings_clear_log">Очистить журнал</string>
+    <string name="title_settings_restore_built_in_questions">Восстановить встроенные вопросы</string>
 
     <string name="title_edit_question_dialog">Введите вопрос</string>
     <string name="title_confirm_delete_question_dialog">Удалить вопрос?</string>
     <string name="title_confirm_hide_question_dialog">Скрыть вопрос?</string>
     <string name="title_confirm_clear_log_full_dialog">Удалить все ответы из журнала?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Удалить ответы на этот вопрос?</string>
+    <string name="title_confirm_restore_built_in_questions_dialog">Восстановить видимость встроенных вопросов?</string>
 
     <string name="q_text_feelings">Что я сейчас чувствую?</string>
     <string name="q_text_insincerity">С кем я был не собой?</string>
@@ -47,6 +49,7 @@
     <string name="msg_change_language_restart">Пожалуйста, перезапустите приложение, чтобы изменения полностью вступили в силу</string>
     <string name="msg_clear_log_full_success">Журнал очищен</string>
     <string name="msg_clear_log_by_question_success">Ответы на вопрос удалены</string>
+    <string name="msg_restore_built_in_questions_success">Встроенные вопросы восстановлены</string>
 
     <string name="btn_save">Сохранить</string>
     <string name="btn_cancel">Отмена</string>
@@ -55,7 +58,8 @@
     <string name="btn_hide">Скрыть</string>
     <string name="btn_show_log">Журнал</string>
     <string name="btn_clear_log">Очистить журнал</string>
+    <string name="btn_restore">Восстановить</string>
 
-    <string name="answer_log_empty_text">Журнал пуст.</string>
+    <string name="answer_log_empty_text">Журнал пуст</string>
 
 </resources>
