@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <ListPreference
-        android:key="Feelings.Guide.Selected.Language"
-        android:title="@string/title_settings_language"
-        android:entries="@array/lang_titles"
-        android:entryValues="@array/lang_values"
-        android:defaultValue="en"/>
-    <Preference
-        android:title="@string/title_settings_clear_log"
-        android:key="Feelings.Guide.Clear.Log"/>
-    <Preference
-        android:title="@string/title_settings_restore_built_in_questions"
-        android:key="Feelings.Guide.Restore.Built.In.Questions"/>
+    <PreferenceCategory
+        android:layout="@layout/pref_category"
+        android:title="@string/title_settings_category_interface">
+
+        <ListPreference
+            android:defaultValue="en"
+            android:entries="@array/lang_titles"
+            android:entryValues="@array/lang_values"
+            android:key="Feelings.Guide.Selected.Language"
+            android:title="@string/title_settings_language"/>
+
+        <Preference
+            android:key="Feelings.Guide.Restore.Built.In.Questions"
+            android:title="@string/title_settings_restore_built_in_questions"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/pref_category"
+        android:title="@string/title_settings_category_clear_log">
+
+        <Preference
+            android:key="Feelings.Guide.Clear.Log.Full"
+            android:title="@string/title_settings_clear_log_full"/>
+
+        <Preference
+            android:key="Feelings.Guide.Clear.Log.Deleted"
+            android:title="@string/title_settings_clear_log_deleted"/>
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -18,7 +18,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class SettingsFragment extends PreferenceFragment {
 
-    private static final String CLEAR_LOG_KEY = "Feelings.Guide.Clear.Log";
+    private static final String CLEAR_LOG_FULL_KEY = "Feelings.Guide.Clear.Log.Full";
+    private static final String CLEAR_LOG_DELETED_KEY = "Feelings.Guide.Clear.Log.Deleted";
     private static final String RESTORE_BUILT_IN_QUESTIONS_KEY = "Feelings.Guide.Restore.Built.In.Questions";
 
     @Override
@@ -27,12 +28,13 @@ public class SettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.preferences);
 
-        setUpClearLogPreference();
+        setUpClearLogFullPreference();
+        setUpClearLogDeletedPreference();
         setUpRestoreBuiltInQuestionsPreference();
     }
 
-    private void setUpClearLogPreference() {
-        Preference clearLogPreference = getPreferenceScreen().findPreference(CLEAR_LOG_KEY);
+    private void setUpClearLogFullPreference() {
+        Preference clearLogPreference = getPreferenceScreen().findPreference(CLEAR_LOG_FULL_KEY);
         clearLogPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 final Activity activity = getActivity();
@@ -41,6 +43,30 @@ public class SettingsFragment extends PreferenceFragment {
                         .setPositiveButton(R.string.btn_delete, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 AnswerStore.deleteAll(activity);
+                                ToastUtil.showShort(activity, getString(R.string.msg_clear_log_full_success));
+                            }
+                        })
+                        .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }).create()
+                        .show();
+                return true;
+            }
+        });
+    }
+
+    private void setUpClearLogDeletedPreference() {
+        Preference clearLogPreference = getPreferenceScreen().findPreference(CLEAR_LOG_DELETED_KEY);
+        clearLogPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                final Activity activity = getActivity();
+                new AlertDialog.Builder(activity)
+                        .setMessage(R.string.title_confirm_clear_log_deleted_dialog)
+                        .setPositiveButton(R.string.btn_delete, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                AnswerStore.deleteForDeletedQuestions(activity);
                                 ToastUtil.showShort(activity, getString(R.string.msg_clear_log_full_success));
                             }
                         })

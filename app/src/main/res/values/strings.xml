@@ -15,14 +15,18 @@
     <string name="title_answer_log_activity">Log</string>
     <string name="title_settings_activity">Settings</string>
 
+    <string name="title_settings_category_interface">Interface</string>
+    <string name="title_settings_category_clear_log">Clear log</string>
     <string name="title_settings_language">Language</string>
-    <string name="title_settings_clear_log">Clear log</string>
+    <string name="title_settings_clear_log_full">Full</string>
+    <string name="title_settings_clear_log_deleted">Deleted questions</string>
     <string name="title_settings_restore_built_in_questions">Restore built-in questions</string>
 
     <string name="title_edit_question_dialog">Enter a question</string>
     <string name="title_confirm_delete_question_dialog">Delete the question?</string>
     <string name="title_confirm_hide_question_dialog">Hide the question?</string>
     <string name="title_confirm_clear_log_full_dialog">Delete all answers from log?</string>
+    <string name="title_confirm_clear_log_deleted_dialog">Delete answers to deleted/hidden questions from log?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Delete answers to this question?</string>
     <string name="title_confirm_restore_built_in_questions_dialog">Restore built-in questions visibility?</string>
 

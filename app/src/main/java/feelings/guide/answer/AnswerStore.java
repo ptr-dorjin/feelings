@@ -12,6 +12,9 @@ import static feelings.guide.answer.AnswerContract.COLUMN_ANSWER;
 import static feelings.guide.answer.AnswerContract.COLUMN_DATE_TIME;
 import static feelings.guide.answer.AnswerContract.COLUMN_QUESTION_ID;
 import static feelings.guide.answer.AnswerContract.ANSWER_TABLE;
+import static feelings.guide.question.QuestionContract.COLUMN_IS_DELETED;
+import static feelings.guide.question.QuestionContract.COLUMN_IS_HIDDEN;
+import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
 import static feelings.guide.util.DateTimeUtil.DB_FORMATTER;
 
 public class AnswerStore {
@@ -54,6 +57,18 @@ public class AnswerStore {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {
             db.delete(ANSWER_TABLE, null, null);
+        } finally {
+            db.close();
+        }
+    }
+
+    public static void deleteForDeletedQuestions(Context context) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
+        try {
+            db.execSQL("delete from " + ANSWER_TABLE + " where " + COLUMN_QUESTION_ID + " in (" +
+                    "select " + _ID + " from " + QUESTION_TABLE + " where " +
+                    COLUMN_IS_DELETED + " = 1 or " + COLUMN_IS_HIDDEN + " = 1" +
+                    ")");
         } finally {
             db.close();
         }
