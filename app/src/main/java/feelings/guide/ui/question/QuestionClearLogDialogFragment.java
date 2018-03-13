@@ -14,7 +14,7 @@ import feelings.guide.R;
 public class QuestionClearLogDialogFragment extends DialogFragment {
 
     interface QuestionClearLogDialogListener {
-        void onClearLogClick();
+        void onClearLogConfirmed();
     }
 
     private QuestionClearLogDialogListener listener;
@@ -26,7 +26,7 @@ public class QuestionClearLogDialogFragment extends DialogFragment {
                 .setMessage(R.string.title_confirm_clear_log_by_question_dialog)
                 .setPositiveButton(R.string.btn_delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.onClearLogClick();
+                        listener.onClearLogConfirmed();
                     }
                 })
                 .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {

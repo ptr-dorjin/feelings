@@ -14,7 +14,7 @@ import feelings.guide.R;
 public class QuestionDeleteDialogFragment extends DialogFragment {
 
     interface QuestionDeleteDialogListener {
-        void onDeleteClick();
+        void onDeleteConfirmed();
     }
 
     private QuestionDeleteDialogListener listener;
@@ -26,7 +26,7 @@ public class QuestionDeleteDialogFragment extends DialogFragment {
                 .setMessage(R.string.title_confirm_delete_question_dialog)
                 .setPositiveButton(R.string.btn_delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.onDeleteClick();
+                        listener.onDeleteConfirmed();
                     }
                 })
                 .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {

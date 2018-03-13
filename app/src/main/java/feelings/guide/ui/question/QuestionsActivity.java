@@ -234,15 +234,20 @@ public class QuestionsActivity extends BaseActivity implements
     }
 
     @Override
-    public void onDeleteClick() {
+    public void onDeleteConfirmed() {
         performServiceAction(QuestionService.deleteQuestion(this, changeQuestionId),
                 R.string.msg_question_delete_success,
                 R.string.msg_question_delete_error);
         adapter.refreshAll();
+        // also clear the log
+        if (QuestionService.hasAnswers(this, changeQuestionId)) {
+            DialogFragment dialogFragment = new QuestionClearLogDialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), QuestionClearLogDialogFragment.class.getSimpleName());
+        }
     }
 
     @Override
-    public void onHideClick() {
+    public void onHideConfirmed() {
         performServiceAction(QuestionService.hideQuestion(this, changeQuestionId),
                 R.string.msg_question_hide_success,
                 R.string.msg_question_hide_error);
@@ -250,7 +255,7 @@ public class QuestionsActivity extends BaseActivity implements
     }
 
     @Override
-    public void onClearLogClick() {
+    public void onClearLogConfirmed() {
         AnswerStore.deleteByQuestionId(this, changeQuestionId);
         ToastUtil.showShort(this, getString(R.string.msg_clear_log_by_question_success));
     }

@@ -85,4 +85,16 @@ public class AnswerStore {
             db.close();
         }
     }
+
+    public static boolean hasAnswers(Context context, long questionId) {
+        Cursor cursor = null;
+        try {
+            cursor = getByQuestionId(context, questionId);
+            return cursor.moveToFirst();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
 }

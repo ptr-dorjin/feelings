@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import feelings.guide.answer.AnswerStore;
+
 public class QuestionService {
 
     private static final String TAG = QuestionService.class.getSimpleName();
@@ -63,5 +65,9 @@ public class QuestionService {
 
     public static boolean changeLanguage(Context context) {
         return QuestionStore.changeLanguage(context);
+    }
+
+    public static boolean hasAnswers(Context context, long questionId) {
+        return AnswerStore.hasAnswers(context, questionId);
     }
 }

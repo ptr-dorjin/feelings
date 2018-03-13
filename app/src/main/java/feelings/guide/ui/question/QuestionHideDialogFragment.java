@@ -14,7 +14,7 @@ import feelings.guide.R;
 public class QuestionHideDialogFragment extends DialogFragment {
 
     interface QuestionHideDialogListener {
-        void onHideClick();
+        void onHideConfirmed();
     }
 
     private QuestionHideDialogListener listener;
@@ -26,7 +26,7 @@ public class QuestionHideDialogFragment extends DialogFragment {
                 .setMessage(R.string.title_confirm_hide_question_dialog)
                 .setPositiveButton(R.string.btn_hide, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.onHideClick();
+                        listener.onHideConfirmed();
                     }
                 })
                 .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
