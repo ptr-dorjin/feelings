@@ -30,6 +30,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
 
     private final Context context;
     private final boolean isFull;
+    private final String dateTimeFormat;
 
     static final class AnswerLogHolder extends RecyclerView.ViewHolder {
         TextView dateTime;
@@ -49,6 +50,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
         this.context = context;
         this.isFull = isFull;
         swapCursor(cursor);
+        this.dateTimeFormat = DateTimeUtil.getDateTimeFormat(context);
     }
 
     @Override
@@ -68,7 +70,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
                 DB_FORMATTER);
         String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ANSWER));
 
-        holder.dateTime.setText(dateTime.format(ofPattern(DateTimeUtil.ANSWER_LOG_FORMAT)));
+        holder.dateTime.setText(dateTime.format(ofPattern(dateTimeFormat)));
         if (holder.question != null) {
             holder.question.setText(QuestionService.getQuestionText(context, questionId));
         }

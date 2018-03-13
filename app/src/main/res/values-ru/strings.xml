@@ -7,6 +7,8 @@
     <string name="title_settings_category_clear_log">Очистить журнал</string>
     <string name="title_settings_language">Язык</string>
     <string name="title_settings_restore_built_in_questions">Восстановить встроенные вопросы</string>
+    <string name="title_settings_date_format">Формат даты</string>
+    <string name="title_settings_time_format">Формат времени</string>
     <string name="title_settings_clear_log_full">Все</string>
     <string name="title_settings_clear_log_deleted">Удаленные вопросы</string>
 

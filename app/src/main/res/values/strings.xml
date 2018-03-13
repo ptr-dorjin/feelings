@@ -11,6 +11,19 @@
         <item>Русский</item>
     </string-array>
 
+    <string-array name="date_formats">
+        <item>d MMM yyyy</item>
+        <item>dd.MM.yyyy</item>
+        <item>MM/dd/yyyy</item>
+        <item>yyyy-MM-dd</item>
+    </string-array>
+
+    <string-array name="time_formats">
+        <item>HH:mm</item>
+        <item>hh:mm a</item>
+        <item>h:mm a</item>
+    </string-array>
+
     <string name="title_answer_activity">Answer</string>
     <string name="title_answer_log_activity">Log</string>
     <string name="title_settings_activity">Settings</string>
@@ -18,9 +31,11 @@
     <string name="title_settings_category_interface">Interface</string>
     <string name="title_settings_category_clear_log">Clear log</string>
     <string name="title_settings_language">Language</string>
+    <string name="title_settings_restore_built_in_questions">Restore built-in questions</string>
+    <string name="title_settings_date_format">Date format</string>
+    <string name="title_settings_time_format">Time format</string>
     <string name="title_settings_clear_log_full">Full</string>
     <string name="title_settings_clear_log_deleted">Deleted questions</string>
-    <string name="title_settings_restore_built_in_questions">Restore built-in questions</string>
 
     <string name="title_edit_question_dialog">Enter a question</string>
     <string name="title_confirm_delete_question_dialog">Delete the question?</string>
