@@ -63,8 +63,8 @@ public class QuestionService {
         return question;
     }
 
-    public static boolean changeLanguage(Context context) {
-        return QuestionStore.changeLanguage(context);
+    public static void changeLanguage(Context context) {
+        QuestionStore.changeLanguage(context);
     }
 
     public static boolean hasAnswers(Context context, long questionId) {

@@ -2,12 +2,13 @@
 <resources>
     <!-- Do not change them without upgrading the DB -->
     <string name="q_feelings">q_feelings</string>
-    <string name="q_insincerity">q_insincerity</string>
     <string name="q_gratitude">q_gratitude</string>
-    <string name="q_preach">q_preach</string>
-    <string name="q_lie">q_lie</string>
-    <string name="q_irresponsibility">q_irresponsibility</string>
     <string name="q_do_body">q_do_body</string>
     <string name="q_do_close">q_do_close</string>
     <string name="q_do_others">q_do_others</string>
+
+    <string name="q_insincerity">q_insincerity</string><!--deprecated-->
+    <string name="q_preach">q_preach</string><!--deprecated-->
+    <string name="q_lie">q_lie</string><!--deprecated-->
+    <string name="q_irresponsibility">q_irresponsibility</string><!--deprecated-->
 </resources>

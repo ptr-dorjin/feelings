@@ -54,17 +54,13 @@ public class DbHelper extends SQLiteOpenHelper {
             new UpgraderTo2(context).upgrade(db);
         }
         if (oldVersion < 3) {
-            new UpgraderTo3().upgrade(db);
+            new UpgraderTo3(context).upgrade(db);
         }
     }
 
     private void populateQuestions(SQLiteDatabase db) {
         populateQuestion(db, R.string.q_feelings);
-        populateQuestion(db, R.string.q_insincerity);
         populateQuestion(db, R.string.q_gratitude);
-        populateQuestion(db, R.string.q_preach);
-        populateQuestion(db, R.string.q_lie);
-        populateQuestion(db, R.string.q_irresponsibility);
         populateQuestion(db, R.string.q_do_body);
         populateQuestion(db, R.string.q_do_close);
         populateQuestion(db, R.string.q_do_others);

@@ -1,165 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="anger">en_Гнев</string>
-    <string name="fear">en_Страх</string>
-    <string name="melancholy">en_Грусть</string>
-    <string name="joy">en_Радость</string>
-    <string name="love">en_Любовь</string>
+    <string name="anger">Anger</string>
+    <string name="fear">Fear</string>
+    <string name="sadness">Sadness</string>
+    <string name="joy">Joy</string>
+    <string name="love">Love</string>
 
     <string-array name="anger_array">
-        <item>en_Бешенство</item>
-        <item>en_Возмущение</item>
-        <item>en_Гнев</item>
-        <item>en_Досада</item>
-        <item>en_Зависть</item>
-        <item>en_Злость</item>
-        <item>en_Истерия</item>
-        <item>en_Негодование</item>
-        <item>en_Недовольство</item>
-        <item>en_Ненависть</item>
-        <item>en_Неприязнь</item>
-        <item>en_Обида</item>
-        <item>en_Отвращение</item>
-        <item>en_Презрение</item>
-        <item>en_Превосходство</item>
-        <item>en_Раздражение</item>
-        <item>en_Ревность</item>
-        <item>en_Сердитость</item>
-        <item>en_Сопротивление</item>
-        <item>en_Уязвленность</item>
-        <item>en_Чувство несправедливости</item>
-        <item>en_Ярость</item>
+        <item>Anger</item>
+        <item>Annoyance</item>
+        <item>Aversion</item>
+        <item>Contempt</item>
+        <item>Discontent</item>
+        <item>Disdain</item>
+        <item>Disgust</item>
+        <item>Dislike</item>
+        <item>Envy</item>
+        <item>Fury</item>
+        <item>Grudge</item>
+        <item>Hatred</item>
+        <item>Hysteria</item>
+        <item>Indignation</item>
+        <item>Jealousy</item>
+        <item>Pique</item>
+        <item>Rage</item>
+        <item>Resentment</item>
+        <item>Superiority</item>
+        <item>Vexation</item>
+        <item>Wrath</item>
     </string-array>
-    
+
     <string-array name="fear_array">
-        <item>en_Апатия</item>
-        <item>en_Беспокойство</item>
-        <item>en_Боязнь</item>
-        <item>en_Вина</item>
-        <item>en_Замешательство</item>
-        <item>en_Застенчивость</item>
-        <item>en_Испуг</item>
-        <item>en_Надменность</item>
-        <item>en_Неловкость</item>
-        <item>en_Неуверенность</item>
-        <item>en_Опасение</item>
-        <item>en_Отчаяние</item>
-        <item>en_Оцепенение</item>
-        <item>en_Ошарашенность</item>
-        <item>en_Ошеломленность</item>
-        <item>en_Подозрение</item>
-        <item>en_Подвох</item>
-        <item>en_Растерянность</item>
-        <item>en_Сломленность</item>
-        <item>en_Смущение</item>
-        <item>en_Сомнение</item>
-        <item>en_Страх</item>
-        <item>en_Стыд</item>
-        <item>en_Тревога</item>
-        <item>en_Ужас</item>
-        <item>en_Унижение</item>
+        <item>Apathy</item>
+        <item>Anxiety</item>
+        <item>Apprehension</item>
+        <item>Arrogance</item>
+        <item>Awe</item>
+        <item>Confusion</item>
+        <item>Despair</item>
+        <item>Doubt</item>
+        <item>Dumbfounded</item>
+        <item>Embarrassment</item>
+        <item>Fault</item>
+        <item>Fear</item>
+        <item>Fright</item>
+        <item>Haughtiness</item>
+        <item>Horror</item>
+        <item>Humiliation</item>
+        <item>Perplexity</item>
+        <item>Shame</item>
+        <item>Shyness</item>
+        <item>Staggered</item>
+        <item>Suspicion</item>
+        <item>Torpor</item>
+        <item>Uncertainty</item>
+        <item>Uneasiness</item>
+        <item>Worry</item>
     </string-array>
-    
-    <string-array name="melancholy_array">
-        <item>en_Грусть</item>
-        <item>en_Безнадежность</item>
-        <item>en_Безразличие</item>
-        <item>en_Беспомощность</item>
-        <item>en_Безучастность</item>
-        <item>en_Безысходность</item>
-        <item>en_Горечь</item>
-        <item>en_Душевная боль</item>
-        <item>en_Жалость (к другим или к себе)</item>
-        <item>en_Загнанность</item>
-        <item>en_Лень</item>
-        <item>en_Опустошенность</item>
-        <item>en_Отрешенность</item>
-        <item>en_Отчаяние</item>
-        <item>en_Отчужденность</item>
-        <item>en_Печаль</item>
-        <item>en_Подавленность</item>
-        <item>en_Покинутость</item>
-        <item>en_Потрясение</item>
-        <item>en_Равнодушие (отсутствие сострадания)</item>
-        <item>en_Разочарование</item>
-        <item>en_Расстройство</item>
-        <item>en_Скука</item>
-        <item>en_Сожаление</item>
-        <item>en_Тоска</item>
+
+    <string-array name="sadness_array">
+        <item>Abandonment</item>
+        <item>Alienation</item>
+        <item>Anguish</item>
+        <item>Bitterness</item>
+        <item>Boredom</item>
+        <item>Depression</item>
+        <item>Despair</item>
+        <item>Detachment</item>
+        <item>Disappointment</item>
+        <item>Ennui</item>
+        <item>Frustration</item>
+        <item>Grief</item>
+        <item>Helplessness</item>
+        <item>Hopelessness</item>
+        <item>Indifference</item>
+        <item>Laziness</item>
+        <item>Longing</item>
+        <item>Melancholy</item>
+        <item>Regret</item>
+        <item>Sadness</item>
+        <item>Shock</item>
+        <item>Sloth</item>
+        <item>Sorrow</item>
+        <item>Sorry</item>
+        <item>Upset</item>
     </string-array>
-    
+
     <string-array name="joy_array">
-        <item>en_Вера</item>
-        <item>en_Возбуждение</item>
-        <item>en_Восторг</item>
-        <item>en_Довольство</item>
-        <item>en_Забота</item>
-        <item>en_Изумление</item>
-        <item>en_Интерес (заинтересованность)</item>
-        <item>en_Ликование</item>
-        <item>en_Любопытство</item>
-        <item>en_Надежда</item>
-        <item>en_Нетерпение</item>
-        <item>en_Облегчение</item>
-        <item>en_Ободренность</item>
-        <item>en_Оживление</item>
-        <item>en_Ожидание</item>
-        <item>en_Окрыленность</item>
-        <item>en_Освобождение</item>
-        <item>en_Предвкушение</item>
-        <item>en_Принятие</item>
-        <item>en_Приподнятость</item>
-        <item>en_Приятие</item>
-        <item>en_Радость</item>
-        <item>en_Решимость</item>
-        <item>en_Счастье</item>
-        <item>en_Торжествование</item>
-        <item>en_Триумф</item>
-        <item>en_Уверенность</item>
-        <item>en_Увлеченность</item>
-        <item>en_Удивление</item>
-        <item>en_Удовлетворение</item>
-        <item>en_Удовольствие</item>
-        <item>en_Умиротворение</item>
-        <item>en_Эйфория</item>
-        <item>en_Энтузиазм</item>
+        <item>Amazement</item>
+        <item>Anticipation</item>
+        <item>Astonishment</item>
+        <item>Care</item>
+        <item>Confidence</item>
+        <item>Contentment</item>
+        <item>Curiosity</item>
+        <item>Delight</item>
+        <item>Elation</item>
+        <item>Encouragement</item>
+        <item>Enjoyment</item>
+        <item>Enthusiasm</item>
+        <item>Euphoria</item>
+        <item>Excitement</item>
+        <item>Expectancy</item>
+        <item>Exultation</item>
+        <item>Fascination</item>
+        <item>Freedom</item>
+        <item>Glee</item>
+        <item>Happiness</item>
+        <item>Hope</item>
+        <item>Interest</item>
+        <item>Joy</item>
+        <item>Jubilation</item>
+        <item>Liveliness</item>
+        <item>Peace</item>
+        <item>Pleasure</item>
+        <item>Relief</item>
+        <item>Resolve</item>
+        <item>Satisfaction</item>
+        <item>Surprise</item>
+        <item>Triumph</item>
     </string-array>
-    
+
     <string-array name="love_array">
-        <item>en_Безмятежность</item>
-        <item>en_Безопасность</item>
-        <item>en_Благоговение, трепет</item>
-        <item>en_Благодарность</item>
-        <item>en_Блаженство</item>
-        <item>en_Вдохновение</item>
-        <item>en_Взаимовыручка</item>
-        <item>en_Влюбленность</item>
-        <item>en_Воодушевление</item>
-        <item>en_Восхищение</item>
-        <item>en_Гармония</item>
-        <item>en_Гордость</item>
-        <item>en_Доброта</item>
-        <item>en_Доверие</item>
-        <item>en_Дружелюбие</item>
-        <item>en_Единство</item>
-        <item>en_Идентичность</item>
-        <item>en_Любовь</item>
-        <item>en_Нежность</item>
-        <item>en_Очарованность</item>
-        <item>en_Привязанность</item>
-        <item>en_Признательность</item>
-        <item>en_Расслабленность</item>
-        <item>en_Самоценность</item>
-        <item>en_Симпатия</item>
-        <item>en_Смирение</item>
-        <item>en_Смятение</item>
-        <item>en_Сопереживание</item>
-        <item>en_Сопричастность</item>
-        <item>en_Сочувствие</item>
-        <item>en_Спокойствие</item>
-        <item>en_Теплота</item>
-        <item>en_Уважение</item>
-        <item>en_Уравновешенность</item>
+        <item>Acceptance</item>
+        <item>Admiration</item>
+        <item>Affection</item>
+        <item>Appreciation</item>
+        <item>Attachment</item>
+        <item>Balance</item>
+        <item>Belongingness</item>
+        <item>Bliss</item>
+        <item>Calm</item>
+        <item>Compassion</item>
+        <item>Faith</item>
+        <item>Fondness</item>
+        <item>Friendliness</item>
+        <item>Gratitude</item>
+        <item>Goodwill</item>
+        <item>Harmony</item>
+        <item>Humility</item>
+        <item>Identity</item>
+        <item>Inspiration</item>
+        <item>Love</item>
+        <item>Proud</item>
+        <item>Relaxation</item>
+        <item>Respect</item>
+        <item>Safety</item>
+        <item>Self-worth</item>
+        <item>Serenity</item>
+        <item>Sympathy</item>
+        <item>Tenderness</item>
+        <item>Trust</item>
+        <item>Unity</item>
     </string-array>
 </resources>

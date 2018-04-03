@@ -18,12 +18,8 @@ public class LocaleChangeListener implements SharedPreferences.OnSharedPreferenc
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (LocaleUtil.SELECTED_LANGUAGE.equals(key)) {
             context = LocaleUtil.setLocale(context);
-            boolean changedInDB = QuestionService.changeLanguage(context);
-            if (!changedInDB) {
-                ToastUtil.showLong(context, "Error while applying selected language");
-            } else {
-                ToastUtil.showLong(context, context.getString(R.string.msg_change_language_restart));
-            }
+            QuestionService.changeLanguage(context);
+            ToastUtil.showLong(context, context.getString(R.string.msg_change_language_restart));
         }
     }
 }

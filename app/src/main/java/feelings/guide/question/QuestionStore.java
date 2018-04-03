@@ -159,26 +159,24 @@ class QuestionStore {
     /**
      * Change language of built-in questions
      */
-    static boolean changeLanguage(Context context) {
+    static void changeLanguage(Context context) {
         SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
         try {
-            boolean result;
-            result = changeLanguage(context, db, R.string.q_feelings);
-            result = result && changeLanguage(context, db, R.string.q_insincerity);
-            result = result && changeLanguage(context, db, R.string.q_gratitude);
-            result = result && changeLanguage(context, db, R.string.q_preach);
-            result = result && changeLanguage(context, db, R.string.q_lie);
-            result = result && changeLanguage(context, db, R.string.q_irresponsibility);
-            result = result && changeLanguage(context, db, R.string.q_do_body);
-            result = result && changeLanguage(context, db, R.string.q_do_close);
-            result = result && changeLanguage(context, db, R.string.q_do_others);
-            return result;
+            changeLanguage(context, db, R.string.q_feelings);
+            changeLanguage(context, db, R.string.q_gratitude);
+            changeLanguage(context, db, R.string.q_do_body);
+            changeLanguage(context, db, R.string.q_do_close);
+            changeLanguage(context, db, R.string.q_do_others);
+            changeLanguage(context, db, R.string.q_insincerity);
+            changeLanguage(context, db, R.string.q_preach);
+            changeLanguage(context, db, R.string.q_lie);
+            changeLanguage(context, db, R.string.q_irresponsibility);
         } finally {
             db.close();
         }
     }
 
-    private static boolean changeLanguage(Context context, SQLiteDatabase db, int code) {
+    private static void changeLanguage(Context context, SQLiteDatabase db, int code) {
         ContentValues values = new ContentValues();
 
         QuestionContract.QuestionCode questionCode = QUESTION_CODE_MAP.get(code);
@@ -188,7 +186,6 @@ class QuestionStore {
         String selection = COLUMN_CODE + " = ?";
         String[] selectionArgs = { context.getString(code) };
 
-        int count = db.update(QUESTION_TABLE, values, selection, selectionArgs);
-        return count == 1;
+        db.update(QUESTION_TABLE, values, selection, selectionArgs);
     }
 }

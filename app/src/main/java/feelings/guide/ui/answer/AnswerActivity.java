@@ -77,7 +77,7 @@ public class AnswerActivity extends BaseActivity {
         if (questionId == QuestionService.FEELINGS_ID) {
             setUpFeelingsGroup(R.string.anger, R.array.anger_array);
             setUpFeelingsGroup(R.string.fear, R.array.fear_array);
-            setUpFeelingsGroup(R.string.melancholy, R.array.melancholy_array);
+            setUpFeelingsGroup(R.string.sadness, R.array.sadness_array);
             setUpFeelingsGroup(R.string.joy, R.array.joy_array);
             setUpFeelingsGroup(R.string.love, R.array.love_array);
 

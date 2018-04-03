@@ -13,6 +13,7 @@
 
     <string-array name="date_formats">
         <item>d MMM yyyy</item>
+        <item>MMM d yyyy</item>
         <item>dd.MM.yyyy</item>
         <item>MM/dd/yyyy</item>
         <item>yyyy-MM-dd</item>
@@ -45,25 +46,25 @@
     <string name="title_confirm_clear_log_by_question_dialog">Delete answers to this question?</string>
     <string name="title_confirm_restore_built_in_questions_dialog">Restore built-in questions visibility?</string>
 
-    <string name="q_text_feelings">en Что я сейчас чувствую?</string>
-    <string name="q_text_insincerity">en С кем я был не собой?</string>
-    <string name="q_text_gratitude">en Кого я могу поблагодарить?</string>
-    <string name="q_text_preach">en С кем я «поумничал» сегодня?</string>
-    <string name="q_text_lie">en В чем моя неискренность?</string>
-    <string name="q_text_irresponsibility">en В чем моя безответственность?</string>
-    <string name="q_text_do_body">en Что я могу сделать для своего тела?</string>
-    <string name="q_text_do_close">en Что я могу сделать для своих близких?</string>
-    <string name="q_text_do_others">en Что я могу сделать для других людей?</string>
+    <string name="q_text_feelings">What do I feel right now?</string>
+    <string name="q_text_gratitude">Who can I thank?</string>
+    <string name="q_text_do_body">What can I do for my body?</string>
+    <string name="q_text_do_close">What can I do for my loved ones?</string>
+    <string name="q_text_do_others">What can I do for other people?</string>
+    <string name="q_text_insincerity">With whom I was not myself?</string><!--deprecated-->
+    <string name="q_text_preach">With whom I was clever today?</string><!--deprecated-->
+    <string name="q_text_lie">What is my insincerity?</string><!--deprecated-->
+    <string name="q_text_irresponsibility">What is my irresponsibility?</string><!--deprecated-->
 
     <string name="q_description_feelings"></string>
-    <string name="q_description_insincerity">en С кем я веду себя как судья/гуру/психолог/«мамочка» и т. д.,  а не как сын/жена/друг/коллега и т. д.? С кем я играю чужие роли («муж» для мамы и др.)?</string>
     <string name="q_description_gratitude"></string>
-    <string name="q_description_preach">en Кого я учил жизни, кому доказывал вслух или про себя?</string>
-    <string name="q_description_lie">en Где я чувствую одно, а говорю и делаю другое? Например, чувствую злость или обиду, а говорю, что все нормально, улыбаюсь. Или чувствую благодарность, любовь, но никак не выражаю.</string>
-    <string name="q_description_irresponsibility">en Несоответствие мыслей, слов и поступков. В чем я даю слово себе или кому-то, но не держу его? Принимаю решение, но не выполняю?</string>
     <string name="q_description_do_body"></string>
     <string name="q_description_do_close"></string>
     <string name="q_description_do_others"></string>
+    <string name="q_description_insincerity"></string><!--deprecated-->
+    <string name="q_description_preach"></string><!--deprecated-->
+    <string name="q_description_lie"></string><!--deprecated-->
+    <string name="q_description_irresponsibility"></string><!--deprecated-->
 
     <string name="msg_question_text_empty">Text must not be empty</string>
     <string name="msg_question_create_success">The question has been created</string>
