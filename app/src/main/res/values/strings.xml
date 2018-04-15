@@ -35,7 +35,7 @@
     <string name="title_settings_restore_built_in_questions">Restore built-in questions</string>
     <string name="title_settings_date_format">Date format</string>
     <string name="title_settings_time_format">Time format</string>
-    <string name="title_settings_clear_log_full">Full</string>
+    <string name="title_settings_clear_log_full">All questions</string>
     <string name="title_settings_clear_log_deleted">Deleted questions</string>
 
     <string name="title_edit_question_dialog">Enter a question</string>
@@ -79,6 +79,8 @@
     <string name="msg_answer_saved_success">The answer has been saved to the log</string>
     <string name="msg_answer_saved_error">Error while saving the answer</string>
     <string name="msg_change_language_restart">Please restart the app to fully apply the changes</string>
+    <string name="msg_date_format_success">Date format has been changed</string>
+    <string name="msg_time_format_success">Time format has been changed</string>
     <string name="msg_clear_log_full_success">Answer log has been cleared</string>
     <string name="msg_clear_log_by_question_success">The question answers have been deleted</string>
     <string name="msg_restore_built_in_questions_success">Built-in questions have been restored</string>
