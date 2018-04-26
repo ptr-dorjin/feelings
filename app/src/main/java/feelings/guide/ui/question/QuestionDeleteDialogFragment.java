@@ -41,7 +41,8 @@ public class QuestionDeleteDialogFragment extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (!(context instanceof QuestionDeleteDialogListener)) {
-            throw new RuntimeException(context.getClass() + " must implement QuestionDeleteDialogListener");
+            throw new RuntimeException(context.getClass() + " must implement "
+                    + QuestionDeleteDialogListener.class);
         }
         listener = (QuestionDeleteDialogListener) context;
     }

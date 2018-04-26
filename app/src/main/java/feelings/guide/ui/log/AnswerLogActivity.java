@@ -3,9 +3,13 @@ package feelings.guide.ui.log;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,10 +17,15 @@ import feelings.guide.R;
 import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.QuestionService;
 import feelings.guide.ui.BaseActivity;
+import feelings.guide.ui.question.QuestionClearLogDialogFragment;
+import feelings.guide.util.ToastUtil;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
 
-public class AnswerLogActivity extends BaseActivity {
+public class AnswerLogActivity extends BaseActivity implements
+        ClearLogFullDialogFragment.ClearLogFullDialogListener,
+        ClearLogDeletedDialogFragment.ClearLogDeletedDialogListener,
+        QuestionClearLogDialogFragment.QuestionClearLogDialogListener {
 
     private static final long DEFAULT_QUESTION_ID = -1;
     private long questionId;
@@ -42,7 +51,7 @@ public class AnswerLogActivity extends BaseActivity {
         RecyclerView recyclerView = findViewById(R.id.answer_log_recycler_view);
         TextView emptyLogText = findViewById(R.id.answer_log_empty);
 
-        if (cursor.getCount() > 0) {
+        if (!isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
             emptyLogText.setVisibility(View.GONE);
             setUpRecyclerView(recyclerView);
@@ -68,7 +77,7 @@ public class AnswerLogActivity extends BaseActivity {
         if (isFull) {
             return;
         }
-        TextView questionText= findViewById(R.id.question_text_on_answer_log);
+        TextView questionText = findViewById(R.id.question_text_on_answer_log);
         questionText.setText(QuestionService.getQuestionText(this, questionId));
     }
 
@@ -78,5 +87,76 @@ public class AnswerLogActivity extends BaseActivity {
         if (adapter != null) {
             adapter.changeCursor(null);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!isEmpty()) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(isFull
+                    ? R.menu.answer_log_full_menu
+                    : R.menu.answer_log_by_question_menu,
+                    menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.clear_log_full) {
+            return showClearLogFullConfirmation();
+        } else if (item.getItemId() == R.id.clear_log_deleted) {
+            return showClearLogDeletedConfirmation();
+        } else if (item.getItemId() == R.id.clear_log_by_question) {
+            return showClearLogByQuestionConfirmation();
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private boolean showClearLogFullConfirmation() {
+        DialogFragment dialogFragment = new ClearLogFullDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), ClearLogFullDialogFragment.class.getSimpleName());
+        return true;
+    }
+
+    private boolean showClearLogDeletedConfirmation() {
+        DialogFragment dialogFragment = new ClearLogDeletedDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), ClearLogDeletedDialogFragment.class.getSimpleName());
+        return true;
+    }
+
+    private boolean showClearLogByQuestionConfirmation() {
+        DialogFragment dialogFragment = new QuestionClearLogDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), QuestionClearLogDialogFragment.class.getSimpleName());
+        return false;
+    }
+
+    @Override
+    public void onClearLogFullConfirmed() {
+        AnswerStore.deleteAll(this);
+        ToastUtil.showShort(this, getString(R.string.msg_clear_log_full_success));
+        cursor = AnswerStore.getAll(this);
+        adapter.refreshAll(cursor);
+    }
+
+    @Override
+    public void onClearLogDeletedConfirmed() {
+        AnswerStore.deleteForDeletedQuestions(this);
+        ToastUtil.showShort(this, getString(R.string.msg_clear_log_deleted_success));
+        cursor = AnswerStore.getAll(this);
+        adapter.refreshAll(cursor);
+    }
+
+    @Override
+    public void onClearLogByQuestionConfirmed() {
+        AnswerStore.deleteByQuestionId(this, questionId);
+        ToastUtil.showShort(this, getString(R.string.msg_clear_log_by_question_success));
+        cursor = AnswerStore.getByQuestionId(this, questionId);
+        adapter.refreshAll(cursor);
+    }
+
+    private boolean isEmpty() {
+        return cursor.getCount() == 0;
     }
 }

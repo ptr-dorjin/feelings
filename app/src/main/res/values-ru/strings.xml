@@ -4,13 +4,10 @@
     <string name="title_settings_activity">Настройки</string>
 
     <string name="title_settings_category_interface">Интерфейс</string>
-    <string name="title_settings_category_clear_log">Очистить журнал</string>
     <string name="title_settings_language">Язык</string>
     <string name="title_settings_restore_built_in_questions">Восстановить встроенные вопросы</string>
     <string name="title_settings_date_format">Формат даты</string>
     <string name="title_settings_time_format">Формат времени</string>
-    <string name="title_settings_clear_log_full">Все вопросы</string>
-    <string name="title_settings_clear_log_deleted">Удаленные вопросы</string>
 
     <string name="title_edit_question_dialog">Введите вопрос</string>
     <string name="title_confirm_delete_question_dialog">Удалить вопрос?</string>
@@ -52,11 +49,12 @@
     <string name="msg_answer_text_empty">Введите ответ</string>
     <string name="msg_answer_saved_success">Ответ сохранен в журнал</string>
     <string name="msg_answer_saved_error">Ошибка при сохранении ответа</string>
+    <string name="msg_clear_log_full_success">Журнал очищен</string>
+    <string name="msg_clear_log_deleted_success">Ответы на удаленные/скрытые вопросов удалены</string>
+    <string name="msg_clear_log_by_question_success">Ответы на вопрос удалены</string>
     <string name="msg_change_language_restart">Пожалуйста, перезапустите приложение, чтобы изменения полностью вступили в силу</string>
     <string name="msg_date_format_success">Формат даты изменен</string>
     <string name="msg_time_format_success">Формат времени изменен</string>
-    <string name="msg_clear_log_full_success">Журнал очищен</string>
-    <string name="msg_clear_log_by_question_success">Ответы на вопрос удалены</string>
     <string name="msg_restore_built_in_questions_success">Встроенные вопросы восстановлены</string>
 
     <string name="btn_save">Сохранить</string>
@@ -67,6 +65,8 @@
     <string name="btn_show_log">Журнал</string>
     <string name="btn_clear_log">Очистить журнал</string>
     <string name="btn_restore">Восстановить</string>
+    <string name="btn_clear_log_full">Очистить все</string>
+    <string name="btn_clear_log_deleted">Очистить удаленные</string>
 
     <string name="answer_log_empty_text">Журнал пуст</string>
 

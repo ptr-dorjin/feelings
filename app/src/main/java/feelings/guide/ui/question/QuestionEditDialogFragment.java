@@ -45,7 +45,8 @@ public class QuestionEditDialogFragment extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (!(context instanceof QuestionEditDialogListener)) {
-            throw new RuntimeException(context.getClass() + " must implement QuestionEditDialogListener");
+            throw new RuntimeException(context.getClass() + " must implement "
+                    + QuestionEditDialogListener.class);
         }
         listener = (QuestionEditDialogListener) context;
     }

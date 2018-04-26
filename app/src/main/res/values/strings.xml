@@ -30,13 +30,10 @@
     <string name="title_settings_activity">Settings</string>
 
     <string name="title_settings_category_interface">Interface</string>
-    <string name="title_settings_category_clear_log">Clear log</string>
     <string name="title_settings_language">Language</string>
     <string name="title_settings_restore_built_in_questions">Restore built-in questions</string>
     <string name="title_settings_date_format">Date format</string>
     <string name="title_settings_time_format">Time format</string>
-    <string name="title_settings_clear_log_full">All questions</string>
-    <string name="title_settings_clear_log_deleted">Deleted questions</string>
 
     <string name="title_edit_question_dialog">Enter a question</string>
     <string name="title_confirm_delete_question_dialog">Delete the question?</string>
@@ -78,11 +75,12 @@
     <string name="msg_answer_text_empty">Enter an answer</string>
     <string name="msg_answer_saved_success">The answer has been saved to the log</string>
     <string name="msg_answer_saved_error">Error while saving the answer</string>
+    <string name="msg_clear_log_full_success">Answer log has been cleared</string>
+    <string name="msg_clear_log_deleted_success">Answers on deleted/hidden questions have been deleted</string>
+    <string name="msg_clear_log_by_question_success">Answers to the question have been deleted</string>
     <string name="msg_change_language_restart">Please restart the app to fully apply the changes</string>
     <string name="msg_date_format_success">Date format has been changed</string>
     <string name="msg_time_format_success">Time format has been changed</string>
-    <string name="msg_clear_log_full_success">Answer log has been cleared</string>
-    <string name="msg_clear_log_by_question_success">The question answers have been deleted</string>
     <string name="msg_restore_built_in_questions_success">Built-in questions have been restored</string>
 
     <string name="btn_save">Save</string>
@@ -93,6 +91,8 @@
     <string name="btn_show_log">Log</string>
     <string name="btn_clear_log">Clear log</string>
     <string name="btn_restore">Restore</string>
+    <string name="btn_clear_log_full">Clear all</string>
+    <string name="btn_clear_log_deleted">Clear deleted</string>
 
     <string name="popup_menu_descr">Popup Menu</string>
 

@@ -30,17 +30,4 @@
             android:title="@string/title_settings_restore_built_in_questions"/>
 
     </PreferenceCategory>
-
-    <PreferenceCategory
-        android:layout="@layout/pref_category"
-        android:title="@string/title_settings_category_clear_log">
-
-        <Preference
-            android:key="Feelings.Guide.Clear.Log.Full"
-            android:title="@string/title_settings_clear_log_full"/>
-
-        <Preference
-            android:key="Feelings.Guide.Clear.Log.Deleted"
-            android:title="@string/title_settings_clear_log_deleted"/>
-    </PreferenceCategory>
 </PreferenceScreen>

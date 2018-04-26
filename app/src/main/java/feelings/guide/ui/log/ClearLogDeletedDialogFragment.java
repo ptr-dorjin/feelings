@@ -1,4 +1,4 @@
-package feelings.guide.ui.question;
+package feelings.guide.ui.log;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,22 +11,22 @@ import android.support.v7.app.AlertDialog;
 import feelings.guide.R;
 
 
-public class QuestionHideDialogFragment extends DialogFragment {
+public class ClearLogDeletedDialogFragment extends DialogFragment {
 
-    interface QuestionHideDialogListener {
-        void onHideConfirmed();
+    interface ClearLogDeletedDialogListener {
+        void onClearLogDeletedConfirmed();
     }
 
-    private QuestionHideDialogListener listener;
+    private ClearLogDeletedDialogListener listener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         FragmentActivity activity = getActivity();
         return new AlertDialog.Builder(activity)
-                .setMessage(R.string.title_confirm_hide_question_dialog)
-                .setPositiveButton(R.string.btn_hide, new DialogInterface.OnClickListener() {
+                .setMessage(R.string.title_confirm_clear_log_deleted_dialog)
+                .setPositiveButton(R.string.btn_delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        listener.onHideConfirmed();
+                        listener.onClearLogDeletedConfirmed();
                     }
                 })
                 .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
@@ -40,10 +40,10 @@ public class QuestionHideDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (!(context instanceof QuestionHideDialogListener)) {
+        if (!(context instanceof ClearLogDeletedDialogListener)) {
             throw new RuntimeException(context.getClass() + " must implement "
-                    + QuestionHideDialogListener.class);
+                    + ClearLogDeletedDialogListener.class);
         }
-        listener = (QuestionHideDialogListener) context;
+        listener = (ClearLogDeletedDialogListener) context;
     }
 }

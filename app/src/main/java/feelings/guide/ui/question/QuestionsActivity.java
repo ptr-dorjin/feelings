@@ -255,7 +255,7 @@ public class QuestionsActivity extends BaseActivity implements
     }
 
     @Override
-    public void onClearLogConfirmed() {
+    public void onClearLogByQuestionConfirmed() {
         AnswerStore.deleteByQuestionId(this, changeQuestionId);
         ToastUtil.showShort(this, getString(R.string.msg_clear_log_by_question_success));
     }

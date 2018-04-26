@@ -76,4 +76,8 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
         }
         holder.answer.setText(answerText);
     }
+
+    void refreshAll(Cursor cursor) {
+        swapCursor(cursor);
+    }
 }
