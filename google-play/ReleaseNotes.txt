@@ -1,0 +1,30 @@
+Version 1.1.0
+<ru-RU>
+1. Теперь нельзя редактировать и удалять предустановленные вопросы
+2. Добавлены описания к некоторым предустановленным вопросам
+3. Изменены формулировки некоторых предустановленных вопросов
+</ru-RU>
+
+<en-US>
+1. Built-in questions can't be edited and deleted now.
+2. Added description for some built-in questions.
+3. Changed wording of some built-in questions'.
+</en-US>
+
+Version 2.0.0
+<en-US>
+1. Added English interface.
+2. Built-in questions can be hidden and restored.
+3. Answer log can be cleared per question, for deleted/hidden questions or fully.
+4. Date and time format for answer log entries can be configured in Settings.
+5. Some built-in questions have been deleted.
+6. Feelings directory has been modified.
+</en-US>
+<ru-RU>
+1. Добавлен английский интерфейс.
+2. Встроенные вопросы можно скрывать и восстанавливать обратно.
+3. Журнал ответов можно очищать по каждому вопросу, для удаленных/скрытых вопросов или полностью.
+4. Формат даты и времени для записей журнала можно изменять в Настройках.
+5. Удалены некоторые предустановленные вопросы.
+6. Отредактирован справочник чувств.
+</ru-RU>
