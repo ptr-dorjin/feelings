@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1024px" height="500px" viewBox="0 0 1024 500">
+<defs>
+<style type="text/css"> @import url(https://fonts.googleapis.com/css?family=Coda:800:latin-ext); </style>
+</defs>
+<clipPath id="cp18">
+<path d="M 0,0 L 1024,0 L1024,500 L 0,500 z M 0,0 L 1152,0 L 1152,567 L 0,567 z" fill-rule="evenodd">
+</path>
+</clipPath>
+<g clip-path="url(#cp18)">
+</g>
+<rect x="0" y="0" width="1152" height="567" opacity="1" fill="#ffffff" stroke="none">
+</rect>
+<text x="-421.5140075683594" y="7.250762939453111" style="font: normal 101.98124999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="40.30879446640316" opacity="1" fill="#54354c" stroke="none" transform="translate(512, 252) rotate(-3600)">Feelings Guide</text>
+<text x="-74.50336456298828" y="4.353890380859365" style="font: normal 61.188749999999985px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="24.185276679841895" opacity="1" fill="#e1493c" stroke="none" transform="translate(492, 192) rotate(-1440)">love</text>
+<text x="-114.30707550048828" y="3.7702275390624926" style="font: normal 53.03024999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="20.96057312252964" opacity="1" fill="#396bd7" stroke="none" transform="translate(512, 332) rotate(-5399.999999999999)">service</text>
+<text x="-46.50480651855469" y="3.7702275390624926" style="font: normal 53.03024999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="20.96057312252964" opacity="1" fill="#5ac2ab" stroke="none" transform="translate(492, 140) rotate(-2880)">joy</text>
+<text x="-148.45135498046875" y="3.4805415039062453" style="font: normal 48.95099999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="19.348221343873515" opacity="1" fill="#7770b3" stroke="none" transform="translate(512, 388) rotate(-18000)">happiness</text>
+<text x="-117.95323181152344" y="3.4805415039062453" style="font: normal 48.95099999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="19.348221343873515" opacity="1" fill="#396bd7" stroke="none" transform="translate(456, 92) rotate(-17639.999999999996)">feelings</text>
+<text x="-73.29353332519531" y="3.4805415039062453" style="font: normal 48.95099999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="19.348221343873515" opacity="1" fill="#fbae42" stroke="none" transform="translate(620, 148) rotate(-7200)">pride</text>
+<text x="-119.61312866210938" y="3.1908554687499944" style="font: normal 44.87174999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="17.73586956521739" opacity="1" fill="#fbae42" stroke="none" transform="translate(548, 432) rotate(-8280)">gratitude</text>
+<text x="-93.69459533691406" y="3.1908554687499944" style="font: normal 44.87174999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="17.73586956521739" opacity="1" fill="#7770b3" stroke="none" transform="translate(348, 136) rotate(-720)">learner</text>
+<text x="-105.21149444580078" y="2.90116333007812" style="font: normal 40.79249999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="16.123517786561262" opacity="1" fill="#e1493c" stroke="none" transform="translate(500, 48) rotate(-13320)">sincerity</text>
+<text x="-95.89767456054688" y="2.6114772949218725" style="font: normal 36.713249999999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="14.511166007905137" opacity="1" fill="#f4d968" stroke="none" transform="translate(668, 184) rotate(-4320)">thoughts</text>
+<text x="-130.9581298828125" y="2.3217912597656216" style="font: normal 32.63399999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="12.89881422924901" opacity="1" fill="#396bd7" stroke="none" transform="translate(508, 476) rotate(-14400)">responsibility</text>
+<text x="-119.82918548583984" y="2.3217912597656216" style="font: normal 32.63399999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="12.89881422924901" opacity="1" fill="#e1493c" stroke="none" transform="translate(296, 180) rotate(-4320)">mindfulness</text>
+<text x="-112.86663818359375" y="2.3217912597656216" style="font: normal 32.63399999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="12.89881422924901" opacity="1" fill="#fbae42" stroke="none" transform="translate(696, 100) rotate(-11160)">selfishness</text>
+<text x="-103.58589935302734" y="2.3217912597656216" style="font: normal 32.63399999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="12.89881422924901" opacity="1" fill="#5ac2ab" stroke="none" transform="translate(288, 332) rotate(-4680.000000000001)">annoyance</text>
+<text x="-71.32234954833984" y="2.3217912597656216" style="font: normal 32.63399999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="12.89881422924901" opacity="1" fill="#f4d968" stroke="none" transform="translate(708, 312) rotate(-10440)">actions</text>
+<text x="-43.081787109375" y="2.3217912597656216" style="font: normal 32.63399999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="12.89881422924901" opacity="1" fill="#5ac2ab" stroke="none" transform="translate(676, 348) rotate(-1080)">guilt</text>
+<text x="-39.56068420410156" y="2.3217912597656216" style="font: normal 32.63399999999999px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="12.89881422924901" opacity="1" fill="#fbae42" stroke="none" transform="translate(384, 428) rotate(-4680.000000000001)">fear</text>
+<text x="-64.18869018554688" y="2.0321052246093725" style="font: normal 28.554749999999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.286462450592884" opacity="1" fill="#f4d968" stroke="none" transform="translate(292, 372) rotate(-13320)">teacher</text>
+<text x="-50.96620178222656" y="2.0321052246093725" style="font: normal 28.554749999999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.286462450592884" opacity="1" fill="#f4d968" stroke="none" transform="translate(664, 68) rotate(-14039.999999999998)">words</text>
+<text x="-55.789588928222656" y="2.0321052246093725" style="font: normal 28.554749999999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="11.286462450592884" opacity="1" fill="#e1493c" stroke="none" transform="translate(724, 388) rotate(-9720)">shame</text>
+<text x="-100.10232543945312" y="1.7424191894531234" style="font: normal 24.475499999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="9.674110671936758" opacity="1" fill="#e1493c" stroke="none" transform="translate(308, 308) rotate(-16920)">subconscious</text>
+<text x="-63.75579833984375" y="1.7424191894531234" style="font: normal 24.475499999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="9.674110671936758" opacity="1" fill="#fbae42" stroke="none" transform="translate(448, 12) rotate(-14400)">relations</text>
+<text x="-66.65921783447266" y="1.7424191894531234" style="font: normal 24.475499999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="9.674110671936758" opacity="1" fill="#e1493c" stroke="none" transform="translate(580, 12) rotate(-14759.999999999998)">emotions</text>
+<text x="-40.82115936279297" y="1.7424191894531234" style="font: normal 24.475499999999997px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="9.674110671936758" opacity="1" fill="#fbae42" stroke="none" transform="translate(312, 396) rotate(-13320)">anger</text>
+<text x="-50.28800964355469" y="1.452727050781247" style="font: normal 20.396249999999995px Coda,Impact,Charcoal,sans-serif" text-anchor="start" dy="8.061758893280631" opacity="1" fill="#7770b3" stroke="none" transform="translate(336, 56) rotate(-2880)">sadness</text>
+</svg>

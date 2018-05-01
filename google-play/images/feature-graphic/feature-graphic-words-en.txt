@@ -1,0 +1,26 @@
+﻿25	Feelings~Guide	#54354c
+13	love	#e1493c
+12	service
+11	joy
+10	happiness
+10	feelings
+10	pride
+9	gratitude
+9	learner
+8	sincerity
+7	thoughts
+6	responsibility
+6	mindfulness
+6	selfishness
+6	annoyance
+6	actions
+6	guilt
+6	fear
+5	teacher
+5	words
+5	shame
+4	subconscious
+4	relations
+4	emotions
+4	anger
+3	sadness
