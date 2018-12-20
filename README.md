@@ -15,3 +15,8 @@
 - cd to_intended_folder
 - adb pull /data/data/feelings.guide/databases/FeelingsGuide.db
 
+### Release
+git tag -a 2.0.0 -m "Release 2.0.0"
+git tag
+git push origin --tags
+
