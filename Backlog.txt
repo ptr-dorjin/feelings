@@ -1,10 +1,5 @@
-Version 2.0.0
-1. Add English language support +
-2. Add settings screen +
-2.1. Clear log +
-2.2. Clear log of deleted questions +
-2.3. Restore built-in questions visibility +
-3. Clear log per question +
-4. Hide built-in questions +
-5. Answer log date format +
-6. Clear log while deleting a question +
+Version 2.1.0
+0. Migrate to AndroidX
+1. Embed Material Design
+2. Edit an answer
+3. Delete an answer
