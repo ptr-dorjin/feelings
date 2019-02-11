@@ -9,21 +9,27 @@
             android:entries="@array/lang_titles"
             android:entryValues="@array/lang_values"
             android:key="Feelings.Guide.Selected.Language"
-            android:title="@string/title_settings_language"/>
+            android:title="@string/title_settings_language"
+            android:negativeButtonText="@null"
+            />
 
         <ListPreference
             android:defaultValue="d MMM yyyy"
             android:entries="@array/date_formats"
             android:entryValues="@array/date_formats"
             android:key="Feelings.Guide.Date.Format"
-            android:title="@string/title_settings_date_format"/>
+            android:title="@string/title_settings_date_format"
+            android:negativeButtonText="@null"
+            />
 
         <ListPreference
             android:defaultValue="HH:mm"
             android:entries="@array/time_formats"
             android:entryValues="@array/time_formats"
             android:key="Feelings.Guide.Time.Format"
-            android:title="@string/title_settings_time_format"/>
+            android:title="@string/title_settings_time_format"
+            android:negativeButtonText="@null"
+            />
 
         <Preference
             android:key="Feelings.Guide.Restore.Built.In.Questions"

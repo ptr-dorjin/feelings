@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="16dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="16dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,27 +14,30 @@
             android:layout_width="16dp"
             android:layout_height="1dp"
             android:layout_marginTop="22dp"
-            android:background="@color/colorLightGrey"/>
+            android:background="@color/lightGrey" />
 
+        <!--don't 'fix' id-->
         <TextView
             android:id="@+android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/left_line"
             android:layout_toRightOf="@id/left_line"
             android:gravity="center_vertical"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/primary"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="22dp"
+            android:layout_toEndOf="@android:id/title"
             android:layout_toRightOf="@android:id/title"
-            android:background="@color/colorLightGrey"/>
+            android:background="@color/lightGrey" />
     </RelativeLayout>
 </LinearLayout>
