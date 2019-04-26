@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_margin="8dp"
     android:orientation="vertical"
+    android:id="@+id/answer_log_view"
     >
 
     <TextView

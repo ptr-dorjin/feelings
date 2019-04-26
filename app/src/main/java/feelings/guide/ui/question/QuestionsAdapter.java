@@ -2,7 +2,8 @@ package feelings.guide.ui.question;
 
 import android.content.Intent;
 import android.database.Cursor;
-import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import feelings.guide.R;
 import feelings.guide.question.QuestionService;
+import feelings.guide.ui.BaseActivity;
 import feelings.guide.ui.RecyclerViewCursorAdapter;
 import feelings.guide.ui.answer.AnswerActivity;
 
@@ -21,8 +23,6 @@ import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
 import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
 
 class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.QuestionViewHolder> {
-
-    private AppCompatActivity context;
 
     final class QuestionViewHolder extends RecyclerView.ViewHolder {
         long questionId;
@@ -37,23 +37,23 @@ class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.Questi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, AnswerActivity.class);
+                    Intent intent = new Intent(activity, AnswerActivity.class);
                     intent.putExtra(QUESTION_ID_PARAM, questionId);
                     // set position as a requestCode. This requestCode will be passed to this activity's onActivityResult
-                    context.startActivity(intent);
+                    activity.startActivity(intent);
                 }
             });
         }
     }
 
-    QuestionsAdapter(AppCompatActivity context) {
-        super(null);
-        this.context = context;
+    QuestionsAdapter(BaseActivity activity) {
+        super(activity, null);
         refreshAll();
     }
 
     @Override
-    public QuestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_card, parent, false);
         return new QuestionViewHolder(view);
     }
@@ -69,6 +69,6 @@ class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.Questi
     }
 
     void refreshAll() {
-        swapCursor(QuestionService.getAllQuestions(context));
+        swapCursor(QuestionService.getAllQuestions(activity));
     }
 }

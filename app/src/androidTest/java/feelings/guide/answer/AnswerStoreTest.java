@@ -2,8 +2,9 @@ package feelings.guide.answer;
 
 import android.content.Context;
 import android.database.Cursor;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,12 +36,12 @@ public class AnswerStoreTest {
 
     @BeforeClass
     public static void beforeClass() {
-        AnswerStore.deleteAll(InstrumentationRegistry.getTargetContext());
+        AnswerStore.deleteAll(ApplicationProvider.getApplicationContext());
     }
 
     @Before
     public void before() {
-        context = InstrumentationRegistry.getTargetContext();
+        context = ApplicationProvider.getApplicationContext();
     }
 
     @After

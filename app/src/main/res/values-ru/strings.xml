@@ -56,6 +56,7 @@
     <string name="msg_date_format_success">Формат даты изменен</string>
     <string name="msg_time_format_success">Формат времени изменен</string>
     <string name="msg_restore_built_in_questions_success">Встроенные вопросы восстановлены</string>
+    <string name="msg_answer_deleted_success">Ответ удален</string>
 
     <string name="btn_save">Сохранить</string>
     <string name="btn_cancel">Отмена</string>
@@ -67,6 +68,8 @@
     <string name="btn_restore">Восстановить</string>
     <string name="btn_clear_log_full">Очистить все</string>
     <string name="btn_clear_log_deleted">Очистить удаленные</string>
+
+    <string name="snackbar_undo">Отмена</string>
 
     <string name="answer_log_empty_text">Журнал пуст</string>
 

@@ -82,6 +82,7 @@
     <string name="msg_date_format_success">Date format has been changed</string>
     <string name="msg_time_format_success">Time format has been changed</string>
     <string name="msg_restore_built_in_questions_success">Built-in questions have been restored</string>
+    <string name="msg_answer_deleted_success">The answer has been deleted</string>
 
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
@@ -93,6 +94,8 @@
     <string name="btn_restore">Restore</string>
     <string name="btn_clear_log_full">Clear all</string>
     <string name="btn_clear_log_deleted">Clear deleted</string>
+
+    <string name="snackbar_undo">Undo</string>
 
     <string name="popup_menu_descr">Popup Menu</string>
 

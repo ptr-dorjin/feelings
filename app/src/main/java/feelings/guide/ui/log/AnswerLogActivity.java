@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
@@ -71,6 +72,9 @@ public class AnswerLogActivity extends BaseActivity implements
         rv.addItemDecoration(dividerItemDecoration);
         adapter = new AnswerLogAdapter(this, isFull, cursor);
         rv.setAdapter(adapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new AnswerLogSwipeCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(rv);
     }
 
     private void fillQuestionText() {

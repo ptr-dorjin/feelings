@@ -6,4 +6,6 @@
     <color name="lightGrey">#D0D0D0</color>
     <color name="white">#ffffff</color>
     <color name="disabled">#d3d3d3</color>
+    <color name="lightGreen">#00A407</color>
+    <color name="lightRed">#FF0018</color>
 </resources>

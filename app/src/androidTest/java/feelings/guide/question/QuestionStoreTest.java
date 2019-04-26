@@ -5,8 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -49,7 +50,7 @@ public class QuestionStoreTest {
 
     @BeforeClass
     public static void beforeClass() {
-        context = InstrumentationRegistry.getTargetContext();
+        context = ApplicationProvider.getApplicationContext();
     }
 
     @AfterClass
@@ -202,8 +203,7 @@ public class QuestionStoreTest {
     }
 
     private static long createBuiltInQuestion(Question question) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
-        try {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_TEXT, question.getText());
             values.put(COLUMN_CODE, question.getCode());
@@ -213,8 +213,6 @@ public class QuestionStoreTest {
             values.put(COLUMN_IS_HIDDEN, false);
 
             return db.insert(QUESTION_TABLE, null, values);
-        } finally {
-            db.close();
         }
     }
 

@@ -5,5 +5,7 @@ local.properties
 .idea
 .DS_Store
 build
+release
 captures
 .externalNativeBuild
+db

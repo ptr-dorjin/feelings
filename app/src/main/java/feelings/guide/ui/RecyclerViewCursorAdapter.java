@@ -2,25 +2,33 @@ package feelings.guide.ui;
 
 import android.database.Cursor;
 import android.database.DataSetObserver;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static android.provider.BaseColumns._ID;
 
 public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
+    protected final BaseActivity activity;
     private Cursor cursor;
     private boolean isDataValid;
     private int rowIdColumn;
 
-    public RecyclerViewCursorAdapter(Cursor cursor) {
+    public RecyclerViewCursorAdapter(BaseActivity activity, Cursor cursor) {
+        this.activity = activity;
         setHasStableIds(true);
         swapCursor(cursor);
+    }
+
+    public BaseActivity getActivity() {
+        return activity;
     }
 
     protected abstract void onBindViewHolder(VH holder, Cursor cursor);
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public void onBindViewHolder(@NonNull VH holder, int position) {
         if (!isDataValid) {
             throw new IllegalStateException("this should only be called when the cursor is valid");
         }
