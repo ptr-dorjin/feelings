@@ -66,7 +66,7 @@ public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHold
         }
     }
 
-    public Cursor swapCursor(Cursor newCursor) {
+    protected Cursor swapCursor(Cursor newCursor) {
         if (newCursor == cursor) {
             return null;
         }
@@ -106,4 +106,12 @@ public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHold
             notifyDataSetChanged();
         }
     };
+
+    private boolean isEmpty() {
+        return cursor.getCount() == 0;
+    }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
 }

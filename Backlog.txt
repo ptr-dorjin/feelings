@@ -1,5 +1,5 @@
 Version 2.1.0
-0. Migrate to AndroidX
-1. Embed Material Design
+0. Migrate to AndroidX +
+1. Embed Material Design +
 2. Edit an answer
-3. Delete an answer
+3. Delete an answer +

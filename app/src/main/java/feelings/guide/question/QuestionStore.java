@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import feelings.guide.R;
@@ -22,6 +24,8 @@ import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
 import static java.lang.String.valueOf;
 
 class QuestionStore {
+
+    private static final String TAG = QuestionStore.class.getSimpleName();
 
     static Question getById(Context context, long questionId) {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
@@ -60,8 +64,7 @@ class QuestionStore {
      * Only for user's question
      */
     static long createQuestion(Context context, Question question) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
-        try {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_TEXT, question.getText());
             values.put(COLUMN_IS_USER, question.isUser());
@@ -69,8 +72,6 @@ class QuestionStore {
             values.put(COLUMN_IS_HIDDEN, false);
 
             return db.insert(QUESTION_TABLE, null, values);
-        } finally {
-            db.close();
         }
     }
 
@@ -78,8 +79,7 @@ class QuestionStore {
      * Only for user's question
      */
     static boolean updateQuestion(Context context, Question question) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
-        try {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_TEXT, question.getText());
 
@@ -87,8 +87,6 @@ class QuestionStore {
             String[] selectionArgs = {valueOf(question.getId())};
             int count = db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
             return count == 1;
-        } finally {
-            db.close();
         }
     }
 
@@ -97,8 +95,7 @@ class QuestionStore {
      * Only for user's question
      */
     static boolean deleteQuestion(Context context, long questionId) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
-        try {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_IS_DELETED, true);
 
@@ -106,8 +103,6 @@ class QuestionStore {
             String[] selectionArgs = {valueOf(questionId), valueOf(1)};
             int count = db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
             return count == 1;
-        } finally {
-            db.close();
         }
     }
 
@@ -115,8 +110,7 @@ class QuestionStore {
      * Only for built-in questions
      */
     static boolean hideQuestion(Context context, long questionId) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
-        try {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_IS_HIDDEN, true);
 
@@ -124,8 +118,6 @@ class QuestionStore {
             String[] selectionArgs = {valueOf(questionId), valueOf(0)};
             int count = db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
             return count == 1;
-        } finally {
-            db.close();
         }
     }
 
@@ -133,16 +125,13 @@ class QuestionStore {
      * Only for built-in questions
      */
     static void restoreHidden(Context context) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
-        try {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_IS_HIDDEN, false);
 
             String selection = COLUMN_IS_USER + " = ?";
             String[] selectionArgs = {valueOf(0)};
             db.update(QuestionContract.QUESTION_TABLE, values, selection, selectionArgs);
-        } finally {
-            db.close();
         }
     }
 
@@ -160,8 +149,7 @@ class QuestionStore {
      * Change language of built-in questions
      */
     static void changeLanguage(Context context) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
-        try {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             changeLanguage(context, db, R.string.q_feelings);
             changeLanguage(context, db, R.string.q_gratitude);
             changeLanguage(context, db, R.string.q_do_body);
@@ -171,8 +159,6 @@ class QuestionStore {
             changeLanguage(context, db, R.string.q_preach);
             changeLanguage(context, db, R.string.q_lie);
             changeLanguage(context, db, R.string.q_irresponsibility);
-        } finally {
-            db.close();
         }
     }
 
@@ -180,6 +166,10 @@ class QuestionStore {
         ContentValues values = new ContentValues();
 
         QuestionContract.QuestionCode questionCode = QUESTION_CODE_MAP.get(code);
+        if (questionCode == null) {
+            Log.w(TAG, "Could not find questionCode by code " + code);
+            return;
+        }
         values.put(COLUMN_TEXT, context.getString(questionCode.getTextId()));
         values.put(COLUMN_DESCRIPTION, context.getString(questionCode.getDescriptionId()));
 

@@ -1,6 +1,5 @@
 package feelings.guide.question;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import feelings.guide.db.DbHelper;
 
+import static com.google.common.truth.Truth.assertThat;
 import static feelings.guide.question.QuestionContract.COLUMN_CODE;
 import static feelings.guide.question.QuestionContract.COLUMN_DESCRIPTION;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_DELETED;
@@ -28,11 +28,6 @@ import static feelings.guide.question.QuestionContract.COLUMN_IS_HIDDEN;
 import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
 import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
 import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class QuestionStoreTest {
@@ -42,7 +37,6 @@ public class QuestionStoreTest {
     private static final String SOME_BUILT_IN_QUESTION = "Some built-in question";
     private static final String TEST_BUILT_IN_QUESTION_CODE = "test_code";
 
-    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private long questionId;
     private long questionId2;
@@ -90,8 +84,8 @@ public class QuestionStoreTest {
         Question fromDB2 = QuestionStore.getById(context, questionId + 1);
 
         // then
-        assertNotNull(fromDB);
-        assertNull(fromDB2);
+        assertThat(fromDB).isNotNull();
+        assertThat(fromDB2).isNull();
     }
 
     @Test
@@ -101,9 +95,9 @@ public class QuestionStoreTest {
         questionId2 = QuestionStore.createQuestion(context, new Question(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING));
 
         // then
-        assertTrue(questionId != -1);
-        assertTrue(questionId2 != -1);
-        assertNotEquals(questionId, questionId2);
+        assertThat(questionId).isNotEqualTo(-1);
+        assertThat(questionId2).isNotEqualTo(-1);
+        assertThat(questionId).isNotEqualTo(questionId2);
     }
 
     @Test
@@ -118,10 +112,10 @@ public class QuestionStoreTest {
         boolean updated = QuestionStore.updateQuestion(context, question);
 
         // then
-        assertTrue(updated);
+        assertThat(updated).isTrue();
         Question fromDB = QuestionStore.getById(context, questionId);
-        assertNotNull(fromDB);
-        assertEquals(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING, fromDB.getText());
+        assertThat(fromDB).isNotNull();
+        assertThat(fromDB.getText()).isEqualTo(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING);
     }
 
     @Test
@@ -133,10 +127,10 @@ public class QuestionStoreTest {
         boolean deleted = QuestionStore.deleteQuestion(context, questionId);
 
         // then
-        assertTrue(deleted);
+        assertThat(deleted).isTrue();
         Question fromDB = QuestionStore.getById(context, questionId);
-        assertNotNull(fromDB);
-        assertTrue(fromDB.isDeleted());
+        assertThat(fromDB).isNotNull();
+        assertThat(fromDB.isDeleted()).isTrue();
     }
 
     @Test
@@ -151,10 +145,10 @@ public class QuestionStoreTest {
         boolean hidden = QuestionStore.hideQuestion(context, questionId);
 
         // then
-        assertTrue(hidden);
+        assertThat(hidden).isTrue();
         Question fromDB = QuestionStore.getById(context, questionId);
-        assertNotNull(fromDB);
-        assertTrue(fromDB.isHidden());
+        assertThat(fromDB).isNotNull();
+        assertThat(fromDB.isHidden()).isTrue();
     }
 
     @Test
@@ -176,21 +170,21 @@ public class QuestionStoreTest {
 
         // then
         List<Question> questions = cursorToQuestions(cursor);
-        assertTrue(questions.size() > 0); //also contains real app's questions
+        assertThat(questions.size()).isGreaterThan(0); //also contains real app's questions
 
         boolean containsQuestion1 = false;
         for (Question question : questions) {
             if (question.getId() == questionId) {
                 containsQuestion1 = true;
             }
-            assertNotEquals(questionId2, question.getId());
-            assertNotEquals(questionId3, question.getId());
+            assertThat(question.getId()).isNotEqualTo(questionId2);
+            assertThat(question.getId()).isNotEqualTo(questionId3);
         }
-        assertTrue(containsQuestion1);
+        assertThat(containsQuestion1).isTrue();
     }
 
     private List<Question> cursorToQuestions(Cursor cursor) {
-        assertNotNull(cursor);
+        assertThat(cursor).isNotNull();
         try {
             List<Question> list = new ArrayList<>();
             while (cursor.moveToNext()) {
@@ -217,15 +211,10 @@ public class QuestionStoreTest {
     }
 
     private static void deleteBuiltInQuestion(String questionCode) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
-
-        String selection = COLUMN_CODE + " = ?";
-        String[] selectionArgs = {questionCode};
-
-        try {
-            db.delete(QUESTION_TABLE,selection, selectionArgs);
-        } finally {
-            db.close();
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
+            String selection = COLUMN_CODE + " = ?";
+            String[] selectionArgs = {questionCode};
+            db.delete(QUESTION_TABLE, selection, selectionArgs);
         }
 
     }

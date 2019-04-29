@@ -9,24 +9,27 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.threeten.bp.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
+import feelings.guide.question.Question;
+import feelings.guide.question.QuestionService;
 import feelings.guide.util.DateTimeUtil;
 
+import static com.google.common.truth.Truth.assertThat;
 import static feelings.guide.answer.AnswerContract.COLUMN_ANSWER;
 import static feelings.guide.answer.AnswerContract.COLUMN_DATE_TIME;
 import static feelings.guide.answer.AnswerContract.COLUMN_QUESTION_ID;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class AnswerStoreTest {
+    private static final long ID = 1;
     private static final long QUESTION_ID = 1;
     private static final int QUESTION_ID_2 = 2;
     private static final LocalDateTime DATE_TIME = LocalDateTime.now();
@@ -50,70 +53,106 @@ public class AnswerStoreTest {
         context = null;
     }
 
+    @Ignore("for performance tests only")
+    @Test
+    public void createForPerformanceTest() {
+        IntStream.range(0, 10000).forEach(i -> {
+            boolean created = AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusSeconds(i), ANSWER_TEXT + i));
+            assertThat(created).isTrue();
+        });
+
+    }
+
     @Test
     public void testCreate() {
+        // given
         Answer answer = new Answer(QUESTION_ID, DATE_TIME, ANSWER_TEXT);
 
+        // when
         boolean created = AnswerStore.saveAnswer(context, answer);
-        assertTrue(created);
+
+        // then
+        assertThat(created).isTrue();
+        List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
+        assertThat(answers)
+                .containsExactly(answer);
+    }
+
+    @Test
+    public void testCreateWithId() {
+        Answer answer = new Answer(ID, QUESTION_ID, DATE_TIME, ANSWER_TEXT);
+
+        // when
+        boolean created = AnswerStore.saveAnswer(context, answer);
+
+        // then
+        assertThat(created).isTrue();
+        List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
+        assertThat(answers)
+                .containsExactly(answer);
     }
 
     @Test
     public void testGetAll() {
         // given
-        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT));
-        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one"));
-        AnswerStore.saveAnswer(context, new Answer(3, DATE_TIME.minusMinutes(2), "one more"));
+        Answer answer1 = new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT);
+        Answer answer2 = new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one");
+        Answer answer3 = new Answer(3, DATE_TIME.minusMinutes(2), "one more");
+        AnswerStore.saveAnswer(context, answer1);
+        AnswerStore.saveAnswer(context, answer2);
+        AnswerStore.saveAnswer(context, answer3);
 
         // when
         List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
 
         // then
-        assertEquals(3, answers.size());
-        Answer fromDb = answers.get(0);
-        assertEquals(QUESTION_ID_2, fromDb.getQuestionId());
-        assertEquals(DATE_TIME.minusMinutes(1), fromDb.getDateTime());
-        assertEquals("another one", fromDb.getAnswerText());
-
-        fromDb = answers.get(1);
-        assertEquals(3, fromDb.getQuestionId());
-        assertEquals(DATE_TIME.minusMinutes(2), fromDb.getDateTime());
-        assertEquals("one more", fromDb.getAnswerText());
-
-        fromDb = answers.get(2);
-        assertEquals(QUESTION_ID, fromDb.getQuestionId());
-        assertEquals(DATE_TIME.minusMinutes(3), fromDb.getDateTime());
-        assertEquals(ANSWER_TEXT, fromDb.getAnswerText());
+        assertThat(answers)
+                .containsExactly(answer2, answer3, answer1)
+                .inOrder();
     }
 
     @Test
     public void testGetByQuestionId() {
         // given
-        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT));
-        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one"));
-        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(2), "one more"));
+        Answer answer1 = new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT);
+        Answer answer2 = new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one");
+        Answer answer3 = new Answer(QUESTION_ID, DATE_TIME.minusMinutes(2), "one more");
+        AnswerStore.saveAnswer(context, answer1);
+        AnswerStore.saveAnswer(context, answer2);
+        AnswerStore.saveAnswer(context, answer3);
 
         // when
         List<Answer> answers = cursorToAnswers(AnswerStore.getByQuestionId(context, QUESTION_ID));
 
         // then
-        assertEquals(2, answers.size());
-        Answer fromDb = answers.get(0);
-        assertEquals(QUESTION_ID, fromDb.getQuestionId());
-        assertEquals(DATE_TIME.minusMinutes(2), fromDb.getDateTime());
-        assertEquals("one more", fromDb.getAnswerText());
+        assertThat(answers)
+                .containsExactly(answer3, answer1)
+                .inOrder();
+    }
 
-        fromDb = answers.get(1);
-        assertEquals(QUESTION_ID, fromDb.getQuestionId());
-        assertEquals(DATE_TIME.minusMinutes(3), fromDb.getDateTime());
-        assertEquals(ANSWER_TEXT, fromDb.getAnswerText());
+    @Test
+    public void testDeleteById() {
+        // given
+        Answer answer1 = new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT);
+        Answer answer2 = new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one");
+        AnswerStore.saveAnswer(context, answer1);
+        AnswerStore.saveAnswer(context, answer2);
+
+        // when
+        AnswerStore.deleteById(context, answer1.getId());
+
+        // then
+        List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
+        assertThat(answers)
+                .containsExactly(answer2);
     }
 
     @Test
     public void testDeleteByQuestionId() {
         // given
+        Answer answer = new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one");
         AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(3), ANSWER_TEXT));
-        AnswerStore.saveAnswer(context, new Answer(QUESTION_ID_2, DATE_TIME.minusMinutes(1), "another one"));
+        AnswerStore.saveAnswer(context, answer);
         AnswerStore.saveAnswer(context, new Answer(QUESTION_ID, DATE_TIME.minusMinutes(2), "one more"));
 
         // when
@@ -121,12 +160,31 @@ public class AnswerStoreTest {
 
         // then
         List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
-        assertEquals(1, answers.size());
-        assertEquals(QUESTION_ID_2, answers.get(0).getQuestionId());
+        assertThat(answers)
+                .containsExactly(answer);
+    }
+
+    @Test
+    public void testDeleteForDeletedQuestions() {
+        // given
+        long questionId = QuestionService.createQuestion(context, new Question("test question"));
+        Answer answer = new Answer(questionId, DATE_TIME.minusMinutes(3), ANSWER_TEXT);
+        Answer answer2 = new Answer(QUESTION_ID, DATE_TIME.minusMinutes(2), "one more");
+        AnswerStore.saveAnswer(context, answer);
+        AnswerStore.saveAnswer(context, answer2);
+
+        // when
+        QuestionService.deleteQuestion(context, questionId);
+        AnswerStore.deleteForDeletedQuestions(context);
+
+        // then
+        List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
+        assertThat(answers)
+                .containsExactly(answer2);
     }
 
     private List<Answer> cursorToAnswers(Cursor cursor) {
-        assertNotNull(cursor);
+        assertThat(cursor).isNotNull();
         try {
             List<Answer> list = new ArrayList<>();
             while (cursor.moveToNext()) {

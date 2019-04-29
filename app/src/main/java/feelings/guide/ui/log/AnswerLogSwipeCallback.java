@@ -1,5 +1,6 @@
 package feelings.guide.ui.log;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -14,22 +15,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import feelings.guide.R;
 
 public class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
-    private AnswerLogAdapter adapter;
+    private AnswerLogSwipeListener swipeListener;
     private Drawable iconDelete;
     private Drawable iconEdit;
     private final ColorDrawable backgroundDelete;
     private final ColorDrawable backgroundEdit;
 
-    public AnswerLogSwipeCallback(AnswerLogAdapter adapter) {
+    interface AnswerLogSwipeListener {
+        void onDeleteAnswer(int position);
+        void onEditAnswer(int position);
+    }
+
+    AnswerLogSwipeCallback(Context context, AnswerLogSwipeListener listener) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
-        this.adapter = adapter;
-        iconDelete = ContextCompat.getDrawable(adapter.getActivity(),
+        this.swipeListener = listener;
+        iconDelete = ContextCompat.getDrawable(context,
                 R.drawable.ic_delete_sweep_white_24dp);
-        iconEdit = ContextCompat.getDrawable(adapter.getActivity(),
+        iconEdit = ContextCompat.getDrawable(context,
                 R.drawable.ic_edit_white_24dp);
-        backgroundDelete = new ColorDrawable(ResourcesCompat.getColor(adapter.getActivity().getResources(),
+        backgroundDelete = new ColorDrawable(ResourcesCompat.getColor(context.getResources(),
                 R.color.lightRed, null));
-        backgroundEdit = new ColorDrawable(ResourcesCompat.getColor(adapter.getActivity().getResources(),
+        backgroundEdit = new ColorDrawable(ResourcesCompat.getColor(context.getResources(),
                 R.color.lightGreen, null));
     }
 
@@ -45,9 +51,9 @@ public class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
         if (direction == ItemTouchHelper.RIGHT) {
-            adapter.deleteAnswer(position);
+            swipeListener.onDeleteAnswer(position);
         } else if (direction == ItemTouchHelper.LEFT) {
-            adapter.editAnswer(position);
+            swipeListener.onEditAnswer(position);
         }
     }
 
