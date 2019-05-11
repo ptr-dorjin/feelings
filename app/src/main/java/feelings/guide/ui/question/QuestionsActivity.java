@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +41,7 @@ public class QuestionsActivity extends BaseActivity implements
         QuestionHideDialogFragment.QuestionHideDialogListener,
         QuestionClearLogDialogFragment.QuestionClearLogDialogListener {
 
+    private static final String TAG = QuestionsActivity.class.getSimpleName();
     public static final String REFRESH_QUESTIONS_KEY = "should-refresh-questions";
     private static final int SETTINGS_REQUEST_CODE = 777;
 
@@ -56,12 +60,7 @@ public class QuestionsActivity extends BaseActivity implements
 
     private void setUpFab() {
         fab = findViewById(R.id.question_add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEditQuestionDialog(null);
-            }
-        });
+        fab.setOnClickListener(v -> showEditQuestionDialog(null));
     }
 
     private void setUpRv() {
@@ -72,7 +71,7 @@ public class QuestionsActivity extends BaseActivity implements
         rv.setAdapter(adapter);
         rv.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy){
                 if (dy > 0) {
                     fab.hide();
                 } else {
@@ -109,23 +108,20 @@ public class QuestionsActivity extends BaseActivity implements
                 : questionId == FEELINGS_ID
                     ? R.menu.questions_popup_menu_feelings
                     : R.menu.questions_popup_menu_built_in);
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.show_log_by_question:
-                        return showAnswerLog(questionId);
-                    case R.id.edit:
-                        return showEditQuestionDialog(questionId);
-                    case R.id.delete:
-                        return showDeleteConfirmation(questionId);
-                    case R.id.hide:
-                        return showHideConfirmation(questionId);
-                    case R.id.clear_log:
-                        return showClearLogConfirmation(questionId);
-                    default:
-                        return false;
-                }
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.show_log_by_question:
+                    return showAnswerLog(questionId);
+                case R.id.edit:
+                    return showEditQuestionDialog(questionId);
+                case R.id.delete:
+                    return showDeleteConfirmation(questionId);
+                case R.id.hide:
+                    return showHideConfirmation(questionId);
+                case R.id.clear_log:
+                    return showClearLogConfirmation(questionId);
+                default:
+                    return false;
             }
         });
         popup.show();
@@ -144,6 +140,10 @@ public class QuestionsActivity extends BaseActivity implements
 
     private void setUpEditDialog(Long questionId, DialogFragment dialogFragment) {
         Dialog dialog = dialogFragment.getDialog();
+        if (dialog == null) {
+            Log.w(TAG, "Edit answer dialog is null");
+            return;
+        }
         EditText questionEditText = dialog.findViewById(R.id.question_text_edit);
         final Button saveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
 
@@ -204,6 +204,7 @@ public class QuestionsActivity extends BaseActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode >= 0) {
             boolean refresh = data.getBooleanExtra(REFRESH_QUESTIONS_KEY, false);
             if (refresh) {
@@ -214,7 +215,12 @@ public class QuestionsActivity extends BaseActivity implements
 
     @Override
     public void onSaveClick(DialogFragment dialogFragment) {
-        EditText questionEditText = dialogFragment.getDialog().findViewById(R.id.question_text_edit);
+        Dialog dialog = dialogFragment.getDialog();
+        if (dialog == null) {
+            Log.w(TAG, "Create/Edit answer dialog is null");
+            return;
+        }
+        EditText questionEditText = dialog.findViewById(R.id.question_text_edit);
         String text = questionEditText.getText().toString().trim();
         if (text.isEmpty()) {
             ToastUtil.showLong(this, getString(R.string.msg_question_text_empty));

@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.threeten.bp.LocalDateTime;
+
 import feelings.guide.db.DbHelper;
 
 import static android.provider.BaseColumns._ID;
+import static feelings.guide.answer.AnswerContract.ALL_COLUMNS;
 import static feelings.guide.answer.AnswerContract.COLUMN_ANSWER;
 import static feelings.guide.answer.AnswerContract.COLUMN_DATE_TIME;
 import static feelings.guide.answer.AnswerContract.COLUMN_QUESTION_ID;
@@ -23,7 +26,7 @@ public class AnswerStore {
         try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             ContentValues values = new ContentValues();
             if (answer.getId() > 0) {
-                // id might be already set when previously deleted answer is being restored
+                // id is already set when previously deleted answer is being restored
                 values.put(_ID, answer.getId());
             }
             values.put(COLUMN_QUESTION_ID, answer.getQuestionId());
@@ -36,6 +39,16 @@ public class AnswerStore {
                 answer.setId(newRowId);
             }
             return success;
+        }
+    }
+
+    public static boolean updateAnswer(Context context, Answer answer) {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_ANSWER, answer.getAnswerText());
+
+            long count = db.update(ANSWER_TABLE, values, _ID + "=" + answer.getId(), null);
+            return count == 1;
         }
     }
 
@@ -56,6 +69,13 @@ public class AnswerStore {
         String[] args = {String.valueOf(questionId)};
 
         return db.query(ANSWER_TABLE, projection, selection, args, null, null, orderBy);
+    }
+
+    public static Answer getById(Context context, long id) {
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
+            Cursor cursor = db.query(ANSWER_TABLE, ALL_COLUMNS, _ID + "=" + id, null, null, null, null)) {
+            return cursor.moveToFirst() ? mapFromCursor(cursor) : null;
+        }
     }
 
     public static void deleteAll(Context context) {
@@ -95,5 +115,16 @@ public class AnswerStore {
         try (Cursor cursor = getByQuestionId(context, questionId)) {
             return cursor.moveToFirst();
         }
+    }
+
+    public static Answer mapFromCursor(Cursor cursor) {
+        long id = cursor.getLong(cursor.getColumnIndexOrThrow(_ID));
+        long questionId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_QUESTION_ID));
+        LocalDateTime dateTime = LocalDateTime.parse(
+                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
+                DB_FORMATTER);
+        String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ANSWER));
+
+        return new Answer(id, questionId, dateTime, answerText);
     }
 }

@@ -28,27 +28,18 @@ class QuestionStore {
     private static final String TAG = QuestionStore.class.getSimpleName();
 
     static Question getById(Context context, long questionId) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
 
         String selection = _ID + " = ?";
         String[] selectionArgs = {valueOf(questionId)};
 
-        Cursor cursor = null;
-        try {
-            cursor = db.query(QUESTION_TABLE, ALL_COLUMNS, selection, selectionArgs, null, null, null);
-            if (cursor.moveToFirst()) {
-                return cursorToQuestion(cursor);
-            } else {
-                return null;
-            }
-        } finally {
-            if (cursor != null) cursor.close();
-            db.close();
+        try (SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
+             Cursor cursor = db.query(QUESTION_TABLE, ALL_COLUMNS, selection, selectionArgs, null, null, null)) {
+            return cursor.moveToFirst() ? mapFromCursor(cursor) : null;
         }
     }
 
     @NonNull
-    static Question cursorToQuestion(Cursor cursor) {
+    static Question mapFromCursor(Cursor cursor) {
         Question question = new Question();
         question.setId(cursor.getLong(cursor.getColumnIndexOrThrow(_ID)));
         question.setCode(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CODE)));

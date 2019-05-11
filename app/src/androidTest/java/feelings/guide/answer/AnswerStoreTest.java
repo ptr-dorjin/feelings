@@ -80,6 +80,7 @@ public class AnswerStoreTest {
 
     @Test
     public void testCreateWithId() {
+        // given
         Answer answer = new Answer(ID, QUESTION_ID, DATE_TIME, ANSWER_TEXT);
 
         // when
@@ -87,6 +88,23 @@ public class AnswerStoreTest {
 
         // then
         assertThat(created).isTrue();
+        List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
+        assertThat(answers)
+                .containsExactly(answer);
+    }
+
+    @Test
+    public void testEdit() {
+        // given
+        Answer answer = new Answer(QUESTION_ID, DATE_TIME, ANSWER_TEXT);
+        AnswerStore.saveAnswer(context, answer);
+        answer.setAnswerText("updated text");
+
+        // when
+        boolean updated = AnswerStore.updateAnswer(context, answer);
+
+        // then
+        assertThat(updated).isTrue();
         List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
         assertThat(answers)
                 .containsExactly(answer);
@@ -145,6 +163,22 @@ public class AnswerStoreTest {
         List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
         assertThat(answers)
                 .containsExactly(answer2);
+    }
+
+    @Test
+    public void testDeleteByIdAndThenUndo() {
+        // given
+        Answer answer = new Answer(QUESTION_ID, DATE_TIME, ANSWER_TEXT);
+        AnswerStore.saveAnswer(context, answer);
+        AnswerStore.deleteById(context, answer.getId());
+
+        // when
+        AnswerStore.saveAnswer(context, answer);
+
+        // then
+        List<Answer> answers = cursorToAnswers(AnswerStore.getAll(context));
+        assertThat(answers)
+                .containsExactly(answer);
     }
 
     @Test

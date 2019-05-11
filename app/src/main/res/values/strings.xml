@@ -53,15 +53,15 @@
     <string name="q_text_lie">What is my insincerity?</string><!--deprecated-->
     <string name="q_text_irresponsibility">What is my irresponsibility?</string><!--deprecated-->
 
-    <string name="q_description_feelings"></string>
-    <string name="q_description_gratitude"></string>
-    <string name="q_description_do_body"></string>
-    <string name="q_description_do_close"></string>
-    <string name="q_description_do_others"></string>
-    <string name="q_description_insincerity"></string><!--deprecated-->
-    <string name="q_description_preach"></string><!--deprecated-->
-    <string name="q_description_lie"></string><!--deprecated-->
-    <string name="q_description_irresponsibility"></string><!--deprecated-->
+    <string name="q_description_feelings" />
+    <string name="q_description_gratitude" />
+    <string name="q_description_do_body" />
+    <string name="q_description_do_close" />
+    <string name="q_description_do_others" />
+    <string name="q_description_insincerity" /><!--deprecated-->
+    <string name="q_description_preach" /><!--deprecated-->
+    <string name="q_description_lie" /><!--deprecated-->
+    <string name="q_description_irresponsibility" /><!--deprecated-->
 
     <string name="msg_question_text_empty">Text must not be empty</string>
     <string name="msg_question_create_success">The question has been created</string>
@@ -73,8 +73,10 @@
     <string name="msg_question_hide_success">The question has been hidden</string>
     <string name="msg_question_hide_error">Error while hiding the question</string>
     <string name="msg_answer_text_empty">Enter an answer</string>
-    <string name="msg_answer_saved_success">The answer has been saved to the log</string>
-    <string name="msg_answer_saved_error">Error while saving the answer</string>
+    <string name="msg_answer_added_success">The answer has been saved to the log</string>
+    <string name="msg_answer_added_error">Error while saving the answer</string>
+    <string name="msg_answer_updated_success">The answer has been updated</string>
+    <string name="msg_answer_updated_error">Error while updating the answer</string>
     <string name="msg_clear_log_full_success">Answer log has been cleared</string>
     <string name="msg_clear_log_deleted_success">Answers to deleted/hidden questions have been deleted</string>
     <string name="msg_clear_log_by_question_success">Answers to the question have been deleted</string>

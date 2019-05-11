@@ -188,7 +188,7 @@ public class QuestionStoreTest {
         try {
             List<Question> list = new ArrayList<>();
             while (cursor.moveToNext()) {
-                list.add(QuestionStore.cursorToQuestion(cursor));
+                list.add(QuestionStore.mapFromCursor(cursor));
             }
             return list;
         } finally {

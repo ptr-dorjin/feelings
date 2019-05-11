@@ -27,15 +27,15 @@
     <string name="q_text_lie">В чем моя неискренность?</string><!--deprecated-->
     <string name="q_text_irresponsibility">В чем моя безответственность?</string><!--deprecated-->
 
-    <string name="q_description_feelings"></string>
-    <string name="q_description_gratitude"></string>
-    <string name="q_description_do_body"></string>
-    <string name="q_description_do_close"></string>
-    <string name="q_description_do_others"></string>
-    <string name="q_description_insincerity"></string><!--deprecated-->
-    <string name="q_description_preach"></string><!--deprecated-->
-    <string name="q_description_lie"></string><!--deprecated-->
-    <string name="q_description_irresponsibility"></string><!--deprecated-->
+    <string name="q_description_feelings" />
+    <string name="q_description_gratitude" />
+    <string name="q_description_do_body" />
+    <string name="q_description_do_close" />
+    <string name="q_description_do_others" />
+    <string name="q_description_insincerity" /><!--deprecated-->
+    <string name="q_description_preach" /><!--deprecated-->
+    <string name="q_description_lie" /><!--deprecated-->
+    <string name="q_description_irresponsibility" /><!--deprecated-->
 
     <string name="msg_question_text_empty">Текст не должен быть пустым</string>
     <string name="msg_question_create_success">Вопрос создан</string>
@@ -47,8 +47,10 @@
     <string name="msg_question_hide_success">Вопрос скрыт</string>
     <string name="msg_question_hide_error">Ошибка при скрытии вопроса</string>
     <string name="msg_answer_text_empty">Введите ответ</string>
-    <string name="msg_answer_saved_success">Ответ сохранен в журнал</string>
-    <string name="msg_answer_saved_error">Ошибка при сохранении ответа</string>
+    <string name="msg_answer_added_success">Ответ сохранен в журнал</string>
+    <string name="msg_answer_added_error">Ошибка при сохранении ответа</string>
+    <string name="msg_answer_updated_success">Ответ обновлен</string>
+    <string name="msg_answer_updated_error">Ошибка при обновлении ответа</string>
     <string name="msg_clear_log_full_success">Журнал очищен</string>
     <string name="msg_clear_log_deleted_success">Ответы на удаленные/скрытые вопросов удалены</string>
     <string name="msg_clear_log_by_question_success">Ответы на вопрос удалены</string>

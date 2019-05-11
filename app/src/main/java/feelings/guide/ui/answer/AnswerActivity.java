@@ -1,8 +1,8 @@
 package feelings.guide.ui.answer;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import org.threeten.bp.LocalDateTime;
 
@@ -25,6 +27,7 @@ import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.Question;
 import feelings.guide.question.QuestionService;
 import feelings.guide.ui.BaseActivity;
+import feelings.guide.ui.log.AnswerLogActivity;
 import feelings.guide.util.ToastUtil;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
@@ -32,18 +35,23 @@ import static java.util.Arrays.asList;
 
 public class AnswerActivity extends BaseActivity {
 
+    public static final String ANSWER_ID_PARAM = "answer_id";
+
     private long questionId;
+    private Answer answer;
     private EditText answerText;
-    private List<String> feelingsGroups = new ArrayList<>();
-    private Map<String, List<String>> mapFeelingsByGroup = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.answer_activity);
 
-        questionId = getIntent().getLongExtra(QUESTION_ID_PARAM, -1);
+        Intent intent = getIntent();
+        questionId = intent != null ? intent.getLongExtra(QUESTION_ID_PARAM, -1) : -1;
         Question question = QuestionService.getById(this, questionId);
+
+        long answerId = intent != null ? intent.getLongExtra(ANSWER_ID_PARAM, -1) : -1;
+        answer = answerId == -1 ? null : AnswerStore.getById(this, answerId);
 
         setUpQuestionText(question);
         setUpQuestionDescription(question);
@@ -67,40 +75,46 @@ public class AnswerActivity extends BaseActivity {
 
     private void setUpAnswerText() {
         answerText = findViewById(R.id.answer_text);
+        if (isEdit()) {
+            answerText.setText(answer.getAnswerText());
+        }
         if (questionId != QuestionService.FEELINGS_ID) {
             answerText.requestFocus();
         }
     }
 
     private void setUpFeelingsList() {
-        ExpandableListView feelingsListView = findViewById(R.id.feelings_list_view);
         if (questionId == QuestionService.FEELINGS_ID) {
-            setUpFeelingsGroup(R.string.anger, R.array.anger_array);
-            setUpFeelingsGroup(R.string.fear, R.array.fear_array);
-            setUpFeelingsGroup(R.string.sadness, R.array.sadness_array);
-            setUpFeelingsGroup(R.string.joy, R.array.joy_array);
-            setUpFeelingsGroup(R.string.love, R.array.love_array);
+            ExpandableListView feelingsListView = findViewById(R.id.feelings_list_view);
+
+            List<String> feelingsGroups = new ArrayList<>();
+            Map<String, List<String>> mapFeelingsByGroup = new HashMap<>();
+
+            setUpFeelingsGroup(R.string.anger, R.array.anger_array, feelingsGroups, mapFeelingsByGroup);
+            setUpFeelingsGroup(R.string.fear, R.array.fear_array, feelingsGroups, mapFeelingsByGroup);
+            setUpFeelingsGroup(R.string.sadness, R.array.sadness_array, feelingsGroups, mapFeelingsByGroup);
+            setUpFeelingsGroup(R.string.joy, R.array.joy_array, feelingsGroups, mapFeelingsByGroup);
+            setUpFeelingsGroup(R.string.love, R.array.love_array, feelingsGroups, mapFeelingsByGroup);
 
             final FeelingsExpandableListAdapter adapter = new FeelingsExpandableListAdapter(this, feelingsGroups, mapFeelingsByGroup);
             feelingsListView.setAdapter(adapter);
-            feelingsListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView parent, View v,
-                                            int groupPosition, int childPosition, long id) {
-                    String selected = (String) adapter.getChild(groupPosition, childPosition);
-                    Editable answer = answerText.getText();
-                    if (!answer.toString().trim().isEmpty()) {
-                        answer.append(", ");
-                    }
-                    answer.append(selected);
-                    return true;
+            feelingsListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+                String selected = (String) adapter.getChild(groupPosition, childPosition);
+                Editable answer = answerText.getText();
+                if (!answer.toString().trim().isEmpty()) {
+                    answer.append(", ");
                 }
+                answer.append(selected);
+                return true;
             });
             feelingsListView.setVisibility(View.VISIBLE);
         }
     }
 
-    private void setUpFeelingsGroup(int feelingsGroupId, int feelingsArrayId) {
+    private void setUpFeelingsGroup(int feelingsGroupId,
+                                    int feelingsArrayId,
+                                    List<String> feelingsGroups,
+                                    Map<String, List<String>> mapFeelingsByGroup) {
         Resources resources = getResources();
         String group = resources.getString(feelingsGroupId);
         feelingsGroups.add(group);
@@ -118,21 +132,41 @@ public class AnswerActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Save button is pressed
         if (item.getItemId() == R.id.save) {
-            if (isInvalid()) {
-                return false;
-            }
-            boolean saved = AnswerStore.saveAnswer(this,
-                    new Answer(questionId, LocalDateTime.now(), answerText.getText().toString().trim()));
-            if (saved) {
-                ToastUtil.showShort(this, getString(R.string.msg_answer_saved_success));
-                finish();
-            } else {
-                ToastUtil.showLong(this, getString(R.string.msg_answer_saved_error));
-            }
-            return saved;
+            return save();
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean save() {
+        if (isInvalid()) {
+            return false;
+        }
+        String text = answerText.getText().toString().trim();
+        boolean isNew = isNew();
+        boolean saved;
+        if (isNew) {
+            answer = new Answer(questionId, LocalDateTime.now(), text);
+            saved = AnswerStore.saveAnswer(this, answer);
+        } else {
+            answer.setAnswerText(text);
+            saved = AnswerStore.updateAnswer(this, answer);
+        }
+
+        if (saved) {
+            ToastUtil.showShort(this, getString(isNew
+                    ? R.string.msg_answer_added_success
+                    : R.string.msg_answer_updated_success));
+            Intent data = new Intent();
+            data.putExtra(AnswerLogActivity.REFRESH_ANSWER_LOG_KEY, true);
+            setResult(RESULT_OK, data);
+            finish();
+        } else {
+            ToastUtil.showLong(this, getString(isNew
+                    ? R.string.msg_answer_added_error
+                    : R.string.msg_answer_updated_error));
+        }
+        return saved;
     }
 
     /**
@@ -144,6 +178,14 @@ public class AnswerActivity extends BaseActivity {
             return true;
         }
         return false;
+    }
+
+    private boolean isEdit() {
+        return answer != null;
+    }
+
+    private boolean isNew() {
+        return answer == null;
     }
 
 }

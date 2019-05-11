@@ -34,14 +34,10 @@ class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.Questi
             questionText = itemView.findViewById(R.id.question_text_on_card);
             popupMenu = itemView.findViewById(R.id.popupMenu);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(activity, AnswerActivity.class);
-                    intent.putExtra(QUESTION_ID_PARAM, questionId);
-                    // set position as a requestCode. This requestCode will be passed to this activity's onActivityResult
-                    activity.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(activity, AnswerActivity.class);
+                intent.putExtra(QUESTION_ID_PARAM, questionId);
+                activity.startActivity(intent);
             });
         }
     }

@@ -1,5 +1,6 @@
 package feelings.guide.ui.log;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,10 +22,12 @@ import feelings.guide.answer.Answer;
 import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.QuestionService;
 import feelings.guide.ui.BaseActivity;
+import feelings.guide.ui.answer.AnswerActivity;
 import feelings.guide.ui.question.QuestionClearLogDialogFragment;
 import feelings.guide.util.ToastUtil;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
+import static feelings.guide.ui.answer.AnswerActivity.ANSWER_ID_PARAM;
 
 public class AnswerLogActivity extends BaseActivity implements
         ClearLogFullDialogFragment.ClearLogFullDialogListener,
@@ -33,10 +36,13 @@ public class AnswerLogActivity extends BaseActivity implements
         AnswerLogSwipeCallback.AnswerLogSwipeListener {
 
     private static final long DEFAULT_QUESTION_ID = -1;
+    public static final String REFRESH_ANSWER_LOG_KEY = "should-refresh-answer-log";
+    private static final int UPDATE_ANSWER_REQUEST_CODE = 101;
     private long questionId;
     private boolean isFull;
     private AnswerLogAdapter adapter;
     private Answer lastDeleted;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +55,7 @@ public class AnswerLogActivity extends BaseActivity implements
                 ? R.layout.full_answer_log_activity
                 : R.layout.answer_log_by_question_activity);
 
-        RecyclerView recyclerView = findViewById(R.id.answer_log_recycler_view);
+        recyclerView = findViewById(R.id.answer_log_recycler_view);
         TextView emptyLogText = findViewById(R.id.answer_log_empty);
 
         adapter = new AnswerLogAdapter(this, isFull, questionId);
@@ -57,22 +63,22 @@ public class AnswerLogActivity extends BaseActivity implements
         recyclerView.setVisibility(notEmpty ? View.VISIBLE : View.GONE);
         emptyLogText.setVisibility(notEmpty ? View.GONE : View.VISIBLE);
         if (notEmpty) {
-            setUpRecyclerView(recyclerView);
+            setUpRecyclerView();
         }
         fillQuestionText();
     }
 
-    private void setUpRecyclerView(RecyclerView rv) {
+    private void setUpRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rv.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),
+        recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
-        rv.addItemDecoration(dividerItemDecoration);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        rv.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new AnswerLogSwipeCallback(this, this));
-        itemTouchHelper.attachToRecyclerView(rv);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void fillQuestionText() {
@@ -165,7 +171,7 @@ public class AnswerLogActivity extends BaseActivity implements
 
     private void showUndoDeleteSnackbar() {
         View view = findViewById(R.id.answer_log_view);
-        Snackbar snackbar = Snackbar.make(view, R.string.msg_answer_deleted_success, Snackbar.LENGTH_INDEFINITE);
+        Snackbar snackbar = Snackbar.make(view, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG);
         snackbar.setAction(R.string.snackbar_undo, v -> undoDelete());
         snackbar.show();
     }
@@ -177,6 +183,23 @@ public class AnswerLogActivity extends BaseActivity implements
 
     @Override
     public void onEditAnswer(int position) {
+        Answer answer = adapter.getByPosition(position);
+        Intent intent = new Intent(this, AnswerActivity.class);
+        intent.putExtra(QUESTION_ID_PARAM, answer.getQuestionId());
+        intent.putExtra(ANSWER_ID_PARAM, answer.getId());
+        startActivityForResult(intent, UPDATE_ANSWER_REQUEST_CODE);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == UPDATE_ANSWER_REQUEST_CODE && resultCode == RESULT_OK) {
+            boolean refresh = data != null && data.getBooleanExtra(REFRESH_ANSWER_LOG_KEY, false);
+            if (refresh) {
+                adapter.refresh();
+                //redraw recyclerView
+                recyclerView.setAdapter(adapter);
+            }
+        }
     }
 }

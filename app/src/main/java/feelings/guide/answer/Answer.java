@@ -1,12 +1,14 @@
 package feelings.guide.answer;
 
+import androidx.annotation.NonNull;
+
 import org.threeten.bp.LocalDateTime;
 
 public class Answer {
     private long id;
     private final long questionId;
     private final LocalDateTime dateTime;
-    private final String answerText;
+    private String answerText;
 
     public Answer(long questionId, LocalDateTime dateTime, String answerText) {
         this.questionId = questionId;
@@ -42,6 +44,11 @@ public class Answer {
         return answerText;
     }
 
+    public void setAnswerText(String answerText) {
+        this.answerText = answerText;
+    }
+
+    // equals and hashCode for tests
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,5 +67,16 @@ public class Answer {
         result = 31 * result + dateTime.hashCode();
         result = 31 * result + answerText.hashCode();
         return result;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", questionId=" + questionId +
+                ", dateTime=" + dateTime +
+                ", answerText='" + answerText + '\'' +
+                '}';
     }
 }

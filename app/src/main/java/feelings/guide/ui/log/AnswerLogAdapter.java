@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import feelings.guide.R;
 import feelings.guide.answer.Answer;
-import feelings.guide.answer.AnswerContract;
 import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.QuestionService;
 import feelings.guide.ui.BaseActivity;
@@ -63,7 +62,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
 
     @Override
     protected void onBindViewHolder(AnswerLogHolder holder, Cursor cursor) {
-        Answer answer = AnswerContract.mapFromCursor(cursor);
+        Answer answer = AnswerStore.mapFromCursor(cursor);
 
         holder.dateTimeView.setText(answer.getDateTime().format(ofPattern(dateTimeFormat)));
         if (holder.questionView != null) {
@@ -83,6 +82,6 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
     Answer getByPosition(int position) {
         Cursor cursor = getCursor();
         cursor.moveToPosition(position);
-        return AnswerContract.mapFromCursor(cursor);
+        return AnswerStore.mapFromCursor(cursor);
     }
 }
