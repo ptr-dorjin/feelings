@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="anger">Гнев</string>
     <string name="fear">Страх</string>
@@ -31,7 +31,7 @@
         <item>Ярость</item>
     </string-array>
 
-    <string-array name="fear_array">
+    <string-array name="fear_array" tools:ignore="InconsistentArrays">
         <item>Апатия</item>
         <item>Беспокойство</item>
         <item>Боязнь</item>
@@ -87,7 +87,7 @@
         <item>Тоска</item>
     </string-array>
 
-    <string-array name="joy_array">
+    <string-array name="joy_array" tools:ignore="InconsistentArrays">
         <item>Возбуждение</item>
         <item>Восторг</item>
         <item>Довольство</item>
@@ -120,7 +120,7 @@
         <item>Энтузиазм</item>
     </string-array>
 
-    <string-array name="love_array">
+    <string-array name="love_array" tools:ignore="InconsistentArrays">
         <item>Безмятежность</item>
         <item>Безопасность</item>
         <item>Благоговение</item>

@@ -17,7 +17,7 @@ import static feelings.guide.question.QuestionContract.QUESTION_TABLE;
 
 class UpgraderTo3 {
 
-    private Context context;
+    private final Context context;
 
     UpgraderTo3(Context context) {
         this.context = context;

@@ -26,8 +26,8 @@ class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.Questi
 
     final class QuestionViewHolder extends RecyclerView.ViewHolder {
         long questionId;
-        TextView questionText;
-        ImageButton popupMenu;
+        final TextView questionText;
+        final ImageButton popupMenu;
 
         private QuestionViewHolder(View itemView) {
             super(itemView);
@@ -43,7 +43,7 @@ class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.Questi
     }
 
     QuestionsAdapter(BaseActivity activity) {
-        super(activity, null);
+        super(activity);
         refreshAll();
     }
 

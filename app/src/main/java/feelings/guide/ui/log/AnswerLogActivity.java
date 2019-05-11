@@ -40,9 +40,9 @@ public class AnswerLogActivity extends BaseActivity implements
     private static final int UPDATE_ANSWER_REQUEST_CODE = 101;
     private long questionId;
     private boolean isFull;
+    private RecyclerView recyclerView;
     private AnswerLogAdapter adapter;
     private Answer lastDeleted;
-    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,8 +101,8 @@ public class AnswerLogActivity extends BaseActivity implements
         if (adapter.isNotEmpty()) {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(isFull
-                    ? R.menu.answer_log_full_menu
-                    : R.menu.answer_log_by_question_menu,
+                            ? R.menu.answer_log_full_menu
+                            : R.menu.answer_log_by_question_menu,
                     menu);
         }
         return true;
@@ -110,33 +110,34 @@ public class AnswerLogActivity extends BaseActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.clear_log_full) {
-            return showClearLogFullConfirmation();
-        } else if (item.getItemId() == R.id.clear_log_deleted) {
-            return showClearLogDeletedConfirmation();
-        } else if (item.getItemId() == R.id.clear_log_by_question) {
-            return showClearLogByQuestionConfirmation();
-        } else {
-            return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.clear_log_full:
+                showClearLogFullConfirmation();
+                return true;
+            case R.id.clear_log_deleted:
+                showClearLogDeletedConfirmation();
+                return true;
+            case R.id.clear_log_by_question:
+                showClearLogByQuestionConfirmation();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
-    private boolean showClearLogFullConfirmation() {
+    private void showClearLogFullConfirmation() {
         DialogFragment dialogFragment = new ClearLogFullDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), ClearLogFullDialogFragment.class.getSimpleName());
-        return true;
     }
 
-    private boolean showClearLogDeletedConfirmation() {
+    private void showClearLogDeletedConfirmation() {
         DialogFragment dialogFragment = new ClearLogDeletedDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), ClearLogDeletedDialogFragment.class.getSimpleName());
-        return true;
     }
 
-    private boolean showClearLogByQuestionConfirmation() {
+    private void showClearLogByQuestionConfirmation() {
         DialogFragment dialogFragment = new QuestionClearLogDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), QuestionClearLogDialogFragment.class.getSimpleName());
-        return false;
     }
 
     @Override

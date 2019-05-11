@@ -27,7 +27,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @SuppressLint("StaticFieldLeak")
     private static DbHelper instance = null;
 
-    private Context context;
+    private final Context context;
 
     public static DbHelper getInstance(Context context) {
         if (instance == null) {

@@ -1,9 +1,7 @@
 package feelings.guide.question;
 
 import android.provider.BaseColumns;
-
-import java.util.HashMap;
-import java.util.Map;
+import android.util.SparseArray;
 
 import feelings.guide.R;
 
@@ -29,7 +27,7 @@ public class QuestionContract implements BaseColumns {
             COLUMN_IS_HIDDEN + " INTEGER" +
             ")";
 
-    public static final Map<Integer, QuestionCode> QUESTION_CODE_MAP = new HashMap<>();
+    public static final SparseArray<QuestionCode> QUESTION_CODE_MAP = new SparseArray<>();
 
     static {
         map(new QuestionCode(R.string.q_feelings, R.string.q_text_feelings, R.string.q_description_feelings));

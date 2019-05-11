@@ -15,9 +15,9 @@ import feelings.guide.R;
 
 class FeelingsExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private Context context;
-    private List<String> feelingsGroups;
-    private Map<String, List<String>> mapFeelingsByGroup;
+    private final Context context;
+    private final List<String> feelingsGroups;
+    private final Map<String, List<String>> mapFeelingsByGroup;
 
     FeelingsExpandableListAdapter(Context context, List<String> feelingsGroups,
                                   Map<String, List<String>> mapFeelingsByGroup) {
@@ -68,7 +68,8 @@ class FeelingsExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return mapFeelingsByGroup.get(feelingsGroups.get(groupPosition)).get(childPosition);
+        List<String> children = mapFeelingsByGroup.get(feelingsGroups.get(groupPosition));
+        return children != null ? children.get(childPosition) : null;
     }
 
     @Override
@@ -78,7 +79,8 @@ class FeelingsExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mapFeelingsByGroup.get(feelingsGroups.get(groupPosition)).size();
+        List<String> children = mapFeelingsByGroup.get(feelingsGroups.get(groupPosition));
+        return children != null ? children.size() : 0;
     }
 
     @Override

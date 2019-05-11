@@ -31,9 +31,9 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
     private final String dateTimeFormat;
 
     static final class AnswerLogHolder extends RecyclerView.ViewHolder {
-        TextView dateTimeView;
-        TextView questionView;
-        TextView answerView;
+        final TextView dateTimeView;
+        final TextView questionView;
+        final TextView answerView;
 
         AnswerLogHolder(View itemView) {
             super(itemView);
@@ -43,7 +43,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
         }
     }
     AnswerLogAdapter(BaseActivity activity, boolean isFull, long questionId) {
-        super(activity, null);
+        super(activity);
         this.isFull = isFull;
         this.questionId = questionId;
         this.dateTimeFormat = DateTimeUtil.getDateTimeFormat(activity);

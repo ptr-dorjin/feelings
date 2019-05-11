@@ -15,14 +15,10 @@ public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHold
     private boolean isDataValid;
     private int rowIdColumn;
 
-    public RecyclerViewCursorAdapter(BaseActivity activity, Cursor cursor) {
+    protected RecyclerViewCursorAdapter(BaseActivity activity) {
         this.activity = activity;
         setHasStableIds(true);
-        swapCursor(cursor);
-    }
-
-    public BaseActivity getActivity() {
-        return activity;
+        swapCursor(null);
     }
 
     protected abstract void onBindViewHolder(VH holder, Cursor cursor);
@@ -72,15 +68,11 @@ public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHold
         }
         Cursor oldCursor = cursor;
         if (oldCursor != null) {
-            if (mDataSetObserver != null) {
-                oldCursor.unregisterDataSetObserver(mDataSetObserver);
-            }
+            oldCursor.unregisterDataSetObserver(dataSetObserver);
         }
         cursor = newCursor;
         if (newCursor != null) {
-            if (mDataSetObserver != null) {
-                newCursor.registerDataSetObserver(mDataSetObserver);
-            }
+            newCursor.registerDataSetObserver(dataSetObserver);
             rowIdColumn = newCursor.getColumnIndexOrThrow(_ID);
             isDataValid = true;
             notifyDataSetChanged();
@@ -93,7 +85,7 @@ public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHold
     }
 
 
-    private DataSetObserver mDataSetObserver = new DataSetObserver() {
+    private final DataSetObserver dataSetObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
             isDataValid = true;

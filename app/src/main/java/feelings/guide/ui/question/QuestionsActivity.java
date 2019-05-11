@@ -3,6 +3,7 @@ package feelings.guide.ui.question;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -69,9 +71,9 @@ public class QuestionsActivity extends BaseActivity implements
         adapter = new QuestionsAdapter(this);
         adapter.setHasStableIds(true);
         rv.setAdapter(adapter);
-        rv.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy){
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
                     fab.hide();
                 } else {
@@ -90,12 +92,15 @@ public class QuestionsActivity extends BaseActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.show_log) {
-            return showAnswerLog(null);
-        } else if (item.getItemId() == R.id.show_settings) {
-            return showSettings();
-        } else {
-            return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.show_log:
+                showAnswerLog(null);
+                return true;
+            case R.id.show_settings:
+                showSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -106,20 +111,25 @@ public class QuestionsActivity extends BaseActivity implements
         popup.inflate(isUser
                 ? R.menu.questions_popup_menu_user
                 : questionId == FEELINGS_ID
-                    ? R.menu.questions_popup_menu_feelings
-                    : R.menu.questions_popup_menu_built_in);
+                ? R.menu.questions_popup_menu_feelings
+                : R.menu.questions_popup_menu_built_in);
         popup.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.show_log_by_question:
-                    return showAnswerLog(questionId);
+                    showAnswerLog(questionId);
+                    return true;
                 case R.id.edit:
-                    return showEditQuestionDialog(questionId);
+                    showEditQuestionDialog(questionId);
+                    return true;
                 case R.id.delete:
-                    return showDeleteConfirmation(questionId);
+                    showDeleteConfirmation(questionId);
+                    return true;
                 case R.id.hide:
-                    return showHideConfirmation(questionId);
+                    showHideConfirmation(questionId);
+                    return true;
                 case R.id.clear_log:
-                    return showClearLogConfirmation(questionId);
+                    showClearLogConfirmation(questionId);
+                    return true;
                 default:
                     return false;
             }
@@ -127,7 +137,7 @@ public class QuestionsActivity extends BaseActivity implements
         popup.show();
     }
 
-    private boolean showEditQuestionDialog(Long questionId) {
+    private void showEditQuestionDialog(Long questionId) {
         changeQuestionId = questionId;
         FragmentManager fragmentManager = getSupportFragmentManager();
         DialogFragment dialogFragment = new QuestionEditDialogFragment();
@@ -135,7 +145,6 @@ public class QuestionsActivity extends BaseActivity implements
         dialogFragment.show(fragmentManager, QuestionEditDialogFragment.class.getSimpleName());
         fragmentManager.executePendingTransactions(); // to fetch inflated dialog
         setUpEditDialog(questionId, dialogFragment);
-        return true;
     }
 
     private void setUpEditDialog(Long questionId, DialogFragment dialogFragment) {
@@ -154,10 +163,12 @@ public class QuestionsActivity extends BaseActivity implements
         }
         questionEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -166,46 +177,41 @@ public class QuestionsActivity extends BaseActivity implements
         });
     }
 
-    private boolean showDeleteConfirmation(long questionId) {
+    private void showDeleteConfirmation(long questionId) {
         changeQuestionId = questionId;
         DialogFragment dialogFragment = new QuestionDeleteDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), QuestionDeleteDialogFragment.class.getSimpleName());
-        return true;
     }
 
-    private boolean showHideConfirmation(long questionId) {
+    private void showHideConfirmation(long questionId) {
         changeQuestionId = questionId;
         DialogFragment dialogFragment = new QuestionHideDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), QuestionHideDialogFragment.class.getSimpleName());
-        return true;
     }
 
-    private boolean showClearLogConfirmation(long questionId) {
+    private void showClearLogConfirmation(long questionId) {
         changeQuestionId = questionId;
         DialogFragment dialogFragment = new QuestionClearLogDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), QuestionClearLogDialogFragment.class.getSimpleName());
-        return true;
     }
 
-    private boolean showAnswerLog(Long questionId) {
+    private void showAnswerLog(Long questionId) {
         Intent intent = new Intent(this, AnswerLogActivity.class);
         if (questionId != null) {
             intent.putExtra(QUESTION_ID_PARAM, questionId);
         }
         startActivity(intent);
-        return true;
     }
 
-    private boolean showSettings() {
+    private void showSettings() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivityForResult(intent, SETTINGS_REQUEST_CODE);
-        return true;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode >= 0) {
+        if (requestCode == SETTINGS_REQUEST_CODE && resultCode == RESULT_OK) {
             boolean refresh = data.getBooleanExtra(REFRESH_QUESTIONS_KEY, false);
             if (refresh) {
                 adapter.refreshAll();

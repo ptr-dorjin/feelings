@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="feelings.guide"
     android:installLocation="internalOnly">
 
@@ -27,7 +28,7 @@
             android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/title_answer_activity"
             android:screenOrientation="portrait"
-            >
+            tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.question.QuestionsActivity" />
@@ -37,7 +38,7 @@
             android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/title_answer_log_activity"
             android:screenOrientation="portrait"
-            >
+            tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.question.QuestionsActivity" />
@@ -46,7 +47,8 @@
         <activity android:name=".ui.settings.SettingsActivity"
             android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/title_settings_activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.question.QuestionsActivity" />

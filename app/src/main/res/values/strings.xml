@@ -99,8 +99,11 @@
 
     <string name="snackbar_undo">Undo</string>
 
-    <string name="popup_menu_descr">Popup Menu</string>
+    <string name="popup_menu_description">Popup Menu</string>
 
     <string name="answer_log_empty_text">The log is empty</string>
+
+    <string name="hint_question_text">Enter question</string>
+    <string name="hint_answer_text">Enter answer</string>
 
 </resources>

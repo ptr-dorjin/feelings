@@ -71,7 +71,7 @@ public class QuestionStoreTest {
             QuestionStore.deleteQuestion(context, questionId3);
         }
 
-        deleteBuiltInQuestion(TEST_BUILT_IN_QUESTION_CODE);
+        deleteBuiltInQuestion();
     }
 
     @Test
@@ -210,10 +210,10 @@ public class QuestionStoreTest {
         }
     }
 
-    private static void deleteBuiltInQuestion(String questionCode) {
+    private static void deleteBuiltInQuestion() {
         try (SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase()) {
             String selection = COLUMN_CODE + " = ?";
-            String[] selectionArgs = {questionCode};
+            String[] selectionArgs = {QuestionStoreTest.TEST_BUILT_IN_QUESTION_CODE};
             db.delete(QUESTION_TABLE, selection, selectionArgs);
         }
 

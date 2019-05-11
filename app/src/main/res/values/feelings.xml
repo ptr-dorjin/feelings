@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="anger">Anger</string>
     <string name="fear">Fear</string>
@@ -31,7 +31,7 @@
         <item>Wrath</item>
     </string-array>
 
-    <string-array name="fear_array">
+    <string-array name="fear_array" tools:ignore="InconsistentArrays">
         <item>Apathy</item>
         <item>Anxiety</item>
         <item>Apprehension</item>
@@ -86,7 +86,7 @@
         <item>Upset</item>
     </string-array>
 
-    <string-array name="joy_array">
+    <string-array name="joy_array" tools:ignore="InconsistentArrays">
         <item>Amazement</item>
         <item>Anticipation</item>
         <item>Astonishment</item>
@@ -121,7 +121,7 @@
         <item>Triumph</item>
     </string-array>
 
-    <string-array name="love_array">
+    <string-array name="love_array" tools:ignore="InconsistentArrays">
         <item>Acceptance</item>
         <item>Admiration</item>
         <item>Affection</item>

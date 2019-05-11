@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import feelings.guide.R;
 
-public class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
-    private AnswerLogSwipeListener swipeListener;
-    private Drawable iconDelete;
-    private Drawable iconEdit;
+class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
+    private final AnswerLogSwipeListener swipeListener;
+    private final Drawable iconDelete;
+    private final Drawable iconEdit;
     private final ColorDrawable backgroundDelete;
     private final ColorDrawable backgroundEdit;
 
