@@ -10,6 +10,7 @@ android {
         versionCode 3
         versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -46,6 +47,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha05'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
     implementation 'com.google.android.material:material:1.1.0-alpha06'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
 
