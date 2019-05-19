@@ -3,23 +3,23 @@ package feelings.guide.ui.log;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import feelings.guide.R;
 
 class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
     private final AnswerLogSwipeListener swipeListener;
-    private final Drawable iconDelete;
-    private final Drawable iconEdit;
+    private final VectorDrawableCompat iconDelete;
+    private final VectorDrawableCompat iconEdit;
     private final ColorDrawable backgroundDelete;
     private final ColorDrawable backgroundEdit;
+    private static final int ICON_MARGIN = 64;
 
     interface AnswerLogSwipeListener {
         void onDeleteAnswer(int position);
@@ -29,14 +29,10 @@ class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
     AnswerLogSwipeCallback(Context context, AnswerLogSwipeListener listener) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.swipeListener = listener;
-        iconDelete = ContextCompat.getDrawable(context,
-                R.drawable.ic_delete_sweep_white_24dp);
-        iconEdit = ContextCompat.getDrawable(context,
-                R.drawable.ic_edit_white_24dp);
-        backgroundDelete = new ColorDrawable(ResourcesCompat.getColor(context.getResources(),
-                R.color.lightRed, null));
-        backgroundEdit = new ColorDrawable(ResourcesCompat.getColor(context.getResources(),
-                R.color.lightGreen, null));
+        iconDelete = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_delete_sweep_white_24dp, null);
+        iconEdit = VectorDrawableCompat.create(context.getResources(), R.drawable.ic_edit_white_24dp, null);
+        backgroundDelete = new ColorDrawable(ResourcesCompat.getColor(context.getResources(), R.color.lightRed, null));
+        backgroundEdit = new ColorDrawable(ResourcesCompat.getColor(context.getResources(), R.color.lightGreen, null));
     }
 
     @Override
@@ -71,7 +67,6 @@ class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
         } else if (dX < 0) {
             iconHeight = iconEdit.getIntrinsicHeight();
         }
-        int iconMargin = 120;
         int iconTop = itemView.getTop() + (itemView.getHeight() - iconHeight) / 2;
         int iconBottom = iconTop + iconHeight;
 
@@ -83,8 +78,8 @@ class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
                     itemView.getBottom());
             backgroundDelete.draw(c);
 
-            int iconLeft = itemView.getLeft() + iconMargin;
-            int iconRight = itemView.getLeft() + iconMargin + iconDelete.getIntrinsicWidth();
+            int iconLeft = itemView.getLeft() + ICON_MARGIN;
+            int iconRight = itemView.getLeft() + ICON_MARGIN + iconDelete.getIntrinsicWidth();
             iconDelete.setBounds(iconLeft, iconTop, iconRight, iconBottom);
             iconDelete.draw(c);
         } else if (dX < 0) { // Swiping to the left
@@ -95,8 +90,8 @@ class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
                     itemView.getBottom());
             backgroundEdit.draw(c);
 
-            int iconLeft = itemView.getRight() - iconMargin - iconEdit.getIntrinsicWidth();
-            int iconRight = itemView.getRight() - iconMargin;
+            int iconLeft = itemView.getRight() - ICON_MARGIN - iconEdit.getIntrinsicWidth();
+            int iconRight = itemView.getRight() - ICON_MARGIN;
             iconEdit.setBounds(iconLeft, iconTop, iconRight, iconBottom);
             iconEdit.draw(c);
         } else { // view is unSwiped

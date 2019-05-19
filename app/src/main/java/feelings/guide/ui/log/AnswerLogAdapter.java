@@ -55,7 +55,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
     @NonNull
     public AnswerLogHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         int itemViewId = isFull
-                ? R.layout.full_answer_log_item
+                ? R.layout.answer_log_full_item
                 : R.layout.answer_log_by_question_item;
         View view = LayoutInflater.from(activity).inflate(itemViewId, parent, false);
         return new AnswerLogHolder(view);

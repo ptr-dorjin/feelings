@@ -53,7 +53,7 @@ public class AnswerLogActivity extends BaseActivity implements
         isFull = questionId == DEFAULT_QUESTION_ID;
 
         setContentView(isFull
-                ? R.layout.full_answer_log_activity
+                ? R.layout.answer_log_full_activity
                 : R.layout.answer_log_by_question_activity);
 
         recyclerView = findViewById(R.id.answer_log_recycler_view);
