@@ -20,12 +20,8 @@ import java.util.stream.IntStream;
 
 import feelings.guide.question.Question;
 import feelings.guide.question.QuestionService;
-import feelings.guide.util.DateTimeUtil;
 
 import static com.google.common.truth.Truth.assertThat;
-import static feelings.guide.answer.AnswerContract.COLUMN_ANSWER;
-import static feelings.guide.answer.AnswerContract.COLUMN_DATE_TIME;
-import static feelings.guide.answer.AnswerContract.COLUMN_QUESTION_ID;
 
 @RunWith(AndroidJUnit4.class)
 public class AnswerStoreTest {
@@ -222,12 +218,7 @@ public class AnswerStoreTest {
         try {
             List<Answer> list = new ArrayList<>();
             while (cursor.moveToNext()) {
-                long questionId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_QUESTION_ID));
-                LocalDateTime dateTime = LocalDateTime.parse(
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
-                        DateTimeUtil.DB_FORMATTER);
-                String answerText = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ANSWER));
-                list.add(new Answer(questionId, dateTime, answerText));
+                list.add(AnswerStore.mapFromCursor(cursor));
             }
             return list;
         } finally {

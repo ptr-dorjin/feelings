@@ -71,7 +71,7 @@ class AnswerLogSwipeCallback extends ItemTouchHelper.SimpleCallback {
         } else if (dX < 0) {
             iconHeight = iconEdit.getIntrinsicHeight();
         }
-        int iconMargin = (itemView.getHeight() - iconHeight) / 2;
+        int iconMargin = 120;
         int iconTop = itemView.getTop() + (itemView.getHeight() - iconHeight) / 2;
         int iconBottom = iconTop + iconHeight;
 

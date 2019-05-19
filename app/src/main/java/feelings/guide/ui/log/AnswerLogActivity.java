@@ -27,7 +27,10 @@ import feelings.guide.ui.question.QuestionClearLogDialogFragment;
 import feelings.guide.util.ToastUtil;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
-import static feelings.guide.ui.answer.AnswerActivity.ANSWER_ID_PARAM;
+import static feelings.guide.FeelingsApplication.REFRESH_ANSWER_LOG_RESULT_KEY;
+import static feelings.guide.FeelingsApplication.UPDATED_ANSWER_ID_RESULT_KEY;
+import static feelings.guide.FeelingsApplication.UPDATE_ANSWER_REQUEST_CODE;
+import static feelings.guide.FeelingsApplication.ANSWER_ID_PARAM;
 
 public class AnswerLogActivity extends BaseActivity implements
         ClearLogFullDialogFragment.ClearLogFullDialogListener,
@@ -36,8 +39,6 @@ public class AnswerLogActivity extends BaseActivity implements
         AnswerLogSwipeCallback.AnswerLogSwipeListener {
 
     private static final long DEFAULT_QUESTION_ID = -1;
-    public static final String REFRESH_ANSWER_LOG_KEY = "should-refresh-answer-log";
-    private static final int UPDATE_ANSWER_REQUEST_CODE = 101;
     private long questionId;
     private boolean isFull;
     private RecyclerView recyclerView;
@@ -179,6 +180,7 @@ public class AnswerLogActivity extends BaseActivity implements
 
     private void undoDelete() {
         AnswerStore.saveAnswer(this, lastDeleted);
+        //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
         adapter.refresh();
     }
 
@@ -195,11 +197,26 @@ public class AnswerLogActivity extends BaseActivity implements
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UPDATE_ANSWER_REQUEST_CODE && resultCode == RESULT_OK) {
-            boolean refresh = data != null && data.getBooleanExtra(REFRESH_ANSWER_LOG_KEY, false);
-            if (refresh) {
-                adapter.refresh();
-                //redraw recyclerView
-                recyclerView.setAdapter(adapter);
+            onEditAnswerResult(data);
+        }
+    }
+
+    private void onEditAnswerResult(@Nullable Intent data) {
+        boolean refresh = data != null && data.getBooleanExtra(REFRESH_ANSWER_LOG_RESULT_KEY, false);
+        if (refresh) {
+            //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
+            adapter.refresh();
+
+            //redraw recyclerView
+            recyclerView.setAdapter(adapter);
+
+            //scroll to updated answer
+            long answerId = data.getLongExtra(UPDATED_ANSWER_ID_RESULT_KEY, -1);
+            if (answerId > 0) {
+                int position = adapter.getPositionById(answerId);
+                if (position > -1) {
+                    recyclerView.scrollToPosition(position);
+                }
             }
         }
     }

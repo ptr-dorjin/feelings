@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,15 +28,15 @@ import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.Question;
 import feelings.guide.question.QuestionService;
 import feelings.guide.ui.BaseActivity;
-import feelings.guide.ui.log.AnswerLogActivity;
 import feelings.guide.util.ToastUtil;
 
+import static feelings.guide.FeelingsApplication.ANSWER_ID_PARAM;
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
+import static feelings.guide.FeelingsApplication.REFRESH_ANSWER_LOG_RESULT_KEY;
+import static feelings.guide.FeelingsApplication.UPDATED_ANSWER_ID_RESULT_KEY;
 import static java.util.Arrays.asList;
 
 public class AnswerActivity extends BaseActivity {
-
-    public static final String ANSWER_ID_PARAM = "answer_id";
 
     private long questionId;
     private Answer answer;
@@ -62,6 +63,7 @@ public class AnswerActivity extends BaseActivity {
     private void setUpQuestionText(Question question) {
         TextView questionText = findViewById(R.id.question_text_on_answer);
         questionText.setText(question.getText());
+        questionText.setMovementMethod(new ScrollingMovementMethod());
     }
 
     private void setUpQuestionDescription(Question question) {
@@ -158,7 +160,8 @@ public class AnswerActivity extends BaseActivity {
                     ? R.string.msg_answer_added_success
                     : R.string.msg_answer_updated_success));
             Intent data = new Intent();
-            data.putExtra(AnswerLogActivity.REFRESH_ANSWER_LOG_KEY, true);
+            data.putExtra(REFRESH_ANSWER_LOG_RESULT_KEY, true);
+            data.putExtra(UPDATED_ANSWER_ID_RESULT_KEY, answer.getId());
             setResult(RESULT_OK, data);
             finish();
         } else {

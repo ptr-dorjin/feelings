@@ -1,13 +1,13 @@
 package feelings.guide.ui.log;
 
 import android.database.Cursor;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import feelings.guide.R;
 import feelings.guide.answer.Answer;
@@ -17,6 +17,7 @@ import feelings.guide.ui.BaseActivity;
 import feelings.guide.ui.RecyclerViewCursorAdapter;
 import feelings.guide.util.DateTimeUtil;
 
+import static android.provider.BaseColumns._ID;
 import static org.threeten.bp.format.DateTimeFormatter.ofPattern;
 
 /**
@@ -83,5 +84,15 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
         Cursor cursor = getCursor();
         cursor.moveToPosition(position);
         return AnswerStore.mapFromCursor(cursor);
+    }
+
+    int getPositionById(long answerId) {
+        Cursor cursor = getCursor();
+        while (cursor.moveToNext()) {
+            if (answerId == cursor.getLong(cursor.getColumnIndexOrThrow(_ID))) {
+                return cursor.getPosition();
+            }
+        }
+        return -1;
     }
 }

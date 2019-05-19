@@ -3,17 +3,6 @@ package feelings.guide.ui.question;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -25,6 +14,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import feelings.guide.R;
 import feelings.guide.answer.AnswerStore;
 import feelings.guide.question.Question;
@@ -35,6 +34,8 @@ import feelings.guide.ui.settings.SettingsActivity;
 import feelings.guide.util.ToastUtil;
 
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
+import static feelings.guide.FeelingsApplication.REFRESH_QUESTIONS_RESULT_KEY;
+import static feelings.guide.FeelingsApplication.SETTINGS_REQUEST_CODE;
 import static feelings.guide.question.QuestionService.FEELINGS_ID;
 
 public class QuestionsActivity extends BaseActivity implements
@@ -44,8 +45,6 @@ public class QuestionsActivity extends BaseActivity implements
         QuestionClearLogDialogFragment.QuestionClearLogDialogListener {
 
     private static final String TAG = QuestionsActivity.class.getSimpleName();
-    public static final String REFRESH_QUESTIONS_KEY = "should-refresh-questions";
-    private static final int SETTINGS_REQUEST_CODE = 777;
 
     private QuestionsAdapter adapter;
     private FloatingActionButton fab;
@@ -212,7 +211,7 @@ public class QuestionsActivity extends BaseActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SETTINGS_REQUEST_CODE && resultCode == RESULT_OK) {
-            boolean refresh = data.getBooleanExtra(REFRESH_QUESTIONS_KEY, false);
+            boolean refresh = data.getBooleanExtra(REFRESH_QUESTIONS_RESULT_KEY, false);
             if (refresh) {
                 adapter.refreshAll();
             }

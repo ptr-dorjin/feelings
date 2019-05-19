@@ -10,10 +10,10 @@ import androidx.appcompat.app.AlertDialog;
 
 import feelings.guide.R;
 import feelings.guide.question.QuestionService;
-import feelings.guide.ui.question.QuestionsActivity;
 import feelings.guide.util.ToastUtil;
 
 import static android.app.Activity.RESULT_OK;
+import static feelings.guide.FeelingsApplication.REFRESH_QUESTIONS_RESULT_KEY;
 
 public class SettingsFragment extends PreferenceFragment {
 
@@ -64,7 +64,7 @@ public class SettingsFragment extends PreferenceFragment {
                         QuestionService.restoreHidden(activity);
                         ToastUtil.showShort(activity, getString(R.string.msg_restore_built_in_questions_success));
                         Intent data = new Intent();
-                        data.putExtra(QuestionsActivity.REFRESH_QUESTIONS_KEY, true);
+                        data.putExtra(REFRESH_QUESTIONS_RESULT_KEY, true);
                         activity.setResult(RESULT_OK, data);
                     })
                     .setNegativeButton(R.string.btn_cancel, (dialog, id) -> dialog.dismiss()).create()

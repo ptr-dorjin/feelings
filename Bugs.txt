@@ -1,1 +1,0 @@
-1. After restoring built-in questions visibility, and getting back by action bar, question list is not being refreshed.

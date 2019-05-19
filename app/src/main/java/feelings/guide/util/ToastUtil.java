@@ -7,11 +7,15 @@ import android.widget.Toast;
 public class ToastUtil {
 
     public static void showLong(final Context context, final String message) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.show();
     }
 
     public static void showShort(Context context, String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.show();
     }
 
     /**

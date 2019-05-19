@@ -28,6 +28,7 @@
             android:parentActivityName=".ui.question.QuestionsActivity"
             android:label="@string/title_answer_activity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
