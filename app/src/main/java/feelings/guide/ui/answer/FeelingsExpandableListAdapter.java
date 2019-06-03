@@ -29,7 +29,7 @@ class FeelingsExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.feelings_group, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.answer_feelings_group, parent, false);
         }
 
         TextView labelFeelingsGroup = convertView.findViewById(R.id.label_feelings_group);
@@ -58,7 +58,7 @@ class FeelingsExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.feeling_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.answer_feeling_item, parent, false);
         }
 
         TextView labelFeeling = convertView.findViewById(R.id.label_feeling_item);
