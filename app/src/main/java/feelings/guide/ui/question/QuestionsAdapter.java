@@ -19,8 +19,8 @@ import feelings.guide.ui.answer.AnswerActivity;
 
 import static android.provider.BaseColumns._ID;
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
-import static feelings.guide.question.QuestionContract.COLUMN_IS_USER;
-import static feelings.guide.question.QuestionContract.COLUMN_TEXT;
+import static feelings.guide.question.QuestionContractKt.COLUMN_IS_USER;
+import static feelings.guide.question.QuestionContractKt.COLUMN_TEXT;
 
 class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.QuestionViewHolder> {
 
@@ -65,6 +65,6 @@ class QuestionsAdapter extends RecyclerViewCursorAdapter<QuestionsAdapter.Questi
     }
 
     void refreshAll() {
-        swapCursor(QuestionService.getAllQuestions(activity));
+        swapCursor(QuestionService.INSTANCE.getAllQuestions(activity));
     }
 }

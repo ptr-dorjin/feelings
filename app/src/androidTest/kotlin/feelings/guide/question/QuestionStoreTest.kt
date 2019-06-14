@@ -7,18 +7,17 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import feelings.guide.db.DbHelper
-import feelings.guide.question.QuestionContract.*
 import org.junit.*
 import org.junit.runner.RunWith
 import java.util.*
 
+private const val TO_BE_OR_NOT_TO_BE = "To be or not to be?"
+private const val WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING = "Would you like to understand nothing?"
+private const val SOME_BUILT_IN_QUESTION = "Some built-in question"
+private const val TEST_BUILT_IN_QUESTION_CODE = "test_code"
+
 @RunWith(AndroidJUnit4::class)
 class QuestionStoreTest {
-    private val toBeOrNotToBe = "To be or not to be?"
-    private val wouldYouLikeToUnderstandNothing = "Would you like to understand nothing?"
-    private val someBuiltInQuestion = "Some built-in question"
-    private val testBuiltInQuestionCode = "test_code"
-
     private lateinit var context: Context
 
     private var questionId: Long = 0
@@ -45,7 +44,7 @@ class QuestionStoreTest {
     @Test
     fun shouldGetById() {
         // given
-        questionId = QuestionStore.createQuestion(context, Question(toBeOrNotToBe))
+        questionId = QuestionStore.createQuestion(context, Question(TO_BE_OR_NOT_TO_BE))
 
         // when
         val fromDB = QuestionStore.getById(context, questionId)
@@ -59,8 +58,8 @@ class QuestionStoreTest {
     @Test
     fun shouldCreate() {
         // when
-        questionId = QuestionStore.createQuestion(context, Question(toBeOrNotToBe))
-        questionId2 = QuestionStore.createQuestion(context, Question(wouldYouLikeToUnderstandNothing))
+        questionId = QuestionStore.createQuestion(context, Question(TO_BE_OR_NOT_TO_BE))
+        questionId2 = QuestionStore.createQuestion(context, Question(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING))
 
         // then
         assertThat(questionId).isNotEqualTo(-1)
@@ -71,10 +70,10 @@ class QuestionStoreTest {
     @Test
     fun shouldUpdate() {
         // given
-        val question = Question(toBeOrNotToBe)
+        val question = Question(TO_BE_OR_NOT_TO_BE)
         questionId = QuestionStore.createQuestion(context, question)
         question.id = questionId
-        question.text = wouldYouLikeToUnderstandNothing
+        question.text = WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING
 
         // when
         val updated = QuestionStore.updateQuestion(context, question)
@@ -83,13 +82,13 @@ class QuestionStoreTest {
         assertThat(updated).isTrue()
         val fromDB = QuestionStore.getById(context, questionId)
         assertThat(fromDB).isNotNull()
-        assertThat(fromDB!!.text).isEqualTo(wouldYouLikeToUnderstandNothing)
+        assertThat(fromDB!!.text).isEqualTo(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING)
     }
 
     @Test
     fun shouldDelete() {
         // given
-        questionId = QuestionStore.createQuestion(context, Question(toBeOrNotToBe))
+        questionId = QuestionStore.createQuestion(context, Question(TO_BE_OR_NOT_TO_BE))
 
         // when
         val deleted = QuestionStore.deleteQuestion(context, questionId)
@@ -105,8 +104,8 @@ class QuestionStoreTest {
     fun shouldHideBuiltInQuestion() {
         // given
         val builtInQuestion = Question()
-        builtInQuestion.code = testBuiltInQuestionCode
-        builtInQuestion.text = someBuiltInQuestion
+        builtInQuestion.code = TEST_BUILT_IN_QUESTION_CODE
+        builtInQuestion.text = SOME_BUILT_IN_QUESTION
         questionId = createBuiltInQuestion(builtInQuestion)
 
         // when
@@ -122,14 +121,14 @@ class QuestionStoreTest {
     @Test
     fun shouldGetAll() {
         // given
-        questionId = QuestionStore.createQuestion(context, Question(toBeOrNotToBe))
+        questionId = QuestionStore.createQuestion(context, Question(TO_BE_OR_NOT_TO_BE))
 
-        questionId2 = QuestionStore.createQuestion(context, Question(wouldYouLikeToUnderstandNothing))
+        questionId2 = QuestionStore.createQuestion(context, Question(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING))
         QuestionStore.deleteQuestion(context, questionId2)
 
         val builtInQuestion = Question()
-        builtInQuestion.code = testBuiltInQuestionCode
-        builtInQuestion.text = someBuiltInQuestion
+        builtInQuestion.code = TEST_BUILT_IN_QUESTION_CODE
+        builtInQuestion.text = SOME_BUILT_IN_QUESTION
         questionId3 = createBuiltInQuestion(builtInQuestion)
         QuestionStore.hideQuestion(context, questionId3)
 
@@ -179,7 +178,7 @@ class QuestionStoreTest {
     private fun deleteBuiltInQuestion() {
         DbHelper.getInstance(context).writableDatabase.use { db ->
             val selection = "$COLUMN_CODE = ?"
-            val selectionArgs = arrayOf(testBuiltInQuestionCode)
+            val selectionArgs = arrayOf(TEST_BUILT_IN_QUESTION_CODE)
             db.delete(QUESTION_TABLE, selection, selectionArgs)
         }
     }

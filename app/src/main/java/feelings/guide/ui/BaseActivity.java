@@ -20,7 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleUtil.setLocale(base));
+        super.attachBaseContext(LocaleUtil.INSTANCE.setLocale(base));
     }
 
     private void resetTitle() {

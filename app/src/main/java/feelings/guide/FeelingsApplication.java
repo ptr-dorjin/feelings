@@ -26,13 +26,13 @@ public class FeelingsApplication extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleUtil.setLocale(base));
+        super.attachBaseContext(LocaleUtil.INSTANCE.setLocale(base));
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        LocaleUtil.setLocale(this);
+        LocaleUtil.INSTANCE.setLocale(this);
     }
 }
 

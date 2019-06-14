@@ -85,7 +85,7 @@ public class AnswerLogActivity extends BaseActivity implements
     private void fillQuestionText() {
         if (!isFull) {
             TextView questionText = findViewById(R.id.question_text_on_answer_log);
-            questionText.setText(QuestionService.getQuestionText(this, questionId));
+            questionText.setText(QuestionService.INSTANCE.getQuestionText(this, questionId));
         }
     }
 
@@ -143,29 +143,29 @@ public class AnswerLogActivity extends BaseActivity implements
 
     @Override
     public void onClearLogFullConfirmed() {
-        AnswerStore.deleteAll(this);
-        ToastUtil.showShort(this, getString(R.string.msg_clear_log_full_success));
+        AnswerStore.INSTANCE.deleteAll(this);
+        ToastUtil.INSTANCE.showShort(this, getString(R.string.msg_clear_log_full_success));
         adapter.refresh();
     }
 
     @Override
     public void onClearLogDeletedConfirmed() {
-        AnswerStore.deleteForDeletedQuestions(this);
-        ToastUtil.showShort(this, getString(R.string.msg_clear_log_deleted_success));
+        AnswerStore.INSTANCE.deleteForDeletedQuestions(this);
+        ToastUtil.INSTANCE.showShort(this, getString(R.string.msg_clear_log_deleted_success));
         adapter.refresh();
     }
 
     @Override
     public void onClearLogByQuestionConfirmed() {
-        AnswerStore.deleteByQuestionId(this, questionId);
-        ToastUtil.showShort(this, getString(R.string.msg_clear_log_by_question_success));
+        AnswerStore.INSTANCE.deleteByQuestionId(this, questionId);
+        ToastUtil.INSTANCE.showShort(this, getString(R.string.msg_clear_log_by_question_success));
         adapter.refresh();
     }
 
     @Override
     public void onDeleteAnswer(int position) {
         lastDeleted = adapter.getByPosition(position);
-        AnswerStore.deleteById(this, lastDeleted.getId());
+        AnswerStore.INSTANCE.deleteById(this, lastDeleted.getId());
         //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
         adapter.refresh();
         showUndoDeleteSnackbar();
@@ -179,7 +179,7 @@ public class AnswerLogActivity extends BaseActivity implements
     }
 
     private void undoDelete() {
-        AnswerStore.saveAnswer(this, lastDeleted);
+        AnswerStore.INSTANCE.saveAnswer(this, lastDeleted);
         //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
         adapter.refresh();
     }

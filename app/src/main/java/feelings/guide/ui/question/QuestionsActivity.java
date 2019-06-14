@@ -36,7 +36,6 @@ import feelings.guide.util.ToastUtil;
 import static feelings.guide.FeelingsApplication.QUESTION_ID_PARAM;
 import static feelings.guide.FeelingsApplication.REFRESH_QUESTIONS_RESULT_KEY;
 import static feelings.guide.FeelingsApplication.SETTINGS_REQUEST_CODE;
-import static feelings.guide.question.QuestionService.FEELINGS_ID;
 
 public class QuestionsActivity extends BaseActivity implements
         QuestionEditDialogFragment.QuestionEditDialogListener,
@@ -109,7 +108,7 @@ public class QuestionsActivity extends BaseActivity implements
         final boolean isUser = (boolean) v.getTag(R.id.tag_is_user);
         popup.inflate(isUser
                 ? R.menu.questions_popup_menu_user
-                : questionId == FEELINGS_ID
+                : questionId == QuestionService.FEELINGS_ID
                 ? R.menu.questions_popup_menu_feelings
                 : R.menu.questions_popup_menu_built_in);
         popup.setOnMenuItemClickListener(item -> {
@@ -156,7 +155,7 @@ public class QuestionsActivity extends BaseActivity implements
         final Button saveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
 
         if (questionId != null) {
-            questionEditText.setText(QuestionService.getQuestionText(this, questionId));
+            questionEditText.setText(QuestionService.INSTANCE.getQuestionText(this, questionId));
         } else {
             saveButton.setEnabled(false);
         }
@@ -228,16 +227,16 @@ public class QuestionsActivity extends BaseActivity implements
         EditText questionEditText = dialog.findViewById(R.id.question_text_edit);
         String text = questionEditText.getText().toString().trim();
         if (text.isEmpty()) {
-            ToastUtil.showLong(this, getString(R.string.msg_question_text_empty));
+            ToastUtil.INSTANCE.showLong(this, getString(R.string.msg_question_text_empty));
             return;
         }
 
         if (changeQuestionId == null) {
-            performServiceAction(QuestionService.createQuestion(this, new Question(text)) != -1,
+            performServiceAction(QuestionService.INSTANCE.createQuestion(this, new Question(text)) != -1,
                     R.string.msg_question_create_success,
                     R.string.msg_question_create_error);
         } else {
-            performServiceAction(QuestionService.updateQuestion(this, new Question(changeQuestionId, text)),
+            performServiceAction(QuestionService.INSTANCE.updateQuestion(this, new Question(changeQuestionId, text)),
                     R.string.msg_question_edit_success,
                     R.string.msg_question_edit_error);
         }
@@ -246,12 +245,12 @@ public class QuestionsActivity extends BaseActivity implements
 
     @Override
     public void onDeleteConfirmed() {
-        performServiceAction(QuestionService.deleteQuestion(this, changeQuestionId),
+        performServiceAction(QuestionService.INSTANCE.deleteQuestion(this, changeQuestionId),
                 R.string.msg_question_delete_success,
                 R.string.msg_question_delete_error);
         adapter.refreshAll();
         // also clear the log
-        if (QuestionService.hasAnswers(this, changeQuestionId)) {
+        if (QuestionService.INSTANCE.hasAnswers(this, changeQuestionId)) {
             DialogFragment dialogFragment = new QuestionClearLogDialogFragment();
             dialogFragment.show(getSupportFragmentManager(), QuestionClearLogDialogFragment.class.getSimpleName());
         }
@@ -259,7 +258,7 @@ public class QuestionsActivity extends BaseActivity implements
 
     @Override
     public void onHideConfirmed() {
-        performServiceAction(QuestionService.hideQuestion(this, changeQuestionId),
+        performServiceAction(QuestionService.INSTANCE.hideQuestion(this, changeQuestionId),
                 R.string.msg_question_hide_success,
                 R.string.msg_question_hide_error);
         adapter.refreshAll();
@@ -267,15 +266,15 @@ public class QuestionsActivity extends BaseActivity implements
 
     @Override
     public void onClearLogByQuestionConfirmed() {
-        AnswerStore.deleteByQuestionId(this, changeQuestionId);
-        ToastUtil.showShort(this, getString(R.string.msg_clear_log_by_question_success));
+        AnswerStore.INSTANCE.deleteByQuestionId(this, changeQuestionId);
+        ToastUtil.INSTANCE.showShort(this, getString(R.string.msg_clear_log_by_question_success));
     }
 
     private void performServiceAction(boolean success, int successMessageId, int errorMessageId) {
         if (success) {
-            ToastUtil.showShort(this, getString(successMessageId));
+            ToastUtil.INSTANCE.showShort(this, getString(successMessageId));
         } else {
-            ToastUtil.showLong(this, getString(errorMessageId));
+            ToastUtil.INSTANCE.showLong(this, getString(errorMessageId));
         }
     }
 }

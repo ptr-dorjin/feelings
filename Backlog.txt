@@ -1,5 +1,9 @@
 Version 2.1.0
 0. Migrate to AndroidX +
 1. Embed Material Design +
-2. Edit an answer
+2. Edit an answer +
 3. Delete an answer +
+
+- test upgrade from 1.0.0 (1)
+- test upgrade from 1.1.0 (3)
+- test upgrade from 2.0.0 (806)

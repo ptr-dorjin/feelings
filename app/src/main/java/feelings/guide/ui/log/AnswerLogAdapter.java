@@ -47,7 +47,7 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
         super(activity);
         this.isFull = isFull;
         this.questionId = questionId;
-        this.dateTimeFormat = DateTimeUtil.getDateTimeFormat(activity);
+        this.dateTimeFormat = DateTimeUtil.INSTANCE.getDateTimeFormat(activity);
         refresh();
     }
 
@@ -63,27 +63,25 @@ class AnswerLogAdapter extends RecyclerViewCursorAdapter<AnswerLogAdapter.Answer
 
     @Override
     protected void onBindViewHolder(AnswerLogHolder holder, Cursor cursor) {
-        Answer answer = AnswerStore.mapFromCursor(cursor);
+        Answer answer = AnswerStore.INSTANCE.mapFromCursor(cursor);
 
         holder.dateTimeView.setText(answer.getDateTime().format(ofPattern(dateTimeFormat)));
         if (holder.questionView != null) {
             //in case of full log
-            holder.questionView.setText(QuestionService.getQuestionText(activity, answer.getQuestionId()));
+            holder.questionView.setText(QuestionService.INSTANCE.getQuestionText(activity, answer.getQuestionId()));
         }
         holder.answerView.setText(answer.getAnswerText());
     }
 
     void refresh() {
-        Cursor cursor = isFull
-                ? AnswerStore.getAll(activity)
-                : AnswerStore.getByQuestionId(activity, questionId);
+        Cursor cursor = AnswerStore.INSTANCE.getAnswers(activity, isFull ? -1 : questionId);
         swapCursor(cursor);
     }
 
     Answer getByPosition(int position) {
         Cursor cursor = getCursor();
         cursor.moveToPosition(position);
-        return AnswerStore.mapFromCursor(cursor);
+        return AnswerStore.INSTANCE.mapFromCursor(cursor);
     }
 
     int getPositionById(long answerId) {

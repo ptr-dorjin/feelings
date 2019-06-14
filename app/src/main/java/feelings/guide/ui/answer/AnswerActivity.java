@@ -49,10 +49,15 @@ public class AnswerActivity extends BaseActivity {
 
         Intent intent = getIntent();
         questionId = intent != null ? intent.getLongExtra(QUESTION_ID_PARAM, -1) : -1;
-        Question question = QuestionService.getById(this, questionId);
+        Question question = QuestionService.INSTANCE.getById(this, questionId);
 
         long answerId = intent != null ? intent.getLongExtra(ANSWER_ID_PARAM, -1) : -1;
-        answer = answerId == -1 ? null : AnswerStore.getById(this, answerId);
+        answer = answerId == -1 ? null : AnswerStore.INSTANCE.getById(this, answerId);
+
+        if (question == null) {
+            ToastUtil.INSTANCE.showLong(this, "Error: cannot find question");
+            return;
+        }
 
         setUpQuestionText(question);
         setUpQuestionDescription(question);
@@ -149,14 +154,14 @@ public class AnswerActivity extends BaseActivity {
         boolean saved;
         if (isNew) {
             answer = new Answer(questionId, LocalDateTime.now(), text);
-            saved = AnswerStore.saveAnswer(this, answer);
+            saved = AnswerStore.INSTANCE.saveAnswer(this, answer);
         } else {
             answer.setAnswerText(text);
-            saved = AnswerStore.updateAnswer(this, answer);
+            saved = AnswerStore.INSTANCE.updateAnswer(this, answer);
         }
 
         if (saved) {
-            ToastUtil.showShort(this, getString(isNew
+            ToastUtil.INSTANCE.showShort(this, getString(isNew
                     ? R.string.msg_answer_added_success
                     : R.string.msg_answer_updated_success));
             Intent data = new Intent();
@@ -165,7 +170,7 @@ public class AnswerActivity extends BaseActivity {
             setResult(RESULT_OK, data);
             finish();
         } else {
-            ToastUtil.showLong(this, getString(isNew
+            ToastUtil.INSTANCE.showLong(this, getString(isNew
                     ? R.string.msg_answer_added_error
                     : R.string.msg_answer_updated_error));
         }
@@ -177,7 +182,7 @@ public class AnswerActivity extends BaseActivity {
      */
     private boolean isInvalid() {
         if (answerText.getText().toString().trim().isEmpty()) {
-            ToastUtil.showShortTop(this, getString(R.string.msg_answer_text_empty));
+            ToastUtil.INSTANCE.showShortTop(this, getString(R.string.msg_answer_text_empty));
             return true;
         }
         return false;

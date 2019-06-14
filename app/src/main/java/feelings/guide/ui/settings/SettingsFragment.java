@@ -37,7 +37,7 @@ public class SettingsFragment extends PreferenceFragment {
         dateFormatPreference.setOnPreferenceChangeListener((preference, newValue) -> {
             Activity activity = getActivity();
             if (activity != null) {
-                ToastUtil.showShort(activity, getString(R.string.msg_date_format_success));
+                ToastUtil.INSTANCE.showShort(activity, getString(R.string.msg_date_format_success));
             }
             return true;
         });
@@ -48,7 +48,7 @@ public class SettingsFragment extends PreferenceFragment {
         dateFormatPreference.setOnPreferenceChangeListener((preference, newValue) -> {
             Activity activity = getActivity();
             if (activity != null) {
-                ToastUtil.showShort(activity, getString(R.string.msg_time_format_success));
+                ToastUtil.INSTANCE.showShort(activity, getString(R.string.msg_time_format_success));
             }
             return true;
         });
@@ -61,8 +61,8 @@ public class SettingsFragment extends PreferenceFragment {
             new AlertDialog.Builder(activity)
                     .setMessage(R.string.title_confirm_restore_built_in_questions_dialog)
                     .setPositiveButton(R.string.btn_restore, (dialog, id) -> {
-                        QuestionService.restoreHidden(activity);
-                        ToastUtil.showShort(activity, getString(R.string.msg_restore_built_in_questions_success));
+                        QuestionService.INSTANCE.restoreHidden(activity);
+                        ToastUtil.INSTANCE.showShort(activity, getString(R.string.msg_restore_built_in_questions_success));
                         Intent data = new Intent();
                         data.putExtra(REFRESH_QUESTIONS_RESULT_KEY, true);
                         activity.setResult(RESULT_OK, data);
