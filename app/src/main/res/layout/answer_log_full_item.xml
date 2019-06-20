@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/answer_log_date_time"
+        android:id="@+id/answerLogDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/answer_log_question"
+        android:id="@+id/answerLogQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -25,10 +25,10 @@
         android:textIsSelectable="true"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answer_log_date_time" />
+        app:layout_constraintTop_toBottomOf="@+id/answerLogDateTime" />
 
     <TextView
-        android:id="@+id/answer_log_answer"
+        android:id="@+id/answerLogAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -39,5 +39,5 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answer_log_question" />
+        app:layout_constraintTop_toBottomOf="@+id/answerLogQuestion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

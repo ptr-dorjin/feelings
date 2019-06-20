@@ -4,6 +4,8 @@
     <string name="title_settings_activity">Настройки</string>
 
     <string name="title_settings_category_interface">Интерфейс</string>
+    <string name="title_settings_category_log">Журнал</string>
+    <string name="title_settings_category_builtin_questions">Встроенные вопросы</string>
     <string name="title_settings_language">Язык</string>
     <string name="title_settings_restore_built_in_questions">Восстановить встроенные вопросы</string>
     <string name="title_settings_date_format">Формат даты</string>

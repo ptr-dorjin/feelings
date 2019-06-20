@@ -30,6 +30,8 @@
     <string name="title_settings_activity">Settings</string>
 
     <string name="title_settings_category_interface">Interface</string>
+    <string name="title_settings_category_log">Log</string>
+    <string name="title_settings_category_builtin_questions">Built-in questions</string>
     <string name="title_settings_language">Language</string>
     <string name="title_settings_restore_built_in_questions">Restore built-in questions</string>
     <string name="title_settings_date_format">Date format</string>

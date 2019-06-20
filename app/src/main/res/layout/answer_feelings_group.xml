@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/label_feelings_group"
+        android:id="@+id/labelFeelingsGroup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"

@@ -38,18 +38,20 @@ android {
 }
 
 dependencies {
-    api("androidx.core:core-ktx:1.2.0-alpha01")
+    api("androidx.core:core-ktx:1.2.0-alpha02")
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     //Kotlin standard library
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
+    implementation("androidx.core:core-ktx:1.0.2")
+    implementation("androidx.preference:preference-ktx:1.1.0-beta01")
     implementation("androidx.appcompat:appcompat:1.1.0-beta01")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.1.0-alpha06")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta1")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta2")
     implementation("androidx.vectordrawable:vectordrawable:1.0.1")
     implementation("com.google.android.material:material:1.1.0-alpha07")
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.0") //todo delete?
+    implementation("com.jakewharton.threetenabp:threetenabp:1.2.0") //needed due to minSdkVersion=15
 
     testImplementation(kotlin("test", KotlinCompilerVersion.VERSION))
     testImplementation(kotlin("test-junit", KotlinCompilerVersion.VERSION))

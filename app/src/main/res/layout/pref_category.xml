@@ -12,7 +12,7 @@
         tools:ignore="UselessParent">
 
         <View
-            android:id="@+id/left_line"
+            android:id="@+id/leftLine"
             android:layout_width="16dp"
             android:layout_height="1dp"
             android:layout_marginTop="22dp"
@@ -28,8 +28,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="8dp"
-            android:layout_toEndOf="@id/left_line"
-            android:layout_toRightOf="@id/left_line"
+            android:layout_toEndOf="@id/leftLine"
+            android:layout_toRightOf="@id/leftLine"
             android:gravity="center_vertical"
             android:textColor="@color/primary"
             android:textSize="18sp"

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/question_text_on_answer"
+        android:id="@+id/questionTextOnAnswer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
@@ -17,7 +17,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/question_description_on_answer"
+        android:id="@+id/questionDescriptionOnAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:focusable="true"
@@ -26,7 +26,7 @@
         android:visibility="gone" />
 
     <EditText
-        android:id="@+id/answer_text"
+        android:id="@+id/answerText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_answer_text"
@@ -39,7 +39,7 @@
         tools:ignore="Autofill" />
 
     <ExpandableListView
-        android:id="@+id/feelings_list_view"
+        android:id="@+id/feelingsListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
