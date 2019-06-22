@@ -1,0 +1,14 @@
+UI test case
+
+Run for any question
+
+I. Test date and time format is changed
+- Answer a question
+- Go to Settings and change date and time format
+- Go to full log
+    - Check the timestamp format is updated
+- Go to question log
+    - Check the timestamp format is updated
+- Restart the app
+- Go to Settings
+    - Check that date and time format are saved

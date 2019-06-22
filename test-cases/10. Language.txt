@@ -1,0 +1,10 @@
+UI test case
+
+I. Test change language
+- Go to Settings and change language
+    - Check the message that restart is required
+- Restart the app
+    - Check that menu is in the selected lang
+    - Check questions are in the selected lang
+- Go to Settings
+    - Check that language is saved

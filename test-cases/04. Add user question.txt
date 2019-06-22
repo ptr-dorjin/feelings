@@ -1,0 +1,27 @@
+UI test case
+
+Run for user question
+
+I. Test question is added
+- Tap + sign
+    - Check popup appears
+    - Check Save button is disabled
+- Enter text
+- Tap Save
+    - Check the question appears in question list
+
+II. Test empty question text validation
+- Tap + sign
+- Enter 1 space
+- Tap Save
+    - Check validation message is displayed and the question is not saved
+
+III. Test add question popup is not closed when tap outside
+- Tap + sign
+- Tap outside
+    - Check the popup is not closed
+
+IV. Test add question popup is not closed when Back is pressed
+- Tap + sign
+- Press Back button
+    - Check the popup is not closed

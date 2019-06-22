@@ -1,0 +1,30 @@
+UI test case
+
+Run for user question
+
+I. Test edit question
+- Answer to user question
+- Edit question text
+    - Check the question text is updated in question list
+- Answer to user question
+    - Check the question text is updated on answer screen
+- Go to question log
+    - Check the question text is updated
+- Go to full log
+    - Check the question text is updated
+
+II. Test edit question cancelled
+- Edit question text but then tap Cancel
+    - Check the question text is not updated
+
+III. Test edit question popup is not closed when tap outside
+- Open edit question text
+- Tap outside
+    - Check the popup is not closed
+
+IV. Test edit question popup is not closed when Back is pressed
+- Open edit question text
+- Press Back button
+    - Check the popup is not closed
+
+V. Test edit menu is not available for feelings and other built-in questions

@@ -1,0 +1,23 @@
+UI test case
+
+Run for any answer
+
+I. Test delete answer with undo from full log
+- Answer a question 10 times
+- Go to full log
+- Delete one answer
+    - Check the answer disappeared and the screen is staying on the same scroll position
+- Undo deletion
+    - Check the answer is returned to the log
+- Delete one answer
+    - Check the answer got deleted and UNDO snackbar disappears
+
+II. Test delete answer with undo from question log
+- Answer a question 10 times
+- Go to the question log
+- Delete one answer
+    - Check the answer disappeared and the screen is staying on the same scroll position
+- Undo deletion
+    - Check the answer is returned to the log
+- Delete one answer
+    - Check the answer got deleted and UNDO snackbar disappears

@@ -1,0 +1,13 @@
+UI test case
+
+Run all tests below 3 times: for feelings / built-in / user question
+
+I. Test answer to question
+- Answer to the question
+- Answer to the question
+- Go to question log
+    - Check the answers in question log
+- Go to full log
+    - Check the answers in full log
+
+repeat

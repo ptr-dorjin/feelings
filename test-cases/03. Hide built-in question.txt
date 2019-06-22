@@ -1,0 +1,20 @@
+UI test case
+
+Run for built-in question
+
+I. Test hide built-in question
+- Answer to built-in question
+- Hide question
+    - Check the question disappeared from question list
+- Go to full log
+    - Check the answer is still there
+- Clear answers for deleted/hidden questions
+    - Check the answer got deleted
+- Go to Settings and restore build-in questions
+    - Check the question appeared in the question list
+
+II. Test hide built-in question cancelled
+- Hide question and choose Cancel
+    - Check the question is still in the list
+
+III. Test hide menu is not available for feelings and user questions

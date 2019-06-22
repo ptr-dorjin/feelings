@@ -1,0 +1,28 @@
+UI test case
+
+Run for user question
+
+I. Test delete user question with answers
+- Add a user question
+- Answer to user question
+- Delete question and choose ALSO to delete answers
+    - Check the question disappeared from question list
+- Go to full log
+    - Check the answer got deleted
+
+II. Test delete user question without answers
+- Add a user question
+- Answer to user question
+- Delete question and choose NOT to delete answers
+    - Check the question disappeared from question list
+- Go to full log
+    - Check the answer is still there
+- Clear answers for deleted/hidden questions
+    - Check the answer got deleted
+
+III. Test delete user question cancelled
+- Add a user question
+- Delete question and choose Cancel
+    - Check the question is still in the list
+
+IV. Test delete menu is not available for feelings and other built-in questions

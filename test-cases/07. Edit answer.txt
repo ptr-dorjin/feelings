@@ -1,0 +1,29 @@
+UI test case
+
+Run all tests below 2 times: for feelings and any other question
+
+I. Test edit answer in full log
+- Answer a question 10 times
+- Go to full log
+- Edit one answer
+    - Check the question is opened with populated answer
+- Change the answer and save it
+    - Check that full log is shown on the same scroll position and changes are in place
+- Edit an answer and tap Up button
+    - Check that full log is shown on the same scroll position
+- Edit an answer and tap Back button
+    - Check that full log is shown on the same scroll position
+
+II. Test edit answer in question log
+- Answer a question 10 times
+- Go to the question log
+- Edit one answer
+    - Check the question is opened with populated answer
+- Change the answer and save it
+    - Check that question log is shown on the same scroll position and changes are in place
+- Edit an answer and tap Up button
+    - Check that question log is shown on the same scroll position
+- Edit an answer and tap Back button
+    - Check that question log is shown on the same scroll position
+
+repeat
