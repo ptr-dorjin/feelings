@@ -7,8 +7,6 @@ import android.text.method.ScrollingMovementMethod
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ExpandableListView
-import android.widget.TextView
 import feelings.guide.*
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
@@ -28,12 +26,6 @@ class AnswerActivity : BaseActivity() {
 
     private val isInvalid: Boolean
         get() = answerText.text.trim().isEmpty()
-
-    private val isEdit: Boolean
-        get() = answer != null
-
-    private val isNew: Boolean
-        get() = answer == null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +63,7 @@ class AnswerActivity : BaseActivity() {
     }
 
     private fun setUpAnswerText() {
+        val isEdit = answer != null
         if (isEdit) {
             answerText.setText(answer!!.answerText)
         }
@@ -134,6 +127,7 @@ class AnswerActivity : BaseActivity() {
         }
         val text = answerText.text.toString().trim()
         val saved: Boolean
+        val isNew = answer == null
         if (isNew) {
             answer = Answer(questionId, LocalDateTime.now(), text)
             saved = AnswerStore.saveAnswer(this, answer!!)
