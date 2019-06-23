@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import feelings.guide.ADD_ANSWER_REQUEST_CODE
 import feelings.guide.QUESTION_ID_PARAM
 import feelings.guide.R
 import feelings.guide.question.COLUMN_IS_USER
@@ -28,9 +29,9 @@ internal class QuestionsAdapter(activity: BaseActivity) : RecyclerViewCursorAdap
 
         init {
             itemView.setOnClickListener {
-                activity.startActivity(Intent(activity, AnswerActivity::class.java).apply {
+                activity.startActivityForResult(Intent(activity, AnswerActivity::class.java).apply {
                     putExtra(QUESTION_ID_PARAM, questionId)
-                })
+                }, ADD_ANSWER_REQUEST_CODE)
             }
         }
     }

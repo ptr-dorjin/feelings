@@ -2,9 +2,8 @@ package feelings .guide.ui
 
 import android.database.Cursor
 import android.database.DataSetObserver
-import androidx.recyclerview.widget.RecyclerView
-
 import android.provider.BaseColumns._ID
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class RecyclerViewCursorAdapter<VH : RecyclerView.ViewHolder> protected constructor(protected val activity: BaseActivity) :
     RecyclerView.Adapter<VH>() {

@@ -18,7 +18,6 @@ import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.answer.AnswerActivity
 import feelings.guide.ui.question.QuestionClearLogDialogFragment
 import feelings.guide.ui.question.QuestionClearLogDialogListener
-import feelings.guide.util.ToastUtil
 import kotlinx.android.synthetic.main.answer_log_by_question_activity.*
 
 private const val DEFAULT_QUESTION_ID: Long = -1
@@ -123,19 +122,19 @@ class AnswerLogActivity : BaseActivity(),
 
     override fun onClearLogFullConfirmed() {
         AnswerStore.deleteAll(this)
-        ToastUtil.showShort(this, getString(R.string.msg_clear_log_full_success))
+        Snackbar.make(answerLogActivityLayout, R.string.msg_clear_log_full_success, Snackbar.LENGTH_LONG).show()
         adapter.refresh()
     }
 
     override fun onClearLogDeletedConfirmed() {
         AnswerStore.deleteForDeletedQuestions(this)
-        ToastUtil.showShort(this, getString(R.string.msg_clear_log_deleted_success))
+        Snackbar.make(answerLogActivityLayout, R.string.msg_clear_log_deleted_success, Snackbar.LENGTH_LONG).show()
         adapter.refresh()
     }
 
     override fun onClearLogByQuestionConfirmed() {
         AnswerStore.deleteByQuestionId(this, questionId)
-        ToastUtil.showShort(this, getString(R.string.msg_clear_log_by_question_success))
+        Snackbar.make(answerLogActivityLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
         adapter.refresh()
     }
 
@@ -144,13 +143,10 @@ class AnswerLogActivity : BaseActivity(),
         AnswerStore.deleteById(this, lastDeleted!!.id)
         //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
         adapter.refresh()
-        showUndoDeleteSnackbar()
-    }
 
-    private fun showUndoDeleteSnackbar() {
-        val snackbar = Snackbar.make(answerLogView, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
-        snackbar.setAction(R.string.snackbar_undo) { undoDelete() }
-        snackbar.show()
+        Snackbar.make(answerLogActivityLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
+            .setAction(R.string.snackbar_undo) { undoDelete() }
+            .show()
     }
 
     private fun undoDelete() {
@@ -171,6 +167,7 @@ class AnswerLogActivity : BaseActivity(),
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == UPDATE_ANSWER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             onEditAnswerResult(data)
+            Snackbar.make(answerLogActivityLayout, R.string.msg_answer_updated_success, Snackbar.LENGTH_LONG).show()
         }
     }
 

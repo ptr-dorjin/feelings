@@ -6,10 +6,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
 import feelings.guide.REFRESH_QUESTIONS_RESULT_KEY
 import feelings.guide.question.QuestionService
-import feelings.guide.util.ToastUtil
 
 const val DATE_FORMAT_KEY = "Feelings.Guide.Date.Format"
 const val TIME_FORMAT_KEY = "Feelings.Guide.Time.Format"
@@ -32,7 +32,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setUpDateFormatPreference() {
         val dateFormatPreference: Preference? = preferenceScreen.findPreference(DATE_FORMAT_KEY)
         dateFormatPreference?.setOnPreferenceChangeListener { _, _ ->
-            activity?.let { ToastUtil.showShort(it, getString(R.string.msg_date_format_success)) }
+            view?.let { Snackbar.make(it, R.string.msg_date_format_success, Snackbar.LENGTH_LONG).show() }
             true
         }
     }
@@ -40,7 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setUpTimeFormatPreference() {
         val dateFormatPreference: Preference? = preferenceScreen.findPreference(TIME_FORMAT_KEY)
         dateFormatPreference?.setOnPreferenceChangeListener { _, _ ->
-            activity?.let { ToastUtil.showShort(it, getString(R.string.msg_time_format_success)) }
+            view?.let { Snackbar.make(it, R.string.msg_time_format_success, Snackbar.LENGTH_LONG).show() }
             true
         }
     }
@@ -53,7 +53,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     .setMessage(R.string.title_confirm_restore_built_in_questions_dialog)
                     .setPositiveButton(R.string.btn_restore) { _, _ ->
                         QuestionService.restoreHidden(it)
-                        ToastUtil.showShort(it, getString(R.string.msg_restore_built_in_questions_success))
+                        view?.let { v -> Snackbar.make(v, R.string.msg_restore_built_in_questions_success, Snackbar.LENGTH_LONG).show() }
                         val data = Intent()
                         data.putExtra(REFRESH_QUESTIONS_RESULT_KEY, true)
                         it.setResult(RESULT_OK, data)

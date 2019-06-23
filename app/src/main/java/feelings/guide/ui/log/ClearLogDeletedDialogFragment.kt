@@ -5,9 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import feelings.guide.R
-import java.util.*
 
 internal interface ClearLogDeletedDialogListener {
     fun onClearLogDeletedConfirmed()

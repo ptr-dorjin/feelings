@@ -4,16 +4,18 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
 import feelings.guide.profile.LocaleUtil
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.BaseActivity
-import feelings.guide.util.ToastUtil
+import kotlinx.android.synthetic.main.settings_activity.*
 
 class SettingsActivity : BaseActivity() {
 
     //keep the listener link to not get garbage collected from pref's WeakHashMap
-    private val localeChangeListener: LocaleChangeListener = LocaleChangeListener(this)
+    private lateinit var localeChangeListener: LocaleChangeListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +24,10 @@ class SettingsActivity : BaseActivity() {
         // Display the fragment as the main content.
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settings_container, SettingsFragment())
+            .replace(R.id.settingsActivityLayout, SettingsFragment())
             .commit()
 
+        localeChangeListener = LocaleChangeListener(this, settingsActivityLayout)
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(localeChangeListener)
     }
@@ -33,12 +36,13 @@ class SettingsActivity : BaseActivity() {
 /**
  * This listener should be in the activity, not in the fragment
  */
-private class LocaleChangeListener(private var context: Context) : SharedPreferences.OnSharedPreferenceChangeListener {
+private class LocaleChangeListener(private var context: Context, private val view: View) :
+    SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         if (LocaleUtil.SELECTED_LANGUAGE == key) {
             context = LocaleUtil.setLocale(context)
             QuestionService.changeLanguage(context)
-            ToastUtil.showLong(context, context.getString(R.string.msg_change_language_restart))
+            Snackbar.make(view, R.string.msg_change_language_restart, Snackbar.LENGTH_LONG).show()
         }
     }
 }

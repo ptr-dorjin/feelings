@@ -64,7 +64,7 @@ dependencies {
     androidTestImplementation("com.google.truth:truth:0.44") { //todo replace?
         exclude(group = "com.google.guava", module = "listenablefuture")
     }
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0-alpha04", {
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0-alpha04") {
         exclude(group = "com.android.support", module = "support-annotations")
-    })
+    }
 }

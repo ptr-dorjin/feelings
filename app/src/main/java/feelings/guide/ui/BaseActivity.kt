@@ -2,12 +2,10 @@ package feelings.guide.ui
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.GET_META_DATA
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
 import feelings.guide.profile.LocaleUtil
-
-import android.content.pm.PackageManager.GET_META_DATA
 
 abstract class BaseActivity : AppCompatActivity() {
 

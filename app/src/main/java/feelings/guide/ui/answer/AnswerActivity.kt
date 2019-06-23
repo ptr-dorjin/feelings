@@ -7,13 +7,13 @@ import android.text.method.ScrollingMovementMethod
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import feelings.guide.*
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
 import feelings.guide.question.Question
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.BaseActivity
-import feelings.guide.util.ToastUtil
 import kotlinx.android.synthetic.main.answer_activity.*
 import org.threeten.bp.LocalDateTime
 import java.util.*
@@ -39,7 +39,7 @@ class AnswerActivity : BaseActivity() {
         answer = if (answerId == -1L) null else AnswerStore.getById(this, answerId)
 
         if (question == null) {
-            ToastUtil.showLong(this, "Error: cannot find question")
+            Snackbar.make(answerActivityLayout, "Error: cannot find question", Snackbar.LENGTH_LONG).show()
             return
         }
 
@@ -122,7 +122,7 @@ class AnswerActivity : BaseActivity() {
 
     private fun save(): Boolean {
         if (isInvalid) {
-            ToastUtil.showShortTop(this, getString(R.string.msg_answer_text_empty))
+            Snackbar.make(answerActivityLayout, R.string.msg_answer_text_empty, Snackbar.LENGTH_LONG).show()
             return false
         }
         val text = answerText.text.toString().trim()
@@ -137,12 +137,6 @@ class AnswerActivity : BaseActivity() {
         }
 
         if (saved) {
-            ToastUtil.showShort(
-                this, getString(
-                    if (isNew) R.string.msg_answer_added_success
-                    else R.string.msg_answer_updated_success
-                )
-            )
             val data = Intent().apply {
                 putExtra(REFRESH_ANSWER_LOG_RESULT_KEY, true)
                 putExtra(UPDATED_ANSWER_ID_RESULT_KEY, answer!!.id)
@@ -150,12 +144,8 @@ class AnswerActivity : BaseActivity() {
             setResult(Activity.RESULT_OK, data)
             finish()
         } else {
-            ToastUtil.showLong(
-                this, getString(
-                    if (isNew) R.string.msg_answer_added_error
-                    else R.string.msg_answer_updated_error
-                )
-            )
+            val msg = if (isNew) R.string.msg_answer_added_error else R.string.msg_answer_updated_error
+            Snackbar.make(answerActivityLayout, msg, Snackbar.LENGTH_LONG).show()
         }
         return saved
     }

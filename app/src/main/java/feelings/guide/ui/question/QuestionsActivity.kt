@@ -15,17 +15,14 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import feelings.guide.QUESTION_ID_PARAM
-import feelings.guide.R
-import feelings.guide.REFRESH_QUESTIONS_RESULT_KEY
-import feelings.guide.SETTINGS_REQUEST_CODE
+import com.google.android.material.snackbar.Snackbar
+import feelings.guide.*
 import feelings.guide.answer.AnswerStore
 import feelings.guide.question.Question
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.log.AnswerLogActivity
 import feelings.guide.ui.settings.SettingsActivity
-import feelings.guide.util.ToastUtil
 import kotlinx.android.synthetic.main.question_edit_dialog.*
 import kotlinx.android.synthetic.main.questions_activity.*
 
@@ -186,13 +183,15 @@ class QuestionsActivity : BaseActivity(),
             if (needToRefresh) {
                 adapter.refreshAll()
             }
+        } else if (requestCode == ADD_ANSWER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Snackbar.make(questionsActivityLayout, R.string.msg_answer_added_success, Snackbar.LENGTH_LONG).show()
         }
     }
 
     override fun onSaveClick(dialogFragment: DialogFragment) {
         val text = dialogFragment.dialog!!.questionTextEdit.text.toString().trim()
         if (text.isEmpty()) {
-            ToastUtil.showLong(this, getString(R.string.msg_question_text_empty))
+            Snackbar.make(questionsActivityLayout, R.string.msg_question_text_empty, Snackbar.LENGTH_LONG).show()
             return
         }
 
@@ -233,10 +232,10 @@ class QuestionsActivity : BaseActivity(),
 
     override fun onClearLogByQuestionConfirmed() {
         AnswerStore.deleteByQuestionId(this, changeQuestionId!!)
-        ToastUtil.showShort(this, getString(R.string.msg_clear_log_by_question_success))
+        Snackbar.make(questionsActivityLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
     }
 
     private fun performServiceAction(success: Boolean, successMessageId: Int, errorMessageId: Int) =
-        if (success) ToastUtil.showShort(this, getString(successMessageId))
-        else ToastUtil.showLong(this, getString(errorMessageId))
+        if (success) Snackbar.make(questionsActivityLayout, successMessageId, Snackbar.LENGTH_LONG).show()
+        else Snackbar.make(questionsActivityLayout, errorMessageId, Snackbar.LENGTH_LONG).show()
 }
