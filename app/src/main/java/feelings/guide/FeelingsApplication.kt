@@ -17,6 +17,7 @@ const val REFRESH_QUESTIONS_RESULT_KEY = "should-refresh-questions"
 const val REFRESH_ANSWER_LOG_RESULT_KEY = "should-refresh-answer-log"
 const val UPDATED_ANSWER_ID_RESULT_KEY = "updated-answer-id"
 
+@Suppress("unused")
 class FeelingsApplication : Application() {
 
     override fun onCreate() {

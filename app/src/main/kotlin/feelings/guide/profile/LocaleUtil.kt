@@ -7,10 +7,7 @@ import androidx.preference.PreferenceManager
 import java.util.*
 
 object LocaleUtil {
-    private val SUPPORTED_LANGUAGES = Arrays.asList(
-        Locale.ENGLISH.language,
-        Locale("ru").language
-    )
+    private val SUPPORTED_LANGUAGES = listOf(Locale.ENGLISH.language, Locale("ru").language)
 
     internal const val SELECTED_LANGUAGE = "Feelings.Guide.Selected.Language"
 

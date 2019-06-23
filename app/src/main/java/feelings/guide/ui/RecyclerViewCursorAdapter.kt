@@ -1,4 +1,4 @@
-package feelings .guide.ui
+package feelings.guide.ui
 
 import android.database.Cursor
 import android.database.DataSetObserver
