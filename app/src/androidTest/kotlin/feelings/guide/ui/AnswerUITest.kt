@@ -56,7 +56,7 @@ class AnswerUITest {
     fun answerBuiltInQuestion_addsToLog() {
         // given
         val answer = "The app"
-        addBuiltInAnswer(answer, R.string.q_text_do_others)
+        addBuiltInAnswer(R.string.q_text_do_others, answer)
 
         // when
         openLogByQuestion(R.string.q_text_do_others)
@@ -93,9 +93,8 @@ class AnswerUITest {
         // then the answer is in full log
         onView(first(withId(R.id.answerLogAnswer))).check(matches(withText(answer)))
 
-        // cleanup local
+        // cleanup user question
         Espresso.pressBack()
         deleteUserQuestion(question)
-        onView(withText(R.string.btn_delete)).perform(ViewActions.click()) // delete answers too
     }
 }
