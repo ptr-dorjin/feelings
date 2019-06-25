@@ -22,7 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@FlakyTest(detail = "Fails on Android 5, 7, 8. Passes on Android 4, 6, 9")
+@FlakyTest(detail = "Fails on Android 5, 7, 8, 9. Passes on Android 4, 6")
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class FeelingsListUITest {
@@ -39,10 +39,10 @@ class FeelingsListUITest {
     @Test
     fun selectFeelingWithScroll_closesAnswerActivity() {
         // given
-        val feeling = context.resources.getStringArray(R.array.joy_array)[3]
+        val feeling = context.resources.getStringArray(R.array.love_array)[4]
 
         // when
-        addFeelingsAnswer(R.string.joy, feeling)
+        addFeelingsAnswer(R.string.love, feeling)
 
         // then
         onView(withId(R.id.questionRV)).check(matches(isDisplayed()))
