@@ -52,12 +52,6 @@ class QuestionsActivity : BaseActivity(),
         adapter = QuestionsAdapter(this)
         adapter.setHasStableIds(true)
         questionRV.adapter = adapter
-        questionRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) questionFab.hide()
-                else questionFab.show()
-            }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -95,22 +89,27 @@ class QuestionsActivity : BaseActivity(),
             when (it.itemId) {
                 R.id.show_log_by_question -> {
                     showAnswerLog(questionId)
+                    popup.dismiss()
                     true
                 }
                 R.id.edit -> {
                     showEditQuestionDialog(questionId)
+                    popup.dismiss()
                     true
                 }
                 R.id.delete -> {
                     showDeleteConfirmation(questionId)
+                    popup.dismiss()
                     true
                 }
                 R.id.hide -> {
                     showHideConfirmation(questionId)
+                    popup.dismiss()
                     true
                 }
                 R.id.clear_log -> {
                     showClearLogConfirmation(questionId)
+                    popup.dismiss()
                     true
                 }
                 else -> false

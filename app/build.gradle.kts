@@ -60,11 +60,11 @@ dependencies {
 
     androidTestImplementation(kotlin("test", KotlinCompilerVersion.VERSION))
     androidTestImplementation(kotlin("test-junit", KotlinCompilerVersion.VERSION))
-    androidTestImplementation("androidx.test.ext:junit:1.1.1")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.1")
+    androidTestImplementation("androidx.test:rules:1.2.0")
     androidTestImplementation("com.google.truth:truth:0.44") { //todo replace?
         exclude(group = "com.google.guava", module = "listenablefuture")
     }
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0-alpha04") {
-        exclude(group = "com.android.support", module = "support-annotations")
-    }
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-alpha01")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0-alpha01")
 }
