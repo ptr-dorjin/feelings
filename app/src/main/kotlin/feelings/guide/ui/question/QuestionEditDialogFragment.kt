@@ -24,7 +24,6 @@ class QuestionEditDialogFragment : DialogFragment() {
         .setTitle(R.string.title_edit_question_dialog)
         .setPositiveButton(R.string.btn_save) { _, _ -> listener.onSaveClick(this@QuestionEditDialogFragment) }
         .setNegativeButton(R.string.btn_cancel) { _, _ -> dismiss() }
-        .setCancelable(false)
         .create()
 
     override fun onAttach(context: Context) {

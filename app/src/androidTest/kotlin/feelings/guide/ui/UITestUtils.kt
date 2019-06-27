@@ -113,7 +113,7 @@ internal fun addUserQuestion(question: String) {
     onView(withText(R.string.btn_save)).perform(click())
 }
 
-internal fun deleteUserQuestion(question: String, hasAnswers: Boolean = true) {
+internal fun deleteUserQuestion(question: String, hasAnswers: Boolean = false) {
     scrollToQuestion(question)
     onView(allOf(withId(R.id.popupMenu), hasSibling(withText(question)))).perform(click())
     onView(withText(R.string.btn_delete)).perform(click()) // delete on popup
@@ -137,4 +137,9 @@ internal fun checkNoQuestion(questionId: Int) {
 
 internal fun checkNoQuestion(question: String) {
     onView(withId(R.id.questionRV)).check(matches(not(hasItem(hasDescendant(withText(question))))))
+}
+
+internal fun checkSnackbar(stringId: Int) {
+    onView(withId(com.google.android.material.R.id.snackbar_text))
+        .check(matches(withText(stringId)))
 }

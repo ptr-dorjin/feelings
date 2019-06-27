@@ -98,6 +98,6 @@ class AddAnswerUITest {
 
         // clean up user question
         Espresso.pressBack()
-        deleteUserQuestion(question)
+        deleteUserQuestion(question, true)
     }
 }

@@ -136,7 +136,7 @@ class ClearLogUITest {
 
         // clean up user question
         Espresso.pressBack()
-        deleteUserQuestion(question, false)
+        deleteUserQuestion(question)
     }
 
     @Test
@@ -155,7 +155,7 @@ class ClearLogUITest {
 
         // clean up user question
         Espresso.pressBack()
-        deleteUserQuestion(question, false)
+        deleteUserQuestion(question)
     }
 
     @Test
@@ -174,6 +174,6 @@ class ClearLogUITest {
 
         // clean up user question
         Espresso.pressBack()
-        deleteUserQuestion(question, false)
+        deleteUserQuestion(question)
     }
 }
