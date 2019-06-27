@@ -1,17 +1,20 @@
-package feelings.guide.ui
+package feelings.guide.ui.ts01
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
+import feelings.guide.ui.addAnswer
+import feelings.guide.ui.addBuiltInAnswer
+import feelings.guide.ui.addFeelingsAnswer
+import feelings.guide.ui.addUserQuestion
+import feelings.guide.ui.checkLastAnswer
+import feelings.guide.ui.deleteUserQuestion
+import feelings.guide.ui.openFullLog
+import feelings.guide.ui.openLogByQuestion
 import feelings.guide.ui.question.QuestionsActivity
 import org.junit.Before
 import org.junit.Rule
@@ -21,7 +24,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class AnswerUITest {
+class AddAnswerUITest {
     private lateinit var context: Context
 
     @get:Rule
@@ -42,14 +45,14 @@ class AnswerUITest {
         openLogByQuestion(R.string.q_text_feelings)
 
         // then the answer is in question log
-        onView(first(withId(R.id.answerLogAnswer))).check(matches(withText(feeling)))
+        checkLastAnswer(feeling)
 
         // when
         Espresso.pressBack()
         openFullLog()
 
         // then the answer is in full log
-        onView(first(withId(R.id.answerLogAnswer))).check(matches(withText(feeling)))
+        checkLastAnswer(feeling)
     }
 
     @Test
@@ -62,14 +65,14 @@ class AnswerUITest {
         openLogByQuestion(R.string.q_text_do_others)
 
         // then the answer is question log
-        onView(first(withId(R.id.answerLogAnswer))).check(matches(withText(answer)))
+        checkLastAnswer(answer)
 
         // when
         Espresso.pressBack()
         openFullLog()
 
         // then the answer is in full log
-        onView(first(withId(R.id.answerLogAnswer))).check(matches(withText(answer)))
+        checkLastAnswer(answer)
     }
 
     @Test
@@ -78,22 +81,22 @@ class AnswerUITest {
         val question = "Windows or Linux?"
         val answer = "Android"
         addUserQuestion(question)
-        addUserAnswer(question, answer)
+        addAnswer(question, answer)
 
         // when
         openLogByQuestion(question)
 
         // then the answer is in question log
-        onView(first(withId(R.id.answerLogAnswer))).check(matches(withText(answer)))
+        checkLastAnswer(answer)
 
         // when
         Espresso.pressBack()
         openFullLog()
 
         // then the answer is in full log
-        onView(first(withId(R.id.answerLogAnswer))).check(matches(withText(answer)))
+        checkLastAnswer(answer)
 
-        // cleanup user question
+        // clean up user question
         Espresso.pressBack()
         deleteUserQuestion(question)
     }

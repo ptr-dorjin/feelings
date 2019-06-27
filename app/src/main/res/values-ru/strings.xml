@@ -72,6 +72,7 @@
     <string name="btn_restore">Восстановить</string>
     <string name="btn_clear_log_full">Очистить все</string>
     <string name="btn_clear_log_deleted">Очистить удаленные</string>
+    <string name="btn_settings">Настройки</string>
 
     <string name="snackbar_undo">Отмена</string>
 

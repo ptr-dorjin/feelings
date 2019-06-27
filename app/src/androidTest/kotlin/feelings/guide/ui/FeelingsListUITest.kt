@@ -18,6 +18,7 @@ import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
 import feelings.guide.ui.question.QuestionsActivity
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,6 +26,7 @@ import org.junit.runner.RunWith
 @FlakyTest(detail = "Fails on Android 5, 7, 8, 9. Passes on Android 4, 6")
 @RunWith(AndroidJUnit4::class)
 @LargeTest
+@Ignore("flaky test")
 class FeelingsListUITest {
     private lateinit var context: Context
 

@@ -98,6 +98,7 @@
     <string name="btn_restore">Restore</string>
     <string name="btn_clear_log_full">Clear all</string>
     <string name="btn_clear_log_deleted">Clear deleted</string>
+    <string name="btn_settings">Settings</string>
 
     <string name="snackbar_undo">Undo</string>
 

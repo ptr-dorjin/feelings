@@ -1,4 +1,4 @@
-package feelings.guide.ui
+package feelings.guide.ui.ts02
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
@@ -10,6 +10,16 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
+import feelings.guide.ui.addAnswer
+import feelings.guide.ui.addBuiltInAnswer
+import feelings.guide.ui.addFeelingsAnswer
+import feelings.guide.ui.addUserQuestion
+import feelings.guide.ui.clearLogFromQuestionList
+import feelings.guide.ui.clearLogFromQuestionLog
+import feelings.guide.ui.clearLogFull
+import feelings.guide.ui.deleteUserQuestion
+import feelings.guide.ui.openFullLog
+import feelings.guide.ui.openLogByQuestion
 import feelings.guide.ui.question.QuestionsActivity
 import org.junit.Before
 import org.junit.Rule
@@ -115,7 +125,7 @@ class ClearLogUITest {
         // given
         val question = "Windows or MacOS?"
         addUserQuestion(question)
-        addUserAnswer(question, "Linux")
+        addAnswer(question, "Linux")
 
         // when
         clearLogFromQuestionList(question)
@@ -124,7 +134,7 @@ class ClearLogUITest {
         openLogByQuestion(question)
         onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
 
-        // cleanup user question
+        // clean up user question
         Espresso.pressBack()
         deleteUserQuestion(question, false)
     }
@@ -134,7 +144,7 @@ class ClearLogUITest {
         // given
         val question = "Intel or AMD?"
         addUserQuestion(question)
-        addUserAnswer(question, "ARM")
+        addAnswer(question, "ARM")
 
         // when
         openLogByQuestion(question)
@@ -143,7 +153,7 @@ class ClearLogUITest {
         // then
         onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
 
-        // cleanup user question
+        // clean up user question
         Espresso.pressBack()
         deleteUserQuestion(question, false)
     }
@@ -153,7 +163,7 @@ class ClearLogUITest {
         // given
         val question = "Windows or MacOS?"
         addUserQuestion(question)
-        addUserAnswer(question, "Linux")
+        addAnswer(question, "Linux")
 
         // when
         openFullLog()
@@ -162,7 +172,7 @@ class ClearLogUITest {
         // then
         onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
 
-        // cleanup user question
+        // clean up user question
         Espresso.pressBack()
         deleteUserQuestion(question, false)
     }

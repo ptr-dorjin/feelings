@@ -5,6 +5,6 @@
         android:title="@string/btn_show_log"
         app:showAsAction="ifRoom"/>
     <item android:id="@+id/show_settings"
-        android:title="@string/title_settings_activity"
+        android:title="@string/btn_settings"
         app:showAsAction="never"/>
 </menu>
