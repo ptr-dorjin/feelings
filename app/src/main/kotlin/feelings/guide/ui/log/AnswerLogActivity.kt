@@ -72,7 +72,7 @@ class AnswerLogActivity : BaseActivity(),
 
     private fun fillQuestionText() {
         if (!isFull) {
-            questionTextOnAnswerLog.text = QuestionService.getQuestionText(this, questionId)
+            questionTextInLogByQuestion.text = QuestionService.getQuestionText(this, questionId)
         }
     }
 

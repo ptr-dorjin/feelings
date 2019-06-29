@@ -2,21 +2,13 @@ package feelings.guide.ui.ts03
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
-import feelings.guide.ui.addBuiltInAnswer
-import feelings.guide.ui.checkLastAnswer
-import feelings.guide.ui.checkNoAnswer
-import feelings.guide.ui.checkNoQuestion
-import feelings.guide.ui.checkQuestion
-import feelings.guide.ui.clearLogHiddenDeleted
-import feelings.guide.ui.hideQuestion
-import feelings.guide.ui.openFullLog
+import feelings.guide.ui.*
 import feelings.guide.ui.question.QuestionsActivity
-import feelings.guide.ui.restoreBuiltInQuestions
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,7 +40,7 @@ class HideQuestionUITest {
     fun hideBuiltInQuestion_answersAreNotDeleted() {
         // given
         val answer = "Push-ups"
-        addBuiltInAnswer(R.string.q_text_do_body, answer)
+        answerBuiltInQuestion(R.string.q_text_do_body, answer)
 
         // when
         hideQuestion(R.string.q_text_do_body)
@@ -58,7 +50,7 @@ class HideQuestionUITest {
         checkLastAnswer(answer)
 
         // clean up
-        Espresso.pressBack()
+        pressBack()
         restoreBuiltInQuestions()
     }
 
@@ -66,7 +58,7 @@ class HideQuestionUITest {
     fun clearAnswersForHiddenQuestions_answerIsDeleted() {
         // given
         val answer = "Pull-ups"
-        addBuiltInAnswer(R.string.q_text_do_body, answer)
+        answerBuiltInQuestion(R.string.q_text_do_body, answer)
         hideQuestion(R.string.q_text_do_body)
 
         // when
@@ -77,7 +69,7 @@ class HideQuestionUITest {
         checkNoAnswer(answer)
 
         // clean up
-        Espresso.pressBack()
+        pressBack()
         restoreBuiltInQuestions()
     }
 
@@ -90,7 +82,7 @@ class HideQuestionUITest {
         restoreBuiltInQuestions()
 
         // then
-        Espresso.pressBack()
+        pressBack()
         checkQuestion(R.string.q_text_do_others)
     }
 

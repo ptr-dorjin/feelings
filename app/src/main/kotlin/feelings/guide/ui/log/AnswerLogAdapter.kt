@@ -29,7 +29,7 @@ internal class AnswerLogAdapter(activity: BaseActivity, private val isFull: Bool
 
     internal class AnswerLogHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dateTimeView: TextView = itemView.answerLogDateTime
-        val questionView: TextView? = itemView.answerLogQuestion
+        val questionView: TextView? = itemView.questionTextInFullLog
         val answerView: TextView = itemView.answerLogAnswer
     }
 

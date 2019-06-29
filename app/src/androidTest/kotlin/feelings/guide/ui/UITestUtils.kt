@@ -14,19 +14,19 @@ import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 
-internal fun addFeelingsAnswer(feelingsGroupId: Int, feeling: String) {
+internal fun answerFeelings(feelingsGroupId: Int, feeling: String) {
     onView(withText(R.string.q_text_feelings)).perform(click())
     onView(allOf(withId(R.id.labelFeelingsGroup), withText(feelingsGroupId))).perform(click())
     onView(allOf(withId(R.id.labelFeelingItem), withText(feeling))).perform(click())
     onView(withId(R.id.save)).perform(click())
 }
 
-internal fun addBuiltInAnswer(questionId: Int, answer: String) {
+internal fun answerBuiltInQuestion(questionId: Int, answer: String) {
     val question = (getApplicationContext() as Context).getString(questionId)
-    addAnswer(question, answer)
+    answerQuestion(question, answer)
 }
 
-internal fun addAnswer(question: String, answer: String) {
+internal fun answerQuestion(question: String, answer: String) {
     scrollToQuestion(question)
     onView(withText(question)).perform(click())
     onView(withId(R.id.answerText)).perform(typeText(answer), closeSoftKeyboard())
@@ -48,7 +48,7 @@ internal fun openFullLog() {
 /**
  * assumes there is only one question with this text, otherwise throws an exception
  */
-private fun scrollToQuestion(question: String) {
+internal fun scrollToQuestion(question: String) {
     onView(withId(R.id.questionRV)).perform(scrollToHolder(questionWithText(question)))
 }
 
@@ -110,6 +110,18 @@ internal fun restoreBuiltInQuestions() {
 internal fun addUserQuestion(question: String) {
     onView(withId(R.id.questionFab)).perform(click())
     onView(withId(R.id.questionTextEdit)).perform(typeText(question), closeSoftKeyboard())
+    onView(withText(R.string.btn_save)).perform(click())
+}
+
+internal fun openEditQuestionDialog(question: String) {
+    scrollToQuestion(question)
+    onView(allOf(withId(R.id.popupMenu), hasSibling(withText(question)))).perform(click())
+    onView(withText(R.string.btn_edit)).perform(click())
+}
+
+internal fun editUserQuestion(old: String, new: String) {
+    openEditQuestionDialog(old)
+    onView(withId(R.id.questionTextEdit)).perform(replaceText(new), closeSoftKeyboard())
     onView(withText(R.string.btn_save)).perform(click())
 }
 
