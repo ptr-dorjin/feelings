@@ -2,13 +2,18 @@ package feelings.guide.ui.ts03
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
 import feelings.guide.ui.*
 import feelings.guide.ui.question.QuestionsActivity
+import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -86,4 +91,45 @@ class HideQuestionUITest {
         checkQuestion(R.string.q_text_do_others)
     }
 
+    @Test
+    fun hideCancelled_questionIsStillOnTheList() {
+        // when
+        scrollToQuestion(R.string.q_text_do_others)
+        onView(allOf(withId(R.id.popupMenu), hasSibling(withText(R.string.q_text_do_others))))
+            .perform(click())
+        onView(withText(R.string.btn_hide)).perform(click())
+        onView(withText(R.string.btn_cancel)).perform(click())
+
+        // then
+        checkQuestion(R.string.q_text_do_others)
+    }
+
+    @Test
+    fun popupMenuForFeelings_doesNotHaveHideMenu() {
+        // when
+        onView(allOf(withId(R.id.popupMenu), hasSibling(withText(R.string.q_text_feelings))))
+            .perform(click())
+
+        // then
+        onView(withText(R.string.btn_hide)).check(doesNotExist())
+    }
+
+    @Test
+    fun popupMenuForUserQuestion_doesNotHaveHideMenu() {
+        // given
+        val question = "Bluetooth or wireless mouse?"
+        addUserQuestion(question)
+
+        // when
+        scrollToQuestion(question)
+        onView(allOf(withId(R.id.popupMenu), hasSibling(withText(question))))
+            .perform(click())
+
+        // then
+        onView(withText(R.string.btn_hide)).check(doesNotExist())
+
+        // clean up
+        pressBack()
+        deleteUserQuestion(question)
+    }
 }

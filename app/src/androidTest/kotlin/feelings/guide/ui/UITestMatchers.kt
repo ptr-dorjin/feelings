@@ -1,6 +1,7 @@
 package feelings.guide.ui
 
 import android.view.View
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.BoundedMatcher
 import feelings.guide.ui.question.QuestionsAdapter
@@ -48,6 +49,7 @@ internal fun hasItem(matcher: Matcher<View>): Matcher<View> {
         }
 
         override fun matchesSafely(view: RecyclerView): Boolean {
+            if (view.isGone) return false
             val adapter = view.adapter
             for (position in 0 until adapter!!.itemCount) {
                 val type = adapter.getItemViewType(position)

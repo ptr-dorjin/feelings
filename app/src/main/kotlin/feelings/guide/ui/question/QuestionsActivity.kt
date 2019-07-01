@@ -88,28 +88,28 @@ class QuestionsActivity : BaseActivity(),
         popup.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.show_log_by_question -> {
-                    showAnswerLog(questionId)
                     popup.dismiss()
+                    showAnswerLog(questionId)
                     true
                 }
                 R.id.edit -> {
-                    showEditQuestionDialog(questionId)
                     popup.dismiss()
+                    showEditQuestionDialog(questionId)
                     true
                 }
                 R.id.delete -> {
-                    showDeleteConfirmation(questionId)
                     popup.dismiss()
+                    showDeleteConfirmation(questionId)
                     true
                 }
                 R.id.hide -> {
-                    showHideConfirmation(questionId)
                     popup.dismiss()
+                    showHideConfirmation(questionId)
                     true
                 }
                 R.id.clear_log -> {
-                    showClearLogConfirmation(questionId)
                     popup.dismiss()
+                    showClearLogConfirmation(questionId)
                     true
                 }
                 else -> false

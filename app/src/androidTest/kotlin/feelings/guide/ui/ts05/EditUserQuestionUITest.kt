@@ -97,7 +97,7 @@ class EditUserQuestionUITest {
 
         // clean up
         pressBack()
-        deleteUserQuestion(updated)
+        deleteUserQuestion(updated, true)
     }
 
     @Test
@@ -165,7 +165,7 @@ class EditUserQuestionUITest {
         onView(Matchers.allOf(withId(R.id.popupMenu), hasSibling(withText(R.string.q_text_feelings))))
             .perform(click())
 
-        //
+        // then
         onView(withText(R.string.btn_edit)).check(doesNotExist())
     }
 
@@ -175,7 +175,7 @@ class EditUserQuestionUITest {
         onView(Matchers.allOf(withId(R.id.popupMenu), hasSibling(withText(R.string.q_text_do_body))))
             .perform(click())
 
-        //
+        // then
         onView(withText(R.string.btn_edit)).check(doesNotExist())
     }
 

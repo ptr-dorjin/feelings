@@ -22,7 +22,7 @@ internal fun answerFeelings(feelingsGroupId: Int, feeling: String) {
 }
 
 internal fun answerBuiltInQuestion(questionId: Int, answer: String) {
-    val question = (getApplicationContext() as Context).getString(questionId)
+    val question = getApplicationContext<Context>().getString(questionId)
     answerQuestion(question, answer)
 }
 
@@ -52,8 +52,13 @@ internal fun scrollToQuestion(question: String) {
     onView(withId(R.id.questionRV)).perform(scrollToHolder(questionWithText(question)))
 }
 
+internal fun scrollToQuestion(questionId: Int) {
+    val question = getApplicationContext<Context>().getString(questionId)
+    scrollToQuestion(question)
+}
+
 internal fun openLogByQuestion(questionId: Int) {
-    val question = (getApplicationContext() as Context).getString(questionId)
+    val question = getApplicationContext<Context>().getString(questionId)
     openLogByQuestion(question)
 }
 
@@ -64,7 +69,7 @@ internal fun openLogByQuestion(question: String) {
 }
 
 internal fun clearLogFromQuestionList(questionId: Int) {
-    val question = (getApplicationContext() as Context).getString(questionId)
+    val question = getApplicationContext<Context>().getString(questionId)
     clearLogFromQuestionList(question)
 }
 
@@ -94,7 +99,7 @@ internal fun clearLogHiddenDeleted() {
 }
 
 internal fun hideQuestion(questionId: Int) {
-    scrollToQuestion((getApplicationContext() as Context).getString(questionId))
+    scrollToQuestion(questionId)
     onView(allOf(withId(R.id.popupMenu), hasSibling(withText(questionId)))).perform(click())
     onView(withText(R.string.btn_hide)).perform(click()) // hide on popup
     onView(withText(R.string.btn_hide)).perform(click()) // hide on confirmation dialog
@@ -125,16 +130,21 @@ internal fun editUserQuestion(old: String, new: String) {
     onView(withText(R.string.btn_save)).perform(click())
 }
 
-internal fun deleteUserQuestion(question: String, hasAnswers: Boolean = false) {
+internal fun deleteUserQuestion(question: String, hasAnswers: Boolean = false, clearAnswers: Boolean = true) {
     scrollToQuestion(question)
     onView(allOf(withId(R.id.popupMenu), hasSibling(withText(question)))).perform(click())
     onView(withText(R.string.btn_delete)).perform(click()) // delete on popup
     onView(withText(R.string.btn_delete)).perform(click()) // delete on confirmation dialog for question
-    if (hasAnswers) onView(withText(R.string.btn_delete)).perform(click()) // delete on confirmation dialog for its answers
+    if (hasAnswers) {
+        if (clearAnswers)
+            onView(withText(R.string.btn_delete)).perform(click()) // delete on confirmation dialog for its answers
+        else
+            onView(withText(R.string.btn_cancel)).perform(click())
+    }
 }
 
 internal fun checkQuestion(questionId: Int) {
-    val question = (getApplicationContext() as Context).getString(questionId)
+    val question = getApplicationContext<Context>().getString(questionId)
     checkQuestion(question)
 }
 
@@ -143,7 +153,7 @@ internal fun checkQuestion(question: String) {
 }
 
 internal fun checkNoQuestion(questionId: Int) {
-    val question = (getApplicationContext() as Context).getString(questionId)
+    val question = getApplicationContext<Context>().getString(questionId)
     checkNoQuestion(question)
 }
 
