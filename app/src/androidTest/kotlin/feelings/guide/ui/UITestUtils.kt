@@ -6,19 +6,30 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToHolder
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import feelings.guide.R
+import feelings.guide.randomAlphanumericString
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 
-internal fun answerFeelings(feelingsGroupId: Int, feeling: String) {
+internal fun answerFeelings(feelingsGroupId: Int, feeling: String, appendix: String = "") {
     onView(withText(R.string.q_text_feelings)).perform(click())
     onView(allOf(withId(R.id.labelFeelingsGroup), withText(feelingsGroupId))).perform(click())
     onView(allOf(withId(R.id.labelFeelingItem), withText(feeling))).perform(click())
+    if (appendix.isNotEmpty())
+        onView(withId(R.id.answerText)).perform(replaceText("$feeling $appendix"), closeSoftKeyboard())
     onView(withId(R.id.save)).perform(click())
+}
+
+internal fun answerFeelingsRandom(): String {
+    val feeling = getApplicationContext<Context>().resources.getStringArray(R.array.anger_array)[0]
+    val appendix = randomAlphanumericString()
+    answerFeelings(R.string.anger, feeling, appendix)
+    return "$feeling $appendix"
 }
 
 internal fun answerBuiltInQuestion(questionId: Int, answer: String) {
@@ -164,4 +175,14 @@ internal fun checkNoQuestion(question: String) {
 internal fun checkSnackbar(stringId: Int) {
     onView(withId(com.google.android.material.R.id.snackbar_text))
         .check(matches(withText(stringId)))
+}
+
+internal fun openEditAnswer(answer: String) {
+    onView(withId(R.id.answerLogRV)).perform(actionOnHolderItem(answerWithText(answer), swipeLeft()))
+}
+
+internal fun editAnswer(old: String, new: String) {
+    openEditAnswer(old)
+    onView(withId(R.id.answerText)).perform(replaceText(new), closeSoftKeyboard())
+    onView(withId(R.id.save)).perform(click())
 }

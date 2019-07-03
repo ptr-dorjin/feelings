@@ -4,6 +4,7 @@ import android.view.View
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.BoundedMatcher
+import feelings.guide.ui.log.AnswerLogAdapter
 import feelings.guide.ui.question.QuestionsAdapter
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -28,15 +29,27 @@ internal fun <T> first(matcher: Matcher<T>): Matcher<T> {
     }
 }
 
-internal fun questionWithText(text: String): Matcher<RecyclerView.ViewHolder> {
+internal fun questionWithText(question: String): Matcher<RecyclerView.ViewHolder> {
     return object : BoundedMatcher<RecyclerView.ViewHolder, QuestionsAdapter.QuestionViewHolder>(
         QuestionsAdapter.QuestionViewHolder::class.java
     ) {
         override fun describeTo(description: Description) {
-            description.appendText("has a question with the specified text")
+            description.appendText("has a question with text '$question'")
         }
 
-        override fun matchesSafely(vh: QuestionsAdapter.QuestionViewHolder) = vh.questionText.text.toString() == text
+        override fun matchesSafely(vh: QuestionsAdapter.QuestionViewHolder) = vh.questionText.text.toString() == question
+    }
+}
+
+internal fun answerWithText(answer: String): Matcher<RecyclerView.ViewHolder> {
+    return object : BoundedMatcher<RecyclerView.ViewHolder, AnswerLogAdapter.AnswerLogHolder>(
+        AnswerLogAdapter.AnswerLogHolder::class.java
+    ) {
+        override fun describeTo(description: Description) {
+            description.appendText("has an answer with text '$answer'")
+        }
+
+        override fun matchesSafely(vh: AnswerLogAdapter.AnswerLogHolder) = vh.answerView.text.toString() == answer
     }
 }
 

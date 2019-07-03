@@ -1,7 +1,7 @@
 package feelings.guide.ui.ts05
 
 import android.content.Context
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.*
@@ -30,7 +30,7 @@ class EditUserQuestionUITest {
 
     @Before
     fun before() {
-        context = ApplicationProvider.getApplicationContext()
+        context = getApplicationContext()
     }
 
     @Test
