@@ -3,7 +3,7 @@ package feelings.guide.question
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import feelings.guide.db.DbHelper
@@ -31,7 +31,7 @@ class QuestionStoreTest {
         questionId = 0
         questionId2 = 0
         questionId3 = 0
-        context = ApplicationProvider.getApplicationContext()
+        context = getApplicationContext()
     }
 
     @After

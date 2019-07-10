@@ -1,4 +1,4 @@
-package feelings.guide.ui
+package feelings.guide.ui.util
 
 import android.view.View
 import androidx.core.view.isGone

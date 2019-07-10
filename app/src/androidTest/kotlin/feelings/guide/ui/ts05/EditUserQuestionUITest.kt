@@ -12,8 +12,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
-import feelings.guide.ui.*
 import feelings.guide.ui.question.QuestionsActivity
+import feelings.guide.ui.util.*
 import org.hamcrest.Matchers
 import org.junit.Before
 import org.junit.Rule

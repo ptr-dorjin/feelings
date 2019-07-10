@@ -1,4 +1,4 @@
-package feelings.guide.ui
+package feelings.guide.ui.util
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
@@ -185,4 +185,8 @@ internal fun editAnswer(old: String, new: String) {
     openEditAnswer(old)
     onView(withId(R.id.answerText)).perform(replaceText(new), closeSoftKeyboard())
     onView(withId(R.id.save)).perform(click())
+}
+
+internal fun deleteAnswer(answer: String) {
+    onView(withId(R.id.answerLogRV)).perform(actionOnHolderItem(answerWithText(answer), swipeRight()))
 }

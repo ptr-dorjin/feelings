@@ -44,10 +44,10 @@ dependencies {
     //Kotlin standard library
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
     implementation("androidx.core:core-ktx:1.0.2")
-    implementation("androidx.preference:preference-ktx:1.1.0-beta01")
-    implementation("androidx.appcompat:appcompat:1.1.0-beta01")
+    implementation("androidx.preference:preference-ktx:1.1.0-rc01")
+    implementation("androidx.appcompat:appcompat:1.1.0-rc01")
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.recyclerview:recyclerview:1.1.0-alpha06")
+    implementation("androidx.recyclerview:recyclerview:1.1.0-beta01")
     implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta2")
     implementation("androidx.vectordrawable:vectordrawable:1.0.1")
     implementation("com.google.android.material:material:1.1.0-alpha07")

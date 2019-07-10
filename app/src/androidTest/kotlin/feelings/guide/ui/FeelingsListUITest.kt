@@ -12,6 +12,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
 import feelings.guide.ui.question.QuestionsActivity
+import feelings.guide.ui.util.answerFeelings
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule

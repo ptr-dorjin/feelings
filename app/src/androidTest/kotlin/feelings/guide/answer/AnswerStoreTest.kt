@@ -2,7 +2,7 @@ package feelings.guide.answer
 
 import android.content.Context
 import android.database.Cursor
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import feelings.guide.question.Question
@@ -27,7 +27,7 @@ class AnswerStoreTest {
 
     @Before
     fun before() {
-        context = ApplicationProvider.getApplicationContext()
+        context = getApplicationContext()
     }
 
     @After
@@ -216,7 +216,7 @@ class AnswerStoreTest {
         @BeforeClass
         @JvmStatic
         fun beforeClass() {
-            AnswerStore.deleteAll(ApplicationProvider.getApplicationContext())
+            AnswerStore.deleteAll(getApplicationContext())
         }
     }
 }
