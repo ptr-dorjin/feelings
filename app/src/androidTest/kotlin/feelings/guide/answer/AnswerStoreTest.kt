@@ -3,7 +3,6 @@ package feelings.guide.answer
 import android.content.Context
 import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import feelings.guide.question.Question
 import feelings.guide.question.QuestionService
@@ -11,7 +10,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.threeten.bp.LocalDateTime
 import java.util.*
 
@@ -20,7 +18,6 @@ private const val QUESTION_ID: Long = 1
 private const val QUESTION_ID_2: Long = 2
 private const val ANSWER_TEXT = "test answer"
 
-@RunWith(AndroidJUnit4::class)
 class AnswerStoreTest {
     private val now = LocalDateTime.now()
     private lateinit var context: Context

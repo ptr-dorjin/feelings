@@ -4,13 +4,11 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import feelings.guide.db.DbHelper
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.util.*
 
 private const val TO_BE_OR_NOT_TO_BE = "To be or not to be?"
@@ -18,7 +16,6 @@ private const val WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING = "Would you like to unde
 private const val SOME_BUILT_IN_QUESTION = "Some built-in question"
 private const val TEST_BUILT_IN_QUESTION_CODE = "test_code"
 
-@RunWith(AndroidJUnit4::class)
 class QuestionStoreTest {
     private lateinit var context: Context
 
