@@ -12,7 +12,6 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
 import feelings.guide.ui.question.QuestionsActivity
-import feelings.guide.ui.util.answerFeelingsRandom
 import feelings.guide.ui.util.first
 import feelings.guide.ui.util.openFullLog
 import feelings.guide.ui.util.openLogByQuestion
@@ -53,9 +52,6 @@ class DateTimeFormatUITest(private val dateFormat: String, private val timeForma
 
     @Test
     fun dateTimeFormatIsChanged_fullLogGetsUpdated() {
-        // given
-        answerFeelingsRandom()
-
         // when
         changeDateAndTimeFormat()
 
@@ -69,9 +65,6 @@ class DateTimeFormatUITest(private val dateFormat: String, private val timeForma
 
     @Test
     fun dateTimeFormatIsChanged_questionLogGetsUpdated() {
-        // given
-        answerFeelingsRandom()
-
         // when
         changeDateAndTimeFormat()
 

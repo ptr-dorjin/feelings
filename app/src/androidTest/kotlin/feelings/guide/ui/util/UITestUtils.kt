@@ -160,7 +160,8 @@ internal fun checkQuestion(questionId: Int) {
 }
 
 internal fun checkQuestion(question: String) {
-    onView(withId(R.id.questionRV)).check(matches(hasItem(hasDescendant(withText(question)))))
+    onView(withId(R.id.questionRV))
+        .check(matches(hasItem(hasDescendant(withText(question)))))
 }
 
 internal fun checkNoQuestion(questionId: Int) {
@@ -169,7 +170,8 @@ internal fun checkNoQuestion(questionId: Int) {
 }
 
 internal fun checkNoQuestion(question: String) {
-    onView(withId(R.id.questionRV)).check(matches(not(hasItem(hasDescendant(withText(question))))))
+    onView(withId(R.id.questionRV))
+        .check(matches(not(hasItem(hasDescendant(withText(question))))))
 }
 
 internal fun checkSnackbar(stringId: Int) {
