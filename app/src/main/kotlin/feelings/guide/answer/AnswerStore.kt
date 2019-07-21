@@ -3,16 +3,13 @@ package feelings.guide.answer
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-
-import org.threeten.bp.LocalDateTime
-
-import feelings.guide.db.DbHelper
-
 import android.provider.BaseColumns._ID
+import feelings.guide.db.DbHelper
 import feelings.guide.question.COLUMN_IS_DELETED
 import feelings.guide.question.COLUMN_IS_HIDDEN
 import feelings.guide.question.QUESTION_TABLE
 import feelings.guide.util.DB_FORMATTER
+import org.threeten.bp.LocalDateTime
 
 internal object AnswerStore {
 

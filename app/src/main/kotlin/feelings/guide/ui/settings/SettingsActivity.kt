@@ -1,5 +1,6 @@
 package feelings.guide.ui.settings
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,10 +13,11 @@ import feelings.guide.question.QuestionService
 import feelings.guide.ui.BaseActivity
 import kotlinx.android.synthetic.main.settings_activity.*
 
-class SettingsActivity : BaseActivity() {
+//keep the listener link to not get garbage collected from pref's WeakHashMap
+@SuppressLint("StaticFieldLeak")
+private val localeChangeListener = LocaleChangeListener()
 
-    //keep the listener link to not get garbage collected from pref's WeakHashMap
-    private lateinit var localeChangeListener: LocaleChangeListener
+class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,22 +29,31 @@ class SettingsActivity : BaseActivity() {
             .replace(R.id.settingsActivityLayout, SettingsFragment())
             .commit()
 
-        localeChangeListener = LocaleChangeListener(this, settingsActivityLayout)
+        localeChangeListener.context = this
+        localeChangeListener.view = settingsActivityLayout
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(localeChangeListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .unregisterOnSharedPreferenceChangeListener(localeChangeListener)
     }
 }
 
 /**
  * This listener should be in the activity, not in the fragment
  */
-private class LocaleChangeListener(private var context: Context, private val view: View) :
-    SharedPreferences.OnSharedPreferenceChangeListener {
+private class LocaleChangeListener(
+    internal var context: Context? = null,
+    internal var view: View? = null
+) : SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (LocaleUtil.SELECTED_LANGUAGE == key) {
-            context = LocaleUtil.setLocale(context)
-            QuestionService.changeLanguage(context)
-            Snackbar.make(view, R.string.msg_change_language_restart, Snackbar.LENGTH_LONG).show()
+        if (SELECTED_LANGUAGE_KEY == key && context != null) {
+            context = LocaleUtil.setLocale(context!!)
+            QuestionService.changeLanguage(context!!)
+            view?.let { Snackbar.make(it, R.string.msg_change_language_restart, Snackbar.LENGTH_LONG).show() }
         }
     }
 }

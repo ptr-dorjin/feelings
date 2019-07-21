@@ -4,12 +4,11 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
 import androidx.preference.PreferenceManager
+import feelings.guide.ui.settings.SELECTED_LANGUAGE_KEY
 import java.util.*
 
 object LocaleUtil {
     private val SUPPORTED_LANGUAGES = listOf(Locale.ENGLISH.language, Locale("ru").language)
-
-    internal const val SELECTED_LANGUAGE = "Feelings.Guide.Selected.Language"
 
     fun setLocale(context: Context): Context {
         var defaultLanguage = Locale.getDefault().language
@@ -32,13 +31,13 @@ object LocaleUtil {
 
     private fun getPersistedData(context: Context, defaultLanguage: String): String? {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(SELECTED_LANGUAGE, defaultLanguage)
+            .getString(SELECTED_LANGUAGE_KEY, defaultLanguage)
     }
 
     private fun persist(context: Context, language: String?) {
         PreferenceManager.getDefaultSharedPreferences(context)
             .edit()
-            .putString(SELECTED_LANGUAGE, language)
+            .putString(SELECTED_LANGUAGE_KEY, language)
             .apply()
     }
 

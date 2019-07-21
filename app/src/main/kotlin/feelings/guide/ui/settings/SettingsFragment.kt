@@ -11,8 +11,9 @@ import feelings.guide.R
 import feelings.guide.REFRESH_QUESTIONS_RESULT_KEY
 import feelings.guide.question.QuestionService
 
-const val DATE_FORMAT_KEY = "Feelings.Guide.Date.Format"
-const val TIME_FORMAT_KEY = "Feelings.Guide.Time.Format"
+internal const val SELECTED_LANGUAGE_KEY = "Feelings.Guide.Selected.Language"
+internal const val DATE_FORMAT_KEY = "Feelings.Guide.Date.Format"
+internal const val TIME_FORMAT_KEY = "Feelings.Guide.Time.Format"
 private const val RESTORE_BUILT_IN_QUESTIONS_KEY = "Feelings.Guide.Restore.Built.In.Questions"
 
 class SettingsFragment : PreferenceFragmentCompat() {

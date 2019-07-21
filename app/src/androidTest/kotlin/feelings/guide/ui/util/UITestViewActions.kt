@@ -1,17 +1,17 @@
 package feelings.guide.ui.util
 
 import android.view.View
+import androidx.test.espresso.PerformException
+import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.CoordinatesProvider
 import androidx.test.espresso.action.GeneralClickAction
 import androidx.test.espresso.action.Press
 import androidx.test.espresso.action.Tap
-import androidx.test.espresso.util.HumanReadables
-import androidx.test.espresso.PerformException
-import androidx.test.espresso.UiController
-import androidx.test.espresso.util.TreeIterables
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.util.HumanReadables
+import androidx.test.espresso.util.TreeIterables
 import org.hamcrest.Matcher
 import java.util.concurrent.TimeoutException
 

@@ -55,6 +55,7 @@ class LocaleUITest(
         // the message is displayed on different languages on different APIs:
         //  - on Android < 7 it's in the new language
         //  - on Android >= 7 its in the old language
+        checkSnackbar(R.string.msg_change_language_restart)
     }
 
     @Test

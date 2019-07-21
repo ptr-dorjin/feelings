@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="@string/title_settings_category_interface">
         <ListPreference
             android:defaultValue="en"
@@ -8,7 +10,7 @@
             android:key="Feelings.Guide.Selected.Language"
             android:negativeButtonText="@null"
             android:title="@string/title_settings_language"
-            />
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/title_settings_category_log">
@@ -18,14 +20,16 @@
             android:entryValues="@array/date_formats"
             android:key="Feelings.Guide.Date.Format"
             android:negativeButtonText="@null"
-            android:title="@string/title_settings_date_format" />
+            android:title="@string/title_settings_date_format"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="HH:mm"
             android:entries="@array/time_formats"
             android:entryValues="@array/time_formats"
             android:key="Feelings.Guide.Time.Format"
             android:negativeButtonText="@null"
-            android:title="@string/title_settings_time_format" />
+            android:title="@string/title_settings_time_format"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/title_settings_category_builtin_questions">
