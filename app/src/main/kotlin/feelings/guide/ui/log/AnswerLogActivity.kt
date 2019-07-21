@@ -19,7 +19,6 @@ import feelings.guide.ui.answer.AnswerActivity
 import feelings.guide.ui.question.QuestionClearLogDialogFragment
 import feelings.guide.ui.question.QuestionClearLogDialogListener
 import kotlinx.android.synthetic.main.answer_log_by_question_activity.*
-import org.jetbrains.annotations.TestOnly
 
 private const val DEFAULT_QUESTION_ID: Long = -1
 
@@ -33,7 +32,6 @@ class AnswerLogActivity : BaseActivity(),
     private var isFull: Boolean = false
     private lateinit var adapter: AnswerLogAdapter
     private var lastDeleted: Answer? = null
-    internal var deleteSnackbarCallback: Snackbar.Callback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,10 +144,9 @@ class AnswerLogActivity : BaseActivity(),
         //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
         adapter.refresh()
 
-        val snackbar = Snackbar.make(answerLogActivityLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
+        Snackbar.make(answerLogActivityLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
             .setAction(R.string.snackbar_undo) { undoDelete() }
-        deleteSnackbarCallback?.let { snackbar.addCallback(it) } // for tests only
-        snackbar.show()
+            .show()
     }
 
     private fun undoDelete() {

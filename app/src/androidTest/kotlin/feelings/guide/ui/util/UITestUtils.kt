@@ -175,8 +175,13 @@ internal fun checkNoQuestion(question: String) {
 }
 
 internal fun checkSnackbar(stringId: Int) {
-    onView(withId(com.google.android.material.R.id.snackbar_text))
-        .check(matches(withText(stringId)))
+    val snackbarId = com.google.android.material.R.id.snackbar_text
+    onView(isRoot()).perform(waitId(snackbarId))
+    onView(withId(snackbarId)).check(matches(withText(stringId)))
+}
+
+fun waitForSnackbar() {
+    onView(isRoot()).perform(waitId(com.google.android.material.R.id.snackbar_action))
 }
 
 internal fun openEditAnswer(answer: String) {

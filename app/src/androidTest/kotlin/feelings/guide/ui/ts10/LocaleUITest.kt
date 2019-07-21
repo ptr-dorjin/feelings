@@ -13,6 +13,7 @@ import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
 import feelings.guide.ui.question.QuestionsActivity
 import feelings.guide.ui.util.checkQuestion
+import feelings.guide.ui.util.checkSnackbar
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -51,9 +52,7 @@ class LocaleUITest(
         // when
         changeLocale(locale)
         // then
-        // cannot test snackbar with msg_change_language_restart because
-        // 1. snackbar is flaky
-        // 2. the message is displayed on different languages on different APIs:
+        // the message is displayed on different languages on different APIs:
         //  - on Android < 7 it's in the new language
         //  - on Android >= 7 its in the old language
     }

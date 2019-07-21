@@ -30,7 +30,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun setUpDateFormatPreference() {
-        val dateFormatPreference: Preference? = preferenceScreen.findPreference(DATE_FORMAT_KEY)
+        val dateFormatPreference: Preference? = findPreference(DATE_FORMAT_KEY)
         dateFormatPreference?.setOnPreferenceChangeListener { _, _ ->
             view?.let { Snackbar.make(it, R.string.msg_date_format_success, Snackbar.LENGTH_LONG).show() }
             true
@@ -38,7 +38,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun setUpTimeFormatPreference() {
-        val dateFormatPreference: Preference? = preferenceScreen.findPreference(TIME_FORMAT_KEY)
+        val dateFormatPreference: Preference? = findPreference(TIME_FORMAT_KEY)
         dateFormatPreference?.setOnPreferenceChangeListener { _, _ ->
             view?.let { Snackbar.make(it, R.string.msg_time_format_success, Snackbar.LENGTH_LONG).show() }
             true
@@ -46,7 +46,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun setUpRestoreBuiltInQuestionsPreference() {
-        val clearLogPreference: Preference? = preferenceScreen.findPreference(RESTORE_BUILT_IN_QUESTIONS_KEY)
+        val clearLogPreference: Preference? = findPreference(RESTORE_BUILT_IN_QUESTIONS_KEY)
         clearLogPreference?.setOnPreferenceClickListener {
             activity?.let {
                 AlertDialog.Builder(it)

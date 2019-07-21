@@ -7,7 +7,6 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.filters.FlakyTest
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
@@ -48,7 +47,6 @@ class DeleteAnswerUITest {
         checkNoAnswer(answer)
     }
 
-    @FlakyTest(detail = "Snackbar is not rendered sometimes")
     @Test
     fun undoAnswerDeletion_fullLog_returnsAnswerToList() {
         // given
@@ -57,6 +55,7 @@ class DeleteAnswerUITest {
         deleteAnswer(answer)
 
         // when
+        waitForSnackbar()
         onView(withText(R.string.snackbar_undo)).perform(click())
 
         // then
@@ -84,6 +83,7 @@ class DeleteAnswerUITest {
         deleteAnswer(answer)
 
         // when
+        waitForSnackbar()
         onView(withText(R.string.snackbar_undo)).perform(click())
 
         // then
