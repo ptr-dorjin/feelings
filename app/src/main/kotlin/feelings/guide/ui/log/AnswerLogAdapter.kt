@@ -1,5 +1,6 @@
 package feelings.guide.ui.log
 
+import android.content.Context
 import android.database.Cursor
 import android.provider.BaseColumns._ID
 import android.view.LayoutInflater
@@ -11,7 +12,6 @@ import feelings.guide.R
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
 import feelings.guide.question.QuestionService
-import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.RecyclerViewCursorAdapter
 import feelings.guide.util.DateTimeUtil
 import kotlinx.android.synthetic.main.answer_log_full_item.view.*
@@ -22,10 +22,10 @@ import org.threeten.bp.format.DateTimeFormatter.ofPattern
  * - answer log by one question
  * - full answer log (for all questions)
  */
-internal class AnswerLogAdapter(activity: BaseActivity, private val isFull: Boolean, private val questionId: Long) :
-    RecyclerViewCursorAdapter<AnswerLogAdapter.AnswerLogHolder>(activity) {
+internal class AnswerLogAdapter(context: Context, private val isFull: Boolean, private val questionId: Long) :
+    RecyclerViewCursorAdapter<AnswerLogAdapter.AnswerLogHolder>(context) {
 
-    private val dateTimeFormat: String = DateTimeUtil.getDateTimeFormat(activity)
+    private val dateTimeFormat: String = DateTimeUtil.getDateTimeFormat(context)
 
     internal class AnswerLogHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dateTimeView: TextView = itemView.answerLogDateTime
@@ -42,7 +42,7 @@ internal class AnswerLogAdapter(activity: BaseActivity, private val isFull: Bool
             isFull -> R.layout.answer_log_full_item
             else -> R.layout.answer_log_by_question_item
         }
-        val view = LayoutInflater.from(activity).inflate(itemViewId, parent, false)
+        val view = LayoutInflater.from(context).inflate(itemViewId, parent, false)
         return AnswerLogHolder(view)
     }
 
@@ -52,13 +52,13 @@ internal class AnswerLogAdapter(activity: BaseActivity, private val isFull: Bool
         holder.dateTimeView.text = dateTime.format(ofPattern(dateTimeFormat))
         if (holder.questionView != null) {
             //in case of full log
-            holder.questionView.text = QuestionService.getQuestionText(activity, questionId1)
+            holder.questionView.text = QuestionService.getQuestionText(context, questionId1)
         }
         holder.answerView.text = answerText
     }
 
     fun refresh() {
-        val cursor = AnswerStore.getAnswers(activity, if (isFull) -1 else questionId)
+        val cursor = AnswerStore.getAnswers(context, if (isFull) -1 else questionId)
         swapCursor(cursor)
     }
 

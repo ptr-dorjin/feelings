@@ -11,7 +11,11 @@ import feelings.guide.R
 
 private const val ICON_MARGIN = 64
 
-internal class AnswerLogSwipeCallback(context: Context, private val swipeListener: AnswerLogSwipeListener) :
+internal class AnswerLogSwipeCallback(
+    context: Context,
+    private val onDeleteAnswerCallback: (Int) -> Unit,
+    private val onEditAnswerCallback: (Int) -> Unit
+) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
     private val iconDelete: VectorDrawableCompat =
         VectorDrawableCompat.create(context.resources, R.drawable.ic_delete_sweep_white_24dp, null)!!
@@ -22,11 +26,6 @@ internal class AnswerLogSwipeCallback(context: Context, private val swipeListene
     private val backgroundEdit: ColorDrawable =
         ColorDrawable(ResourcesCompat.getColor(context.resources, R.color.lightGreen, null))
 
-    internal interface AnswerLogSwipeListener {
-        fun onDeleteAnswer(position: Int)
-        fun onEditAnswer(position: Int)
-    }
-
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
         // used for up and down movements
         return false
@@ -35,9 +34,9 @@ internal class AnswerLogSwipeCallback(context: Context, private val swipeListene
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.adapterPosition
         if (direction == ItemTouchHelper.RIGHT) {
-            swipeListener.onDeleteAnswer(position)
+            onDeleteAnswerCallback(position)
         } else if (direction == ItemTouchHelper.LEFT) {
-            swipeListener.onEditAnswer(position)
+            onEditAnswerCallback(position)
         }
     }
 

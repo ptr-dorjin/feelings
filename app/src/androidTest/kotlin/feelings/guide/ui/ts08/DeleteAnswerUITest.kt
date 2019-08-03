@@ -11,7 +11,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
 import feelings.guide.ui.log.AnswerLogActivity
-import feelings.guide.ui.question.QuestionsActivity
+import feelings.guide.ui.question.QuestionListActivity
 import feelings.guide.ui.util.*
 import org.junit.Before
 import org.junit.Rule
@@ -23,7 +23,7 @@ class DeleteAnswerUITest {
     private lateinit var context: Context
 
     @get:Rule
-    var activityRule = ActivityTestRule(QuestionsActivity::class.java)
+    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
 
     @get:Rule
     var answerLogRule = ActivityTestRule(AnswerLogActivity::class.java)

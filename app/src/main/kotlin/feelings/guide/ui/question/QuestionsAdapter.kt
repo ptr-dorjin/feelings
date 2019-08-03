@@ -1,6 +1,6 @@
 package feelings.guide.ui.question
 
-import android.content.Intent
+import android.content.Context
 import android.database.Cursor
 import android.provider.BaseColumns._ID
 import android.view.LayoutInflater
@@ -9,18 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import feelings.guide.ADD_ANSWER_REQUEST_CODE
-import feelings.guide.QUESTION_ID_PARAM
 import feelings.guide.R
 import feelings.guide.question.COLUMN_IS_USER
 import feelings.guide.question.COLUMN_TEXT
 import feelings.guide.question.QuestionService
-import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.RecyclerViewCursorAdapter
-import feelings.guide.ui.answer.AnswerActivity
 import kotlinx.android.synthetic.main.question_card.view.*
 
-internal class QuestionsAdapter(activity: BaseActivity) : RecyclerViewCursorAdapter<QuestionsAdapter.QuestionViewHolder>(activity) {
+internal class QuestionsAdapter(context: Context, private val questionClickCallback: (Long) -> Unit) :
+    RecyclerViewCursorAdapter<QuestionsAdapter.QuestionViewHolder>(context) {
 
     internal inner class QuestionViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var questionId: Long = 0
@@ -28,11 +25,7 @@ internal class QuestionsAdapter(activity: BaseActivity) : RecyclerViewCursorAdap
         val popupMenu: ImageButton = itemView.popupMenu
 
         init {
-            itemView.setOnClickListener {
-                activity.startActivityForResult(Intent(activity, AnswerActivity::class.java).apply {
-                    putExtra(QUESTION_ID_PARAM, questionId)
-                }, ADD_ANSWER_REQUEST_CODE)
-            }
+            itemView.setOnClickListener { questionClickCallback(questionId) }
         }
     }
 
@@ -57,6 +50,6 @@ internal class QuestionsAdapter(activity: BaseActivity) : RecyclerViewCursorAdap
     }
 
     fun refreshAll() {
-        swapCursor(QuestionService.getAllQuestions(activity))
+        swapCursor(QuestionService.getAllQuestions(context))
     }
 }

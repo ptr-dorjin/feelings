@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
-import feelings.guide.ui.question.QuestionsActivity
+import feelings.guide.ui.question.QuestionListActivity
 import feelings.guide.ui.util.*
 import org.hamcrest.Matchers.not
 import org.junit.Before
@@ -22,7 +22,7 @@ class AddUserQuestionUITest {
     private lateinit var context: Context
 
     @get:Rule
-    var activityRule = ActivityTestRule(QuestionsActivity::class.java)
+    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
 
     @Before
     fun before() {

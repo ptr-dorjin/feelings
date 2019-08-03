@@ -11,7 +11,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
-import feelings.guide.ui.question.QuestionsActivity
+import feelings.guide.ui.question.QuestionListActivity
 import feelings.guide.ui.util.first
 import feelings.guide.ui.util.openFullLog
 import feelings.guide.ui.util.openLogByQuestion
@@ -25,8 +25,8 @@ import org.junit.runners.Parameterized.Parameters
 import java.util.*
 
 private val dateFormats = mapOf(
-    "d MMM yyyy" to "\\d{1,2} \\p{L}{3} \\d{4}",
-    "MMM d yyyy" to "\\p{L}{3} \\d{1,2} \\d{4}",
+    "d MMM yyyy" to "\\d{1,2} [\\p{L}.]{3,4} \\d{4}",
+    "MMM d yyyy" to "[\\p{L}.]{3,4} \\d{1,2} \\d{4}",
     "dd.MM.yyyy" to "\\d{2}\\.\\d{2}\\.\\d{4}",
     "MM/dd/yyyy" to "\\d{2}/\\d{2}/\\d{4}",
     "yyyy-MM-dd" to "\\d{4}-\\d{2}-\\d{2}"
@@ -43,7 +43,7 @@ class DateTimeFormatUITest(private val dateFormat: String, private val timeForma
     private lateinit var context: Context
 
     @get:Rule
-    var activityRule = ActivityTestRule(QuestionsActivity::class.java)
+    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
 
     @Before
     fun before() {

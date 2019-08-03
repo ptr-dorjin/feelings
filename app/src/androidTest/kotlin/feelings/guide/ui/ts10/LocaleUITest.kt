@@ -11,7 +11,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
-import feelings.guide.ui.question.QuestionsActivity
+import feelings.guide.ui.question.QuestionListActivity
 import feelings.guide.ui.util.checkQuestion
 import feelings.guide.ui.util.checkSnackbar
 import org.junit.Before
@@ -40,7 +40,7 @@ class LocaleUITest(
     private lateinit var context: Context
 
     @get:Rule
-    var activityRule = ActivityTestRule(QuestionsActivity::class.java)
+    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
 
     @Before
     fun before() {

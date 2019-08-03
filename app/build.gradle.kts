@@ -62,7 +62,10 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.1.0-beta01")
     implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta2")
     implementation("androidx.vectordrawable:vectordrawable:1.0.1")
-    implementation("com.google.android.material:material:1.1.0-alpha08")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.1.0-beta02")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.1.0-beta02")
+    implementation("androidx.navigation:navigation-ui-ktx:2.1.0-beta02")
+    implementation("com.google.android.material:material:1.1.0-alpha09")
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.0") //needed due to minSdkVersion=15
 
     testImplementation(kotlin("test", KotlinCompilerVersion.VERSION))
@@ -77,8 +80,8 @@ dependencies {
     androidTestImplementation("com.google.truth:truth:0.44") { //todo replace?
         exclude("com.google.guava", "listenablefuture")
     }
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-alpha01")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0-alpha01")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-alpha02")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0-alpha02")
     androidTestImplementation("org.hamcrest:hamcrest:2.1")
     androidTestImplementation("org.hamcrest:hamcrest-library:2.1")
 }

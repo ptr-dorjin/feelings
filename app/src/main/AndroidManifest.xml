@@ -14,7 +14,7 @@
         android:name=".FeelingsApplication"
         >
 
-        <activity android:name=".ui.question.QuestionsActivity"
+        <activity android:name=".ui.question.QuestionListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             >
@@ -25,34 +25,34 @@
         </activity>
 
         <activity android:name=".ui.answer.AnswerActivity"
-            android:parentActivityName=".ui.question.QuestionsActivity"
+            android:parentActivityName=".ui.question.QuestionListActivity"
             android:label="@string/title_answer_activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"
             tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.question.QuestionsActivity" />
+                android:value=".ui.question.QuestionListActivity" />
         </activity>
 
         <activity android:name=".ui.log.AnswerLogActivity"
-            android:parentActivityName=".ui.question.QuestionsActivity"
+            android:parentActivityName=".ui.question.QuestionListActivity"
             android:label="@string/title_answer_log_activity"
             android:screenOrientation="portrait"
             tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.question.QuestionsActivity" />
+                android:value=".ui.question.QuestionListActivity" />
         </activity>
 
         <activity android:name=".ui.settings.SettingsActivity"
-            android:parentActivityName=".ui.question.QuestionsActivity"
+            android:parentActivityName=".ui.question.QuestionListActivity"
             android:label="@string/title_settings_activity"
             android:screenOrientation="portrait"
             tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.question.QuestionsActivity" />
+                android:value=".ui.question.QuestionListActivity" />
         </activity>
 
     </application>

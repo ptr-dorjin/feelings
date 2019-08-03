@@ -1,43 +1,48 @@
 package feelings.guide.ui.question
 
-import android.app.Activity
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import feelings.guide.*
+import feelings.guide.R
 import feelings.guide.answer.AnswerStore
 import feelings.guide.question.Question
 import feelings.guide.question.QuestionService
-import feelings.guide.ui.BaseActivity
-import feelings.guide.ui.log.AnswerLogActivity
-import feelings.guide.ui.settings.SettingsActivity
 import kotlinx.android.synthetic.main.question_edit_dialog.*
-import kotlinx.android.synthetic.main.questions_activity.*
+import kotlinx.android.synthetic.main.question_list.*
 
-class QuestionsActivity : BaseActivity(),
-    QuestionEditDialogListener,
-    QuestionDeleteDialogListener,
-    QuestionHideDialogListener,
-    QuestionClearLogDialogListener {
+class QuestionListFragment : Fragment() {
 
     private lateinit var adapter: QuestionsAdapter
     private var changeQuestionId: Long? = null
+    private var popup: PopupMenu? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.questions_activity)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.question_list, container, false)
+    }
 
+    override fun onPause() {
+        // to avoid "Activity has leaked window" error, popup should be dismissed
+        popup?.dismiss()
+        popup = null
+        super.onPause()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
         setUpFab()
         setUpRv()
     }
@@ -47,36 +52,45 @@ class QuestionsActivity : BaseActivity(),
     }
 
     private fun setUpRv() {
-        questionRV.layoutManager = LinearLayoutManager(this)
-        adapter = QuestionsAdapter(this)
+        questionRV.layoutManager = LinearLayoutManager(context)
+        adapter = QuestionsAdapter(requireContext(), this::questionClickCallback)
         adapter.setHasStableIds(true)
         questionRV.adapter = adapter
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
+    private fun questionClickCallback(questionId: Long) {
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            (requireActivity() as QuestionListActivity).navigateToAnswer(questionId)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.questions_menu, menu)
-        return true
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.show_log -> {
-                showAnswerLog(null)
+                if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                    (requireActivity() as QuestionListActivity).navigateToAnswerLog(null)
+                }
                 true
             }
             R.id.show_settings -> {
-                showSettings()
+                if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                    (requireActivity() as QuestionListActivity).navigateToSettings()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    fun showPopupMenu(v: View) {
-        val popup = PopupMenu(this, v)
-        val questionId = v.getTag(R.id.tag_question_id) as Long
-        val isUser = v.getTag(R.id.tag_is_user) as Boolean
+    fun showPopupMenu(view: View) {
+        val popup = PopupMenu(requireContext(), view)
+        val questionId = view.getTag(R.id.tag_question_id) as Long
+        val isUser = view.getTag(R.id.tag_is_user) as Boolean
         popup.inflate(
             when {
                 isUser -> R.menu.questions_popup_menu_user
@@ -85,29 +99,27 @@ class QuestionsActivity : BaseActivity(),
             }
         )
         popup.setOnMenuItemClickListener {
+            popup.dismiss()
             when (it.itemId) {
                 R.id.show_log_by_question -> {
-                    popup.dismiss()
-                    showAnswerLog(questionId)
+                    if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                        (requireActivity() as QuestionListActivity).navigateToAnswerLog(questionId)
+                    }
                     true
                 }
                 R.id.edit -> {
-                    popup.dismiss()
                     showEditQuestionDialog(questionId)
                     true
                 }
                 R.id.delete -> {
-                    popup.dismiss()
                     showDeleteConfirmation(questionId)
                     true
                 }
                 R.id.hide -> {
-                    popup.dismiss()
                     showHideConfirmation(questionId)
                     true
                 }
                 R.id.clear_log -> {
-                    popup.dismiss()
                     showClearLogConfirmation(questionId)
                     true
                 }
@@ -115,12 +127,13 @@ class QuestionsActivity : BaseActivity(),
             }
         }
         popup.show()
+        this.popup = popup
     }
 
     private fun showEditQuestionDialog(questionId: Long?) {
         changeQuestionId = questionId
-        val fragmentManager = supportFragmentManager
-        val dialogFragment = QuestionEditDialogFragment()
+        val fragmentManager = requireActivity().supportFragmentManager
+        val dialogFragment = QuestionEditDialogFragment(this::onSaveClick)
         dialogFragment.isCancelable = false
         dialogFragment.show(fragmentManager, QuestionEditDialogFragment::class.java.simpleName)
         fragmentManager.executePendingTransactions() // to fetch inflated dialog
@@ -133,7 +146,7 @@ class QuestionsActivity : BaseActivity(),
         val saveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
 
         if (questionId != null)
-            questionEditText.setText(QuestionService.getQuestionText(this, questionId))
+            questionEditText.setText(QuestionService.getQuestionText(requireContext(), questionId))
         else saveButton.isEnabled = false
 
         questionEditText.addTextChangedListener(object : TextWatcher {
@@ -149,91 +162,79 @@ class QuestionsActivity : BaseActivity(),
 
     private fun showDeleteConfirmation(questionId: Long) {
         changeQuestionId = questionId
-        QuestionDeleteDialogFragment().show(supportFragmentManager, QuestionDeleteDialogFragment::class.java.simpleName)
+        QuestionDeleteDialogFragment(this::onDeleteConfirmed).show(
+            requireActivity().supportFragmentManager,
+            QuestionDeleteDialogFragment::class.java.simpleName
+        )
     }
 
     private fun showHideConfirmation(questionId: Long) {
         changeQuestionId = questionId
-        QuestionHideDialogFragment().show(supportFragmentManager, QuestionHideDialogFragment::class.java.simpleName)
+        QuestionHideDialogFragment(this::onHideConfirmed).show(
+            requireActivity().supportFragmentManager,
+            QuestionHideDialogFragment::class.java.simpleName
+        )
     }
 
     private fun showClearLogConfirmation(questionId: Long) {
         changeQuestionId = questionId
-        QuestionClearLogDialogFragment().show(supportFragmentManager, QuestionClearLogDialogFragment::class.java.simpleName)
+        QuestionClearLogDialogFragment(this::onClearLogByQuestionConfirmed).show(
+            requireActivity().supportFragmentManager,
+            QuestionClearLogDialogFragment::class.java.simpleName
+        )
     }
 
-    private fun showAnswerLog(questionId: Long?) {
-        startActivity(Intent(this, AnswerLogActivity::class.java).apply {
-            questionId?.let {
-                putExtra(QUESTION_ID_PARAM, questionId)
-            }
-        })
-    }
-
-    private fun showSettings() {
-        startActivityForResult(Intent(this, SettingsActivity::class.java), SETTINGS_REQUEST_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SETTINGS_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val needToRefresh = data!!.getBooleanExtra(REFRESH_QUESTIONS_RESULT_KEY, false)
-            if (needToRefresh) {
-                adapter.refreshAll()
-            }
-        } else if (requestCode == ADD_ANSWER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Snackbar.make(questionsActivityLayout, R.string.msg_answer_added_success, Snackbar.LENGTH_LONG).show()
-        }
-    }
-
-    override fun onSaveClick(dialogFragment: DialogFragment) {
-        val text = dialogFragment.dialog!!.questionTextEdit.text.toString().trim()
+    private fun onSaveClick(text: String) {
         if (text.isEmpty()) {
-            Snackbar.make(questionsActivityLayout, R.string.msg_question_text_empty, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(questions_list_layout, R.string.msg_question_text_empty, Snackbar.LENGTH_LONG).show()
             return
         }
 
         if (changeQuestionId == null) performServiceAction(
-            QuestionService.createQuestion(this, Question(text)) != -1L,
+            QuestionService.createQuestion(requireContext(), Question(text)) != -1L,
             R.string.msg_question_create_success,
             R.string.msg_question_create_error
         ) else performServiceAction(
-            QuestionService.updateQuestion(this, Question(changeQuestionId!!, text)),
+            QuestionService.updateQuestion(requireContext(), Question(changeQuestionId!!, text)),
             R.string.msg_question_edit_success,
             R.string.msg_question_edit_error
         )
         adapter.refreshAll()
     }
 
-    override fun onDeleteConfirmed() {
+    private fun onDeleteConfirmed() {
         performServiceAction(
-            QuestionService.deleteQuestion(this, changeQuestionId!!),
+            QuestionService.deleteQuestion(requireContext(), changeQuestionId!!),
             R.string.msg_question_delete_success,
             R.string.msg_question_delete_error
         )
         adapter.refreshAll()
         // also clear the log
-        if (QuestionService.hasAnswers(this, changeQuestionId!!)) {
-            val dialogFragment = QuestionClearLogDialogFragment()
-            dialogFragment.show(supportFragmentManager, QuestionClearLogDialogFragment::class.java.simpleName)
+        if (QuestionService.hasAnswers(requireContext(), changeQuestionId!!)) {
+            val dialogFragment = QuestionClearLogDialogFragment(this::onClearLogByQuestionConfirmed)
+            dialogFragment.show(requireActivity().supportFragmentManager, QuestionClearLogDialogFragment::class.java.simpleName)
         }
     }
 
-    override fun onHideConfirmed() {
+    private fun onHideConfirmed() {
         performServiceAction(
-            QuestionService.hideQuestion(this, changeQuestionId!!),
+            QuestionService.hideQuestion(requireContext(), changeQuestionId!!),
             R.string.msg_question_hide_success,
             R.string.msg_question_hide_error
         )
         adapter.refreshAll()
     }
 
-    override fun onClearLogByQuestionConfirmed() {
-        AnswerStore.deleteByQuestionId(this, changeQuestionId!!)
-        Snackbar.make(questionsActivityLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
+    private fun onClearLogByQuestionConfirmed() {
+        AnswerStore.deleteByQuestionId(requireContext(), changeQuestionId!!)
+        Snackbar.make(questions_list_layout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
     }
 
     private fun performServiceAction(success: Boolean, successMessageId: Int, errorMessageId: Int) =
-        if (success) Snackbar.make(questionsActivityLayout, successMessageId, Snackbar.LENGTH_LONG).show()
-        else Snackbar.make(questionsActivityLayout, errorMessageId, Snackbar.LENGTH_LONG).show()
+        if (success) Snackbar.make(questions_list_layout, successMessageId, Snackbar.LENGTH_LONG).show()
+        else Snackbar.make(questions_list_layout, errorMessageId, Snackbar.LENGTH_LONG).show()
+
+    internal fun refreshAll() {
+        adapter.refreshAll()
+    }
 }
