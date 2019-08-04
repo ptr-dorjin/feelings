@@ -11,7 +11,7 @@ import feelings.guide.R
 import feelings.guide.profile.LocaleUtil
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.BaseActivity
-import kotlinx.android.synthetic.main.settings_activity.*
+import kotlinx.android.synthetic.main.settings_host.*
 
 //keep the listener link to not get garbage collected from pref's WeakHashMap
 @SuppressLint("StaticFieldLeak")
@@ -21,16 +21,16 @@ class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_activity)
+        setContentView(R.layout.settings_host)
 
         // Display the fragment as the main content.
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settingsActivityLayout, SettingsFragment())
+            .replace(R.id.settingsContent, SettingsFragment())
             .commit()
 
         localeChangeListener.context = this
-        localeChangeListener.view = settingsActivityLayout
+        localeChangeListener.view = settingsContent
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(localeChangeListener)
     }
@@ -53,7 +53,10 @@ private class LocaleChangeListener(
         if (SELECTED_LANGUAGE_KEY == key && context != null) {
             context = LocaleUtil.setLocale(context!!)
             QuestionService.changeLanguage(context!!)
-            view?.let { Snackbar.make(it, R.string.msg_change_language_restart, Snackbar.LENGTH_LONG).show() }
+            view?.let {
+                Snackbar.make(it, R.string.msg_change_language_restart, Snackbar.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 }
