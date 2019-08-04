@@ -186,7 +186,7 @@ class QuestionListFragment : Fragment() {
 
     private fun onSaveClick(text: String) {
         if (text.isEmpty()) {
-            Snackbar.make(questions_list_layout, R.string.msg_question_text_empty, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(questionsListLayout, R.string.msg_question_text_empty, Snackbar.LENGTH_LONG).show()
             return
         }
 
@@ -227,14 +227,18 @@ class QuestionListFragment : Fragment() {
 
     private fun onClearLogByQuestionConfirmed() {
         AnswerStore.deleteByQuestionId(requireContext(), changeQuestionId!!)
-        Snackbar.make(questions_list_layout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(questionsListLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
     }
 
     private fun performServiceAction(success: Boolean, successMessageId: Int, errorMessageId: Int) =
-        if (success) Snackbar.make(questions_list_layout, successMessageId, Snackbar.LENGTH_LONG).show()
-        else Snackbar.make(questions_list_layout, errorMessageId, Snackbar.LENGTH_LONG).show()
+        if (success) Snackbar.make(questionsListLayout, successMessageId, Snackbar.LENGTH_LONG).show()
+        else Snackbar.make(questionsListLayout, errorMessageId, Snackbar.LENGTH_LONG).show()
 
-    internal fun refreshAll() {
-        adapter.refreshAll()
+    internal fun onReturnFromSettings(needToRefresh: Boolean) {
+        if (needToRefresh) adapter.refreshAll()
+    }
+
+    internal fun onReturnFromAddAnswer(answerIsAdded: Boolean) {
+        if (answerIsAdded) Snackbar.make(questionsListLayout, R.string.msg_answer_added_success, Snackbar.LENGTH_LONG).show()
     }
 }

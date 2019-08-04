@@ -5,6 +5,7 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToHolder
@@ -178,6 +179,11 @@ internal fun checkSnackbar(stringId: Int) {
     val snackbarId = com.google.android.material.R.id.snackbar_text
     onView(isRoot()).perform(waitId(snackbarId))
     onView(withId(snackbarId)).check(matches(withText(stringId)))
+}
+
+internal fun checkNoSnackbar(stringId: Int) {
+    val snackbarId = com.google.android.material.R.id.snackbar_text
+    onView(allOf(withId(snackbarId), withText(stringId))).check(doesNotExist())
 }
 
 fun waitForSnackbar() {

@@ -14,7 +14,6 @@ import feelings.guide.randomAlphanumericString
 import feelings.guide.ui.question.QuestionListActivity
 import feelings.guide.ui.util.*
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -111,6 +110,7 @@ class EditAnswerUITest {
         editAnswer(answer, new)
 
         // then
+        checkSnackbar(R.string.msg_answer_updated_success)
         onView(withText(new)).check(matches(isDisplayed()))
     }
 
@@ -125,6 +125,7 @@ class EditAnswerUITest {
         editAnswer(answer, new)
 
         // then
+        checkSnackbar(R.string.msg_answer_updated_success)
         onView(withText(new)).check(matches(isDisplayed()))
     }
 
@@ -142,6 +143,7 @@ class EditAnswerUITest {
         editAnswer(answer, new)
 
         // then
+        checkSnackbar(R.string.msg_answer_updated_success)
         onView(withText(new)).check(matches(isDisplayed()))
 
         // clean up
@@ -163,6 +165,7 @@ class EditAnswerUITest {
         editAnswer(answer, new)
 
         // then
+        checkSnackbar(R.string.msg_answer_updated_success)
         onView(withText(new)).check(matches(isDisplayed()))
 
         // clean up
@@ -171,7 +174,6 @@ class EditAnswerUITest {
     }
 
     @Test
-    @Ignore("Can be enabled after adding NavigationGraph")
     fun pressUpOnEditAnswerForFeelings_fullLog() {
         // given
         val answer = answerFeelingsRandom()
@@ -183,10 +185,10 @@ class EditAnswerUITest {
 
         // then
         onView(withText(answer)).check(matches(isDisplayed()))
+        checkNoSnackbar(R.string.msg_answer_updated_success)
     }
 
     @Test
-    @Ignore("Can be enabled after adding NavigationGraph")
     fun pressUpOnEditAnswerForFeelings_questionLog() {
         // given
         val answer = answerFeelingsRandom()
@@ -198,10 +200,10 @@ class EditAnswerUITest {
 
         // then
         onView(withText(answer)).check(matches(isDisplayed()))
+        checkNoSnackbar(R.string.msg_answer_updated_success)
     }
 
     @Test
-    @Ignore("Can be enabled after adding NavigationGraph")
     fun pressBackOnEditAnswerForFeelings_fullLog() {
         // given
         val answer = answerFeelingsRandom()
@@ -213,10 +215,10 @@ class EditAnswerUITest {
 
         // then
         onView(withText(answer)).check(matches(isDisplayed()))
+        checkNoSnackbar(R.string.msg_answer_updated_success)
     }
 
     @Test
-    @Ignore("Can be enabled after adding NavigationGraph")
     fun pressBackOnEditAnswerForFeelings_questionLog() {
         // given
         val answer = answerFeelingsRandom()
@@ -228,6 +230,7 @@ class EditAnswerUITest {
 
         // then
         onView(withText(answer)).check(matches(isDisplayed()))
+        checkNoSnackbar(R.string.msg_answer_updated_success)
     }
 
 }

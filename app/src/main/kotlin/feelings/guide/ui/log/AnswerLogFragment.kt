@@ -1,6 +1,5 @@
 package feelings.guide.ui.log
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,35 +7,30 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import feelings.guide.QUESTION_ID_PARAM
 import feelings.guide.R
-import feelings.guide.REFRESH_ANSWER_LOG_RESULT_KEY
-import feelings.guide.UPDATED_ANSWER_ID_RESULT_KEY
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.question.QuestionClearLogDialogFragment
-import kotlinx.android.synthetic.main.answer_log_by_question_activity.*
+import kotlinx.android.synthetic.main.answer_log_by_question.*
 
-private const val DEFAULT_QUESTION_ID: Long = -1
 
-class AnswerLogFragment(private val onEditAnswerActivityCallback: (Answer) -> Unit) : Fragment() {
+class AnswerLogFragment(
+    private var questionId: Long = 0,
+    private val onEditAnswerActivityCallback: (Answer) -> Unit
+) : Fragment() {
 
-    private var questionId: Long = 0
     private var isFull: Boolean = false
     private lateinit var adapter: AnswerLogAdapter
     private var lastDeleted: Answer? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        questionId = arguments?.getLong(QUESTION_ID_PARAM, DEFAULT_QUESTION_ID) ?: DEFAULT_QUESTION_ID
         isFull = questionId == DEFAULT_QUESTION_ID
-
         val layout = when {
-            isFull -> R.layout.answer_log_full_activity
-            else -> R.layout.answer_log_by_question_activity
+            isFull -> R.layout.answer_log_full
+            else -> R.layout.answer_log_by_question
         }
         return inflater.inflate(layout, container, false)
-
     }
 
     override fun onDestroy() {
@@ -127,19 +121,19 @@ class AnswerLogFragment(private val onEditAnswerActivityCallback: (Answer) -> Un
 
     private fun onClearLogFullConfirmed() {
         AnswerStore.deleteAll(requireContext())
-        Snackbar.make(answerLogActivityLayout, R.string.msg_clear_log_full_success, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(answerLogLayout, R.string.msg_clear_log_full_success, Snackbar.LENGTH_LONG).show()
         adapter.refresh()
     }
 
     private fun onClearLogDeletedConfirmed() {
         AnswerStore.deleteForDeletedQuestions(requireContext())
-        Snackbar.make(answerLogActivityLayout, R.string.msg_clear_log_deleted_success, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(answerLogLayout, R.string.msg_clear_log_deleted_success, Snackbar.LENGTH_LONG).show()
         adapter.refresh()
     }
 
     private fun onClearLogByQuestionConfirmed() {
         AnswerStore.deleteByQuestionId(requireContext(), questionId)
-        Snackbar.make(answerLogActivityLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(answerLogLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
         adapter.refresh()
     }
 
@@ -149,7 +143,7 @@ class AnswerLogFragment(private val onEditAnswerActivityCallback: (Answer) -> Un
         //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
         adapter.refresh()
 
-        Snackbar.make(answerLogActivityLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
+        Snackbar.make(answerLogLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
             .setAction(R.string.snackbar_undo) { undoDelete() }
             .show()
     }
@@ -165,23 +159,21 @@ class AnswerLogFragment(private val onEditAnswerActivityCallback: (Answer) -> Un
         onEditAnswerActivityCallback(answer)
     }
 
-    internal fun onReturnFromEditAnswer(data: Intent?) {
-        val needToRefresh = data?.getBooleanExtra(REFRESH_ANSWER_LOG_RESULT_KEY, false) ?: false
-        if (needToRefresh) {
-            //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
-            adapter.refresh()
+    internal fun onReturnFromEditAnswer(answerId: Long, answerIsUpdated: Boolean) {
+        //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
+        adapter.refresh()
 
-            //redraw recyclerView
-            answerLogRV.adapter = adapter
+        //redraw recyclerView
+        answerLogRV.adapter = adapter
 
-            //scroll to updated answer
-            val answerId = data?.getLongExtra(UPDATED_ANSWER_ID_RESULT_KEY, -1) ?: -1
-            if (answerId > 0) {
-                val position = adapter.getPositionById(answerId)
-                if (position > -1) {
-                    answerLogRV.scrollToPosition(position)
-                }
+        //scroll to the answer
+        if (answerId > 0) {
+            val position = adapter.getPositionById(answerId)
+            if (position > -1) {
+                answerLogRV.scrollToPosition(position)
             }
         }
+        if (answerIsUpdated)
+            Snackbar.make(answerLogLayout, R.string.msg_answer_updated_success, Snackbar.LENGTH_LONG).show()
     }
 }

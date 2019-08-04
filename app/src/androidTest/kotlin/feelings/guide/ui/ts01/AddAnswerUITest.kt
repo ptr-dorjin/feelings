@@ -2,7 +2,11 @@ package feelings.guide.ui.ts01
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
@@ -31,6 +35,9 @@ class AddAnswerUITest {
         val feeling = context.resources.getStringArray(R.array.anger_array)[1]
         answerFeelings(R.string.anger, feeling)
 
+        // then
+        checkSnackbar(R.string.msg_answer_added_success)
+
         // when
         openLogByQuestion(R.string.q_text_feelings)
 
@@ -50,6 +57,9 @@ class AddAnswerUITest {
         // given
         val answer = "The app"
         answerBuiltInQuestion(R.string.q_text_do_others, answer)
+
+        // then
+        checkSnackbar(R.string.msg_answer_added_success)
 
         // when
         openLogByQuestion(R.string.q_text_do_others)
@@ -73,6 +83,9 @@ class AddAnswerUITest {
         addUserQuestion(question)
         answerQuestion(question, answer)
 
+        // then
+        checkSnackbar(R.string.msg_answer_added_success)
+
         // when
         openLogByQuestion(question)
 
@@ -89,5 +102,29 @@ class AddAnswerUITest {
         // clean up user question
         pressBack()
         deleteUserQuestion(question, true)
+    }
+
+    @Test
+    fun pressUpOnAddAnswer_noSnackbarIsShown() {
+        // given
+        onView(withText(R.string.q_text_feelings)).perform(click())
+
+        // when
+        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click())
+
+        // then
+        checkNoSnackbar(R.string.msg_answer_added_success)
+    }
+
+    @Test
+    fun pressBackOnAddAnswer_noSnackbarIsShown() {
+        // given
+        onView(withText(R.string.q_text_feelings)).perform(click())
+
+        // when
+        pressBack()
+
+        // then
+        checkNoSnackbar(R.string.msg_answer_added_success)
     }
 }
