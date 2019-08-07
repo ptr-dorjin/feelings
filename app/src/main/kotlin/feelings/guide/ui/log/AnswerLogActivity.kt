@@ -7,10 +7,13 @@ import feelings.guide.*
 import feelings.guide.answer.Answer
 import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.answer.AnswerActivity
+import feelings.guide.ui.log.byquestion.AnswerLogByQuestionFragment
+import feelings.guide.ui.log.full.AnswerLogFullFragment
 
 const val DEFAULT_QUESTION_ID: Long = -1
 
 class AnswerLogActivity : BaseActivity() {
+    private var isFull: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +22,11 @@ class AnswerLogActivity : BaseActivity() {
         if (savedInstanceState == null) {
             val questionId = intent.getLongExtra(QUESTION_ID_PARAM, DEFAULT_QUESTION_ID)
 
-            val fragment = AnswerLogFragment(questionId, this::navigateToEditAnswer)
+            isFull = questionId == DEFAULT_QUESTION_ID
+            val fragment = when {
+                isFull -> AnswerLogFullFragment()
+                else -> AnswerLogByQuestionFragment(questionId)
+            }
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.answerLogContent, fragment)
@@ -27,7 +34,7 @@ class AnswerLogActivity : BaseActivity() {
         }
     }
 
-    private fun navigateToEditAnswer(answer: Answer) {
+    internal fun navigateToEditAnswer(answer: Answer) {
         startActivityForResult(Intent(this, AnswerActivity::class.java).apply {
             putExtra(QUESTION_ID_PARAM, answer.questionId)
             putExtra(ANSWER_ID_PARAM, answer.id)
@@ -39,9 +46,12 @@ class AnswerLogActivity : BaseActivity() {
         if (requestCode == EDIT_ANSWER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // returned from editing the answer
             val answerLogFragment = supportFragmentManager.findFragmentById(R.id.answerLogContent)
-            val answerId = data?.getLongExtra(EDITED_ANSWER_ID_RESULT_KEY, -1) ?: -1
+            val answerId = data?.getLongExtra(UPDATED_ANSWER_ID_RESULT_KEY, -1) ?: -1
             val answerIsUpdated = data?.getBooleanExtra(ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY, false) ?: false
-            (answerLogFragment as? AnswerLogFragment)?.onReturnFromEditAnswer(answerId, answerIsUpdated)
+            if (isFull)
+                (answerLogFragment as? AnswerLogFullFragment)?.onReturnFromEditAnswer(answerId, answerIsUpdated)
+            else
+                (answerLogFragment as? AnswerLogByQuestionFragment)?.onReturnFromEditAnswer(answerId, answerIsUpdated)
         }
     }
 }

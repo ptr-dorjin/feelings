@@ -59,7 +59,7 @@ class DateTimeFormatUITest(private val dateFormat: String, private val timeForma
         pressBack()
         openFullLog()
         val dateTimePattern = "${dateFormats[dateFormat]}, ${timeFormats[timeFormat]}"
-        onView(first(withId(R.id.answerLogDateTime)))
+        onView(first(withId(R.id.logFullDateTime)))
             .check(matches(withText(matchesPattern(dateTimePattern))))
     }
 
@@ -72,7 +72,7 @@ class DateTimeFormatUITest(private val dateFormat: String, private val timeForma
         pressBack()
         openLogByQuestion(R.string.q_text_feelings)
         val dateTimePattern = "${dateFormats[dateFormat]}, ${timeFormats[timeFormat]}"
-        onView(first(withId(R.id.answerLogDateTime)))
+        onView(first(withId(R.id.logByQuestionDateTime)))
             .check(matches(withText(matchesPattern(dateTimePattern))))
     }
 

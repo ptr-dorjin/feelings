@@ -31,9 +31,13 @@ class QuestionListActivity : BaseActivity() {
         }, ADD_ANSWER_REQUEST_CODE)
     }
 
-    internal fun navigateToAnswerLog(questionId: Long?) {
+    internal fun navigateToAnswerLogFull() {
+        startActivity(Intent(this, AnswerLogActivity::class.java))
+    }
+
+    internal fun navigateToAnswerLogByQuestion(questionId: Long) {
         startActivity(Intent(this, AnswerLogActivity::class.java).apply {
-            if (questionId != null) putExtra(QUESTION_ID_PARAM, questionId)
+            putExtra(QUESTION_ID_PARAM, questionId)
         })
     }
 

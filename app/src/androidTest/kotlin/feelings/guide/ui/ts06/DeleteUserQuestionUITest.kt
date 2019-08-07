@@ -54,7 +54,7 @@ class DeleteUserQuestionUITest {
 
         // then
         openFullLog()
-        checkNoAnswer(answer)
+        checkNoAnswerInLogFull(answer)
     }
 
     @Test
@@ -70,7 +70,7 @@ class DeleteUserQuestionUITest {
 
         // then
         openFullLog()
-        checkLastAnswer(answer)
+        checkLastAnswerInLogFull(answer)
     }
 
     @Test
@@ -87,7 +87,7 @@ class DeleteUserQuestionUITest {
         clearLogHiddenDeleted()
 
         // then
-        checkNoAnswer(answer)
+        checkNoAnswerInLogFull(answer)
     }
 
     @Test

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
 import feelings.guide.answer.Answer
@@ -16,8 +17,7 @@ import java.util.*
 
 class AnswerFragment(
     private var questionId: Long = -1,
-    internal var answerId: Long = -1,
-    private val navigateBack: (Boolean, Long?) -> Boolean
+    internal var answerId: Long = -1
 ) : Fragment() {
 
     private var answer: Answer? = null
@@ -141,5 +141,12 @@ class AnswerFragment(
             Snackbar.make(answerLayout, msg, Snackbar.LENGTH_LONG).show()
         }
         return saved
+    }
+
+    private fun navigateBack(updated: Boolean, answerId: Long?): Boolean {
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            (requireActivity() as AnswerActivity).navigateBack(updated, answerId)
+        }
+        return true
     }
 }

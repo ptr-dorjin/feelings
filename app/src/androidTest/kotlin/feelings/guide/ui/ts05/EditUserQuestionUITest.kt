@@ -80,8 +80,8 @@ class EditUserQuestionUITest {
         // when
         openLogByQuestion(updated)
 
-        // then it's updated on question list
-        onView(withId(R.id.questionTextInLogByQuestion))
+        // then it's updated in question log
+        onView(withId(R.id.logByQuestionText))
             .check(matches(withText(updated)))
 
         // when
@@ -89,7 +89,7 @@ class EditUserQuestionUITest {
         openFullLog()
 
         // then it's updated in full log
-        onView(first(withId(R.id.questionTextInFullLog)))
+        onView(first(withId(R.id.logFullQuestionText)))
             .check(matches(withText(updated)))
 
         // clean up

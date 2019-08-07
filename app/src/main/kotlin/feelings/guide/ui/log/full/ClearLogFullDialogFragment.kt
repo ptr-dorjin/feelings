@@ -1,4 +1,4 @@
-package feelings.guide.ui.log
+package feelings.guide.ui.log.full
 
 import android.app.Dialog
 import android.os.Bundle

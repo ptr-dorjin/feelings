@@ -38,7 +38,7 @@ class ClearLogUITest {
 
         // then
         openLogByQuestion(R.string.q_text_feelings)
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
     }
 
     @Test
@@ -52,7 +52,7 @@ class ClearLogUITest {
         clearLogFromQuestionLog()
 
         // then
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
     }
 
     @Test
@@ -66,7 +66,7 @@ class ClearLogUITest {
         clearLogFull()
 
         // then
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logFullAnswer)).check(doesNotExist())
     }
 
     @Test
@@ -79,7 +79,7 @@ class ClearLogUITest {
 
         // then
         openLogByQuestion(R.string.q_text_do_others)
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
     }
 
     @Test
@@ -92,7 +92,7 @@ class ClearLogUITest {
         clearLogFromQuestionLog()
 
         // then
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
     }
 
     @Test
@@ -105,7 +105,7 @@ class ClearLogUITest {
         clearLogFull()
 
         // then
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logFullAnswer)).check(doesNotExist())
     }
 
     @Test
@@ -120,7 +120,7 @@ class ClearLogUITest {
 
         // then
         openLogByQuestion(question)
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
 
         // clean up user question
         pressBack()
@@ -139,7 +139,7 @@ class ClearLogUITest {
         clearLogFromQuestionLog()
 
         // then
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
 
         // clean up user question
         pressBack()
@@ -158,7 +158,7 @@ class ClearLogUITest {
         clearLogFull()
 
         // then
-        onView(withId(R.id.answerLogAnswer)).check(doesNotExist())
+        onView(withId(R.id.logFullAnswer)).check(doesNotExist())
 
         // clean up user question
         pressBack()

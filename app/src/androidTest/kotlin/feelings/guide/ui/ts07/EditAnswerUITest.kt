@@ -36,7 +36,7 @@ class EditAnswerUITest {
 
         // when
         openFullLog()
-        openEditAnswer(answer)
+        openEditAnswerInLogFull(answer)
 
         // then
         onView(withId(R.id.answerText)).check(matches(withText(answer)))
@@ -50,7 +50,7 @@ class EditAnswerUITest {
 
         // when
         openLogByQuestion(R.string.q_text_feelings)
-        openEditAnswer(answer)
+        openEditAnswerInLogByQuestion(answer)
 
         // then
         onView(withId(R.id.answerText)).check(matches(withText(answer)))
@@ -67,7 +67,7 @@ class EditAnswerUITest {
 
         // when
         openFullLog()
-        openEditAnswer(answer)
+        openEditAnswerInLogFull(answer)
 
         // then
         onView(withId(R.id.answerText)).check(matches(withText(answer)))
@@ -88,7 +88,7 @@ class EditAnswerUITest {
 
         // when
         openLogByQuestion(question)
-        openEditAnswer(answer)
+        openEditAnswerInLogByQuestion(answer)
 
         // then
         onView(withId(R.id.answerText)).check(matches(withText(answer)))
@@ -107,7 +107,7 @@ class EditAnswerUITest {
 
         // when
         openFullLog()
-        editAnswer(answer, new)
+        editAnswerInLogFull(answer, new)
 
         // then
         checkSnackbar(R.string.msg_answer_updated_success)
@@ -122,7 +122,7 @@ class EditAnswerUITest {
 
         // when
         openLogByQuestion(R.string.q_text_feelings)
-        editAnswer(answer, new)
+        editAnswerInLogByQuestion(answer, new)
 
         // then
         checkSnackbar(R.string.msg_answer_updated_success)
@@ -140,7 +140,7 @@ class EditAnswerUITest {
 
         // when
         openFullLog()
-        editAnswer(answer, new)
+        editAnswerInLogFull(answer, new)
 
         // then
         checkSnackbar(R.string.msg_answer_updated_success)
@@ -162,7 +162,7 @@ class EditAnswerUITest {
 
         // when
         openLogByQuestion(question)
-        editAnswer(answer, new)
+        editAnswerInLogByQuestion(answer, new)
 
         // then
         checkSnackbar(R.string.msg_answer_updated_success)
@@ -178,7 +178,7 @@ class EditAnswerUITest {
         // given
         val answer = answerFeelingsRandom()
         openFullLog()
-        openEditAnswer(answer)
+        openEditAnswerInLogFull(answer)
 
         // when
         onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click())
@@ -193,7 +193,7 @@ class EditAnswerUITest {
         // given
         val answer = answerFeelingsRandom()
         openLogByQuestion(R.string.q_text_feelings)
-        openEditAnswer(answer)
+        openEditAnswerInLogByQuestion(answer)
 
         // when
         onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click())
@@ -208,7 +208,7 @@ class EditAnswerUITest {
         // given
         val answer = answerFeelingsRandom()
         openFullLog()
-        openEditAnswer(answer)
+        openEditAnswerInLogFull(answer)
 
         // when
         pressBack()
@@ -223,7 +223,7 @@ class EditAnswerUITest {
         // given
         val answer = answerFeelingsRandom()
         openLogByQuestion(R.string.q_text_feelings)
-        openEditAnswer(answer)
+        openEditAnswerInLogByQuestion(answer)
 
         // when
         pressBack()

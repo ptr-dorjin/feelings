@@ -45,12 +45,20 @@ internal fun answerQuestion(question: String, answer: String) {
     onView(withId(R.id.save)).perform(click())
 }
 
-internal fun checkLastAnswer(answer: String) {
-    onView(first(withId(R.id.answerLogAnswer))).check(matches(withText(answer)))
+internal fun checkLastAnswerInLogFull(answer: String) {
+    onView(first(withId(R.id.logFullAnswer))).check(matches(withText(answer)))
 }
 
-internal fun checkNoAnswer(answer: String) {
-    onView(withId(R.id.answerLogRV)).check(matches(not(hasItem(hasDescendant(withText(answer))))))
+internal fun checkLastAnswerInLogByQuestion(answer: String) {
+    onView(first(withId(R.id.logByQuestionAnswer))).check(matches(withText(answer)))
+}
+
+internal fun checkNoAnswerInLogFull(answer: String) {
+    onView(withId(R.id.logFullRV)).check(matches(not(hasItem(hasDescendant(withText(answer))))))
+}
+
+internal fun checkNoAnswerInLogByQuestion(answer: String) {
+    onView(withId(R.id.logByQuestionRV)).check(matches(not(hasItem(hasDescendant(withText(answer))))))
 }
 
 internal fun openFullLog() {
@@ -190,16 +198,40 @@ fun waitForSnackbar() {
     onView(isRoot()).perform(waitId(com.google.android.material.R.id.snackbar_action))
 }
 
-internal fun openEditAnswer(answer: String) {
-    onView(withId(R.id.answerLogRV)).perform(actionOnHolderItem(answerWithText(answer), swipeLeft()))
+internal fun openEditAnswerInLogFull(answer: String) {
+    onView(withId(R.id.logFullRV))
+        .perform(actionOnHolderItem(answerWithTextInLogFull(answer), swipeLeft()))
 }
 
-internal fun editAnswer(old: String, new: String) {
-    openEditAnswer(old)
+internal fun openEditAnswerInLogByQuestion(answer: String) {
+    onView(withId(R.id.logByQuestionRV))
+        .perform(actionOnHolderItem(answerWithTextInLogByQuestion(answer), swipeLeft()))
+}
+
+internal fun editAnswerInLogFull(old: String, new: String) {
+    openEditAnswerInLogFull(old)
     onView(withId(R.id.answerText)).perform(replaceText(new), closeSoftKeyboard())
     onView(withId(R.id.save)).perform(click())
 }
 
-internal fun deleteAnswer(answer: String) {
-    onView(withId(R.id.answerLogRV)).perform(actionOnHolderItem(answerWithText(answer), swipeRight()))
+internal fun editAnswerInLogByQuestion(old: String, new: String) {
+    openEditAnswerInLogByQuestion(old)
+    onView(withId(R.id.answerText)).perform(replaceText(new), closeSoftKeyboard())
+    onView(withId(R.id.save)).perform(click())
+}
+
+internal fun deleteAnswerInLogFull(answer: String) {
+    onView(withId(R.id.logFullRV)).perform(
+        actionOnHolderItem(
+            answerWithTextInLogFull(answer), swipeRight()
+        )
+    )
+}
+
+internal fun deleteAnswerInLogByQuestion(answer: String) {
+    onView(withId(R.id.logByQuestionRV)).perform(
+        actionOnHolderItem(
+            answerWithTextInLogByQuestion(answer), swipeRight()
+        )
+    )
 }

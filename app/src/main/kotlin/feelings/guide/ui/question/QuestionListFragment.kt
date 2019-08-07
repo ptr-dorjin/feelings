@@ -73,7 +73,7 @@ class QuestionListFragment : Fragment() {
         return when (item.itemId) {
             R.id.show_log -> {
                 if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                    (requireActivity() as QuestionListActivity).navigateToAnswerLog(null)
+                    (requireActivity() as QuestionListActivity).navigateToAnswerLogFull()
                 }
                 true
             }
@@ -103,7 +103,7 @@ class QuestionListFragment : Fragment() {
             when (it.itemId) {
                 R.id.show_log_by_question -> {
                     if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                        (requireActivity() as QuestionListActivity).navigateToAnswerLog(questionId)
+                        (requireActivity() as QuestionListActivity).navigateToAnswerLogByQuestion(questionId)
                     }
                     true
                 }

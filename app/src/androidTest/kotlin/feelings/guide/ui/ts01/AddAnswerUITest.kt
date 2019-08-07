@@ -41,15 +41,15 @@ class AddAnswerUITest {
         // when
         openLogByQuestion(R.string.q_text_feelings)
 
-        // then the answer is in question log
-        checkLastAnswer(feeling)
+        // then
+        checkLastAnswerInLogByQuestion(feeling)
 
         // when
         pressBack()
         openFullLog()
 
-        // then the answer is in full log
-        checkLastAnswer(feeling)
+        // then
+        checkLastAnswerInLogFull(feeling)
     }
 
     @Test
@@ -64,15 +64,15 @@ class AddAnswerUITest {
         // when
         openLogByQuestion(R.string.q_text_do_others)
 
-        // then the answer is question log
-        checkLastAnswer(answer)
+        // then
+        checkLastAnswerInLogByQuestion(answer)
 
         // when
         pressBack()
         openFullLog()
 
-        // then the answer is in full log
-        checkLastAnswer(answer)
+        // then
+        checkLastAnswerInLogFull(answer)
     }
 
     @Test
@@ -89,15 +89,15 @@ class AddAnswerUITest {
         // when
         openLogByQuestion(question)
 
-        // then the answer is in question log
-        checkLastAnswer(answer)
+        // then
+        checkLastAnswerInLogByQuestion(answer)
 
         // when
         pressBack()
         openFullLog()
 
-        // then the answer is in full log
-        checkLastAnswer(answer)
+        // then
+        checkLastAnswerInLogFull(answer)
 
         // clean up user question
         pressBack()

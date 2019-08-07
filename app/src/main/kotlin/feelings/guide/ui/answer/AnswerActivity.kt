@@ -16,7 +16,7 @@ class AnswerActivity : BaseActivity() {
             val questionId = intent.getLongExtra(QUESTION_ID_PARAM, -1)
             val answerId = intent.getLongExtra(ANSWER_ID_PARAM, -1)
 
-            val fragment = AnswerFragment(questionId, answerId, this::navigateBack)
+            val fragment = AnswerFragment(questionId, answerId)
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.answerContent, fragment)
@@ -24,9 +24,9 @@ class AnswerActivity : BaseActivity() {
         }
     }
 
-    private fun navigateBack(updated: Boolean, answerId: Long? = -1): Boolean {
+    internal fun navigateBack(updated: Boolean, answerId: Long? = -1): Boolean {
         setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra(EDITED_ANSWER_ID_RESULT_KEY, answerId)
+            putExtra(UPDATED_ANSWER_ID_RESULT_KEY, answerId)
             putExtra(ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY, updated)
         })
         finish()

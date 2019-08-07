@@ -40,11 +40,11 @@ class DeleteAnswerUITest {
         openFullLog()
 
         // when
-        deleteAnswer(answer)
+        deleteAnswerInLogFull(answer)
 
         // then
         checkSnackbar(R.string.msg_answer_deleted_success)
-        checkNoAnswer(answer)
+        checkNoAnswerInLogFull(answer)
     }
 
     @Test
@@ -52,7 +52,7 @@ class DeleteAnswerUITest {
         // given
         val answer = answerFeelingsRandom()
         openFullLog()
-        deleteAnswer(answer)
+        deleteAnswerInLogFull(answer)
 
         // when
         waitForSnackbar()
@@ -68,11 +68,11 @@ class DeleteAnswerUITest {
         val answer = answerFeelingsRandom()
         openLogByQuestion(R.string.q_text_feelings)
         // when
-        deleteAnswer(answer)
+        deleteAnswerInLogByQuestion(answer)
 
         // then
         checkSnackbar(R.string.msg_answer_deleted_success)
-        checkNoAnswer(answer)
+        checkNoAnswerInLogByQuestion(answer)
     }
 
     @Test
@@ -80,7 +80,7 @@ class DeleteAnswerUITest {
         // given
         val answer = answerFeelingsRandom()
         openLogByQuestion(R.string.q_text_feelings)
-        deleteAnswer(answer)
+        deleteAnswerInLogByQuestion(answer)
 
         // when
         waitForSnackbar()

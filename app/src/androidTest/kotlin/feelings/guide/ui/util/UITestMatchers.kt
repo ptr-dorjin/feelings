@@ -4,7 +4,8 @@ import android.view.View
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.BoundedMatcher
-import feelings.guide.ui.log.AnswerLogAdapter
+import feelings.guide.ui.log.byquestion.AnswerLogByQuestionAdapter
+import feelings.guide.ui.log.full.AnswerLogFullAdapter
 import feelings.guide.ui.question.QuestionsAdapter
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -41,17 +42,30 @@ internal fun questionWithText(question: String): Matcher<RecyclerView.ViewHolder
     }
 }
 
-internal fun answerWithText(answer: String): Matcher<RecyclerView.ViewHolder> {
-    return object : BoundedMatcher<RecyclerView.ViewHolder, AnswerLogAdapter.AnswerLogHolder>(
-        AnswerLogAdapter.AnswerLogHolder::class.java
+internal fun answerWithTextInLogFull(answer: String): Matcher<RecyclerView.ViewHolder> {
+    return object : BoundedMatcher<RecyclerView.ViewHolder, AnswerLogFullAdapter.AnswerLogHolder>(
+        AnswerLogFullAdapter.AnswerLogHolder::class.java
     ) {
         override fun describeTo(description: Description) {
             description.appendText("has an answer with text '$answer'")
         }
 
-        override fun matchesSafely(vh: AnswerLogAdapter.AnswerLogHolder) = vh.answerView.text.toString() == answer
+        override fun matchesSafely(vh: AnswerLogFullAdapter.AnswerLogHolder) = vh.answerView.text.toString() == answer
     }
 }
+
+internal fun answerWithTextInLogByQuestion(answer: String): Matcher<RecyclerView.ViewHolder> {
+    return object : BoundedMatcher<RecyclerView.ViewHolder, AnswerLogByQuestionAdapter.AnswerLogHolder>(
+        AnswerLogByQuestionAdapter.AnswerLogHolder::class.java
+    ) {
+        override fun describeTo(description: Description) {
+            description.appendText("has an answer with text '$answer'")
+        }
+
+        override fun matchesSafely(vh: AnswerLogByQuestionAdapter.AnswerLogHolder) = vh.answerView.text.toString() == answer
+    }
+}
+
 
 internal fun hasItem(matcher: Matcher<View>): Matcher<View> {
     return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {

@@ -47,9 +47,9 @@ class HideQuestionUITest {
         // when
         hideQuestion(R.string.q_text_do_body)
 
-        // then the answer is still in full log
+        // then
         openFullLog()
-        checkLastAnswer(answer)
+        checkLastAnswerInLogFull(answer)
 
         // clean up
         pressBack()
@@ -67,8 +67,8 @@ class HideQuestionUITest {
         openFullLog()
         clearLogHiddenDeleted()
 
-        // then the answer is gone
-        checkNoAnswer(answer)
+        // then
+        checkNoAnswerInLogFull(answer)
 
         // clean up
         pressBack()

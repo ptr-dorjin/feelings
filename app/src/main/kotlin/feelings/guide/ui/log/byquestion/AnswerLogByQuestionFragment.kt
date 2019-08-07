@@ -1,8 +1,9 @@
-package feelings.guide.ui.log
+package feelings.guide.ui.log.byquestion
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,26 +12,19 @@ import feelings.guide.R
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
 import feelings.guide.question.QuestionService
+import feelings.guide.ui.log.AnswerLogActivity
+import feelings.guide.ui.log.AnswerLogSwipeCallback
 import feelings.guide.ui.question.QuestionClearLogDialogFragment
 import kotlinx.android.synthetic.main.answer_log_by_question.*
 
 
-class AnswerLogFragment(
-    private var questionId: Long = 0,
-    private val onEditAnswerActivityCallback: (Answer) -> Unit
-) : Fragment() {
+class AnswerLogByQuestionFragment(private var questionId: Long) : Fragment() {
 
-    private var isFull: Boolean = false
-    private lateinit var adapter: AnswerLogAdapter
+    private lateinit var adapter: AnswerLogByQuestionAdapter
     private var lastDeleted: Answer? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        isFull = questionId == DEFAULT_QUESTION_ID
-        val layout = when {
-            isFull -> R.layout.answer_log_full
-            else -> R.layout.answer_log_by_question
-        }
-        return inflater.inflate(layout, container, false)
+        return inflater.inflate(R.layout.answer_log_by_question, container, false)
     }
 
     override fun onDestroy() {
@@ -41,10 +35,10 @@ class AnswerLogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
 
-        adapter = AnswerLogAdapter(requireContext(), isFull, questionId)
+        adapter = AnswerLogByQuestionAdapter(requireContext(), questionId)
         val notEmpty = adapter.isNotEmpty
-        answerLogRV.visibility = if (notEmpty) View.VISIBLE else View.GONE
-        answerLogEmptyText.visibility = if (notEmpty) View.GONE else View.VISIBLE
+        logByQuestionRV.visibility = if (notEmpty) View.VISIBLE else View.GONE
+        logByQuestionEmptyText.visibility = if (notEmpty) View.GONE else View.VISIBLE
         if (notEmpty)
             setUpRecyclerView()
         fillQuestionText()
@@ -52,64 +46,42 @@ class AnswerLogFragment(
 
     private fun setUpRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
-        answerLogRV.layoutManager = layoutManager
+        logByQuestionRV.layoutManager = layoutManager
         val dividerItemDecoration = DividerItemDecoration(
-            answerLogRV.context,
+            logByQuestionRV.context,
             layoutManager.orientation
         )
-        answerLogRV.addItemDecoration(dividerItemDecoration)
+        logByQuestionRV.addItemDecoration(dividerItemDecoration)
 
-        answerLogRV.adapter = adapter
+        logByQuestionRV.adapter = adapter
 
-        val itemTouchHelper = ItemTouchHelper(AnswerLogSwipeCallback(requireContext(), this::onDeleteAnswer, this::onEditAnswer))
-        itemTouchHelper.attachToRecyclerView(answerLogRV)
+        val itemTouchHelper = ItemTouchHelper(
+            AnswerLogSwipeCallback(
+                requireContext(),
+                this::onDeleteAnswer,
+                this::onEditAnswer
+            )
+        )
+        itemTouchHelper.attachToRecyclerView(logByQuestionRV)
     }
 
     private fun fillQuestionText() {
-        if (!isFull) {
-            questionTextInLogByQuestion.text = QuestionService.getQuestionText(requireContext(), questionId)
-        }
+        logByQuestionText.text = QuestionService.getQuestionText(requireContext(), questionId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (adapter.isNotEmpty) {
-            inflater.inflate(
-                if (isFull) R.menu.answer_log_full_menu
-                else R.menu.answer_log_by_question_menu,
-                menu
-            )
+            inflater.inflate(R.menu.answer_log_by_question_menu, menu)
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.clear_log_full -> {
-            showClearLogFullConfirmation()
-            true
-        }
-        R.id.clear_log_deleted -> {
-            showClearLogDeletedConfirmation()
-            true
-        }
         R.id.clear_log_by_question -> {
             showClearLogByQuestionConfirmation()
             true
         }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    private fun showClearLogFullConfirmation() {
-        ClearLogFullDialogFragment(this::onClearLogFullConfirmed).show(
-            requireActivity().supportFragmentManager,
-            ClearLogFullDialogFragment::class.java.simpleName
-        )
-    }
-
-    private fun showClearLogDeletedConfirmation() {
-        ClearLogDeletedDialogFragment(this::onClearLogDeletedConfirmed).show(
-            requireActivity().supportFragmentManager,
-            ClearLogDeletedDialogFragment::class.java.simpleName
-        )
     }
 
     private fun showClearLogByQuestionConfirmation() {
@@ -119,21 +91,9 @@ class AnswerLogFragment(
         )
     }
 
-    private fun onClearLogFullConfirmed() {
-        AnswerStore.deleteAll(requireContext())
-        Snackbar.make(answerLogLayout, R.string.msg_clear_log_full_success, Snackbar.LENGTH_LONG).show()
-        adapter.refresh()
-    }
-
-    private fun onClearLogDeletedConfirmed() {
-        AnswerStore.deleteForDeletedQuestions(requireContext())
-        Snackbar.make(answerLogLayout, R.string.msg_clear_log_deleted_success, Snackbar.LENGTH_LONG).show()
-        adapter.refresh()
-    }
-
     private fun onClearLogByQuestionConfirmed() {
         AnswerStore.deleteByQuestionId(requireContext(), questionId)
-        Snackbar.make(answerLogLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(logByQuestionLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
         adapter.refresh()
     }
 
@@ -143,7 +103,7 @@ class AnswerLogFragment(
         //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
         adapter.refresh()
 
-        Snackbar.make(answerLogLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
+        Snackbar.make(logByQuestionLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
             .setAction(R.string.snackbar_undo) { undoDelete() }
             .show()
     }
@@ -156,7 +116,9 @@ class AnswerLogFragment(
 
     private fun onEditAnswer(position: Int) {
         val answer = adapter.getByPosition(position)
-        onEditAnswerActivityCallback(answer)
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            (requireActivity() as AnswerLogActivity).navigateToEditAnswer(answer)
+        }
     }
 
     internal fun onReturnFromEditAnswer(answerId: Long, answerIsUpdated: Boolean) {
@@ -164,16 +126,16 @@ class AnswerLogFragment(
         adapter.refresh()
 
         //redraw recyclerView
-        answerLogRV.adapter = adapter
+        logByQuestionRV.adapter = adapter
 
         //scroll to the answer
         if (answerId > 0) {
             val position = adapter.getPositionById(answerId)
             if (position > -1) {
-                answerLogRV.scrollToPosition(position)
+                logByQuestionRV.scrollToPosition(position)
             }
         }
         if (answerIsUpdated)
-            Snackbar.make(answerLogLayout, R.string.msg_answer_updated_success, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(logByQuestionLayout, R.string.msg_answer_updated_success, Snackbar.LENGTH_LONG).show()
     }
 }
