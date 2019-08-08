@@ -155,7 +155,7 @@ class QuestionListFragment : Fragment() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable) {
-                saveButton.isEnabled = !TextUtils.isEmpty(s)
+                saveButton.isEnabled = !TextUtils.isEmpty(s) && s.trim().isNotEmpty()
             }
         })
     }
