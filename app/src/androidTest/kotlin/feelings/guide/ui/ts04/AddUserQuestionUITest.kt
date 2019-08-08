@@ -54,13 +54,14 @@ class AddUserQuestionUITest {
     }
 
     @Test
-    fun emptyText_isNotSaved() {
+    fun blankText_saveBtnIsDisabled() {
         // when
-        val question = " "
+        val question = "   "
         addUserQuestion(question)
 
         // then
-        checkSnackbar(R.string.msg_question_text_empty)
+        onView(withText(R.string.btn_save)).check(matches(not(isEnabled())))
+        onView(withText(R.string.btn_cancel)).perform(click())
         checkNoQuestion(question)
     }
 
