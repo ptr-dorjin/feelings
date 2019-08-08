@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/feelings_guide_navigation"
+    app:startDestination="@id/questionListFragment">
+
+    <fragment
+        android:id="@+id/questionListFragment"
+        android:name="feelings.guide.ui.question.QuestionListFragment"
+        android:label="QuestionListFragment"
+        tools:layout="@layout/question_list">
+        <argument
+            android:name="answer_is_added"
+            app:argType="boolean" />
+        <argument
+            android:name="refresh_questions"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/navigateToAddAnswer"
+            app:destination="@id/answerFragment" />
+        <action
+            android:id="@+id/navigateToSettings"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/navigateToAnswerLogFull"
+            app:destination="@id/answerLogFullFragment" />
+        <action
+            android:id="@+id/navigateToAnswerLogByQuestion"
+            app:destination="@id/answerLogByQuestionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/answerFragment"
+        android:name="feelings.guide.ui.answer.AnswerFragment"
+        android:label="AnswerFragment"
+        tools:layout="@layout/answer">
+        <argument
+            android:name="question_id"
+            app:argType="long" />
+        <argument
+            android:name="answer_id"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/answerLogFullFragment"
+        android:name="feelings.guide.ui.log.full.AnswerLogFullFragment"
+        android:label="AnswerLogFullFragment"
+        tools:layout="@layout/answer_log_full">
+        <argument
+            android:name="updated_answer_id"
+            android:defaultValue="-1L"
+            app:argType="long" />
+        <argument
+            android:name="answer_is_updated"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/navigateToEditAnswer"
+            app:destination="@id/answerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/answerLogByQuestionFragment"
+        android:name="feelings.guide.ui.log.byquestion.AnswerLogByQuestionFragment"
+        android:label="AnswerLogByQuestionFragment"
+        tools:layout="@layout/answer_log_by_question">
+        <argument
+            android:name="question_id"
+            app:argType="long" />
+        <argument
+            android:name="updated_answer_id"
+            android:defaultValue="-1L"
+            app:argType="long" />
+        <argument
+            android:name="answer_is_updated"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/navigateToEditAnswer"
+            app:destination="@id/answerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="feelings.guide.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+</navigation>
