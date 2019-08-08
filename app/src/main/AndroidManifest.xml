@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FeelingsGuide"
         android:name=".FeelingsApplication"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:fullBackupContent="@xml/backup_descriptor"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".ui.question.QuestionListActivity"
             android:launchMode="singleTop"
