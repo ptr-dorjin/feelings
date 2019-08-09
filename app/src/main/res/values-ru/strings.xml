@@ -79,6 +79,6 @@
     <string name="answer_log_empty_text">Журнал пуст</string>
 
     <string name="hint_question_text">Введите вопрос</string>
-    <string name="hint_answer_text">Ввведите ответ</string>
+    <string name="hint_answer_text">Введите ответ</string>
 
 </resources>
