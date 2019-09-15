@@ -47,6 +47,12 @@ android {
         exclude("META-INF/notice.txt")
         exclude("META-INF/ASL2.0")
     }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
 }
 
 dependencies {
