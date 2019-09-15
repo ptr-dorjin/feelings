@@ -4,7 +4,6 @@ Version 1.1.0
 2. Добавлены описания к некоторым предустановленным вопросам
 3. Изменены формулировки некоторых предустановленных вопросов
 </ru-RU>
-
 <en-US>
 1. Built-in questions can't be edited and deleted now.
 2. Added description for some built-in questions.
@@ -34,8 +33,15 @@ Version 2.1.0
 Answers can now be edited by swiping left and deleted by swiping right in the answer log.
 Small UI improvements and bug fixes.
 </en-US>
-
 <ru-RU>
 Ответы теперь можно редактировать (swipe влево) и удалять (swipe вправо) в журнале ответов.
 Небольшие улучшения интерфейса и исправления ошибок.
+</ru-RU>
+
+Version 2.1.1
+<en-US>
+Fixed locale change issue.
+</en-US>
+<ru-RU>
+Исправлена ошибка при смене языка.
 </ru-RU>
