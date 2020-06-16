@@ -14,7 +14,7 @@ private const val DATABASE_VERSION = 3
 private const val DATABASE_NAME = "FeelingsGuide.db"
 
 class DbHelper private constructor(private val context: Context) :
-    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+        SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_QUESTION_TABLE)

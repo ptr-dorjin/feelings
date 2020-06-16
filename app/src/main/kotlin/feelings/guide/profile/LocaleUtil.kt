@@ -17,13 +17,15 @@ object LocaleUtil {
         }
 
         val lang = getPersistedData(context, defaultLanguage)
-        return setLocale(context, lang)
+        return if (lang != null)
+            setLocale(context, lang)
+        else context
     }
 
-    private fun setLocale(context: Context, language: String?): Context {
+    private fun setLocale(context: Context, language: String): Context {
         persist(context, language)
 
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
             updateResources(context, language)
         else
             updateResourcesLegacy(context, language)
@@ -31,7 +33,7 @@ object LocaleUtil {
 
     private fun getPersistedData(context: Context, defaultLanguage: String): String? {
         return PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(SELECTED_LANGUAGE_KEY, defaultLanguage)
+                .getString(SELECTED_LANGUAGE_KEY, defaultLanguage)
     }
 
     private fun persist(context: Context, language: String?) {
@@ -42,7 +44,7 @@ object LocaleUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private fun updateResources(context: Context, language: String?): Context {
+    private fun updateResources(context: Context, language: String): Context {
         val locale = Locale(language)
         Locale.setDefault(locale)
 
@@ -54,7 +56,7 @@ object LocaleUtil {
     }
 
     @Suppress("DEPRECATION")
-    private fun updateResourcesLegacy(context: Context, language: String?): Context {
+    private fun updateResourcesLegacy(context: Context, language: String): Context {
         val locale = Locale(language)
         Locale.setDefault(locale)
 

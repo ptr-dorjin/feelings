@@ -1,7 +1,7 @@
 package feelings.guide.util
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import feelings.guide.ui.settings.DATE_FORMAT_KEY
 import feelings.guide.ui.settings.TIME_FORMAT_KEY
 import org.threeten.bp.format.DateTimeFormatter

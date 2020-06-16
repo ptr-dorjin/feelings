@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
@@ -25,20 +25,20 @@ class SettingsActivity : BaseActivity() {
 
         // Display the fragment as the main content.
         supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.settingsContent, SettingsFragment())
-            .commit()
+                .beginTransaction()
+                .replace(R.id.settingsContent, SettingsFragment())
+                .commit()
 
         localeChangeListener.context = this
         localeChangeListener.view = settingsContent
         PreferenceManager.getDefaultSharedPreferences(this)
-            .registerOnSharedPreferenceChangeListener(localeChangeListener)
+                .registerOnSharedPreferenceChangeListener(localeChangeListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         PreferenceManager.getDefaultSharedPreferences(this)
-            .unregisterOnSharedPreferenceChangeListener(localeChangeListener)
+                .unregisterOnSharedPreferenceChangeListener(localeChangeListener)
     }
 }
 
@@ -46,8 +46,8 @@ class SettingsActivity : BaseActivity() {
  * This listener should be in the activity, not in the fragment
  */
 private class LocaleChangeListener(
-    internal var context: Context? = null,
-    internal var view: View? = null
+        internal var context: Context? = null,
+        internal var view: View? = null
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         if (SELECTED_LANGUAGE_KEY == key && context != null) {
@@ -55,7 +55,7 @@ private class LocaleChangeListener(
             QuestionService.changeLanguage(context!!)
             view?.let {
                 Snackbar.make(it, R.string.msg_change_language_restart, Snackbar.LENGTH_LONG)
-                    .show()
+                        .show()
             }
         }
     }
