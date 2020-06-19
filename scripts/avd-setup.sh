@@ -8,6 +8,12 @@ mapfile -t DEVICES < <($EMULATOR -list-avds)
 
 for device in "${DEVICES[@]}"; do
   printf "\n====================== %s ======================\n" $device
+
+  if (! grep hw.keyboard < ~/.android/avd/$device.avd/config.ini); then
+    echo "settings hw.keyboard=yes"
+    echo "hw.keyboard=yes" >> ~/.android/avd/$device.avd/config.ini
+  fi
+
   echo "Starting $device"
   ${EMULATOR} </dev/null -avd ${device} &
   #EMULATOR_PID=$!
