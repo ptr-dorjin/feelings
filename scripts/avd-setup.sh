@@ -10,7 +10,7 @@ for device in "${DEVICES[@]}"; do
   printf "\n====================== %s ======================\n" $device
 
   if (! grep hw.keyboard < ~/.android/avd/$device.avd/config.ini); then
-    echo "settings hw.keyboard=yes"
+    echo "setting hw.keyboard=yes"
     echo "hw.keyboard=yes" >> ~/.android/avd/$device.avd/config.ini
   fi
 
