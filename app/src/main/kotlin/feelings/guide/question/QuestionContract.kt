@@ -14,15 +14,19 @@ const val COLUMN_IS_DELETED = "is_deleted"
 const val COLUMN_IS_HIDDEN = "is_hidden"
 
 val ALL_COLUMNS = arrayOf(
-    BaseColumns._ID,
-    COLUMN_CODE,
-    COLUMN_TEXT,
-    COLUMN_DESCRIPTION,
-    COLUMN_IS_USER,
-    COLUMN_IS_DELETED,
-    COLUMN_IS_HIDDEN
+        BaseColumns._ID,
+        COLUMN_CODE,
+        COLUMN_TEXT,
+        COLUMN_DESCRIPTION,
+        COLUMN_IS_USER,
+        COLUMN_IS_DELETED,
+        COLUMN_IS_HIDDEN
 )
 
+/**
+autoincrement guaranties that there are no collisions in question IDs with any IDs ever before
+existed in this table, i.e. IDs are never re-used.
+ */
 const val SQL_CREATE_QUESTION_TABLE: String = """CREATE TABLE $QUESTION_TABLE (
     ${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     $COLUMN_CODE TEXT,
@@ -34,9 +38,9 @@ const val SQL_CREATE_QUESTION_TABLE: String = """CREATE TABLE $QUESTION_TABLE (
 )"""
 
 data class QuestionCode internal constructor(
-    val code: Int,
-    val textId: Int,
-    val descriptionId: Int
+        val code: Int,
+        val textId: Int,
+        val descriptionId: Int
 )
 
 object QuestionContract {
