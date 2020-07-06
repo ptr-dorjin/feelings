@@ -55,16 +55,6 @@
     <string name="q_text_lie">What is my insincerity?</string><!--deprecated-->
     <string name="q_text_irresponsibility">What is my irresponsibility?</string><!--deprecated-->
 
-    <string name="q_description_feelings" />
-    <string name="q_description_gratitude" />
-    <string name="q_description_do_body" />
-    <string name="q_description_do_close" />
-    <string name="q_description_do_others" />
-    <string name="q_description_insincerity" /><!--deprecated-->
-    <string name="q_description_preach" /><!--deprecated-->
-    <string name="q_description_lie" /><!--deprecated-->
-    <string name="q_description_irresponsibility" /><!--deprecated-->
-
     <string name="msg_question_text_empty">Text must not be empty</string>
     <string name="msg_question_create_success">The question has been created</string>
     <string name="msg_question_create_error">Error while creating the question</string>

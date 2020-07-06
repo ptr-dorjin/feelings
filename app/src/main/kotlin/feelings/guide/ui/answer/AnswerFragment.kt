@@ -7,10 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
-import feelings.guide.answer.Answer
-import feelings.guide.answer.AnswerStore
-import feelings.guide.question.Question
-import feelings.guide.question.QuestionService
+import feelings.guide.data.answer.Answer
+import feelings.guide.data.question.FEELINGS_ID
+import feelings.guide.data.question.Question
 import kotlinx.android.synthetic.main.answer.*
 import org.threeten.bp.LocalDateTime
 import java.util.*
@@ -64,13 +63,13 @@ class AnswerFragment(
         if (isEdit) {
             answerText.setText(answer!!.answerText)
         }
-        if (questionId != QuestionService.FEELINGS_ID) {
+        if (questionId != FEELINGS_ID) {
             answerText.requestFocus()
         }
     }
 
     private fun setUpFeelingsList() {
-        if (questionId != QuestionService.FEELINGS_ID) return
+        if (questionId != FEELINGS_ID) return
 
         val feelingsGroups = ArrayList<String>()
         val mapFeelingsByGroup = HashMap<String, List<String>>()

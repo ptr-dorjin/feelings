@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
-import feelings.guide.answer.Answer
-import feelings.guide.answer.AnswerStore
-import feelings.guide.question.QuestionService
+import feelings.guide.data.answer.Answer
 import feelings.guide.ui.log.AnswerLogActivity
 import feelings.guide.ui.log.AnswerLogSwipeCallback
 import feelings.guide.ui.question.QuestionClearLogDialogFragment

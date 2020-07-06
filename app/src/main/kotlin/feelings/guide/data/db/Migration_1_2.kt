@@ -1,21 +1,21 @@
-package feelings.guide.db
+package feelings.guide.data.db
 
 import android.content.ContentValues
-import android.content.Context
-import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE
 import android.provider.BaseColumns._ID
+import androidx.sqlite.db.SupportSQLiteDatabase
 import feelings.guide.R
-import feelings.guide.question.COLUMN_CODE
-import feelings.guide.question.COLUMN_DESCRIPTION
-import feelings.guide.question.COLUMN_TEXT
-import feelings.guide.question.QUESTION_TABLE
-import feelings.guide.question.QuestionContract.QUESTION_CODE_MAP
+import feelings.guide.data.question.COLUMN_CODE
+import feelings.guide.data.question.COLUMN_DESCRIPTION
+import feelings.guide.data.question.COLUMN_TEXT
+import feelings.guide.data.question.QUESTION_TABLE
+import feelings.guide.data.question.QuestionContract.QUESTION_CODE_MAP
 
-internal class UpgraderTo2(private val context: Context) {
+internal val MIGRATION_1_2 = object : ContextAwareMigration(1, 2) {
 
-    fun upgrade(db: SQLiteDatabase) {
-        db.execSQL("alter table $QUESTION_TABLE add $COLUMN_CODE TEXT")
-        db.execSQL("alter table $QUESTION_TABLE add $COLUMN_DESCRIPTION TEXT")
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("alter table question add code TEXT")
+        db.execSQL("alter table question add description TEXT")
         updateQuestionById(db, 1, R.string.q_feelings)
         updateQuestionById(db, 2, R.string.q_insincerity)
         updateQuestionById(db, 3, R.string.q_gratitude)
@@ -27,7 +27,7 @@ internal class UpgraderTo2(private val context: Context) {
         updateQuestionById(db, 9, R.string.q_do_others)
     }
 
-    private fun updateQuestionById(db: SQLiteDatabase, questionId: Int, code: Int) {
+    private fun updateQuestionById(db: SupportSQLiteDatabase, questionId: Int, code: Int) {
         val values = ContentValues()
 
         val questionCode = QUESTION_CODE_MAP.get(code)
@@ -38,6 +38,6 @@ internal class UpgraderTo2(private val context: Context) {
         val selection = "$_ID = ?"
         val selectionArgs = arrayOf(questionId.toString())
 
-        db.update(QUESTION_TABLE, values, selection, selectionArgs)
+        db.update(QUESTION_TABLE, CONFLICT_REPLACE, values, selection, selectionArgs)
     }
 }

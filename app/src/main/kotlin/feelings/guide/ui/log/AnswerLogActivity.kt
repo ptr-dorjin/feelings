@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import feelings.guide.*
-import feelings.guide.answer.Answer
+import feelings.guide.data.answer.Answer
 import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.answer.AnswerActivity
 import feelings.guide.ui.log.byquestion.AnswerLogByQuestionFragment

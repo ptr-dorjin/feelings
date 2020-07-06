@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import feelings.guide.R
-import feelings.guide.answer.Answer
-import feelings.guide.answer.AnswerStore
-import feelings.guide.question.QuestionService
+import feelings.guide.data.answer.Answer
 import feelings.guide.ui.RecyclerViewCursorAdapter
 import feelings.guide.util.DateTimeUtil
 import kotlinx.android.synthetic.main.answer_log_full_item.view.*

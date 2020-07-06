@@ -5,31 +5,40 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
-import feelings.guide.answer.AnswerStore
-import feelings.guide.question.Question
-import feelings.guide.question.QuestionService
+import feelings.guide.data.question.FEELINGS_ID
+import feelings.guide.data.question.Question
+import feelings.guide.data.question.QuestionUpdate
+import feelings.guide.data.question.QuestionViewModel
 import kotlinx.android.synthetic.main.question_edit_dialog.*
 import kotlinx.android.synthetic.main.question_list.*
 
 class QuestionListFragment : Fragment() {
 
+    private lateinit var questionViewModel: QuestionViewModel
     private lateinit var adapter: QuestionsAdapter
     private var changeQuestionId: Long? = null
     private var popup: PopupMenu? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.question_list, container, false)
     }
@@ -42,6 +51,13 @@ class QuestionListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        questionViewModel = ViewModelProvider(requireActivity())
+                .get(QuestionViewModel::class.java)
+        questionViewModel.allQuestions.observe(viewLifecycleOwner,
+                Observer { questions ->
+                    questions?.let { adapter.setQuestions(questions) }
+                })
+
         setHasOptionsMenu(true)
         setUpFab()
         setUpRv()
@@ -52,10 +68,10 @@ class QuestionListFragment : Fragment() {
     }
 
     private fun setUpRv() {
-        questionRV.layoutManager = LinearLayoutManager(context)
         adapter = QuestionsAdapter(requireContext(), this::questionClickCallback)
         adapter.setHasStableIds(true)
         questionRV.adapter = adapter
+        questionRV.layoutManager = LinearLayoutManager(context)
     }
 
     private fun questionClickCallback(questionId: Long) {
@@ -92,11 +108,11 @@ class QuestionListFragment : Fragment() {
         val questionId = view.getTag(R.id.tag_question_id) as Long
         val isUser = view.getTag(R.id.tag_is_user) as Boolean
         popup.inflate(
-            when {
-                isUser -> R.menu.questions_popup_menu_user
-                questionId == QuestionService.FEELINGS_ID -> R.menu.questions_popup_menu_feelings
-                else -> R.menu.questions_popup_menu_built_in
-            }
+                when {
+                    isUser -> R.menu.questions_popup_menu_user
+                    questionId == FEELINGS_ID -> R.menu.questions_popup_menu_feelings
+                    else -> R.menu.questions_popup_menu_built_in
+                }
         )
         popup.setOnMenuItemClickListener {
             popup.dismiss()
@@ -145,9 +161,10 @@ class QuestionListFragment : Fragment() {
         val questionEditText = dialog.questionTextEdit
         val saveButton = (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
 
-        if (questionId != null)
-            questionEditText.setText(QuestionService.getQuestionText(requireContext(), questionId))
-        else saveButton.isEnabled = false
+        if (questionId != null) {
+            val question = questionViewModel.getById(questionId)
+            questionEditText.setText(question.text)
+        } else saveButton.isEnabled = false
 
         questionEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -163,24 +180,24 @@ class QuestionListFragment : Fragment() {
     private fun showDeleteConfirmation(questionId: Long) {
         changeQuestionId = questionId
         QuestionDeleteDialogFragment(this::onDeleteConfirmed).show(
-            requireActivity().supportFragmentManager,
-            QuestionDeleteDialogFragment::class.java.simpleName
+                requireActivity().supportFragmentManager,
+                QuestionDeleteDialogFragment::class.java.simpleName
         )
     }
 
     private fun showHideConfirmation(questionId: Long) {
         changeQuestionId = questionId
         QuestionHideDialogFragment(this::onHideConfirmed).show(
-            requireActivity().supportFragmentManager,
-            QuestionHideDialogFragment::class.java.simpleName
+                requireActivity().supportFragmentManager,
+                QuestionHideDialogFragment::class.java.simpleName
         )
     }
 
     private fun showClearLogConfirmation(questionId: Long) {
         changeQuestionId = questionId
         QuestionClearLogDialogFragment(this::onClearLogByQuestionConfirmed).show(
-            requireActivity().supportFragmentManager,
-            QuestionClearLogDialogFragment::class.java.simpleName
+                requireActivity().supportFragmentManager,
+                QuestionClearLogDialogFragment::class.java.simpleName
         )
     }
 
@@ -190,52 +207,57 @@ class QuestionListFragment : Fragment() {
             return
         }
 
-        if (changeQuestionId == null) performServiceAction(
-            QuestionService.createQuestion(requireContext(), Question(text)) != -1L,
-            R.string.msg_question_create_success,
-            R.string.msg_question_create_error
-        ) else performServiceAction(
-            QuestionService.updateQuestion(requireContext(), Question(changeQuestionId!!, text)),
-            R.string.msg_question_edit_success,
-            R.string.msg_question_edit_error
-        )
-        adapter.refreshAll()
+        if (changeQuestionId == null) {
+            //todo success vs error?
+            val createQuestionJob = questionViewModel.createQuestion(Question(text))
+            performServiceAction(
+                    createQuestionJob.isCompleted,
+                    R.string.msg_question_create_success,
+                    R.string.msg_question_create_error
+            )
+        } else {
+            val updateQuestionJob = questionViewModel.updateQuestion(QuestionUpdate(changeQuestionId!!, text))
+            performServiceAction(
+                    updateQuestionJob.isCompleted,
+                    R.string.msg_question_edit_success,
+                    R.string.msg_question_edit_error
+            )
+        }
     }
 
     private fun onDeleteConfirmed() {
+        val deleteQuestionJob = questionViewModel.deleteQuestion(changeQuestionId!!)
         performServiceAction(
-            QuestionService.deleteQuestion(requireContext(), changeQuestionId!!),
-            R.string.msg_question_delete_success,
-            R.string.msg_question_delete_error
+                deleteQuestionJob.isCompleted,
+                R.string.msg_question_delete_success,
+                R.string.msg_question_delete_error
         )
-        adapter.refreshAll()
         // also clear the log
-        if (QuestionService.hasAnswers(requireContext(), changeQuestionId!!)) {
+        if (questionViewModel.hasAnswers(changeQuestionId!!)) {
             val dialogFragment = QuestionClearLogDialogFragment(this::onClearLogByQuestionConfirmed)
             dialogFragment.show(requireActivity().supportFragmentManager, QuestionClearLogDialogFragment::class.java.simpleName)
         }
     }
 
     private fun onHideConfirmed() {
+        val hideQuestionJob = questionViewModel.hideQuestion(changeQuestionId!!)
         performServiceAction(
-            QuestionService.hideQuestion(requireContext(), changeQuestionId!!),
-            R.string.msg_question_hide_success,
-            R.string.msg_question_hide_error
+                hideQuestionJob.isCompleted,
+                R.string.msg_question_hide_success,
+                R.string.msg_question_hide_error
         )
-        adapter.refreshAll()
     }
 
     private fun onClearLogByQuestionConfirmed() {
-        AnswerStore.deleteByQuestionId(requireContext(), changeQuestionId!!)
+        questionViewModel.clearLogByQuestion(changeQuestionId!!)
         Snackbar.make(questionsListLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
     }
 
     private fun performServiceAction(success: Boolean, successMessageId: Int, errorMessageId: Int) =
-        if (success) Snackbar.make(questionsListLayout, successMessageId, Snackbar.LENGTH_LONG).show()
-        else Snackbar.make(questionsListLayout, errorMessageId, Snackbar.LENGTH_LONG).show()
+            if (success) Snackbar.make(questionsListLayout, successMessageId, Snackbar.LENGTH_LONG).show()
+            else Snackbar.make(questionsListLayout, errorMessageId, Snackbar.LENGTH_LONG).show()
 
     internal fun onReturnFromSettings(needToRefresh: Boolean) {
-        if (needToRefresh) adapter.refreshAll()
     }
 
     internal fun onReturnFromAddAnswer(answerIsAdded: Boolean) {

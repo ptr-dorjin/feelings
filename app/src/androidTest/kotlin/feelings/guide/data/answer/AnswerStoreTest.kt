@@ -1,11 +1,10 @@
-package feelings.guide.answer
+package feelings.guide.data.answer
 
 import android.content.Context
 import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.google.common.truth.Truth.assertThat
-import feelings.guide.question.Question
-import feelings.guide.question.QuestionService
+import feelings.guide.data.question.Question
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass

@@ -1,8 +1,6 @@
 package feelings.guide.ui.question
 
 import android.content.Context
-import android.database.Cursor
-import android.provider.BaseColumns._ID
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +8,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import feelings.guide.R
-import feelings.guide.question.COLUMN_IS_USER
-import feelings.guide.question.COLUMN_TEXT
-import feelings.guide.question.QuestionService
-import feelings.guide.ui.RecyclerViewCursorAdapter
+import feelings.guide.data.question.Question
 import kotlinx.android.synthetic.main.question_card.view.*
 
 internal class QuestionsAdapter(context: Context, private val questionClickCallback: (Long) -> Unit) :
-    RecyclerViewCursorAdapter<QuestionsAdapter.QuestionViewHolder>(context) {
+        RecyclerView.Adapter<QuestionsAdapter.QuestionViewHolder>() {
+
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
+    private var questions = emptyList<Question>() // Cached copy of question
 
     internal inner class QuestionViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var questionId: Long = 0
@@ -29,27 +27,23 @@ internal class QuestionsAdapter(context: Context, private val questionClickCallb
         }
     }
 
-    init {
-        refreshAll()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.question_card, parent, false)
-        return QuestionViewHolder(view)
+        val itemView = inflater.inflate(R.layout.question_card, parent, false)
+        return QuestionViewHolder(itemView)
     }
 
-    public override fun onBindViewHolder(holder: QuestionViewHolder, cursor: Cursor) {
-        val questionId = cursor.getLong(cursor.getColumnIndexOrThrow(_ID))
-        val isUser = 1 == cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_USER))
-        holder.let {
-            it.questionId = questionId
-            it.questionText.text = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXT))
-            it.popupMenu.setTag(R.id.tag_question_id, questionId)
-            it.popupMenu.setTag(R.id.tag_is_user, isUser)
-        }
+    override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
+        val current = questions[position]
+        holder.questionId = current.id
+        holder.questionText.text = current.text
+        holder.popupMenu.setTag(R.id.tag_question_id, current.id)
+        holder.popupMenu.setTag(R.id.tag_is_user, current.isUser)
     }
 
-    fun refreshAll() {
-        swapCursor(QuestionService.getAllQuestions(context))
+    internal fun setQuestions(questions: List<Question>) {
+        this.questions = questions
+        notifyDataSetChanged()
     }
+
+    override fun getItemCount() = questions.size
 }

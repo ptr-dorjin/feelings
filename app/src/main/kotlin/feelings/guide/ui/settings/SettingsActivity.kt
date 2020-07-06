@@ -9,7 +9,6 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
 import feelings.guide.profile.LocaleUtil
-import feelings.guide.question.QuestionService
 import feelings.guide.ui.BaseActivity
 import kotlinx.android.synthetic.main.settings_host.*
 
