@@ -64,17 +64,17 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     //Kotlin standard library
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
-    implementation("androidx.core:core-ktx:1.3.0")
+    implementation("androidx.core:core-ktx:1.5.0-alpha01")
     implementation("androidx.preference:preference-ktx:1.1.1")
     implementation("androidx.appcompat:appcompat:1.3.0-alpha01")
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.recyclerview:recyclerview:1.2.0-alpha03")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta7")
+    implementation("androidx.recyclerview:recyclerview:1.2.0-alpha05")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta8")
     implementation("androidx.vectordrawable:vectordrawable:1.1.0")
-    implementation("androidx.navigation:navigation-runtime-ktx:2.3.0-rc01")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.0-rc01")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.0-rc01")
-    implementation("com.google.android.material:material:1.3.0-alpha01")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.3.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.0")
+    implementation("com.google.android.material:material:1.3.0-alpha02")
     //threetenabp is needed due to minSdkVersion=15. Can be removed after setting minSdkVersion=26
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.0")
 
@@ -90,8 +90,8 @@ dependencies {
     androidTestImplementation("com.google.truth:truth:0.44") { //todo replace?
         exclude("com.google.guava", "listenablefuture")
     }
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-rc01")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0-rc01")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-rc02")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0-rc02")
     androidTestImplementation("org.hamcrest:hamcrest:2.1")
     androidTestImplementation("org.hamcrest:hamcrest-library:2.1")
 }

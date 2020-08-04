@@ -132,7 +132,7 @@ class QuestionStoreTest {
         QuestionStore.hideQuestion(context, questionId3)
 
         // when
-        val cursor = QuestionStore.getAll(context)
+        val cursor = QuestionStore.getAllVisible(context)
 
         // then
         val questions = cursorToQuestions(cursor)

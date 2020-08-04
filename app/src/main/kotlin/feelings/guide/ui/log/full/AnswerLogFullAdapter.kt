@@ -43,10 +43,10 @@ internal class AnswerLogFullAdapter(context: Context) :
     }
 
     override fun onBindViewHolder(holder: AnswerLogHolder, cursor: Cursor) {
-        val (questionId1, dateTime, answerText) = AnswerStore.mapFromCursor(cursor)
+        val (questionId, dateTime, answerText) = AnswerStore.mapFromCursor(cursor)
 
         holder.dateTimeView.text = dateTime.format(ofPattern(dateTimeFormat))
-        holder.questionView.text = QuestionService.getQuestionText(context, questionId1)
+        holder.questionView.text = QuestionService.getQuestionText(context, questionId)
         holder.answerView.text = answerText
     }
 

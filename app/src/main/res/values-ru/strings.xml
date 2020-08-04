@@ -18,6 +18,7 @@
     <string name="title_confirm_clear_log_deleted_dialog">Удалить ответы на удаленные/скрытые вопросы из журнала?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Удалить ответы на этот вопрос?</string>
     <string name="title_confirm_restore_built_in_questions_dialog">Восстановить видимость встроенных вопросов?</string>
+    <string name="title_export_permission_dialog">Разрешите приложению запись на карту памяти для экспорта журнала в файл</string>
 
     <string name="q_text_feelings">Что я сейчас чувствую?</string>
     <string name="q_text_gratitude">Кого я могу поблагодарить?</string>
@@ -72,7 +73,9 @@
     <string name="btn_restore">Восстановить</string>
     <string name="btn_clear_log_full">Очистить все</string>
     <string name="btn_clear_log_deleted">Очистить удаленные</string>
+    <string name="btn_export_log">Экспорт</string>
     <string name="btn_settings">Настройки</string>
+    <string name="btn_permit">Разрешить</string>
 
     <string name="snackbar_undo">Отмена</string>
 

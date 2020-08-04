@@ -53,7 +53,7 @@ object QuestionService {
     }
 
     fun getAllQuestions(context: Context): Cursor {
-        return QuestionStore.getAll(context)
+        return QuestionStore.getAllVisible(context)
     }
 
     fun getById(context: Context, questionId: Long): Question? {

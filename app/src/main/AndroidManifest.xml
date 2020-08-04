@@ -4,6 +4,8 @@
     package="feelings.guide"
     android:installLocation="internalOnly">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,6 +16,7 @@
         android:name=".FeelingsApplication"
         android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="GoogleAppIndexingWarning">
+
 
         <activity android:name=".ui.question.QuestionListActivity"
             android:launchMode="singleTop"

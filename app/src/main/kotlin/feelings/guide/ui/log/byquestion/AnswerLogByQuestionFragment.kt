@@ -1,7 +1,16 @@
 package feelings.guide.ui.log.byquestion
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -9,16 +18,21 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
+import feelings.guide.WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.log.AnswerLogActivity
 import feelings.guide.ui.log.AnswerLogSwipeCallback
+import feelings.guide.ui.log.ExportPermissionDialogFragment
 import feelings.guide.ui.question.QuestionClearLogDialogFragment
 import kotlinx.android.synthetic.main.answer_log_by_question.*
 
 
-class AnswerLogByQuestionFragment(private var questionId: Long) : Fragment() {
+class AnswerLogByQuestionFragment(
+        private var questionId: Long,
+        private val exportFn: () -> Unit)
+    : Fragment() {
 
     private lateinit var adapter: AnswerLogByQuestionAdapter
     private var lastDeleted: Answer? = null
@@ -48,19 +62,19 @@ class AnswerLogByQuestionFragment(private var questionId: Long) : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         logByQuestionRV.layoutManager = layoutManager
         val dividerItemDecoration = DividerItemDecoration(
-            logByQuestionRV.context,
-            layoutManager.orientation
+                logByQuestionRV.context,
+                layoutManager.orientation
         )
         logByQuestionRV.addItemDecoration(dividerItemDecoration)
 
         logByQuestionRV.adapter = adapter
 
         val itemTouchHelper = ItemTouchHelper(
-            AnswerLogSwipeCallback(
-                requireContext(),
-                this::onDeleteAnswer,
-                this::onEditAnswer
-            )
+                AnswerLogSwipeCallback(
+                        requireContext(),
+                        this::onDeleteAnswer,
+                        this::onEditAnswer
+                )
         )
         itemTouchHelper.attachToRecyclerView(logByQuestionRV)
     }
@@ -81,14 +95,17 @@ class AnswerLogByQuestionFragment(private var questionId: Long) : Fragment() {
             showClearLogByQuestionConfirmation()
             true
         }
+        R.id.export_log -> {
+            exportLog()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 
     private fun showClearLogByQuestionConfirmation() {
-        QuestionClearLogDialogFragment(this::onClearLogByQuestionConfirmed).show(
-            requireActivity().supportFragmentManager,
-            QuestionClearLogDialogFragment::class.java.simpleName
-        )
+        QuestionClearLogDialogFragment(this::onClearLogByQuestionConfirmed)
+                .show(requireActivity().supportFragmentManager,
+                        QuestionClearLogDialogFragment::class.java.simpleName)
     }
 
     private fun onClearLogByQuestionConfirmed() {
@@ -104,8 +121,8 @@ class AnswerLogByQuestionFragment(private var questionId: Long) : Fragment() {
         adapter.refresh()
 
         Snackbar.make(logByQuestionLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
-            .setAction(R.string.snackbar_undo) { undoDelete() }
-            .show()
+                .setAction(R.string.snackbar_undo) { undoDelete() }
+                .show()
     }
 
     private fun undoDelete() {
@@ -137,5 +154,18 @@ class AnswerLogByQuestionFragment(private var questionId: Long) : Fragment() {
         }
         if (answerIsUpdated)
             Snackbar.make(logByQuestionLayout, R.string.msg_answer_updated_success, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun exportLog() {
+        if (ContextCompat.checkSelfPermission(requireContext(), WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+            exportFn()
+        } else {
+            ExportPermissionDialogFragment {
+                ActivityCompat.requestPermissions(requireActivity(),
+                        arrayOf(WRITE_EXTERNAL_STORAGE),
+                        WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE)
+            }.show(requireActivity().supportFragmentManager,
+                    ExportPermissionDialogFragment::class.java.simpleName)
+        }
     }
 }

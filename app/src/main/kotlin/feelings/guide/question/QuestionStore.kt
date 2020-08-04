@@ -13,7 +13,7 @@ internal object QuestionStore {
 
     fun getById(context: Context, questionId: Long): Question? = DbHelper.getInstance(context).readableDatabase.use {
         it.query(QUESTION_TABLE, ALL_COLUMNS, "$_ID = $questionId", null, null, null, null)
-            .use { cursor -> return if (cursor.moveToFirst()) mapFromCursor(cursor) else null }
+                .use { cursor -> return if (cursor.moveToFirst()) mapFromCursor(cursor) else null }
     }
 
     fun mapFromCursor(cursor: Cursor): Question = Question().apply {
@@ -75,11 +75,28 @@ internal object QuestionStore {
         it.update(QUESTION_TABLE, values, "$COLUMN_IS_USER = 0", null)
     }
 
-    fun getAll(context: Context): Cursor {
+    fun getAllVisible(context: Context): Cursor {
         return DbHelper.getInstance(context).readableDatabase.query(
-            QUESTION_TABLE, ALL_COLUMNS, "$COLUMN_IS_DELETED = 0 and $COLUMN_IS_HIDDEN = 0",
-            null, null, null, "$_ID ASC"
+                QUESTION_TABLE, ALL_COLUMNS, "$COLUMN_IS_DELETED = 0 and $COLUMN_IS_HIDDEN = 0",
+                null, null, null, "$_ID ASC"
         )
+    }
+
+    fun getAllAsList(context: Context): List<Question> {
+        var cursor: Cursor? = null
+        try {
+            cursor = DbHelper.getInstance(context).readableDatabase.query(
+                    QUESTION_TABLE, ALL_COLUMNS, null,
+                    null, null, null, "$_ID ASC"
+            )
+            val questions = ArrayList<Question>()
+            while (cursor.moveToNext()) {
+                questions.add(mapFromCursor(cursor))
+            }
+            return questions
+        } finally {
+            cursor?.close()
+        }
     }
 
     /**

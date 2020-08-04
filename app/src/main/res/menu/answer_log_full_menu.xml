@@ -7,4 +7,7 @@
     <item android:id="@+id/clear_log_deleted"
         android:title="@string/btn_clear_log_deleted"
         app:showAsAction="never"/>
+    <item android:id="@+id/export_log"
+            android:title="@string/btn_export_log"
+            app:showAsAction="never"/>
 </menu>

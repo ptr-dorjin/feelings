@@ -1,7 +1,16 @@
 package feelings.guide.ui.log.full
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -9,14 +18,16 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
+import feelings.guide.WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
 import feelings.guide.ui.log.AnswerLogActivity
 import feelings.guide.ui.log.AnswerLogSwipeCallback
+import feelings.guide.ui.log.ExportPermissionDialogFragment
 import kotlinx.android.synthetic.main.answer_log_full.*
 
 
-class AnswerLogFullFragment : Fragment() {
+class AnswerLogFullFragment(private val exportFn: () -> Unit) : Fragment() {
 
     private lateinit var adapter: AnswerLogFullAdapter
     private var lastDeleted: Answer? = null
@@ -45,19 +56,19 @@ class AnswerLogFullFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         logFullRV.layoutManager = layoutManager
         val dividerItemDecoration = DividerItemDecoration(
-            logFullRV.context,
-            layoutManager.orientation
+                logFullRV.context,
+                layoutManager.orientation
         )
         logFullRV.addItemDecoration(dividerItemDecoration)
 
         logFullRV.adapter = adapter
 
         val itemTouchHelper = ItemTouchHelper(
-            AnswerLogSwipeCallback(
-                requireContext(),
-                this::onDeleteAnswer,
-                this::onEditAnswer
-            )
+                AnswerLogSwipeCallback(
+                        requireContext(),
+                        this::onDeleteAnswer,
+                        this::onEditAnswer
+                )
         )
         itemTouchHelper.attachToRecyclerView(logFullRV)
     }
@@ -78,32 +89,36 @@ class AnswerLogFullFragment : Fragment() {
             showClearLogDeletedConfirmation()
             true
         }
+        R.id.export_log -> {
+            exportLog()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 
     private fun showClearLogFullConfirmation() {
-        ClearLogFullDialogFragment(this::onClearLogFullConfirmed).show(
-            requireActivity().supportFragmentManager,
-            ClearLogFullDialogFragment::class.java.simpleName
-        )
+        ClearLogFullDialogFragment(this::onClearLogFullConfirmed)
+                .show(requireActivity().supportFragmentManager,
+                        ClearLogFullDialogFragment::class.java.simpleName)
     }
 
     private fun showClearLogDeletedConfirmation() {
-        ClearLogDeletedDialogFragment(this::onClearLogDeletedConfirmed).show(
-            requireActivity().supportFragmentManager,
-            ClearLogDeletedDialogFragment::class.java.simpleName
-        )
+        ClearLogDeletedDialogFragment(this::onClearLogDeletedConfirmed)
+                .show(requireActivity().supportFragmentManager,
+                        ClearLogDeletedDialogFragment::class.java.simpleName)
     }
 
     private fun onClearLogFullConfirmed() {
         AnswerStore.deleteAll(requireContext())
-        Snackbar.make(logFullLayout, R.string.msg_clear_log_full_success, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(logFullLayout, R.string.msg_clear_log_full_success, Snackbar.LENGTH_LONG)
+                .show()
         adapter.refresh()
     }
 
     private fun onClearLogDeletedConfirmed() {
         AnswerStore.deleteForDeletedQuestions(requireContext())
-        Snackbar.make(logFullLayout, R.string.msg_clear_log_deleted_success, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(logFullLayout, R.string.msg_clear_log_deleted_success, Snackbar.LENGTH_LONG)
+                .show()
         adapter.refresh()
     }
 
@@ -114,8 +129,8 @@ class AnswerLogFullFragment : Fragment() {
         adapter.refresh()
 
         Snackbar.make(logFullLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
-            .setAction(R.string.snackbar_undo) { undoDelete() }
-            .show()
+                .setAction(R.string.snackbar_undo) { undoDelete() }
+                .show()
     }
 
     private fun undoDelete() {
@@ -147,5 +162,18 @@ class AnswerLogFullFragment : Fragment() {
         }
         if (answerIsUpdated)
             Snackbar.make(logFullLayout, R.string.msg_answer_updated_success, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun exportLog() {
+        if (ContextCompat.checkSelfPermission(requireContext(), WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+            exportFn()
+        } else {
+            ExportPermissionDialogFragment {
+                ActivityCompat.requestPermissions(requireActivity(),
+                        arrayOf(WRITE_EXTERNAL_STORAGE),
+                        WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE)
+            }.show(requireActivity().supportFragmentManager,
+                    ExportPermissionDialogFragment::class.java.simpleName)
+        }
     }
 }

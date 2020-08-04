@@ -8,6 +8,7 @@ import feelings.guide.db.DbHelper
 import feelings.guide.question.COLUMN_IS_DELETED
 import feelings.guide.question.COLUMN_IS_HIDDEN
 import feelings.guide.question.QUESTION_TABLE
+import feelings.guide.question.QuestionStore
 import feelings.guide.util.DB_FORMATTER
 import org.threeten.bp.LocalDateTime
 
@@ -45,6 +46,37 @@ internal object AnswerStore {
             ANSWER_TABLE, projection, selection, null, null, null,
             "$COLUMN_DATE_TIME DESC"
         )
+    }
+
+    fun getAnswersForExport(context: Context, questionId: Long = -1): List<AnswerForExport> {
+        var cursor: Cursor? = null
+        try {
+            val projection = arrayOf(_ID, COLUMN_QUESTION_ID, COLUMN_DATE_TIME, COLUMN_ANSWER)
+            val selection = if (questionId > -1) "$COLUMN_QUESTION_ID = $questionId" else null
+            cursor = DbHelper.getInstance(context).readableDatabase.query(
+                    ANSWER_TABLE, projection, selection, null, null, null,
+                    "$COLUMN_DATE_TIME DESC"
+            )
+
+            val questionMap = HashMap<Long, String>()
+            for (question in QuestionStore.getAllAsList(context)) {
+                questionMap[question.id] = question.text!!
+            }
+
+            val answers = ArrayList<AnswerForExport>()
+            while (cursor.moveToNext()) {
+                val answer = mapFromCursor(cursor)
+                val questionText = questionMap[answer.questionId]
+                val answerForExport = AnswerForExport(answer.dateTime,
+                        questionText ?: "",
+                        answer.answerText ?: "")
+
+                answers.add(answerForExport)
+            }
+            return answers
+        } finally {
+            cursor?.close()
+        }
     }
 
     fun getById(context: Context, id: Long): Answer? = DbHelper.getInstance(context).readableDatabase.use {
