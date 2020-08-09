@@ -1,9 +1,12 @@
 package feelings.guide.ui.log
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.ANSWER_ID_PARAM
 import feelings.guide.ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY
@@ -14,11 +17,16 @@ import feelings.guide.UPDATED_ANSWER_ID_RESULT_KEY
 import feelings.guide.WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
+import feelings.guide.export.exportLog
+import feelings.guide.util.getExternalStorageMounted
+import feelings.guide.util.setExternalStoragePath
 import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.answer.AnswerActivity
 import feelings.guide.ui.log.byquestion.AnswerLogByQuestionFragment
 import feelings.guide.ui.log.full.AnswerLogFullFragment
 import kotlinx.android.synthetic.main.answer_log_host.*
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 
 const val DEFAULT_QUESTION_ID: Long = -1
 
@@ -82,8 +90,39 @@ class AnswerLogActivity : BaseActivity() {
     }
 
     private fun doExport() {
-        val answers = AnswerStore.getAnswersForExport(this, questionId)
-        Snackbar.make(answerLogContent, "Exporting ${answers.size} answers", Snackbar.LENGTH_LONG)
-                .show()
+        try {
+            if (!getExternalStorageMounted()) {
+                Snackbar.make(answerLogContent, "Storage is not mounted. Cannot export.",
+                        Snackbar.LENGTH_LONG).show()
+                return
+            }
+
+            val answers = AnswerStore.getAnswersForExport(this, questionId)
+            val id = if (isFull) "full" else questionId.toString()
+            val timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            val fileName = "feelings-guide-log-$id-$timestamp.csv"
+
+
+            val resolver = contentResolver
+            val contentValues = ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                put(MediaStore.MediaColumns.MIME_TYPE, "text/csv")
+                setExternalStoragePath(this, fileName)
+            }
+
+            val uri = resolver.insert(MediaStore.Files.getContentUri("external"), contentValues)
+
+            uri?.apply {
+                resolver.openOutputStream(uri)?.apply {
+                    exportLog(answers, this)
+                    Snackbar.make(answerLogContent, "Exported ${answers.size} answers to Media/Documents",
+                            Snackbar.LENGTH_LONG).show()
+                }
+            }
+        } catch (e: Exception) {
+            Snackbar.make(answerLogContent, "An error occurred while exporting the log. ${e.message}",
+                    Snackbar.LENGTH_LONG).show()
+            Log.e("export", "An error occurred while exporting the log.", e)
+        }
     }
 }

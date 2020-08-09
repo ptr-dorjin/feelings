@@ -16,6 +16,7 @@ android {
         versionName = "2.1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled = true
     }
     buildTypes {
         getByName("release") {
@@ -69,7 +70,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0-alpha01")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.2.0-alpha05")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta8")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-rc1")
     implementation("androidx.vectordrawable:vectordrawable:1.1.0")
     implementation("androidx.navigation:navigation-runtime-ktx:2.3.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
@@ -77,6 +78,9 @@ dependencies {
     implementation("com.google.android.material:material:1.3.0-alpha02")
     //threetenabp is needed due to minSdkVersion=15. Can be removed after setting minSdkVersion=26
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.0")
+    implementation("com.opencsv:opencsv:5.2")
+    // to workaround the 64K reference limit
+    implementation("androidx.multidex:multidex:2.0.1")
 
     testImplementation(kotlin("test", KotlinCompilerVersion.VERSION))
     testImplementation(kotlin("test-junit", KotlinCompilerVersion.VERSION))
@@ -90,8 +94,8 @@ dependencies {
     androidTestImplementation("com.google.truth:truth:0.44") { //todo replace?
         exclude("com.google.guava", "listenablefuture")
     }
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-rc02")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0-rc02")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-rc03")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0-rc03")
     androidTestImplementation("org.hamcrest:hamcrest:2.1")
     androidTestImplementation("org.hamcrest:hamcrest-library:2.1")
 }

@@ -2,6 +2,7 @@ package feelings.guide.ui.log.full
 
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -24,6 +25,7 @@ import feelings.guide.answer.AnswerStore
 import feelings.guide.ui.log.AnswerLogActivity
 import feelings.guide.ui.log.AnswerLogSwipeCallback
 import feelings.guide.ui.log.ExportPermissionDialogFragment
+import feelings.guide.util.canWriteToExternalStorage
 import kotlinx.android.synthetic.main.answer_log_full.*
 
 
@@ -165,7 +167,7 @@ class AnswerLogFullFragment(private val exportFn: () -> Unit) : Fragment() {
     }
 
     private fun exportLog() {
-        if (ContextCompat.checkSelfPermission(requireContext(), WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED) {
+        if (canWriteToExternalStorage(requireContext())) {
             exportFn()
         } else {
             ExportPermissionDialogFragment {

@@ -3,6 +3,7 @@ package feelings.guide
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import androidx.multidex.MultiDexApplication
 
 import com.jakewharton.threetenabp.AndroidThreeTen
 
@@ -19,7 +20,7 @@ const val UPDATED_ANSWER_ID_RESULT_KEY = "updated-answer-id"
 const val ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY = "answer-is-added-or-updated"
 
 @Suppress("unused")
-class FeelingsApplication : Application() {
+class FeelingsApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
