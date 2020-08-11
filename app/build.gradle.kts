@@ -10,7 +10,7 @@ android {
     compileSdkVersion(29)
     defaultConfig {
         applicationId = "feelings.guide"
-        minSdkVersion(16)
+        minSdkVersion(19)
         targetSdkVersion(29)
         versionCode = 5
         versionName = "2.1.1"

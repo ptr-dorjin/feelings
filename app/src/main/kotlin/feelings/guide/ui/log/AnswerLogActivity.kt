@@ -1,32 +1,27 @@
 package feelings.guide.ui.log
 
-import android.app.Activity
-import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.ANSWER_ID_PARAM
 import feelings.guide.ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY
 import feelings.guide.EDIT_ANSWER_REQUEST_CODE
+import feelings.guide.EXPORT_LOG_REQUEST_CODE
 import feelings.guide.QUESTION_ID_PARAM
 import feelings.guide.R
 import feelings.guide.UPDATED_ANSWER_ID_RESULT_KEY
-import feelings.guide.WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
 import feelings.guide.export.exportLog
-import feelings.guide.util.getExternalStorageMounted
-import feelings.guide.util.setExternalStoragePath
 import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.answer.AnswerActivity
 import feelings.guide.ui.log.byquestion.AnswerLogByQuestionFragment
 import feelings.guide.ui.log.full.AnswerLogFullFragment
+import feelings.guide.util.EXPORT_FILE_NAME_FORMATTER
 import kotlinx.android.synthetic.main.answer_log_host.*
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
 
 const val DEFAULT_QUESTION_ID: Long = -1
 
@@ -43,8 +38,8 @@ class AnswerLogActivity : BaseActivity() {
 
             isFull = questionId == DEFAULT_QUESTION_ID
             val fragment = when {
-                isFull -> AnswerLogFullFragment(this::doExport)
-                else -> AnswerLogByQuestionFragment(questionId, this::doExport)
+                isFull -> AnswerLogFullFragment(this::createFileForExport)
+                else -> AnswerLogByQuestionFragment(questionId, this::createFileForExport)
             }
             supportFragmentManager
                     .beginTransaction()
@@ -62,7 +57,7 @@ class AnswerLogActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == EDIT_ANSWER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == EDIT_ANSWER_REQUEST_CODE && resultCode == RESULT_OK) {
             // returned from editing the answer
             val answerLogFragment = supportFragmentManager.findFragmentById(R.id.answerLogContent)
             val answerId = data?.getLongExtra(UPDATED_ANSWER_ID_RESULT_KEY, -1) ?: -1
@@ -72,57 +67,51 @@ class AnswerLogActivity : BaseActivity() {
                 (answerLogFragment as? AnswerLogFullFragment)?.onReturnFromEditAnswer(answerId, answerIsUpdated)
             else
                 (answerLogFragment as? AnswerLogByQuestionFragment)?.onReturnFromEditAnswer(answerId, answerIsUpdated)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty()) {
-                when (grantResults[0]) {
-                    PackageManager.PERMISSION_GRANTED -> doExport()
-                    PackageManager.PERMISSION_DENIED -> Snackbar.make(answerLogContent,
-                            "Cannot export without write storage permission",
-                            Snackbar.LENGTH_LONG)
-                            .show()
-                }
-            }
-        }
-    }
-
-    private fun doExport() {
-        try {
-            if (!getExternalStorageMounted()) {
-                Snackbar.make(answerLogContent, "Storage is not mounted. Cannot export.",
-                        Snackbar.LENGTH_LONG).show()
-                return
-            }
-
-            val answers = AnswerStore.getAnswersForExport(this, questionId)
-            val id = if (isFull) "full" else questionId.toString()
-            val timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-            val fileName = "feelings-guide-log-$id-$timestamp.csv"
-
-
-            val resolver = contentResolver
-            val contentValues = ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-                put(MediaStore.MediaColumns.MIME_TYPE, "text/csv")
-                setExternalStoragePath(this, fileName)
-            }
-
-            val uri = resolver.insert(MediaStore.Files.getContentUri("external"), contentValues)
-
-            uri?.apply {
-                resolver.openOutputStream(uri)?.apply {
-                    exportLog(answers, this)
-                    Snackbar.make(answerLogContent, "Exported ${answers.size} answers to Media/Documents",
+        } else if (requestCode == EXPORT_LOG_REQUEST_CODE && resultCode == RESULT_OK) {
+            try {
+                if (data?.data == null) {
+                    Snackbar.make(answerLogContent, "Choose file location to export.",
                             Snackbar.LENGTH_LONG).show()
                 }
+                data?.data?.let { uri: Uri ->
+                    val answers = AnswerStore.getAnswersForExport(this, questionId)
+                    contentResolver.openOutputStream(uri).use {
+                        if (it == null) {
+                            Snackbar.make(answerLogContent, "Cannot write to file $uri",
+                                    Snackbar.LENGTH_LONG).show()
+                            return
+                        }
+
+                        exportLog(answers, it)
+
+                        Snackbar.make(answerLogContent, "Successfully exported log",
+                                Snackbar.LENGTH_LONG).show()
+                    }
+                }
+            } catch (e: Exception) {
+                Snackbar.make(answerLogContent, "An error occurred while exporting the file. ${e.message}",
+                        Snackbar.LENGTH_LONG).show()
+                Log.e("export", "An error occurred while creating a file.", e)
             }
+        }
+    }
+
+    private fun createFileForExport() {
+        try {
+            val id = if (isFull) "full" else questionId.toString()
+            val timestamp = LocalDateTime.now().format(EXPORT_FILE_NAME_FORMATTER)
+            val fileName = "feelings-guide-log-$id-$timestamp.csv"
+
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "text/csv"
+                putExtra(Intent.EXTRA_TITLE, fileName)
+            }
+            startActivityForResult(intent, EXPORT_LOG_REQUEST_CODE)
         } catch (e: Exception) {
-            Snackbar.make(answerLogContent, "An error occurred while exporting the log. ${e.message}",
+            Snackbar.make(answerLogContent, "An error occurred while creating a file. ${e.message}",
                     Snackbar.LENGTH_LONG).show()
-            Log.e("export", "An error occurred while exporting the log.", e)
+            Log.e("export", "An error occurred while creating a file.", e)
         }
     }
 }

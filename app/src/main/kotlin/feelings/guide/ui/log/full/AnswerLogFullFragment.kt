@@ -1,8 +1,5 @@
 package feelings.guide.ui.log.full
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,8 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,13 +14,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
-import feelings.guide.WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
 import feelings.guide.ui.log.AnswerLogActivity
 import feelings.guide.ui.log.AnswerLogSwipeCallback
-import feelings.guide.ui.log.ExportPermissionDialogFragment
-import feelings.guide.util.canWriteToExternalStorage
 import kotlinx.android.synthetic.main.answer_log_full.*
 
 
@@ -92,7 +84,7 @@ class AnswerLogFullFragment(private val exportFn: () -> Unit) : Fragment() {
             true
         }
         R.id.export_log -> {
-            exportLog()
+            exportFn()
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -164,18 +156,5 @@ class AnswerLogFullFragment(private val exportFn: () -> Unit) : Fragment() {
         }
         if (answerIsUpdated)
             Snackbar.make(logFullLayout, R.string.msg_answer_updated_success, Snackbar.LENGTH_LONG).show()
-    }
-
-    private fun exportLog() {
-        if (canWriteToExternalStorage(requireContext())) {
-            exportFn()
-        } else {
-            ExportPermissionDialogFragment {
-                ActivityCompat.requestPermissions(requireActivity(),
-                        arrayOf(WRITE_EXTERNAL_STORAGE),
-                        WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE)
-            }.show(requireActivity().supportFragmentManager,
-                    ExportPermissionDialogFragment::class.java.simpleName)
-        }
     }
 }
