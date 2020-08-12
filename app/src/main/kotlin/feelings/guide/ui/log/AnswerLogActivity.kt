@@ -84,12 +84,12 @@ class AnswerLogActivity : BaseActivity() {
 
                         exportLog(answers, it)
 
-                        Snackbar.make(answerLogContent, "Successfully exported log",
+                        Snackbar.make(answerLogContent, "Finished exporting to file",
                                 Snackbar.LENGTH_LONG).show()
                     }
                 }
             } catch (e: Exception) {
-                Snackbar.make(answerLogContent, "An error occurred while exporting the file. ${e.message}",
+                Snackbar.make(answerLogContent, "An error occurred while exporting to file. ${e.message}",
                         Snackbar.LENGTH_LONG).show()
                 Log.e("export", "An error occurred while creating a file.", e)
             }

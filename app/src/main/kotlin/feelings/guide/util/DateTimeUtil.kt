@@ -12,6 +12,7 @@ private const val ANSWER_LOG_TIME_DEFAULT_FORMAT = "HH:mm"
 
 val DB_FORMATTER: DateTimeFormatter = ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
 val EXPORT_FILE_NAME_FORMATTER: DateTimeFormatter = ofPattern("yyyyMMdd-HHmmss")
+val EXPORT_CONTENT_FORMATTER: DateTimeFormatter = ofPattern("yyyy-MM-dd HH:mm:ss")
 
 object DateTimeUtil {
     fun getDateTimeFormat(context: Context): String {

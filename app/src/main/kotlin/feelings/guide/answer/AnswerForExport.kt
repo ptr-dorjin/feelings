@@ -1,7 +1,7 @@
 package feelings.guide.answer
 
+import feelings.guide.util.EXPORT_CONTENT_FORMATTER
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
 
 data class AnswerForExport(
         val dateTime: LocalDateTime,
@@ -10,8 +10,8 @@ data class AnswerForExport(
 ) {
 
     fun toCsvLine(): Array<String> = arrayOf(
-        dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-        questionText,
-        answerText
+            dateTime.format(EXPORT_CONTENT_FORMATTER),
+            questionText,
+            answerText
     )
 }

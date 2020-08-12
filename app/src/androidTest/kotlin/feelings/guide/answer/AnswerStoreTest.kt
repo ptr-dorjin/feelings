@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.google.common.truth.Truth.assertThat
+import feelings.guide.R
 import feelings.guide.question.Question
 import feelings.guide.question.QuestionService
 import org.junit.After
@@ -11,6 +12,7 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.Month
 import java.util.*
 
 private const val ID: Long = 1
@@ -196,6 +198,40 @@ class AnswerStoreTest {
         val answers = cursorToAnswers(AnswerStore.getAnswers(context))
         assertThat(answers)
             .containsExactly(answer2)
+    }
+
+    @Test
+    fun testGetAllAnswersForExport() {
+        // given
+        AnswerStore.saveAnswer(context, Answer(QUESTION_ID, now, ANSWER_TEXT))
+        AnswerStore.saveAnswer(context, Answer(QUESTION_ID, now.minusDays(1), "another answer"))
+        AnswerStore.saveAnswer(context, Answer(QUESTION_ID_2, now.minusMinutes(5), "answer to question 2"))
+
+        // when
+        val answersForExport = AnswerStore.getAnswersForExport(context)
+
+        // then
+        assertThat(answersForExport).containsExactly(
+                AnswerForExport(now, context.getString(R.string.q_text_feelings), ANSWER_TEXT),
+                AnswerForExport(now.minusMinutes(5), context.getString(R.string.q_text_gratitude), "answer to question 2"),
+                AnswerForExport(now.minusDays(1), context.getString(R.string.q_text_feelings), "another answer")
+        )
+    }
+
+    @Test
+    fun testGetAnswersToOneQuestionForExport() {
+        // given
+        AnswerStore.saveAnswer(context, Answer(QUESTION_ID, now, ANSWER_TEXT))
+        AnswerStore.saveAnswer(context, Answer(QUESTION_ID, now.minusDays(1), "another answer"))
+        AnswerStore.saveAnswer(context, Answer(QUESTION_ID_2, now.minusMinutes(5), "answer to question 2"))
+
+        // when
+        val answersForExport = AnswerStore.getAnswersForExport(context, QUESTION_ID_2)
+
+        // then
+        assertThat(answersForExport).containsExactly(
+                AnswerForExport(now.minusMinutes(5), context.getString(R.string.q_text_gratitude), "answer to question 2")
+        )
     }
 
     private fun cursorToAnswers(cursor: Cursor): List<Answer> {
