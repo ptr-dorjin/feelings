@@ -1,14 +1,32 @@
-Version 1.1.0
-<ru-RU>
-1. Теперь нельзя редактировать и удалять предустановленные вопросы
-2. Добавлены описания к некоторым предустановленным вопросам
-3. Изменены формулировки некоторых предустановленных вопросов
-</ru-RU>
+Version 2.2.0
 <en-US>
-1. Built-in questions can't be edited and deleted now.
-2. Added description for some built-in questions.
-3. Changed wording of some built-in questions'.
+Added export feature.
+Now you can export the log to a CSV file.
+CSV files can be opened in any spreadsheet application on your phone or computer.
 </en-US>
+<ru-RU>
+Добавлена возможность экспорта.
+Теперь вы можете экспортировать журнал в CSV файл.
+CSV файл можно открыть в любой spreadsheet программе на телефоне или на компьютере.
+</ru-RU>
+
+Version 2.1.1
+<en-US>
+Fixed locale change issue.
+</en-US>
+<ru-RU>
+Исправлена ошибка при смене языка.
+</ru-RU>
+
+Version 2.1.0
+<en-US>
+Answers can now be edited by swiping left and deleted by swiping right in the answer log.
+Small UI improvements and bug fixes.
+</en-US>
+<ru-RU>
+Ответы теперь можно редактировать (swipe влево) и удалять (swipe вправо) в журнале ответов.
+Небольшие улучшения интерфейса и исправления ошибок.
+</ru-RU>
 
 Version 2.0.0
 <en-US>
@@ -28,20 +46,14 @@ Version 2.0.0
 6. Отредактирован справочник чувств.
 </ru-RU>
 
-Version 2.1.0
-<en-US>
-Answers can now be edited by swiping left and deleted by swiping right in the answer log.
-Small UI improvements and bug fixes.
-</en-US>
+Version 1.1.0
 <ru-RU>
-Ответы теперь можно редактировать (swipe влево) и удалять (swipe вправо) в журнале ответов.
-Небольшие улучшения интерфейса и исправления ошибок.
+1. Теперь нельзя редактировать и удалять предустановленные вопросы
+2. Добавлены описания к некоторым предустановленным вопросам
+3. Изменены формулировки некоторых предустановленных вопросов
 </ru-RU>
-
-Version 2.1.1
 <en-US>
-Fixed locale change issue.
+1. Built-in questions can't be edited and deleted now.
+2. Added description for some built-in questions.
+3. Changed wording of some built-in questions'.
 </en-US>
-<ru-RU>
-Исправлена ошибка при смене языка.
-</ru-RU>
