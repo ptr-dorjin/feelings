@@ -112,4 +112,8 @@
     <string name="hint_question_text">Enter question</string>
     <string name="hint_answer_text">Enter answer</string>
 
+    <string name="export_header_date_time">Date and time</string>
+    <string name="export_header_question">Question</string>
+    <string name="export_header_answer">Answer</string>
+
 </resources>

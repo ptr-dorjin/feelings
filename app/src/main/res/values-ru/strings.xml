@@ -84,4 +84,7 @@
     <string name="hint_question_text">Введите вопрос</string>
     <string name="hint_answer_text">Введите ответ</string>
 
+    <string name="export_header_date_time">Дата и время</string>
+    <string name="export_header_question">Вопрос</string>
+    <string name="export_header_answer">Ответ</string>
 </resources>

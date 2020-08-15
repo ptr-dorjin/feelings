@@ -14,7 +14,7 @@ import feelings.guide.R
 import feelings.guide.UPDATED_ANSWER_ID_RESULT_KEY
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
-import feelings.guide.export.exportLog
+import feelings.guide.export.LogExporter
 import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.answer.AnswerActivity
 import feelings.guide.ui.log.byquestion.AnswerLogByQuestionFragment
@@ -82,7 +82,7 @@ class AnswerLogActivity : BaseActivity() {
                             return
                         }
 
-                        exportLog(answers, it)
+                        LogExporter().export(answers, it, this)
 
                         Snackbar.make(answerLogContent, "Finished exporting to file",
                                 Snackbar.LENGTH_LONG).show()

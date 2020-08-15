@@ -86,6 +86,7 @@ dependencies {
     testImplementation(kotlin("test-junit", KotlinCompilerVersion.VERSION))
     testImplementation("androidx.test.ext:junit:1.1.1")
     testImplementation("com.google.truth:truth:0.44") //todo replace?
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
 
     androidTestImplementation(kotlin("test", KotlinCompilerVersion.VERSION))
     androidTestImplementation(kotlin("test-junit", KotlinCompilerVersion.VERSION))
