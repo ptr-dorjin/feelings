@@ -12,8 +12,8 @@ import feelings.guide.R
 class ClearLogFullDialogFragment(private val onClearLogFullConfirmed: () -> Unit) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext())
-        .setMessage(R.string.title_confirm_clear_log_full_dialog)
-        .setPositiveButton(R.string.btn_delete) { _, _ -> onClearLogFullConfirmed() }
-        .setNegativeButton(R.string.btn_cancel) { _, _ -> dismiss() }
-        .create()
+            .setMessage(R.string.title_confirm_clear_log_full_dialog)
+            .setPositiveButton(R.string.btn_delete) { _, _ -> onClearLogFullConfirmed() }
+            .setNegativeButton(R.string.btn_cancel) { _, _ -> dismiss() }
+            .create()
 }

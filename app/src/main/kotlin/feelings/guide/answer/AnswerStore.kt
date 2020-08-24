@@ -43,8 +43,8 @@ internal object AnswerStore {
         val projection = arrayOf(_ID, COLUMN_QUESTION_ID, COLUMN_DATE_TIME, COLUMN_ANSWER)
         val selection = if (questionId > -1) "$COLUMN_QUESTION_ID = $questionId" else null
         return DbHelper.getInstance(context).readableDatabase.query(
-            ANSWER_TABLE, projection, selection, null, null, null,
-            "$COLUMN_DATE_TIME DESC"
+                ANSWER_TABLE, projection, selection, null, null, null,
+                "$COLUMN_DATE_TIME DESC"
         )
     }
 
@@ -81,7 +81,7 @@ internal object AnswerStore {
 
     fun getById(context: Context, id: Long): Answer? = DbHelper.getInstance(context).readableDatabase.use {
         it.query(ANSWER_TABLE, ALL_COLUMNS, "$_ID = $id", null, null, null, null)
-            .use { cursor -> return if (cursor.moveToFirst()) mapFromCursor(cursor) else null }
+                .use { cursor -> return if (cursor.moveToFirst()) mapFromCursor(cursor) else null }
     }
 
     fun deleteAll(context: Context) = DbHelper.getInstance(context).writableDatabase.use {
@@ -98,13 +98,13 @@ internal object AnswerStore {
 
     fun deleteForDeletedQuestions(context: Context) = DbHelper.getInstance(context).writableDatabase.use {
         it.execSQL(
-            """delete from $ANSWER_TABLE where $COLUMN_QUESTION_ID in (
+                """delete from $ANSWER_TABLE where $COLUMN_QUESTION_ID in (
                 |select $_ID from $QUESTION_TABLE where $COLUMN_IS_DELETED = 1 or $COLUMN_IS_HIDDEN = 1)""".trimMargin()
         )
     }
 
     fun hasAnswers(context: Context, questionId: Long): Boolean =
-        getAnswers(context, questionId).use { cursor -> return cursor.moveToFirst() }
+            getAnswers(context, questionId).use { cursor -> return cursor.moveToFirst() }
 
     fun mapFromCursor(cursor: Cursor): Answer {
         val id = cursor.getLong(cursor.getColumnIndexOrThrow(_ID))

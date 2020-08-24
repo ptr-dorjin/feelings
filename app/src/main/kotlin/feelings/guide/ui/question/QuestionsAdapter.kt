@@ -17,7 +17,7 @@ import feelings.guide.ui.RecyclerViewCursorAdapter
 import kotlinx.android.synthetic.main.question_card.view.*
 
 internal class QuestionsAdapter(context: Context, private val questionClickCallback: (Long) -> Unit) :
-    RecyclerViewCursorAdapter<QuestionsAdapter.QuestionViewHolder>(context) {
+        RecyclerViewCursorAdapter<QuestionsAdapter.QuestionViewHolder>(context) {
 
     internal inner class QuestionViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var questionId: Long = 0

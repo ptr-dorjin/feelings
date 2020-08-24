@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# prerequisite: run `./gradlew assembleDebug assembleAndroidTest`
+# prerequisite: run `./gradlew clean assembleDebug assembleAndroidTest`
 # which will build two apks respectively:
 # ~/dev/feelings/app/build/outputs/apk/debug/app-debug.apk
 # ~/dev/feelings/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk

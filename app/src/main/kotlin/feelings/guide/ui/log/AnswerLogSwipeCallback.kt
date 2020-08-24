@@ -12,19 +12,19 @@ import feelings.guide.R
 private const val ICON_MARGIN = 64
 
 internal class AnswerLogSwipeCallback(
-    context: Context,
-    private val onDeleteAnswerCallback: (Int) -> Unit,
-    private val onEditAnswerCallback: (Int) -> Unit
+        context: Context,
+        private val onDeleteAnswerCallback: (Int) -> Unit,
+        private val onEditAnswerCallback: (Int) -> Unit
 ) :
-    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
     private val iconDelete: VectorDrawableCompat =
-        VectorDrawableCompat.create(context.resources, R.drawable.ic_delete_sweep_white_24dp, null)!!
+            VectorDrawableCompat.create(context.resources, R.drawable.ic_delete_sweep_white_24dp, null)!!
     private val iconEdit: VectorDrawableCompat =
-        VectorDrawableCompat.create(context.resources, R.drawable.ic_edit_white_24dp, null)!!
+            VectorDrawableCompat.create(context.resources, R.drawable.ic_edit_white_24dp, null)!!
     private val backgroundDelete: ColorDrawable =
-        ColorDrawable(ResourcesCompat.getColor(context.resources, R.color.lightRed, null))
+            ColorDrawable(ResourcesCompat.getColor(context.resources, R.color.lightRed, null))
     private val backgroundEdit: ColorDrawable =
-        ColorDrawable(ResourcesCompat.getColor(context.resources, R.color.lightGreen, null))
+            ColorDrawable(ResourcesCompat.getColor(context.resources, R.color.lightGreen, null))
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
         // used for up and down movements
@@ -41,10 +41,10 @@ internal class AnswerLogSwipeCallback(
     }
 
     override fun onChildDraw(
-        c: Canvas,
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
     ) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         val itemView = viewHolder.itemView
@@ -61,10 +61,10 @@ internal class AnswerLogSwipeCallback(
         when {
             dX > 0 -> { // Swiping to the right
                 backgroundDelete.setBounds(
-                    itemView.left,
-                    itemView.top,
-                    itemView.left + dX.toInt(),
-                    itemView.bottom
+                        itemView.left,
+                        itemView.top,
+                        itemView.left + dX.toInt(),
+                        itemView.bottom
                 )
                 backgroundDelete.draw(c)
 
@@ -75,10 +75,10 @@ internal class AnswerLogSwipeCallback(
             }
             dX < 0 -> { // Swiping to the left
                 backgroundEdit.setBounds(
-                    itemView.right + dX.toInt(),
-                    itemView.top,
-                    itemView.right,
-                    itemView.bottom
+                        itemView.right + dX.toInt(),
+                        itemView.top,
+                        itemView.right,
+                        itemView.bottom
                 )
                 backgroundEdit.draw(c)
 

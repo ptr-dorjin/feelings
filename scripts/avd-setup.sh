@@ -19,19 +19,20 @@ for device in "${DEVICES[@]}"; do
   #EMULATOR_PID=$!
 
   $ADB </dev/null wait-for-device shell getprop init.svc.bootanim
+  sleep 20
   echo "Started $device"
 
   echo "Switching animation off"
 
-  # known issue: `settings` is not available in API 16
   $ADB </dev/null shell settings put global window_animation_scale 0
   $ADB </dev/null shell settings put global transition_animation_scale 0
   $ADB </dev/null shell settings put global animator_duration_scale 0
   sleep 5
 
+  echo "Rebooting to apply the new settings"
   $ADB reboot
 
-  sleep 10
+  sleep 20
 
   $ADB </dev/null emu kill
   echo "Killed $device"

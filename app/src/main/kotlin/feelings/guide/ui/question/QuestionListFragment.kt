@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.DialogFragment
@@ -27,9 +32,9 @@ class QuestionListFragment : Fragment() {
     private var popup: PopupMenu? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.question_list, container, false)
     }
@@ -92,11 +97,11 @@ class QuestionListFragment : Fragment() {
         val questionId = view.getTag(R.id.tag_question_id) as Long
         val isUser = view.getTag(R.id.tag_is_user) as Boolean
         popup.inflate(
-            when {
-                isUser -> R.menu.questions_popup_menu_user
-                questionId == QuestionService.FEELINGS_ID -> R.menu.questions_popup_menu_feelings
-                else -> R.menu.questions_popup_menu_built_in
-            }
+                when {
+                    isUser -> R.menu.questions_popup_menu_user
+                    questionId == QuestionService.FEELINGS_ID -> R.menu.questions_popup_menu_feelings
+                    else -> R.menu.questions_popup_menu_built_in
+                }
         )
         popup.setOnMenuItemClickListener {
             popup.dismiss()
@@ -163,24 +168,24 @@ class QuestionListFragment : Fragment() {
     private fun showDeleteConfirmation(questionId: Long) {
         changeQuestionId = questionId
         QuestionDeleteDialogFragment(this::onDeleteConfirmed).show(
-            requireActivity().supportFragmentManager,
-            QuestionDeleteDialogFragment::class.java.simpleName
+                requireActivity().supportFragmentManager,
+                QuestionDeleteDialogFragment::class.java.simpleName
         )
     }
 
     private fun showHideConfirmation(questionId: Long) {
         changeQuestionId = questionId
         QuestionHideDialogFragment(this::onHideConfirmed).show(
-            requireActivity().supportFragmentManager,
-            QuestionHideDialogFragment::class.java.simpleName
+                requireActivity().supportFragmentManager,
+                QuestionHideDialogFragment::class.java.simpleName
         )
     }
 
     private fun showClearLogConfirmation(questionId: Long) {
         changeQuestionId = questionId
         QuestionClearLogDialogFragment(this::onClearLogByQuestionConfirmed).show(
-            requireActivity().supportFragmentManager,
-            QuestionClearLogDialogFragment::class.java.simpleName
+                requireActivity().supportFragmentManager,
+                QuestionClearLogDialogFragment::class.java.simpleName
         )
     }
 
@@ -191,22 +196,22 @@ class QuestionListFragment : Fragment() {
         }
 
         if (changeQuestionId == null) performServiceAction(
-            QuestionService.createQuestion(requireContext(), Question(text)) != -1L,
-            R.string.msg_question_create_success,
-            R.string.msg_question_create_error
+                QuestionService.createQuestion(requireContext(), Question(text)) != -1L,
+                R.string.msg_question_create_success,
+                R.string.msg_question_create_error
         ) else performServiceAction(
-            QuestionService.updateQuestion(requireContext(), Question(changeQuestionId!!, text)),
-            R.string.msg_question_edit_success,
-            R.string.msg_question_edit_error
+                QuestionService.updateQuestion(requireContext(), Question(changeQuestionId!!, text)),
+                R.string.msg_question_edit_success,
+                R.string.msg_question_edit_error
         )
         adapter.refreshAll()
     }
 
     private fun onDeleteConfirmed() {
         performServiceAction(
-            QuestionService.deleteQuestion(requireContext(), changeQuestionId!!),
-            R.string.msg_question_delete_success,
-            R.string.msg_question_delete_error
+                QuestionService.deleteQuestion(requireContext(), changeQuestionId!!),
+                R.string.msg_question_delete_success,
+                R.string.msg_question_delete_error
         )
         adapter.refreshAll()
         // also clear the log
@@ -218,9 +223,9 @@ class QuestionListFragment : Fragment() {
 
     private fun onHideConfirmed() {
         performServiceAction(
-            QuestionService.hideQuestion(requireContext(), changeQuestionId!!),
-            R.string.msg_question_hide_success,
-            R.string.msg_question_hide_error
+                QuestionService.hideQuestion(requireContext(), changeQuestionId!!),
+                R.string.msg_question_hide_success,
+                R.string.msg_question_hide_error
         )
         adapter.refreshAll()
     }
@@ -231,8 +236,8 @@ class QuestionListFragment : Fragment() {
     }
 
     private fun performServiceAction(success: Boolean, successMessageId: Int, errorMessageId: Int) =
-        if (success) Snackbar.make(questionsListLayout, successMessageId, Snackbar.LENGTH_LONG).show()
-        else Snackbar.make(questionsListLayout, errorMessageId, Snackbar.LENGTH_LONG).show()
+            if (success) Snackbar.make(questionsListLayout, successMessageId, Snackbar.LENGTH_LONG).show()
+            else Snackbar.make(questionsListLayout, errorMessageId, Snackbar.LENGTH_LONG).show()
 
     internal fun onReturnFromSettings(needToRefresh: Boolean) {
         if (needToRefresh) adapter.refreshAll()

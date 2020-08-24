@@ -51,16 +51,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         clearLogPreference?.setOnPreferenceClickListener {
             activity?.let {
                 AlertDialog.Builder(it)
-                    .setMessage(R.string.title_confirm_restore_built_in_questions_dialog)
-                    .setPositiveButton(R.string.btn_restore) { _, _ ->
-                        QuestionService.restoreHidden(it)
-                        view?.let { v -> Snackbar.make(v, R.string.msg_restore_built_in_questions_success, Snackbar.LENGTH_LONG).show() }
-                        val data = Intent()
-                        data.putExtra(REFRESH_QUESTIONS_RESULT_KEY, true)
-                        it.setResult(RESULT_OK, data)
-                    }
-                    .setNegativeButton(R.string.btn_cancel) { dialog, _ -> dialog.dismiss() }.create()
-                    .show()
+                        .setMessage(R.string.title_confirm_restore_built_in_questions_dialog)
+                        .setPositiveButton(R.string.btn_restore) { _, _ ->
+                            QuestionService.restoreHidden(it)
+                            view?.let { v -> Snackbar.make(v, R.string.msg_restore_built_in_questions_success, Snackbar.LENGTH_LONG).show() }
+                            val data = Intent()
+                            data.putExtra(REFRESH_QUESTIONS_RESULT_KEY, true)
+                            it.setResult(RESULT_OK, data)
+                        }
+                        .setNegativeButton(R.string.btn_cancel) { dialog, _ -> dialog.dismiss() }.create()
+                        .show()
             }
             true
         }

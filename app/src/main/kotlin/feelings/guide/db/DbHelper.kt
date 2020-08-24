@@ -6,8 +6,15 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import feelings.guide.R
 import feelings.guide.answer.SQL_CREATE_ANSWER_TABLE
-import feelings.guide.question.*
+import feelings.guide.question.COLUMN_CODE
+import feelings.guide.question.COLUMN_DESCRIPTION
+import feelings.guide.question.COLUMN_IS_DELETED
+import feelings.guide.question.COLUMN_IS_HIDDEN
+import feelings.guide.question.COLUMN_IS_USER
+import feelings.guide.question.COLUMN_TEXT
+import feelings.guide.question.QUESTION_TABLE
 import feelings.guide.question.QuestionContract.QUESTION_CODE_MAP
+import feelings.guide.question.SQL_CREATE_QUESTION_TABLE
 import feelings.guide.util.SingletonHolder
 
 private const val DATABASE_VERSION = 3

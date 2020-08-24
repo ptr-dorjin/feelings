@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.Month
 import java.util.*
 
 private const val ID: Long = 1
@@ -38,6 +37,7 @@ class AnswerStoreTest {
      * for performance tests only
      */
     //@Test
+    @Suppress("unused")
     fun createForPerformanceTest() {
         for (i in 0..10000) {
             val created = AnswerStore.saveAnswer(context, Answer(QUESTION_ID, now.minusSeconds(i.toLong()), ANSWER_TEXT + i))
@@ -58,7 +58,7 @@ class AnswerStoreTest {
         assertThat(created).isTrue()
         val answers = cursorToAnswers(AnswerStore.getAnswers(context))
         assertThat(answers)
-            .containsExactly(answer)
+                .containsExactly(answer)
     }
 
     @Test
@@ -73,7 +73,7 @@ class AnswerStoreTest {
         assertThat(created).isTrue()
         val answers = cursorToAnswers(AnswerStore.getAnswers(context))
         assertThat(answers)
-            .containsExactly(answer)
+                .containsExactly(answer)
     }
 
     @Test
@@ -90,7 +90,7 @@ class AnswerStoreTest {
         assertThat(updated).isTrue()
         val answers = cursorToAnswers(AnswerStore.getAnswers(context))
         assertThat(answers)
-            .containsExactly(answer)
+                .containsExactly(answer)
     }
 
     @Test
@@ -108,8 +108,8 @@ class AnswerStoreTest {
 
         // then
         assertThat(answers)
-            .containsExactly(answer2, answer3, answer1)
-            .inOrder()
+                .containsExactly(answer2, answer3, answer1)
+                .inOrder()
     }
 
     @Test
@@ -127,8 +127,8 @@ class AnswerStoreTest {
 
         // then
         assertThat(answers)
-            .containsExactly(answer3, answer1)
-            .inOrder()
+                .containsExactly(answer3, answer1)
+                .inOrder()
     }
 
     @Test
@@ -145,7 +145,7 @@ class AnswerStoreTest {
         // then
         val answers = cursorToAnswers(AnswerStore.getAnswers(context))
         assertThat(answers)
-            .containsExactly(answer2)
+                .containsExactly(answer2)
     }
 
     @Test
@@ -161,7 +161,7 @@ class AnswerStoreTest {
         // then
         val answers = cursorToAnswers(AnswerStore.getAnswers(context))
         assertThat(answers)
-            .containsExactly(answer)
+                .containsExactly(answer)
     }
 
     @Test
@@ -178,7 +178,7 @@ class AnswerStoreTest {
         // then
         val answers = cursorToAnswers(AnswerStore.getAnswers(context))
         assertThat(answers)
-            .containsExactly(answer)
+                .containsExactly(answer)
     }
 
     @Test
@@ -197,7 +197,7 @@ class AnswerStoreTest {
         // then
         val answers = cursorToAnswers(AnswerStore.getAnswers(context))
         assertThat(answers)
-            .containsExactly(answer2)
+                .containsExactly(answer2)
     }
 
     @Test

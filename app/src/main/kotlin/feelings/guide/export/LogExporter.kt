@@ -13,8 +13,8 @@ internal class LogExporter {
      * Closes outputStream at the end
      */
     internal fun export(answers: List<AnswerForExport>,
-                           outputStream: OutputStream,
-                           context: Context) {
+                        outputStream: OutputStream,
+                        context: Context) {
         CSVWriter(OutputStreamWriter(outputStream)).use { csvWriter ->
             csvWriter.writeNext(getHeader(context))
             for (answer in answers) {

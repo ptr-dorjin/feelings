@@ -3,7 +3,11 @@ package feelings.guide.ui.answer
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import feelings.guide.*
+import feelings.guide.ANSWER_ID_PARAM
+import feelings.guide.ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY
+import feelings.guide.QUESTION_ID_PARAM
+import feelings.guide.R
+import feelings.guide.UPDATED_ANSWER_ID_RESULT_KEY
 import feelings.guide.ui.BaseActivity
 
 class AnswerActivity : BaseActivity() {
@@ -18,9 +22,9 @@ class AnswerActivity : BaseActivity() {
 
             val fragment = AnswerFragment(questionId, answerId)
             supportFragmentManager
-                .beginTransaction()
-                .add(R.id.answerContent, fragment)
-                .commit()
+                    .beginTransaction()
+                    .add(R.id.answerContent, fragment)
+                    .commit()
         }
     }
 

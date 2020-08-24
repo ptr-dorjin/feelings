@@ -12,8 +12,8 @@ import feelings.guide.R
 class QuestionDeleteDialogFragment(private val onDeleteConfirmed: () -> Unit) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = AlertDialog.Builder(requireContext())
-        .setMessage(R.string.title_confirm_delete_question_dialog)
-        .setPositiveButton(R.string.btn_delete) { _, _ -> onDeleteConfirmed() }
-        .setNegativeButton(R.string.btn_cancel) { _, _ -> dismiss() }
-        .create()
+            .setMessage(R.string.title_confirm_delete_question_dialog)
+            .setPositiveButton(R.string.btn_delete) { _, _ -> onDeleteConfirmed() }
+            .setNegativeButton(R.string.btn_cancel) { _, _ -> dismiss() }
+            .create()
 }

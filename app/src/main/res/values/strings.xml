@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Feelings Guide</string>
+    <string name="app_name" translatable="false">Feelings Guide</string>
 
     <string-array name="lang_values">
         <item>en</item>
@@ -44,7 +44,7 @@
     <string name="title_confirm_clear_log_deleted_dialog">Delete answers to deleted/hidden questions from log?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Delete answers to this question?</string>
     <string name="title_confirm_restore_built_in_questions_dialog">Restore built-in questions visibility?</string>
-    <string name="title_export_permission_dialog">Enable writing to the storage in order to export the log to a file</string>
+<!--    <string name="title_export_permission_dialog">Enable writing to the storage in order to export the log to a file</string>-->
 
     <string name="q_text_feelings">What do I feel right now?</string>
     <string name="q_text_gratitude">Who can I thank?</string>
@@ -101,11 +101,11 @@
     <string name="btn_clear_log_deleted">Clear deleted</string>
     <string name="btn_export_log">Export</string>
     <string name="btn_settings">Settings</string>
-    <string name="btn_permit">Permit</string>
+<!--    <string name="btn_permit">Permit</string>-->
 
     <string name="snackbar_undo">Undo</string>
 
-    <string name="popup_menu_description">Popup Menu</string>
+    <string name="popup_menu_description" translatable="false">Popup Menu</string>
 
     <string name="answer_log_empty_text">The log is empty</string>
 

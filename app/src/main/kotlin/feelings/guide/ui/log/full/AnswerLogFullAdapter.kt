@@ -22,7 +22,7 @@ import org.threeten.bp.format.DateTimeFormatter.ofPattern
  * - full answer log (for all questions)
  */
 internal class AnswerLogFullAdapter(context: Context) :
-    RecyclerViewCursorAdapter<AnswerLogFullAdapter.AnswerLogHolder>(context) {
+        RecyclerViewCursorAdapter<AnswerLogFullAdapter.AnswerLogHolder>(context) {
 
     private val dateTimeFormat: String = DateTimeUtil.getDateTimeFormat(context)
 
@@ -38,7 +38,7 @@ internal class AnswerLogFullAdapter(context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerLogHolder {
         val view = LayoutInflater.from(context)
-            .inflate(R.layout.answer_log_full_item, parent, false)
+                .inflate(R.layout.answer_log_full_item, parent, false)
         return AnswerLogHolder(view)
     }
 

@@ -4,7 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import feelings.guide.*
+import androidx.activity.result.contract.ActivityResultContracts
+import feelings.guide.ADD_ANSWER_REQUEST_CODE
+import feelings.guide.ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY
+import feelings.guide.QUESTION_ID_PARAM
+import feelings.guide.R
+import feelings.guide.REFRESH_QUESTIONS_RESULT_KEY
+import feelings.guide.SETTINGS_REQUEST_CODE
 import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.answer.AnswerActivity
 import feelings.guide.ui.log.AnswerLogActivity
@@ -19,9 +25,9 @@ class QuestionListActivity : BaseActivity() {
         if (savedInstanceState == null) {
             val fragment = QuestionListFragment()
             supportFragmentManager
-                .beginTransaction()
-                .add(R.id.questionListContent, fragment)
-                .commit()
+                    .beginTransaction()
+                    .add(R.id.questionListContent, fragment)
+                    .commit()
         }
     }
 
@@ -59,7 +65,8 @@ class QuestionListActivity : BaseActivity() {
             (questionListFragment as? QuestionListFragment)?.onReturnFromSettings(needToRefresh)
         } else if (requestCode == ADD_ANSWER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // returned from adding the answer
-            val answerIsAdded = data?.getBooleanExtra(ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY, false) ?: false
+            val answerIsAdded = data?.getBooleanExtra(ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY, false)
+                    ?: false
             (questionListFragment as? QuestionListFragment)?.onReturnFromAddAnswer(answerIsAdded)
         }
     }

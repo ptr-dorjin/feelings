@@ -11,13 +11,14 @@ import kotlinx.android.synthetic.main.answer_feeling_item.view.*
 import kotlinx.android.synthetic.main.answer_feelings_group.view.*
 
 internal class FeelingsExpandableListAdapter(
-    private val context: Context,
-    private val feelingsGroups: List<String>,
-    private val mapFeelingsByGroup: Map<String, List<String>>
+        private val context: Context,
+        private val feelingsGroups: List<String>,
+        private val mapFeelingsByGroup: Map<String, List<String>>
 ) : BaseExpandableListAdapter() {
 
     override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup): View {
-        val cv = convertView ?: LayoutInflater.from(context).inflate(R.layout.answer_feelings_group, parent, false)
+        val cv = convertView
+                ?: LayoutInflater.from(context).inflate(R.layout.answer_feelings_group, parent, false)
         cv.labelFeelingsGroup.apply {
             setTypeface(null, Typeface.BOLD)
             text = getGroup(groupPosition) as String
@@ -38,10 +39,11 @@ internal class FeelingsExpandableListAdapter(
     }
 
     override fun getChildView(
-        groupPosition: Int, childPosition: Int,
-        isLastChild: Boolean, convertView: View?, parent: ViewGroup
+            groupPosition: Int, childPosition: Int,
+            isLastChild: Boolean, convertView: View?, parent: ViewGroup
     ): View {
-        val cv = convertView ?: LayoutInflater.from(context).inflate(R.layout.answer_feeling_item, parent, false)
+        val cv = convertView
+                ?: LayoutInflater.from(context).inflate(R.layout.answer_feeling_item, parent, false)
         cv.labelFeelingItem?.text = getChild(groupPosition, childPosition) as String
         return cv
     }

@@ -2,6 +2,7 @@ package feelings.guide.profile
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Build
 import androidx.preference.PreferenceManager
 import feelings.guide.ui.settings.SELECTED_LANGUAGE_KEY
@@ -38,9 +39,9 @@ object LocaleUtil {
 
     private fun persist(context: Context, language: String?) {
         PreferenceManager.getDefaultSharedPreferences(context)
-            .edit()
-            .putString(SELECTED_LANGUAGE_KEY, language)
-            .apply()
+                .edit()
+                .putString(SELECTED_LANGUAGE_KEY, language)
+                .apply()
     }
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -48,11 +49,11 @@ object LocaleUtil {
         val locale = Locale(language)
         Locale.setDefault(locale)
 
-        val configuration = context.resources.configuration
-        configuration.setLocale(locale)
-        configuration.setLayoutDirection(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
 
-        return context.createConfigurationContext(configuration)
+        return context.createConfigurationContext(config)
     }
 
     @Suppress("DEPRECATION")
@@ -62,11 +63,11 @@ object LocaleUtil {
 
         val resources = context.resources
 
-        val configuration = resources.configuration
-        configuration.locale = locale
-        configuration.setLayoutDirection(locale)
+        val config = resources.configuration
+        config.locale = locale
+        config.setLayoutDirection(locale)
 
-        resources.updateConfiguration(configuration, resources.displayMetrics)
+        resources.updateConfiguration(config, resources.displayMetrics)
 
         return context
     }

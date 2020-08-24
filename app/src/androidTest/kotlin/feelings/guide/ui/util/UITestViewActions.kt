@@ -4,7 +4,6 @@ import android.view.View
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.CoordinatesProvider
 import androidx.test.espresso.action.GeneralClickAction
 import androidx.test.espresso.action.Press
 import androidx.test.espresso.action.Tap
@@ -18,16 +17,16 @@ import java.util.concurrent.TimeoutException
 
 fun clickXY(x: Int, y: Int): ViewAction {
     return GeneralClickAction(
-        Tap.SINGLE,
-        CoordinatesProvider { view ->
-            val screenPos = IntArray(2)
-            view.getLocationOnScreen(screenPos)
-            floatArrayOf(
-                (screenPos[0] + x).toFloat(),
-                (screenPos[1] + y).toFloat()
-            )
-        },
-        Press.FINGER, 0, 0
+            Tap.SINGLE,
+            { view ->
+                val screenPos = IntArray(2)
+                view.getLocationOnScreen(screenPos)
+                floatArrayOf(
+                        (screenPos[0] + x).toFloat(),
+                        (screenPos[1] + y).toFloat()
+                )
+            },
+            Press.FINGER, 0, 0
     )
 }
 
@@ -59,9 +58,9 @@ fun waitId(viewId: Int, millis: Long = 1000) = object : ViewAction {
 
         // timeout happened
         throw PerformException.Builder()
-            .withActionDescription(description)
-            .withViewDescription(HumanReadables.describe(view))
-            .withCause(TimeoutException())
-            .build()
+                .withActionDescription(description)
+                .withViewDescription(HumanReadables.describe(view))
+                .withCause(TimeoutException())
+                .build()
     }
 }

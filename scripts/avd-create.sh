@@ -6,7 +6,6 @@ EMULATOR=~/Android/Sdk/emulator/emulator
 ADB=~/Android/Sdk/platform-tools/adb
 
 # 1. Download images
-$SDK_MANAGER 'system-images;android-16;google_apis;x86'
 $SDK_MANAGER 'system-images;android-21;google_apis;x86_64'
 $SDK_MANAGER 'system-images;android-23;google_apis;x86_64'
 $SDK_MANAGER 'system-images;android-24;google_apis;x86_64'
@@ -18,9 +17,6 @@ $SDK_MANAGER 'system-images;android-29;google_apis;x86_64'
 $SDK_MANAGER --licenses
 
 # 3. Create devices
-$AVD_MANAGER --silent create avd --force --name api16-android4 --abi google_apis/x86 \
-  --package 'system-images;android-16;google_apis;x86' --device "Nexus 4"
-printf "\ndone\n"
 $AVD_MANAGER --silent create avd --force --name api21-android5 --abi google_apis/x86_64 \
   --package 'system-images;android-21;google_apis;x86_64' --device "Nexus 6"
 printf "\ndone\n"

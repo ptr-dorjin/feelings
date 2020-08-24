@@ -2,7 +2,12 @@ package feelings.guide.ui.answer
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.snackbar.Snackbar
@@ -16,8 +21,8 @@ import org.threeten.bp.LocalDateTime
 import java.util.*
 
 class AnswerFragment(
-    private var questionId: Long = -1,
-    internal var answerId: Long = -1
+        private var questionId: Long = -1,
+        internal var answerId: Long = -1
 ) : Fragment() {
 
     private var answer: Answer? = null
@@ -96,10 +101,10 @@ class AnswerFragment(
     }
 
     private fun setUpFeelingsGroup(
-        feelingsGroupId: Int,
-        feelingsArrayId: Int,
-        feelingsGroups: MutableList<String>,
-        mapFeelingsByGroup: MutableMap<String, List<String>>
+            feelingsGroupId: Int,
+            feelingsArrayId: Int,
+            feelingsGroups: MutableList<String>,
+            mapFeelingsByGroup: MutableMap<String, List<String>>
     ) {
         val resources = resources
         val group = resources.getString(feelingsGroupId)

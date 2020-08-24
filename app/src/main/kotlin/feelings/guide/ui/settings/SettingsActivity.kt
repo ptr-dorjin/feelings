@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import android.view.View
+import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
 import feelings.guide.profile.LocaleUtil
@@ -46,8 +46,8 @@ class SettingsActivity : BaseActivity() {
  * This listener should be in the activity, not in the fragment
  */
 private class LocaleChangeListener(
-        internal var context: Context? = null,
-        internal var view: View? = null
+        var context: Context? = null,
+        var view: View? = null
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         if (SELECTED_LANGUAGE_KEY == key && context != null) {

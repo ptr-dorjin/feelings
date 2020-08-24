@@ -3,9 +3,9 @@ package feelings.guide.answer
 import org.threeten.bp.LocalDateTime
 
 data class Answer(
-    val questionId: Long,
-    val dateTime: LocalDateTime,
-    var answerText: String?
+        val questionId: Long,
+        val dateTime: LocalDateTime,
+        var answerText: String?
 ) {
     var id: Long = 0
 

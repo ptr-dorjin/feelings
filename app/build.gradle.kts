@@ -24,9 +24,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
-    lintOptions {
-        disable("MissingTranslation")
-    }
     productFlavors {
     }
     compileOptions {
@@ -60,25 +57,27 @@ android {
 }
 
 dependencies {
-    api("androidx.core:core-ktx:1.5.0-alpha01")
+    api("androidx.core:core-ktx:1.5.0-alpha02")
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     //Kotlin standard library
     implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
-    implementation("androidx.core:core-ktx:1.5.0-alpha01")
+    implementation("androidx.core:core-ktx:1.5.0-alpha02")
     implementation("androidx.preference:preference-ktx:1.1.1")
-    implementation("androidx.appcompat:appcompat:1.3.0-alpha01")
+    implementation("androidx.appcompat:appcompat:1.3.0-alpha02")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.2.0-alpha05")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-rc1")
-    implementation("androidx.vectordrawable:vectordrawable:1.1.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0")
+    implementation("androidx.vectordrawable:vectordrawable:1.2.0-alpha02")
     implementation("androidx.navigation:navigation-runtime-ktx:2.3.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.0")
     implementation("com.google.android.material:material:1.3.0-alpha02")
     //threetenabp is needed due to minSdkVersion=15. Can be removed after setting minSdkVersion=26
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.0")
-    implementation("com.opencsv:opencsv:5.2")
+    implementation("com.opencsv:opencsv:5.2") {
+        exclude("commons-logging")
+    }
     // to workaround the 64K reference limit
     implementation("androidx.multidex:multidex:2.0.1")
 

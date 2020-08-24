@@ -4,7 +4,12 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import feelings.guide.R
-import feelings.guide.question.*
+import feelings.guide.question.COLUMN_CODE
+import feelings.guide.question.COLUMN_DESCRIPTION
+import feelings.guide.question.COLUMN_IS_DELETED
+import feelings.guide.question.COLUMN_IS_HIDDEN
+import feelings.guide.question.COLUMN_TEXT
+import feelings.guide.question.QUESTION_TABLE
 import feelings.guide.question.QuestionContract.QUESTION_CODE_MAP
 
 internal class UpgraderTo3(private val context: Context) {
