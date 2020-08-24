@@ -1,3 +1,11 @@
+Version 2.2.1
+<en-US>
+Fixed locale change issue
+</en-US>
+<ru-RU>
+Исправлена ошибка при изменении языка интерфейса
+</ru-RU>
+
 Version 2.2.0
 <en-US>
 Added export feature.
