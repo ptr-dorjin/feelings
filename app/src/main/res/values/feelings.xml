@@ -7,7 +7,7 @@
     <string name="joy">Joy</string>
     <string name="love">Love</string>
 
-    <string-array name="anger_array">
+    <string-array name="anger_array" tools:ignore="InconsistentArrays">
         <item>Anger</item>
         <item>Annoyance</item>
         <item>Aversion</item>
@@ -58,7 +58,7 @@
         <item>Worry</item>
     </string-array>
 
-    <string-array name="sadness_array">
+    <string-array name="sadness_array" tools:ignore="InconsistentArrays">
         <item>Abandonment</item>
         <item>Alienation</item>
         <item>Anguish</item>

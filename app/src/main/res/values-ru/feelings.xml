@@ -7,96 +7,123 @@
     <string name="joy">Радость</string>
     <string name="love">Любовь</string>
 
-    <string-array name="anger_array">
+    <string-array name="anger_array" tools:ignore="InconsistentArrays">
         <item>Бешенство</item>
         <item>Возмущение</item>
+        <item>Враждебность</item>
+        <item>Вредность</item>
+        <item>Вседозволенность</item>
+        <item>Высокомерие</item>
         <item>Гнев</item>
         <item>Досада</item>
         <item>Зависть</item>
         <item>Злость</item>
         <item>Истерия</item>
+        <item>Напряжение</item>
         <item>Негодование</item>
         <item>Недовольство</item>
         <item>Ненависть</item>
         <item>Неприязнь</item>
+        <item>Нетерпение</item>
         <item>Обида</item>
+        <item>Отвержение</item>
         <item>Отвращение</item>
-        <item>Презрение</item>
         <item>Превосходство</item>
+        <item>Презрение</item>
+        <item>Пренебрежение</item>
+        <item>Принуждение</item>
+        <item>Протест</item>
         <item>Раздражение</item>
         <item>Ревность</item>
-        <item>Сердитость</item>
-        <item>Сопротивление</item>
         <item>Уязвленность</item>
         <item>Ярость</item>
     </string-array>
 
     <string-array name="fear_array" tools:ignore="InconsistentArrays">
-        <item>Апатия</item>
         <item>Беспокойство</item>
         <item>Боязнь</item>
         <item>Вина</item>
+        <item>Дискомфорт</item>
         <item>Замешательство</item>
         <item>Застенчивость</item>
         <item>Испуг</item>
         <item>Надменность</item>
+        <item>Настороженность</item>
         <item>Неловкость</item>
+        <item>Неполноценность</item>
         <item>Неуверенность</item>
+        <item>Неудобство</item>
+        <item>Одиночество</item>
         <item>Опасение</item>
         <item>Отчаяние</item>
         <item>Оцепенение</item>
         <item>Ошарашенность</item>
         <item>Ошеломленность</item>
+        <item>Подвох</item>
         <item>Подозрение</item>
         <item>Растерянность</item>
+        <item>Робость</item>
         <item>Сломленность</item>
         <item>Смущение</item>
         <item>Сомнение</item>
         <item>Страх</item>
         <item>Стыд</item>
         <item>Тревога</item>
+        <item>Угрызения совести</item>
         <item>Ужас</item>
         <item>Унижение</item>
+        <item>Холодность</item>
     </string-array>
 
-    <string-array name="sadness_array">
-        <item>Грусть</item>
+    <string-array name="sadness_array" tools:ignore="InconsistentArrays">
+        <item>Апатия</item>
+        <item>Безвыходность</item>
         <item>Безнадежность</item>
         <item>Безразличие</item>
-        <item>Беспомощность</item>
-        <item>Безучастность</item>
         <item>Безысходность</item>
+        <item>Беспомощность</item>
         <item>Горечь</item>
+        <item>Грусть</item>
         <item>Душевная боль</item>
         <item>Жалость</item>
+        <item>Жалость к себе</item>
         <item>Загнанность</item>
         <item>Лень</item>
+        <item>Нервозность</item>
+        <item>Огорчение</item>
         <item>Опустошенность</item>
+        <item>Отверженность</item>
         <item>Отрешенность</item>
-        <item>Отчаяние</item>
         <item>Отчужденность</item>
         <item>Печаль</item>
         <item>Подавленность</item>
-        <item>Покинутость</item>
         <item>Потрясение</item>
         <item>Равнодушие</item>
         <item>Разочарование</item>
-        <item>Расстройство</item>
+        <item>Скорбь</item>
         <item>Скука</item>
         <item>Сожаление</item>
         <item>Тоска</item>
+        <item>Тупик</item>
+        <item>Удрученность</item>
+        <item>Уныние</item>
+        <item>Усталость</item>
     </string-array>
 
     <string-array name="joy_array" tools:ignore="InconsistentArrays">
+        <item>Блаженство</item>
+        <item>Вдохновение</item>
+        <item>Взаимовыручка</item>
         <item>Возбуждение</item>
+        <item>Воодушевление</item>
         <item>Восторг</item>
         <item>Довольство</item>
         <item>Изумление</item>
         <item>Интерес</item>
+        <item>Кураж</item>
         <item>Ликование</item>
         <item>Любопытство</item>
         <item>Надежда</item>
-        <item>Нетерпение</item>
         <item>Облегчение</item>
         <item>Ободренность</item>
         <item>Оживление</item>
@@ -107,54 +134,58 @@
         <item>Приподнятость</item>
         <item>Радость</item>
         <item>Решимость</item>
+        <item>Спокойствие</item>
         <item>Счастье</item>
         <item>Торжествование</item>
         <item>Триумф</item>
-        <item>Уверенность</item>
         <item>Увлеченность</item>
         <item>Удивление</item>
         <item>Удовлетворение</item>
         <item>Удовольствие</item>
-        <item>Умиротворение</item>
         <item>Эйфория</item>
+        <item>Экстаз</item>
         <item>Энтузиазм</item>
     </string-array>
 
     <string-array name="love_array" tools:ignore="InconsistentArrays">
-        <item>Безмятежность</item>
         <item>Безопасность</item>
-        <item>Благоговение</item>
         <item>Благодарность</item>
-        <item>Блаженство</item>
-        <item>Вдохновение</item>
         <item>Вера</item>
-        <item>Взаимовыручка</item>
         <item>Влюбленность</item>
-        <item>Воодушевление</item>
         <item>Восхищение</item>
-        <item>Гармония</item>
         <item>Гордость</item>
+        <item>Доброта</item>
         <item>Доверие</item>
         <item>Дружелюбие</item>
         <item>Единство</item>
+        <item>Жизнелюбие</item>
+        <item>Жизнерадостность</item>
         <item>Забота</item>
-        <item>Идентичность</item>
+        <item>Защищенность</item>
+        <item>Искренность</item>
+        <item>Комфорт</item>
         <item>Любовь</item>
+        <item>Любовь к себе</item>
         <item>Нежность</item>
+        <item>Обожание</item>
+        <item>Одобрение</item>
+        <item>Озарение</item>
         <item>Очарованность</item>
         <item>Привязанность</item>
         <item>Признательность</item>
         <item>Принятие</item>
-        <item>Расслабленность</item>
+        <item>Раскаяние</item>
         <item>Самоценность</item>
         <item>Симпатия</item>
         <item>Смирение</item>
         <item>Сопереживание</item>
         <item>Сопричастность</item>
         <item>Сочувствие</item>
-        <item>Спокойствие</item>
         <item>Теплота</item>
         <item>Уважение</item>
+        <item>Уверенность</item>
+        <item>Умиротворение</item>
         <item>Уравновешенность</item>
+        <item>Ценность</item>
     </string-array>
 </resources>
