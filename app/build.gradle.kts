@@ -12,8 +12,8 @@ android {
         applicationId = "feelings.guide"
         minSdkVersion(19)
         targetSdkVersion(30)
-        versionCode = 7
-        versionName = "2.2.1"
+        versionCode = 8
+        versionName = "2.2.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
