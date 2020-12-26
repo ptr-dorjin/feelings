@@ -12,6 +12,7 @@ $SDK_MANAGER 'system-images;android-24;google_apis;x86_64'
 $SDK_MANAGER 'system-images;android-26;google_apis;x86_64'
 $SDK_MANAGER 'system-images;android-28;google_apis;x86_64'
 $SDK_MANAGER 'system-images;android-29;google_apis;x86_64'
+$SDK_MANAGER 'system-images;android-30;google_apis;x86_64'
 
 # 2. Accept licences
 $SDK_MANAGER --licenses
@@ -34,6 +35,9 @@ $AVD_MANAGER --silent create avd --force --name api28-android9 --abi google_apis
 printf "\ndone\n"
 $AVD_MANAGER --silent create avd --force --name api29-android10 --abi google_apis/x86_64 \
   --package 'system-images;android-29;google_apis;x86_64' --device "pixel"
+printf "\ndone\n"
+$AVD_MANAGER --silent create avd --force --name api30-android11 --abi google_apis/x86_64 \
+  --package 'system-images;android-30;google_apis;x86_64' --device "pixel"
 printf "\ndone\n"
 
 # 4. Let initial bootstrap finish for all devices

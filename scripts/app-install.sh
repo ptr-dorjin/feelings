@@ -7,8 +7,8 @@
 
 EMULATOR=~/Android/Sdk/emulator/emulator
 ADB=~/Android/Sdk/platform-tools/adb
-APK_MAIN=~/dev/feelings/app/build/outputs/apk/debug/app-debug.apk
-APK_TEST=~/dev/feelings/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+APK_MAIN=~/feelings/app/build/outputs/apk/debug/app-debug.apk
+APK_TEST=~/feelings/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
 mapfile -t DEVICES < <($EMULATOR -list-avds)
 
