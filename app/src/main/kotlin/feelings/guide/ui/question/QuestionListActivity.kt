@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import feelings.guide.ADD_ANSWER_REQUEST_CODE
 import feelings.guide.ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY
 import feelings.guide.QUESTION_ID_PARAM
