@@ -1,9 +1,10 @@
 Version 2.2.2
 <en-US>
-Extended feelings dictionary for Russian locale
+Added support for Android 11
 </en-US>
 <ru-RU>
-Расширен справочник чувств для русской локали
+1. Добавлена поддержка Android 11
+2. Расширен справочник чувств для русской локали
 </ru-RU>
 
 
