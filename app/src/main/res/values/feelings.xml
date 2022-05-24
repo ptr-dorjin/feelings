@@ -153,4 +153,12 @@
         <item>Trust</item>
         <item>Unity</item>
     </string-array>
+
+    <string-array name="other_array" tools:ignore="InconsistentArrays">
+        <item>Apologetic</item>
+        <item>Cautious</item>
+        <item>Curious</item>
+        <item>Indifferent</item>
+        <item>Neutral</item>
+    </string-array>
 </resources>
