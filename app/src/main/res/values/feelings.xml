@@ -11,21 +11,27 @@
         <item>Anger</item>
         <item>Annoyance</item>
         <item>Aversion</item>
+        <item>Bothered</item>
         <item>Contempt</item>
         <item>Discontent</item>
         <item>Disdain</item>
         <item>Disgust</item>
         <item>Dislike</item>
+        <item>Disturbed</item>
         <item>Envy</item>
         <item>Fury</item>
         <item>Grudge</item>
         <item>Hatred</item>
+        <item>Horrified</item>
         <item>Hysteria</item>
         <item>Indignation</item>
+        <item>Infatuated</item>
+        <item>Irritated</item>
         <item>Jealousy</item>
         <item>Pique</item>
         <item>Rage</item>
         <item>Resentment</item>
+        <item>Restless</item>
         <item>Superiority</item>
         <item>Vexation</item>
         <item>Wrath</item>
@@ -47,11 +53,14 @@
         <item>Haughtiness</item>
         <item>Horror</item>
         <item>Humiliation</item>
+        <item>Nervous</item>
         <item>Perplexity</item>
+        <item>Scared</item>
         <item>Shame</item>
         <item>Shyness</item>
         <item>Staggered</item>
         <item>Suspicion</item>
+        <item>Terrified</item>
         <item>Torpor</item>
         <item>Uncertainty</item>
         <item>Uneasiness</item>
@@ -60,44 +69,68 @@
 
     <string-array name="sadness_array" tools:ignore="InconsistentArrays">
         <item>Abandonment</item>
+        <item>Absence</item>
         <item>Alienation</item>
         <item>Anguish</item>
         <item>Bitterness</item>
         <item>Boredom</item>
+        <item>Broken</item>
         <item>Depression</item>
         <item>Despair</item>
         <item>Detachment</item>
         <item>Disappointment</item>
+        <item>Empty</item>
         <item>Ennui</item>
+        <item>Exhaustion</item>
+        <item>Fragile</item>
         <item>Frustration</item>
+        <item>Foolish</item>
         <item>Grief</item>
+        <item>Guilty</item>
         <item>Helplessness</item>
         <item>Hopelessness</item>
+        <item>Hurt</item>
         <item>Indifference</item>
         <item>Laziness</item>
+        <item>Loneliness</item>
         <item>Longing</item>
         <item>Melancholy</item>
+        <item>Miserable</item>
         <item>Regret</item>
         <item>Sadness</item>
+        <item>Scattered</item>
         <item>Shock</item>
+        <item>Shy</item>
         <item>Sloth</item>
         <item>Sorrow</item>
         <item>Sorry</item>
+        <item>Tired</item>
+        <item>Unsure</item>
         <item>Upset</item>
+        <item>Vulnerable</item>
+        <item>Worthless</item>
     </string-array>
 
     <string-array name="joy_array" tools:ignore="InconsistentArrays">
         <item>Amazement</item>
         <item>Anticipation</item>
         <item>Astonishment</item>
+        <item>Blessed</item>
+        <item>Blissful</item>
         <item>Care</item>
+        <item>Cheerful</item>
         <item>Confidence</item>
         <item>Contentment</item>
         <item>Curiosity</item>
         <item>Delight</item>
+        <item>Delight</item>
+        <item>Determination</item>
         <item>Elation</item>
         <item>Encouragement</item>
+        <item>Energetic</item>
         <item>Enjoyment</item>
+        <item>Enlightened</item>
+        <item>Enlivened</item>
         <item>Enthusiasm</item>
         <item>Euphoria</item>
         <item>Excitement</item>
@@ -106,6 +139,7 @@
         <item>Fascination</item>
         <item>Freedom</item>
         <item>Glee</item>
+        <item>Grateful</item>
         <item>Happiness</item>
         <item>Hope</item>
         <item>Interest</item>
@@ -113,17 +147,25 @@
         <item>Jubilation</item>
         <item>Liveliness</item>
         <item>Peace</item>
+        <item>Pleased</item>
         <item>Pleasure</item>
         <item>Relief</item>
         <item>Resolve</item>
         <item>Satisfaction</item>
+        <item>Secure</item>
+        <item>Smart</item>
+        <item>Strong</item>
         <item>Surprise</item>
+        <item>Thrill</item>
         <item>Triumph</item>
+        <item>Vivacious</item>
+        <item>Worthiness</item>
     </string-array>
 
     <string-array name="love_array" tools:ignore="InconsistentArrays">
         <item>Acceptance</item>
         <item>Admiration</item>
+        <item>Adored</item>
         <item>Affection</item>
         <item>Appreciation</item>
         <item>Attachment</item>
@@ -142,6 +184,7 @@
         <item>Identity</item>
         <item>Inspiration</item>
         <item>Love</item>
+        <item>Obsession</item>
         <item>Proud</item>
         <item>Relaxation</item>
         <item>Respect</item>
@@ -152,6 +195,7 @@
         <item>Tenderness</item>
         <item>Trust</item>
         <item>Unity</item>
+        <item>Worthy</item>
     </string-array>
 
     <string-array name="other_array" tools:ignore="InconsistentArrays">
