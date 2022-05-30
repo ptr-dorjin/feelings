@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="anger">Ljutnja</string>
+    <string name="fear">Strah</string>
+    <string name="sadness">Tuga</string>
+    <string name="joy">Radost</string>
+    <string name="love">Ljubav</string>
+
+    <string-array name="anger_array" tools:ignore="InconsistentArrays">
+        <item>Antipatija</item>
+        <item>Averzija</item>
+        <item>Bijes</item>
+        <item>Gađenje</item>
+        <item>Histerija</item>
+        <item>Iritiranost</item>
+        <item>Ljubomora</item>
+        <item>Ljutnja</item>
+        <item>Mržnja</item>
+        <item>Nemirnost</item>
+        <item>Nerviranje</item>
+        <item>Nezadovoljstvo</item>
+        <item>Ogorčenost</item>
+        <item>Prezir</item>
+        <item>Sikiracija</item>
+        <item>Smetanje</item>
+        <item>Superiornost</item>
+        <item>Uvrijeđenost</item>
+        <item>Užasnutost</item>
+        <item>Uznemirenost</item>
+        <item>Zaluđenost</item>
+        <item>Zamjerka</item>
+        <item>Zavist</item>
+    </string-array>
+
+    <string-array name="fear_array" tools:ignore="InconsistentArrays">
+        <item>Anksioznost</item>
+        <item>Apatija</item>
+        <item>Arogancija</item>
+        <item>Bojaznost</item>
+        <item>Krivica</item>
+        <item>Nemir</item>
+        <item>Nepovjerenje</item>
+        <item>Nervoza</item>
+        <item>Nesigurnost</item>
+        <item>Oholost</item>
+        <item>Poniženje</item>
+        <item>Prestrašenost</item>
+        <item>Prestravljenost</item>
+        <item>Šokiranost</item>
+        <item>Sram</item>
+        <item>Stidljivost</item>
+        <item>Strah</item>
+        <item>Strahopoštovanje</item>
+        <item>Sumnja</item>
+        <item>Tromost</item>
+        <item>Uplašenost</item>
+        <item>Užas</item>
+        <item>Zabrinutost</item>
+        <item>Zapanjenost</item>
+        <item>Zbunjenost</item>
+    </string-array>
+
+    <string-array name="sadness_array" tools:ignore="InconsistentArrays">
+        <item>Besciljnost</item>
+        <item>Bespomoćnost</item>
+        <item>Beznađe</item>
+        <item>Bezvrijednost</item>
+        <item>Čežnja</item>
+        <item>Depresija</item>
+        <item>Dosada</item>
+        <item>Fragilnost</item>
+        <item>Frustracija</item>
+        <item>Glupavo</item>
+        <item>Gorčina</item>
+        <item>Iscrpljenost</item>
+        <item>Jad</item>
+        <item>Jadno</item>
+        <item>Krivnja</item>
+        <item>Lijenost</item>
+        <item>Melanholija</item>
+        <item>Muka</item>
+        <item>Napuštenost</item>
+        <item>Neprisutnost</item>
+        <item>Nesigurnost</item>
+        <item>Nevezanost</item>
+        <item>Očaj</item>
+        <item>Otuđenost</item>
+        <item>Povrijeđenost</item>
+        <item>Praznina</item>
+        <item>Ranjivost</item>
+        <item>Raspršenost</item>
+        <item>Razočarenje</item>
+        <item>Sažaljenje</item>
+        <item>Slomljenost</item>
+        <item>Šok</item>
+        <item>Stidljivost</item>
+        <item>Tuga</item>
+        <item>Umor</item>
+        <item>Usamljenost</item>
+        <item>Uzrujanost</item>
+        <item>Žalost</item>
+    </string-array>
+
+    <string-array name="joy_array" tools:ignore="InconsistentArrays">
+        <item>Blagoslovljenost</item>
+        <item>Blaženost</item>
+        <item>Brižnost</item>
+        <item>Dostojnost</item>
+        <item>Energičnost</item>
+        <item>Entuzijazam</item>
+        <item>Euforija</item>
+        <item>Fascinacija</item>
+        <item>Iščekivanje</item>
+        <item>Iznenađenost</item>
+        <item>Mir</item>
+        <item>Očekivanje</item>
+        <item>Odlučnost</item>
+        <item>Oduševljenost</item>
+        <item>Ohrabrenje</item>
+        <item>Olakšanje</item>
+        <item>Oživljenost</item>
+        <item>Pametno</item>
+        <item>Prosvijetljenost</item>
+        <item>Pun nade</item>
+        <item>Radost</item>
+        <item>Razdraganost</item>
+        <item>Samouvjerenost</item>
+        <item>Sigurnost</item>
+        <item>Slavlje</item>
+        <item>Sloboda</item>
+        <item>Snažnost</item>
+        <item>Sreća</item>
+        <item>Trijumf</item>
+        <item>Ushićenje</item>
+        <item>Uzbuđenje</item>
+        <item>Uživanje</item>
+        <item>Veselje</item>
+        <item>Začuđenost</item>
+        <item>Zadovoljstvo</item>
+        <item>Zahvalnost</item>
+        <item>Zainteresovanost</item>
+        <item>Zapanjenost</item>
+        <item>Živahnost</item>
+    </string-array>
+
+    <string-array name="love_array" tools:ignore="InconsistentArrays">
+        <item>Blaženstvo</item>
+        <item>Divljenje</item>
+        <item>Dobra volja</item>
+        <item>Dostojnost</item>
+        <item>Drugarstvo</item>
+        <item>Inspiracija</item>
+        <item>Jedinstvo</item>
+        <item>Ljubav</item>
+        <item>Naklonost</item>
+        <item>Nježnost</item>
+        <item>Obožavanost</item>
+        <item>Opsjednutost</item>
+        <item>Opuštanje</item>
+        <item>Poniznost</item>
+        <item>Ponos</item>
+        <item>Poštovanje</item>
+        <item>Povezanost</item>
+        <item>Povjerenje</item>
+        <item>Prihvaćanje</item>
+        <item>Pripadnost</item>
+        <item>Privrženost</item>
+        <item>Ravnoteža</item>
+        <item>Samopoštovanje</item>
+        <item>Sigurnost</item>
+        <item>Simpatija</item>
+        <item>Sklad</item>
+        <item>Smirenost</item>
+        <item>Spokoj</item>
+        <item>Suosjećanje</item>
+        <item>Vjera</item>
+        <item>Zahvalnost</item>
+    </string-array>
+
+    <string-array name="other_array" tools:ignore="InconsistentArrays">
+        <item>Neutralnost</item>
+        <item>Opreznost</item>
+        <item>Pomirljivost</item>
+        <item>Ravnodušnost</item>
+        <item>Znatiželjnost</item>
+    </string-array>
+</resources>
