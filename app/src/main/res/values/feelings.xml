@@ -22,10 +22,8 @@
         <item>Fury</item>
         <item>Grudge</item>
         <item>Hatred</item>
-        <item>Horrified</item>
         <item>Hysteria</item>
         <item>Indignation</item>
-        <item>Infatuated</item>
         <item>Irritated</item>
         <item>Jealousy</item>
         <item>Pique</item>
@@ -43,6 +41,7 @@
         <item>Apprehension</item>
         <item>Arrogance</item>
         <item>Awe</item>
+        <item>Cautious</item>
         <item>Confusion</item>
         <item>Doubt</item>
         <item>Dumbfounded</item>
@@ -52,6 +51,7 @@
         <item>Fright</item>
         <item>Haughtiness</item>
         <item>Horror</item>
+        <item>Horrified</item>
         <item>Humiliation</item>
         <item>Nervous</item>
         <item>Perplexity</item>
@@ -72,6 +72,7 @@
         <item>Absence</item>
         <item>Alienation</item>
         <item>Anguish</item>
+        <item>Apologetic</item>
         <item>Bitterness</item>
         <item>Boredom</item>
         <item>Broken</item>
@@ -122,7 +123,6 @@
         <item>Confidence</item>
         <item>Contentment</item>
         <item>Curiosity</item>
-        <item>Delight</item>
         <item>Delight</item>
         <item>Determination</item>
         <item>Elation</item>
@@ -182,6 +182,7 @@
         <item>Harmony</item>
         <item>Humility</item>
         <item>Identity</item>
+        <item>Infatuated</item>
         <item>Inspiration</item>
         <item>Love</item>
         <item>Obsession</item>
@@ -199,10 +200,6 @@
     </string-array>
 
     <string-array name="other_array" tools:ignore="InconsistentArrays">
-        <item>Apologetic</item>
-        <item>Cautious</item>
-        <item>Curious</item>
-        <item>Indifferent</item>
         <item>Neutral</item>
     </string-array>
 </resources>
