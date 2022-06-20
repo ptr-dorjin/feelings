@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AVD_MANAGER=~/Android/Sdk/tools/bin/avdmanager
+AVD_MANAGER=~/Android/Sdk/cmdline-tools/latest/bin/avdmanager
 EMULATOR=~/Android/Sdk/emulator/emulator
 
 mapfile -t DEVICES < <($EMULATOR -list-avds)

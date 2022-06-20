@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SDK_MANAGER=~/Android/Sdk/tools/bin/sdkmanager
-AVD_MANAGER=~/Android/Sdk/tools/bin/avdmanager
+SDK_MANAGER=~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager
+AVD_MANAGER=~/Android/Sdk/cmdline-tools/latest/bin/avdmanager
 EMULATOR=~/Android/Sdk/emulator/emulator
 ADB=~/Android/Sdk/platform-tools/adb
 
@@ -41,6 +41,7 @@ $AVD_MANAGER --silent create avd --force --name api30-android11 --abi google_api
 printf "\ndone\n"
 
 # 4. Let initial bootstrap finish for all devices
+SLEEP_TIME=120
 mapfile -t DEVICES < <($EMULATOR -list-avds)
 
 for device in "${DEVICES[@]}"; do
@@ -52,8 +53,8 @@ for device in "${DEVICES[@]}"; do
   $ADB </dev/null wait-for-device shell getprop init.svc.bootanim
   echo "Started $device"
 
-  echo "Sleeping 60 seconds to let initial bootstrap finish ..."
-  sleep 60
+  echo "Sleeping ${SLEEP_TIME} seconds to let initial bootstrap finish ..."
+  sleep $SLEEP_TIME
 
   $ADB </dev/null emu kill
   echo "Killed $device"
