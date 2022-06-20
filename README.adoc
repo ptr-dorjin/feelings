@@ -41,6 +41,7 @@ Run scripts from `scripts` directory. In desired execution order:
 |===
 |App version code |App version name |DB version
 
+|9 |2.3.0 |3
 |8 |2.2.2 |3
 |7 |2.2.1 |3
 |6 |2.2.0 |3

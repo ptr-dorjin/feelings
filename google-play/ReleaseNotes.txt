@@ -1,3 +1,8 @@
+Version 2.3.0
+<en-US>
+Added Serbian locale. Extended feelings dictionary in English. Thanks to Stefan Matić for contribution.
+</en-US>
+
 Version 2.2.2
 <en-US>
 Added support for Android 11
