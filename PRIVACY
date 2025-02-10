@@ -1,0 +1,28 @@
+            Feelings Guide Privacy Policy
+
+Created on 9 Feb 2025.
+
+What data is collected?
+
+    Feeling Guide app stores only the questions and answers (your log) that you type while using the app. No other data is collected.
+
+Where the data is stored?
+
+    Your log data is stored on your phone in a local database private to the app.
+
+What data is transferred to the servers?
+
+    Your log data never leaves your device, and nothing is send to the application developer servers. In fact, there is no application developer servers. The app is completely standalone and operates offline.
+
+How the local data is used?
+
+    The data is used only to display when you open your log within the app.
+
+Do other apps on the phone have access to the data?
+
+    Your log data is not accessible by other apps on your phone while it is in the database. The database is private. But keep in mind that if you use the Feeling Guide's export feature, which exports all your answeres from the database to a CSV file, the CSV file might be accessed by other apps after you save it to the phone storage.
+
+What permissions does the app use?
+
+    As of now, no permissions are required.
+
