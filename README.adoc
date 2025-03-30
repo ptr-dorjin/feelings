@@ -22,18 +22,27 @@ Install on a virtual or physical device from Android Studio.
 
 == Automated UI testing
 
-Run scripts from `scripts` directory. In desired execution order:
+Run scripts from `scripts` directory.
+In this order:
 
-- `avd-create.sh` - downloads images and creates a bunch of virtual devices
-** At the very first execution, you need to accept licenses interactively.
-** Sleep time in the script is to let each device finish setting up. Actual sleep time depends on a number of factors. Current sleep time is enough on my laptop, but you may need to increase it on another host.
-** If one of the devices can't finish setup in that time, you may have to manually boot into it via Device Manager GUI from Android Studio to let it finish
+NOTE: Turn off all virtual devices before running the scripts, since `avd` can only work with one running device, and it will fail with `adb: more than one device/emulator` if any other AVD was started outside of the scripts.
+
+- `avd-create.sh` - downloads images and creates a bunch of virtual devices.
+** This should be done only once.
+** At the very first execution, accept licenses interactively.
+
 - `avd-setup.sh` prepares all virtual devices for UI tests:
-** turn off animation
-** turn off keyboard auto-correction - **have to do that manually** on each device for now. didn't find a way to do it programmatically
+** This should be done only once.
+** turns off animation
+** turns off keyboard auto-correction - **have to do that manually** on each device for now.
+Didn't find a way to do it programmatically
+
 - `app-install.sh` installs the app on all virtual devices.
+
 - `run-tests-on-all-devices.sh` runs UI tests on each virtual device sequentially.
+
 - `app-uninstall.sh` uninstalls the app from all virtual devices to test fresh install.
+
 - `avd-delete.sh` deletes all virtual devices, if they are not needed anymore or to troubleshoot.
 
 == App version to DB version mapping

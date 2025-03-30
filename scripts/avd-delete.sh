@@ -1,13 +1,12 @@
 #!/bin/bash
 
-AVD_MANAGER=~/Android/Sdk/cmdline-tools/latest/bin/avdmanager
-EMULATOR=~/Android/Sdk/emulator/emulator
+source common.sh
 
-mapfile -t DEVICES < <($EMULATOR -list-avds)
+filter_devices $1
+for device in "${filtered_devices[@]}"; do
+    printf "\n====================== %s ======================\n" $device
 
-for device in "${DEVICES[@]}"; do
-  printf "\n====================== %s ======================\n" $device
-  echo "Deleting $device"
+    echo "Deleting $device"
 
-  $AVD_MANAGER delete avd -n $device
+    $AVD_MANAGER delete avd -n $device
 done

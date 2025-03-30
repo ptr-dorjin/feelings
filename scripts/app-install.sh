@@ -1,32 +1,24 @@
 #!/bin/bash
 
+source common.sh
+
 # prerequisite: run `./gradlew clean assembleDebug assembleAndroidTest`
 # which will build two apks respectively:
 # ~/dev/feelings/app/build/outputs/apk/debug/app-debug.apk
 # ~/dev/feelings/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
-EMULATOR=~/Android/Sdk/emulator/emulator
-ADB=~/Android/Sdk/platform-tools/adb
 APK_MAIN=~/feelings/app/build/outputs/apk/debug/app-debug.apk
 APK_TEST=~/feelings/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
-mapfile -t DEVICES < <($EMULATOR -list-avds)
+filter_devices $1
+for device in "${filtered_devices[@]}"; do
+    printf "\n====================== %s ======================\n" $device
+    start_device $device false
 
-for device in "${DEVICES[@]}"; do
-  printf "\n====================== %s ======================\n" $device
-  echo "Starting $device"
-  ${EMULATOR} </dev/null -avd ${device} &
-
-  $ADB </dev/null wait-for-device shell getprop init.svc.bootanim
-  echo "Started $device"
-
-  echo "Installing"
+    echo "Installing"
 
   $ADB </dev/null install -r -t $APK_MAIN
   $ADB </dev/null install -r -t $APK_TEST
 
-  $ADB </dev/null emu kill
-  echo "Killed $device"
-
-  sleep 5
+    kill_device $device
 done

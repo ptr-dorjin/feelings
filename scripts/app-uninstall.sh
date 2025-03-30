@@ -1,34 +1,25 @@
 #!/bin/bash
 
-EMULATOR=~/Android/Sdk/emulator/emulator
-ADB=~/Android/Sdk/platform-tools/adb
+source common.sh
 
-mapfile -t DEVICES < <($EMULATOR -list-avds)
+filter_devices $1
+for device in "${filtered_devices[@]}"; do
+    printf "\n====================== %s ======================\n" $device
+    start_device $device false
 
-for device in "${DEVICES[@]}"; do
-  printf "\n====================== %s ======================\n" $device
-  echo "Starting $device"
-  ${EMULATOR} </dev/null -avd ${device} &
+    echo "Uninstalling"
 
-  $ADB </dev/null wait-for-device shell getprop init.svc.bootanim
-  echo "Started $device"
+    if ($ADB shell pm list packages | grep feelings.guide); then
+        $ADB </dev/null uninstall feelings.guide
+    else
+        echo "Could not find feelings.guide"
+    fi
 
-  echo "Uninstalling"
+    if ($ADB shell pm list packages | grep feelings.guide.test); then
+        $ADB </dev/null uninstall feelings.guide.test
+    else
+        echo "Could not find feelings.guide.test"
+    fi
 
-  if ($ADB shell pm list packages | grep feelings.guide); then
-    $ADB </dev/null uninstall feelings.guide
-  else
-    echo "Could not find feelings.guide"
-  fi
-
-  if ($ADB shell pm list packages | grep feelings.guide.test); then
-    $ADB </dev/null uninstall feelings.guide.test
-  else
-    echo "Could not find feelings.guide.test"
-  fi
-
-  $ADB </dev/null emu kill
-  echo "Killed $device"
-
-  sleep 5
+    kill_device $device
 done

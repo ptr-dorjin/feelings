@@ -1,43 +1,38 @@
 #!/bin/bash
 
-EMULATOR=~/Android/Sdk/emulator/emulator
-ADB=~/Android/Sdk/platform-tools/adb
+source common.sh
 
-# 1. Switch animation off
-mapfile -t DEVICES < <($EMULATOR -list-avds)
+filter_devices $1
+for device in "${filtered_devices[@]}"; do
+    printf "\n====================== %s ======================\n" $device
 
-for device in "${DEVICES[@]}"; do
-  printf "\n====================== %s ======================\n" $device
+    # Enable hardware keyboard
+    echo "Setting hw.keyboard=yes"
+    config_file=~/.android/avd/$device.avd/config.ini
+    config_file_backup=~/.android/avd/$device.avd/config.ini.bkp
+    cp $config_file $config_file_backup
+    echo "Created a backup of the config file: $config_file_backup"
+    sed 's/hw.keyboard *=.*/hw.keyboard=yes/' -i $config_file
+    if (! grep -P "hw.keyboard *= *yes" < $config_file); then
+        echo "hw.keyboard=yes" >> $config_file
+    fi
 
-  if (! grep hw.keyboard < ~/.android/avd/$device.avd/config.ini); then
-    echo "setting hw.keyboard=yes"
-    echo "hw.keyboard=yes" >> ~/.android/avd/$device.avd/config.ini
-  fi
+    start_device $device true
 
-  echo "Starting $device"
-  ${EMULATOR} </dev/null -avd ${device} &
-  #EMULATOR_PID=$!
+    # Switch animation off
+    echo "Switching animation off"
 
-  $ADB </dev/null wait-for-device shell getprop init.svc.bootanim
-  sleep 20
-  echo "Started $device"
+    $ADB </dev/null shell settings put global window_animation_scale 0
+    $ADB </dev/null shell settings put global transition_animation_scale 0
+    $ADB </dev/null shell settings put global animator_duration_scale 0
+    sleep 5
 
-  echo "Switching animation off"
+    echo "Rebooting to apply the new settings"
+    $ADB reboot
 
-  $ADB </dev/null shell settings put global window_animation_scale 0
-  $ADB </dev/null shell settings put global transition_animation_scale 0
-  $ADB </dev/null shell settings put global animator_duration_scale 0
-  sleep 5
+    wait_for_device
 
-  echo "Rebooting to apply the new settings"
-  $ADB reboot
-
-  sleep 20
-
-  $ADB </dev/null emu kill
-  echo "Killed $device"
-
-  sleep 5
+    kill_device $device
 done
 
 # 2. Switch keyboard auto-correction off
