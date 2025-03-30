@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,23 +17,64 @@ import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
+import feelings.guide.databinding.AnswerLogByQuestionBinding
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.log.AnswerLogActivity
 import feelings.guide.ui.log.AnswerLogSwipeCallback
 import feelings.guide.ui.question.QuestionClearLogDialogFragment
-import kotlinx.android.synthetic.main.answer_log_by_question.*
 
 
 class AnswerLogByQuestionFragment(
-        private var questionId: Long,
-        private val exportFn: () -> Unit)
-    : Fragment() {
+    private var questionId: Long,
+    private val exportFn: () -> Unit
+) : Fragment() {
 
     private lateinit var adapter: AnswerLogByQuestionAdapter
     private var lastDeleted: Answer? = null
+    private var _binding: AnswerLogByQuestionBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.answer_log_by_question, container, false)
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    private val menuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            if (adapter.isNotEmpty) {
+                menuInflater.inflate(R.menu.answer_log_by_question_menu, menu)
+            }
+        }
+
+        override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+            when (menuItem.itemId) {
+                R.id.clear_log_by_question -> {
+                    showClearLogByQuestionConfirmation()
+                    true
+                }
+
+                R.id.export_log -> {
+                    exportFn()
+                    true
+                }
+
+                else -> false
+            }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = AnswerLogByQuestionBinding.inflate(
+            inflater, container, false
+        )
+        requireActivity().addMenuProvider(menuProvider)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDestroy() {
@@ -41,12 +83,10 @@ class AnswerLogByQuestionFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-
         adapter = AnswerLogByQuestionAdapter(requireContext(), questionId)
         val notEmpty = adapter.isNotEmpty
-        logByQuestionRV.visibility = if (notEmpty) View.VISIBLE else View.GONE
-        logByQuestionEmptyText.visibility = if (notEmpty) View.GONE else View.VISIBLE
+        binding.logByQuestionRV.visibility = if (notEmpty) View.VISIBLE else View.GONE
+        binding.logByQuestionEmptyText.visibility = if (notEmpty) View.GONE else View.VISIBLE
         if (notEmpty)
             setUpRecyclerView()
         fillQuestionText()
@@ -54,57 +94,45 @@ class AnswerLogByQuestionFragment(
 
     private fun setUpRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
-        logByQuestionRV.layoutManager = layoutManager
+        binding.logByQuestionRV.layoutManager = layoutManager
         val dividerItemDecoration = DividerItemDecoration(
-                logByQuestionRV.context,
-                layoutManager.orientation
+            binding.logByQuestionRV.context,
+            layoutManager.orientation
         )
-        logByQuestionRV.addItemDecoration(dividerItemDecoration)
+        binding.logByQuestionRV.addItemDecoration(dividerItemDecoration)
 
-        logByQuestionRV.adapter = adapter
+        binding.logByQuestionRV.adapter = adapter
 
         val itemTouchHelper = ItemTouchHelper(
-                AnswerLogSwipeCallback(
-                        requireContext(),
-                        this::onDeleteAnswer,
-                        this::onEditAnswer
-                )
+            AnswerLogSwipeCallback(
+                requireContext(),
+                this::onDeleteAnswer,
+                this::onEditAnswer
+            )
         )
-        itemTouchHelper.attachToRecyclerView(logByQuestionRV)
+        itemTouchHelper.attachToRecyclerView(binding.logByQuestionRV)
     }
 
     private fun fillQuestionText() {
-        logByQuestionText.text = QuestionService.getQuestionText(requireContext(), questionId)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (adapter.isNotEmpty) {
-            inflater.inflate(R.menu.answer_log_by_question_menu, menu)
-        }
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.clear_log_by_question -> {
-            showClearLogByQuestionConfirmation()
-            true
-        }
-        R.id.export_log -> {
-            exportFn()
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
+        binding.logByQuestionText.text =
+            QuestionService.getQuestionText(requireContext(), questionId)
     }
 
     private fun showClearLogByQuestionConfirmation() {
         QuestionClearLogDialogFragment(this::onClearLogByQuestionConfirmed)
-                .show(requireActivity().supportFragmentManager,
-                        QuestionClearLogDialogFragment::class.java.simpleName)
+            .show(
+                requireActivity().supportFragmentManager,
+                QuestionClearLogDialogFragment::class.java.simpleName
+            )
     }
 
     private fun onClearLogByQuestionConfirmed() {
         AnswerStore.deleteByQuestionId(requireContext(), questionId)
-        Snackbar.make(logByQuestionLayout, R.string.msg_clear_log_by_question_success, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(
+            binding.logByQuestionLayout,
+            R.string.msg_clear_log_by_question_success,
+            Snackbar.LENGTH_LONG
+        ).show()
         adapter.refresh()
     }
 
@@ -114,9 +142,13 @@ class AnswerLogByQuestionFragment(
         //notifying adapter only about 1 position change does not work for some reason, so update everything as a workaround
         adapter.refresh()
 
-        Snackbar.make(logByQuestionLayout, R.string.msg_answer_deleted_success, Snackbar.LENGTH_LONG)
-                .setAction(R.string.snackbar_undo) { undoDelete() }
-                .show()
+        Snackbar.make(
+            binding.logByQuestionLayout,
+            R.string.msg_answer_deleted_success,
+            Snackbar.LENGTH_LONG
+        )
+            .setAction(R.string.snackbar_undo) { undoDelete() }
+            .show()
     }
 
     private fun undoDelete() {
@@ -137,16 +169,20 @@ class AnswerLogByQuestionFragment(
         adapter.refresh()
 
         //redraw recyclerView
-        logByQuestionRV.adapter = adapter
+        binding.logByQuestionRV.adapter = adapter
 
         //scroll to the answer
         if (answerId > 0) {
             val position = adapter.getPositionById(answerId)
             if (position > -1) {
-                logByQuestionRV.scrollToPosition(position)
+                binding.logByQuestionRV.scrollToPosition(position)
             }
         }
         if (answerIsUpdated)
-            Snackbar.make(logByQuestionLayout, R.string.msg_answer_updated_success, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                binding.logByQuestionLayout,
+                R.string.msg_answer_updated_success,
+                Snackbar.LENGTH_LONG
+            ).show()
     }
 }

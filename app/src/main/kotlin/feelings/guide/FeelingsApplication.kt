@@ -3,7 +3,6 @@ package feelings.guide
 import android.content.Context
 import android.content.res.Configuration
 import androidx.multidex.MultiDexApplication
-import com.jakewharton.threetenabp.AndroidThreeTen
 import feelings.guide.profile.LocaleUtil
 
 const val QUESTION_ID_PARAM = "question_id"
@@ -23,7 +22,6 @@ class FeelingsApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        AndroidThreeTen.init(this)
     }
 
     override fun attachBaseContext(base: Context) {

@@ -41,7 +41,7 @@ class HideQuestionUITest {
     @Test
     fun hideBuiltInQuestion_answersAreNotDeleted() {
         // given
-        val answer = "Push-ups"
+        val answer = "Test hide built-in question."
         answerBuiltInQuestion(R.string.q_text_do_body, answer)
 
         // when
@@ -59,7 +59,7 @@ class HideQuestionUITest {
     @Test
     fun clearAnswersForHiddenQuestions_answerIsDeleted() {
         // given
-        val answer = "Pull-ups"
+        val answer = "Test clear answers for hidden questions."
         answerBuiltInQuestion(R.string.q_text_do_body, answer)
         hideQuestion(R.string.q_text_do_body)
 
@@ -114,7 +114,7 @@ class HideQuestionUITest {
     @Test
     fun popupMenuForUserQuestion_doesNotHaveHideMenu() {
         // given
-        val question = "Bluetooth or wireless mouse?"
+        val question = "Test popup menu for user question?"
         addUserQuestion(question)
 
         // when

@@ -33,11 +33,11 @@ class EditUserQuestionUITest {
     @Test
     fun editQuestion_isUpdatedOnQuestionList() {
         // given
-        val old = "To eat?"
+        val old = "Test edit question is updated on question list - old?"
         addUserQuestion(old)
 
         // when
-        val updated = "To eat or to drink?"
+        val updated = "Test edit question is updated on question list - updated?"
         editUserQuestion(old, updated)
 
         // then
@@ -50,9 +50,9 @@ class EditUserQuestionUITest {
     @Test
     fun editQuestion_isUpdatedOnAnswerDialog() {
         // given
-        val old = "Ale or lager?"
+        val old = "Test edit question is updated on answer dialog - old?"
         addUserQuestion(old)
-        val updated = "Anti Hero IPA or Goose Island IPA"
+        val updated = "Test edit question is updated on answer dialog - updated?"
         editUserQuestion(old, updated)
 
         // when
@@ -71,11 +71,11 @@ class EditUserQuestionUITest {
     @Test
     fun editQuestion_isUpdatedInQuestionLog() {
         // given
-        val old = "HP or Lenovo?"
+        val old = "Test edit question is updated in log - old?"
         addUserQuestion(old)
-        val updated = "System76 or Dell?"
+        val updated = "Test edit question is updated in log - updated?"
         editUserQuestion(old, updated)
-        answerQuestion(updated, "System76")
+        answerQuestion(updated, "Test answer")
 
         // when
         openLogByQuestion(updated)
@@ -100,13 +100,16 @@ class EditUserQuestionUITest {
     @Test
     fun ediQuestionCancelled_isNotUpdated() {
         // given
-        val old = "Mouse or TouchPad?"
+        val old = "Test edit question cancelled is not updated?"
         addUserQuestion(old)
 
         // when
         openEditQuestionDialog(old)
         onView(withId(R.id.questionTextEdit))
-            .perform(replaceText("Mouse or trackball?"), closeSoftKeyboard())
+            .perform(
+                replaceText("Test edit question cancelled is not updated - new?"),
+                closeSoftKeyboard()
+            )
         onView(withText(R.string.btn_cancel)).perform(click())
 
         // then
@@ -119,7 +122,7 @@ class EditUserQuestionUITest {
     @Test
     fun tapOutsideEditQuestionDialog_popupIsNotClosed() {
         // given
-        val question = "Popup should not be closed when tap outside"
+        val question = "Test tap outside edit question dialog - popup is not closed?"
         addUserQuestion(question)
         openEditQuestionDialog(question)
 
@@ -140,7 +143,7 @@ class EditUserQuestionUITest {
     @Test
     fun pressBackOnAddQuestionDialog_popupIsNotClosed() {
         // given
-        val question = "Popup should not be closed when Back is pressed"
+        val question = "Test press back on add question dialog - popup is not closed?"
         addUserQuestion(question)
         openEditQuestionDialog(question)
 
@@ -159,7 +162,12 @@ class EditUserQuestionUITest {
     @Test
     fun popupMenuForFeelings_doesNotHaveEditMenu() {
         // when
-        onView(Matchers.allOf(withId(R.id.popupMenu), hasSibling(withText(R.string.q_text_feelings))))
+        onView(
+            Matchers.allOf(
+                withId(R.id.popupMenu),
+                hasSibling(withText(R.string.q_text_feelings))
+            )
+        )
             .perform(click())
 
         // then
@@ -169,7 +177,12 @@ class EditUserQuestionUITest {
     @Test
     fun popupMenuForBuiltInQuestion_doesNotHaveEditMenu() {
         // when
-        onView(Matchers.allOf(withId(R.id.popupMenu), hasSibling(withText(R.string.q_text_do_body))))
+        onView(
+            Matchers.allOf(
+                withId(R.id.popupMenu),
+                hasSibling(withText(R.string.q_text_do_body))
+            )
+        )
             .perform(click())
 
         // then

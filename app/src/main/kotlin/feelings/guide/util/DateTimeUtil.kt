@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import feelings.guide.ui.settings.DATE_FORMAT_KEY
 import feelings.guide.ui.settings.TIME_FORMAT_KEY
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.DateTimeFormatter.ofPattern
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
 
 private const val ANSWER_LOG_DATE_DEFAULT_FORMAT = "d MMM yyyy"
 private const val ANSWER_LOG_TIME_DEFAULT_FORMAT = "HH:mm"

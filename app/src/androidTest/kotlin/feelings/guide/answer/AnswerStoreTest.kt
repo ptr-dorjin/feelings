@@ -11,7 +11,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 import java.util.*
 
 private const val ID: Long = 1

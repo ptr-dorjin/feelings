@@ -1,53 +1,46 @@
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
-
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("android.extensions")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
-    compileSdkVersion(30)
+    namespace = "feelings.guide"
+    compileSdk = 34
+
     defaultConfig {
         applicationId = "feelings.guide"
-        minSdkVersion(19)
-        targetSdkVersion(30)
+        minSdk = 26
+        targetSdk = 34
         versionCode = 9
         versionName = "2.3.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
-        multiDexEnabled = true
     }
+
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
+    }
+    buildFeatures {
+        viewBinding = true
     }
     productFlavors {
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = "11"
     }
     sourceSets["main"].java.srcDir("src/main/kotlin")
     sourceSets["test"].java.srcDir("src/test/kotlin")
     sourceSets["androidTest"].java.srcDir("src/androidTest/kotlin")
-
-    packagingOptions {
-        exclude("README.txt")
-        exclude("META-INF/DEPENDENCIES")
-        exclude("META-INF/LICENSE")
-        exclude("META-INF/LICENSE.txt")
-        exclude("META-INF/license.txt")
-        exclude("META-INF/NOTICE")
-        exclude("META-INF/NOTICE.txt")
-        exclude("META-INF/notice.txt")
-        exclude("META-INF/ASL2.0")
-    }
 
     bundle {
         language {
@@ -57,45 +50,44 @@ android {
 }
 
 dependencies {
-    api("androidx.core:core-ktx:1.5.0-alpha02")
+    api(libs.androidx.core.ktx)
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     //Kotlin standard library
-    implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
-    implementation("androidx.core:core-ktx:1.5.0-alpha02")
-    implementation("androidx.preference:preference-ktx:1.1.1")
-    implementation("androidx.appcompat:appcompat:1.3.0-alpha02")
-    implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.recyclerview:recyclerview:1.2.0-alpha05")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0")
-    implementation("androidx.vectordrawable:vectordrawable:1.2.0-alpha02")
-    implementation("androidx.navigation:navigation-runtime-ktx:2.3.0")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.0")
-    implementation("com.google.android.material:material:1.3.0-alpha02")
-    //threetenabp is needed due to minSdkVersion=15. Can be removed after setting minSdkVersion=26
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.0")
-    implementation("com.opencsv:opencsv:5.2") {
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.app.compat)
+    implementation(libs.androidx.card.view)
+    implementation(libs.androidx.recycler.view)
+    implementation(libs.androidx.constraint.layout)
+    implementation(libs.androidx.vector.drawable)
+    implementation(libs.androidx.nav.runtime.ktx)
+    implementation(libs.androidx.nav.fragment.ktx)
+    implementation(libs.androidx.nav.ui.ktx)
+    implementation(libs.android.material)
+    implementation(libs.opencsv) {
         exclude("commons-logging")
     }
     // to workaround the 64K reference limit
-    implementation("androidx.multidex:multidex:2.0.1")
+    implementation(libs.androidx.multidex)
 
-    testImplementation(kotlin("test", KotlinCompilerVersion.VERSION))
-    testImplementation(kotlin("test-junit", KotlinCompilerVersion.VERSION))
-    testImplementation("androidx.test.ext:junit:1.1.1")
-    testImplementation("com.google.truth:truth:0.44") //todo replace?
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlin.junit)
+    testImplementation(libs.androidx.junit)
+    testImplementation(libs.truth) //todo replace?
+    testImplementation(libs.mockito.kotlin)
 
-    androidTestImplementation(kotlin("test", KotlinCompilerVersion.VERSION))
-    androidTestImplementation(kotlin("test-junit", KotlinCompilerVersion.VERSION))
-    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.1")
-    androidTestImplementation("androidx.test:rules:1.2.0")
-    androidTestImplementation("com.google.truth:truth:0.44") { //todo replace?
+    androidTestImplementation(libs.kotlin.test)
+    androidTestImplementation(libs.kotlin.junit)
+    androidTestImplementation(libs.androidx.junit.ktx)
+    androidTestImplementation(libs.androidx.rules)
+    androidTestImplementation(libs.truth) { //todo replace?
         exclude("com.google.guava", "listenablefuture")
     }
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0-rc03")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.3.0-rc03")
-    androidTestImplementation("org.hamcrest:hamcrest:2.1")
-    androidTestImplementation("org.hamcrest:hamcrest-library:2.1")
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.contrib)
+    androidTestImplementation(libs.androidx.nav.testing)
+    androidTestImplementation(libs.hamcrest)
+    androidTestImplementation(libs.hamcrest.library)
 }

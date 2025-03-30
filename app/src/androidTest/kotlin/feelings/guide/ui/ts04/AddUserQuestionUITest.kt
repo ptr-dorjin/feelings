@@ -32,7 +32,7 @@ class AddUserQuestionUITest {
     @Test
     fun addUserQuestion_appearsInList() {
         // given
-        val question = "Minor or major scale?"
+        val question = "Test add user question appears in the list?"
 
         // when
         addUserQuestion(question)

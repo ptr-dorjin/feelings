@@ -72,7 +72,10 @@ class ClearLogUITest {
     @Test
     fun clearLogFromQuestionList_builtIn() {
         // given
-        answerBuiltInQuestion(R.string.q_text_do_others, "UI tests")
+        answerBuiltInQuestion(
+            R.string.q_text_do_others,
+            "Test clear log from question list."
+        )
 
         // when
         clearLogFromQuestionList(R.string.q_text_do_others)
@@ -85,7 +88,10 @@ class ClearLogUITest {
     @Test
     fun clearLogFromQuestionLog_builtIn() {
         // given
-        answerBuiltInQuestion(R.string.q_text_do_body, "Go to the gym")
+        answerBuiltInQuestion(
+            R.string.q_text_do_body,
+            "Test clear log from question log.",
+        )
 
         // when
         openLogByQuestion(R.string.q_text_do_body)
@@ -98,7 +104,10 @@ class ClearLogUITest {
     @Test
     fun clearLogFull_builtIn() {
         // given
-        answerBuiltInQuestion(R.string.q_text_gratitude, "Mom")
+        answerBuiltInQuestion(
+            R.string.q_text_gratitude,
+            "Test clear log full.",
+        )
 
         // when
         openFullLog()
@@ -111,9 +120,9 @@ class ClearLogUITest {
     @Test
     fun clearLogFromQuestionList_userQuestion() {
         // given
-        val question = "Windows or MacOS?"
+        val question = "Test clear log from question list for user question?"
         addUserQuestion(question)
-        answerQuestion(question, "Linux")
+        answerQuestion(question, "Test answer.")
 
         // when
         clearLogFromQuestionList(question)
@@ -130,9 +139,9 @@ class ClearLogUITest {
     @Test
     fun clearLogFromQuestionLog_userQuestion() {
         // given
-        val question = "Intel or AMD?"
+        val question = "Test clear log from question log for user question?"
         addUserQuestion(question)
-        answerQuestion(question, "ARM")
+        answerQuestion(question, "Test answer.")
 
         // when
         openLogByQuestion(question)
@@ -149,9 +158,9 @@ class ClearLogUITest {
     @Test
     fun clearLogFull_userQuestion() {
         // given
-        val question = "Fender or Gibson?"
+        val question = "Test clear log full for user question?"
         addUserQuestion(question)
-        answerQuestion(question, "Epiphone")
+        answerQuestion(question, "Test answer.")
 
         // when
         openFullLog()

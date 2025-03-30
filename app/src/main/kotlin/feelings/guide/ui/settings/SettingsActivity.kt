@@ -8,20 +8,22 @@ import android.view.View
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import feelings.guide.R
+import feelings.guide.databinding.SettingsHostBinding
 import feelings.guide.profile.LocaleUtil
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.BaseActivity
-import kotlinx.android.synthetic.main.settings_host.*
 
 //keep the listener link to not get garbage collected from pref's WeakHashMap
 @SuppressLint("StaticFieldLeak")
 private val localeChangeListener = LocaleChangeListener()
 
 class SettingsActivity : BaseActivity() {
+    private lateinit var binding: SettingsHostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_host)
+        binding = SettingsHostBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Display the fragment as the main content.
         supportFragmentManager
@@ -30,7 +32,7 @@ class SettingsActivity : BaseActivity() {
                 .commit()
 
         localeChangeListener.context = this
-        localeChangeListener.view = settingsContent
+        localeChangeListener.view = binding.settingsContent
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(localeChangeListener)
     }
@@ -49,7 +51,7 @@ private class LocaleChangeListener(
         var context: Context? = null,
         var view: View? = null
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (SELECTED_LANGUAGE_KEY == key && context != null) {
             context = LocaleUtil.setLocale(context!!)
             QuestionService.changeLanguage(context!!)

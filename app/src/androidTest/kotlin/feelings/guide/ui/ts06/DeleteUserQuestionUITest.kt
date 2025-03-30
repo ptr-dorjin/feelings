@@ -31,7 +31,7 @@ class DeleteUserQuestionUITest {
     @Test
     fun deleteQuestion_deletesFromList() {
         // given
-        val question = "Manual or automatic transmission?"
+        val question = "Test delete question - deletes from list?"
         addUserQuestion(question)
 
         // when
@@ -44,9 +44,9 @@ class DeleteUserQuestionUITest {
     @Test
     fun deleteQuestionWithAnswers_deletesAnswer() {
         // given
-        val question = "Parallel or perpendicular parking?"
+        val question = "Test delete question with answers - deletes answer?"
         addUserQuestion(question)
-        val answer = "Perpendicular"
+        val answer = "Test delete question with answers - delete answer."
         answerQuestion(question, answer)
 
         // when
@@ -60,9 +60,9 @@ class DeleteUserQuestionUITest {
     @Test
     fun deleteQuestionWithoutAnswers_doesNotDeleteAnswer() {
         // given
-        val question = "Windshield or dashboard phone mount?"
+        val question = "Test delete question without answers - does not delete answer?"
         addUserQuestion(question)
-        val answer = "Vent mount"
+        val answer = "Test delete question without answers - does not delete answer."
         answerQuestion(question, answer)
 
         // when
@@ -76,9 +76,9 @@ class DeleteUserQuestionUITest {
     @Test
     fun deleteAnswersForDeletedQuestions_answerIsDeleted() {
         // given
-        val question = "ZipCar or Maven?"
+        val question = "Test delete answers for deleted questions - answer is deleted?"
         addUserQuestion(question)
-        val answer = "Car2go"
+        val answer = "Test delete answers for deleted questions - answer is deleted."
         answerQuestion(question, answer)
         deleteUserQuestion(question, true, clearAnswers = false)
 
@@ -93,7 +93,7 @@ class DeleteUserQuestionUITest {
     @Test
     fun deleteCancelled_questionIsStillOnTheList() {
         // given
-        val question = "Lyft or Uber?"
+        val question = "Test delete cancelled - question is still on the list?"
         addUserQuestion(question)
 
         // when

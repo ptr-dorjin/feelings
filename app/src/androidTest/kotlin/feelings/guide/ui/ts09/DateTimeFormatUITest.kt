@@ -12,10 +12,13 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import feelings.guide.R
 import feelings.guide.ui.question.QuestionListActivity
+import feelings.guide.ui.util.answerFeelingsRandom
+import feelings.guide.ui.util.clearLogFull
 import feelings.guide.ui.util.first
 import feelings.guide.ui.util.openFullLog
 import feelings.guide.ui.util.openLogByQuestion
 import org.hamcrest.Matchers.matchesPattern
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,6 +51,7 @@ class DateTimeFormatUITest(private val dateFormat: String, private val timeForma
     @Before
     fun before() {
         context = getApplicationContext()
+        answerFeelingsRandom()
     }
 
     @Test

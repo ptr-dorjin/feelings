@@ -27,7 +27,7 @@ protected constructor(protected val context: Context) :
     }
 
     private val isEmpty: Boolean
-        get() = cursor?.count ?: 0 == 0
+        get() = (cursor?.count ?: 0) == 0
 
     val isNotEmpty: Boolean
         get() = !isEmpty

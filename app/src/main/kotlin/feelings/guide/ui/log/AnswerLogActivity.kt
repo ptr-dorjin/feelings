@@ -14,24 +14,26 @@ import feelings.guide.R
 import feelings.guide.UPDATED_ANSWER_ID_RESULT_KEY
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
+import feelings.guide.databinding.AnswerLogHostBinding
 import feelings.guide.export.LogExporter
 import feelings.guide.ui.BaseActivity
 import feelings.guide.ui.answer.AnswerActivity
 import feelings.guide.ui.log.byquestion.AnswerLogByQuestionFragment
 import feelings.guide.ui.log.full.AnswerLogFullFragment
 import feelings.guide.util.EXPORT_FILE_NAME_FORMATTER
-import kotlinx.android.synthetic.main.answer_log_host.*
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 
 const val DEFAULT_QUESTION_ID: Long = -1
 
 class AnswerLogActivity : BaseActivity() {
     private var isFull: Boolean = false
     private var questionId: Long = DEFAULT_QUESTION_ID
+    private lateinit var binding: AnswerLogHostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.answer_log_host)
+        binding = AnswerLogHostBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
             questionId = intent.getLongExtra(QUESTION_ID_PARAM, DEFAULT_QUESTION_ID)
@@ -42,9 +44,9 @@ class AnswerLogActivity : BaseActivity() {
                 else -> AnswerLogByQuestionFragment(questionId, this::createFileForExport)
             }
             supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.answerLogContent, fragment)
-                    .commit()
+                .beginTransaction()
+                .add(R.id.answerLogContent, fragment)
+                .commit()
         }
     }
 
@@ -61,36 +63,51 @@ class AnswerLogActivity : BaseActivity() {
             // returned from editing the answer
             val answerLogFragment = supportFragmentManager.findFragmentById(R.id.answerLogContent)
             val answerId = data?.getLongExtra(UPDATED_ANSWER_ID_RESULT_KEY, -1) ?: -1
-            val answerIsUpdated = data?.getBooleanExtra(ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY, false)
+            val answerIsUpdated =
+                data?.getBooleanExtra(ANSWER_IS_ADDED_OR_UPDATED_RESULT_KEY, false)
                     ?: false
             if (isFull)
-                (answerLogFragment as? AnswerLogFullFragment)?.onReturnFromEditAnswer(answerId, answerIsUpdated)
+                (answerLogFragment as? AnswerLogFullFragment)?.onReturnFromEditAnswer(
+                    answerId,
+                    answerIsUpdated
+                )
             else
-                (answerLogFragment as? AnswerLogByQuestionFragment)?.onReturnFromEditAnswer(answerId, answerIsUpdated)
+                (answerLogFragment as? AnswerLogByQuestionFragment)?.onReturnFromEditAnswer(
+                    answerId,
+                    answerIsUpdated
+                )
         } else if (requestCode == EXPORT_LOG_REQUEST_CODE && resultCode == RESULT_OK) {
             try {
                 if (data?.data == null) {
-                    Snackbar.make(answerLogContent, "Choose file location to export.",
-                            Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        binding.answerLogContent, "Choose file location to export.",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
                 data?.data?.let { uri: Uri ->
                     val answers = AnswerStore.getAnswersForExport(this, questionId)
                     contentResolver.openOutputStream(uri).use {
                         if (it == null) {
-                            Snackbar.make(answerLogContent, "Cannot write to file $uri",
-                                    Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.answerLogContent, "Cannot write to file $uri",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                             return
                         }
 
                         LogExporter().export(answers, it, this)
 
-                        Snackbar.make(answerLogContent, "Finished exporting to file",
-                                Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(
+                            binding.answerLogContent, "Finished exporting to file",
+                            Snackbar.LENGTH_LONG
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
-                Snackbar.make(answerLogContent, "An error occurred while exporting to file. ${e.message}",
-                        Snackbar.LENGTH_LONG).show()
+                Snackbar.make(
+                    binding.answerLogContent, "An error occurred while exporting to file. ${e.message}",
+                    Snackbar.LENGTH_LONG
+                ).show()
                 Log.e("export", "An error occurred while creating a file.", e)
             }
         }
@@ -109,8 +126,10 @@ class AnswerLogActivity : BaseActivity() {
             }
             startActivityForResult(intent, EXPORT_LOG_REQUEST_CODE)
         } catch (e: Exception) {
-            Snackbar.make(answerLogContent, "An error occurred while creating a file. ${e.message}",
-                    Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                binding.answerLogContent, "An error occurred while creating a file. ${e.message}",
+                Snackbar.LENGTH_LONG
+            ).show()
             Log.e("export", "An error occurred while creating a file.", e)
         }
     }

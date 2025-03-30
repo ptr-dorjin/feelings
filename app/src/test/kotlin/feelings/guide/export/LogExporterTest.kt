@@ -2,12 +2,12 @@ package feelings.guide.export
 
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
 import feelings.guide.R
 import feelings.guide.answer.AnswerForExport
 import org.junit.Test
-import org.threeten.bp.LocalDateTime
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.doReturn
+import java.time.LocalDateTime
 import java.io.ByteArrayOutputStream
 
 class LogExporterTest {

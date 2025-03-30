@@ -37,6 +37,7 @@ const val SQL_CREATE_QUESTION_TABLE: String = """CREATE TABLE $QUESTION_TABLE (
     $COLUMN_IS_HIDDEN INTEGER
 )"""
 
+@ConsistentCopyVisibility
 data class QuestionCode internal constructor(
         val code: Int,
         val textId: Int,

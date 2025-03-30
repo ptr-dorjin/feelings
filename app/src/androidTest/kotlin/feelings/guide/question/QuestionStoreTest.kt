@@ -11,8 +11,8 @@ import org.junit.Before
 import org.junit.Test
 import java.util.*
 
-private const val TO_BE_OR_NOT_TO_BE = "To be or not to be?"
-private const val WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING = "Would you like to understand nothing?"
+private const val TEST_QUESTION = "Test question one?"
+private const val ANOTHER_QUESTION = "Another test question?"
 private const val SOME_BUILT_IN_QUESTION = "Some built-in question"
 private const val TEST_BUILT_IN_QUESTION_CODE = "test_code"
 
@@ -43,7 +43,7 @@ class QuestionStoreTest {
     @Test
     fun shouldGetById() {
         // given
-        questionId = QuestionStore.createQuestion(context, Question(TO_BE_OR_NOT_TO_BE))
+        questionId = QuestionStore.createQuestion(context, Question(TEST_QUESTION))
 
         // when
         val fromDB = QuestionStore.getById(context, questionId)
@@ -57,8 +57,8 @@ class QuestionStoreTest {
     @Test
     fun shouldCreate() {
         // when
-        questionId = QuestionStore.createQuestion(context, Question(TO_BE_OR_NOT_TO_BE))
-        questionId2 = QuestionStore.createQuestion(context, Question(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING))
+        questionId = QuestionStore.createQuestion(context, Question(TEST_QUESTION))
+        questionId2 = QuestionStore.createQuestion(context, Question(ANOTHER_QUESTION))
 
         // then
         assertThat(questionId).isNotEqualTo(-1)
@@ -69,10 +69,10 @@ class QuestionStoreTest {
     @Test
     fun shouldUpdate() {
         // given
-        val question = Question(TO_BE_OR_NOT_TO_BE)
+        val question = Question(TEST_QUESTION)
         questionId = QuestionStore.createQuestion(context, question)
         question.id = questionId
-        question.text = WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING
+        question.text = ANOTHER_QUESTION
 
         // when
         val updated = QuestionStore.updateQuestion(context, question)
@@ -81,13 +81,13 @@ class QuestionStoreTest {
         assertThat(updated).isTrue()
         val fromDB = QuestionStore.getById(context, questionId)
         assertThat(fromDB).isNotNull()
-        assertThat(fromDB!!.text).isEqualTo(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING)
+        assertThat(fromDB!!.text).isEqualTo(ANOTHER_QUESTION)
     }
 
     @Test
     fun shouldDelete() {
         // given
-        questionId = QuestionStore.createQuestion(context, Question(TO_BE_OR_NOT_TO_BE))
+        questionId = QuestionStore.createQuestion(context, Question(TEST_QUESTION))
 
         // when
         val deleted = QuestionStore.deleteQuestion(context, questionId)
@@ -120,9 +120,9 @@ class QuestionStoreTest {
     @Test
     fun shouldGetAll() {
         // given
-        questionId = QuestionStore.createQuestion(context, Question(TO_BE_OR_NOT_TO_BE))
+        questionId = QuestionStore.createQuestion(context, Question(TEST_QUESTION))
 
-        questionId2 = QuestionStore.createQuestion(context, Question(WOULD_YOU_LIKE_TO_UNDERSTAND_NOTHING))
+        questionId2 = QuestionStore.createQuestion(context, Question(ANOTHER_QUESTION))
         QuestionStore.deleteQuestion(context, questionId2)
 
         val builtInQuestion = Question()

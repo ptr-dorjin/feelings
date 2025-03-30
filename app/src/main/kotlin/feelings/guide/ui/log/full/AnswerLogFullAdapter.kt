@@ -4,32 +4,31 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.BaseColumns._ID
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import feelings.guide.R
 import feelings.guide.answer.Answer
 import feelings.guide.answer.AnswerStore
+import feelings.guide.databinding.AnswerLogFullItemBinding
 import feelings.guide.question.QuestionService
 import feelings.guide.ui.RecyclerViewCursorAdapter
 import feelings.guide.util.DateTimeUtil
-import kotlinx.android.synthetic.main.answer_log_full_item.view.*
-import org.threeten.bp.format.DateTimeFormatter.ofPattern
+import java.time.format.DateTimeFormatter.ofPattern
 
 /**
  * Used on
  * - full answer log (for all questions)
  */
 internal class AnswerLogFullAdapter(context: Context) :
-        RecyclerViewCursorAdapter<AnswerLogFullAdapter.AnswerLogHolder>(context) {
+    RecyclerViewCursorAdapter<AnswerLogFullAdapter.AnswerLogHolder>(context) {
 
     private val dateTimeFormat: String = DateTimeUtil.getDateTimeFormat(context)
 
-    internal class AnswerLogHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val dateTimeView: TextView = itemView.logFullDateTime
-        val questionView: TextView = itemView.logFullQuestionText
-        val answerView: TextView = itemView.logFullAnswer
+    internal class AnswerLogHolder(itemBinding: AnswerLogFullItemBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
+        val dateTimeView: TextView = itemBinding.logFullDateTime
+        val questionView: TextView = itemBinding.logFullQuestionText
+        val answerView: TextView = itemBinding.logFullAnswer
     }
 
     init {
@@ -37,9 +36,10 @@ internal class AnswerLogFullAdapter(context: Context) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerLogHolder {
-        val view = LayoutInflater.from(context)
-                .inflate(R.layout.answer_log_full_item, parent, false)
-        return AnswerLogHolder(view)
+        val itemBinding = AnswerLogFullItemBinding.inflate(
+            LayoutInflater.from(context), parent, false
+        )
+        return AnswerLogHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: AnswerLogHolder, cursor: Cursor) {
