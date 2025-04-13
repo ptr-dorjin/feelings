@@ -1,0 +1,55 @@
+[versions]
+agp = "8.8.2"
+kotlin = "2.1.10"
+coreKtx = "1.13.1" # freeze this version for sdk 34
+preferenceKtx = "1.2.1"
+appCompat = "1.7.0"
+cardView = "1.0.0"
+recyclerView = "1.3.2" # freeze this version for sdk 34
+constraintLayout = "2.2.1"
+vectorDrawable = "1.2.0"
+navigation = "2.8.9"
+material = "1.12.0"
+opencsv = "5.2"
+multidex = "2.0.1"
+junitVersion = "1.2.1"
+truth = "0.44" # todo: replace?
+espressoCore = "3.6.1"
+mockitoKotlin = "5.4.0"
+rules = "1.6.1"
+hamcrest = "2.2"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-preference-ktx = { group = "androidx.preference", name = "preference", version.ref = "preferenceKtx" }
+androidx-app-compat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
+androidx-card-view = { group = "androidx.cardview", name = "cardview", version.ref = "cardView" }
+androidx-recycler-view = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerView" }
+androidx-constraint-layout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+androidx-vector-drawable = { group = "androidx.vectordrawable", name = "vectordrawable", version.ref = "vectorDrawable" }
+androidx-nav-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation" }
+androidx-nav-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+androidx-nav-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+android-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+opencsv = { group = "com.opencsv", name = "opencsv", version.ref = "opencsv" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
+
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlin-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitVersion" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+
+androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
+androidx-nav-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigation" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoCore" }
+hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest" }
+hamcrest-library = { group = "org.hamcrest", name = "hamcrest-library", version.ref = "hamcrest" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+

@@ -1,8 +1,10 @@
 *.iml
 .gradle
-gradle
+gradle/*
+!gradle/libs.versions.toml
 local.properties
 .idea
+.kotlin
 .DS_Store
 build
 release
