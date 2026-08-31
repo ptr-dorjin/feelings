@@ -1,18 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Feelings Guide</string>
 
-    <string-array name="lang_values">
-        <item>en</item>
-        <item>ru</item>
-        <item>sr</item>
-    </string-array>
-
-    <string-array name="lang_titles">
-        <item>English</item>
-        <item>Русский</item>
-        <item>Srpski</item>
-    </string-array>
-
     <string-array name="date_formats">
         <item>d MMM yyyy</item>
         <item>MMM d yyyy</item>
@@ -27,87 +15,77 @@
         <item>h:mm a</item>
     </string-array>
 
+    <string name="title_questions_screen">Questions</string>
     <string name="title_answer_activity">Answer</string>
     <string name="title_answer_log_activity">Log</string>
+    <string name="title_full_log_activity">Full log</string>
     <string name="title_settings_activity">Settings</string>
 
     <string name="title_settings_category_interface">Interface</string>
     <string name="title_settings_category_log">Log</string>
     <string name="title_settings_category_builtin_questions">Built-in questions</string>
-    <string name="title_settings_language">Language</string>
+    <string name="title_settings_theme">Theme</string>
     <string name="title_settings_restore_built_in_questions">Restore built-in questions</string>
     <string name="title_settings_date_format">Date format</string>
     <string name="title_settings_time_format">Time format</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_built_in_all_visible">All built-in questions are visible</string>
+    <plurals name="settings_built_in_hidden_count">
+        <item quantity="one">%1$d built-in question is hidden</item>
+        <item quantity="other">%1$d built-in questions are hidden</item>
+    </plurals>
 
-    <string name="title_edit_question_dialog">Enter a question</string>
+    <string name="title_new_question_sheet">New question</string>
+    <string name="title_edit_question_sheet">Edit question</string>
+    <string name="msg_question_answers_free_text_hint">Answers to your own questions are free text.</string>
+
     <string name="title_confirm_delete_question_dialog">Delete the question?</string>
+    <string name="msg_confirm_delete_question_dialog">It will be removed from the list. Its answers stay in the full log unless you clear them here.</string>
+    <string name="checkbox_also_delete_answers">Also delete its answers</string>
+
     <string name="title_confirm_hide_question_dialog">Hide the question?</string>
-    <string name="title_confirm_clear_log_full_dialog">Delete all answers from log?</string>
-    <string name="title_confirm_clear_log_deleted_dialog">Delete answers to deleted/hidden questions from log?</string>
+    <string name="title_confirm_clear_log_full_dialog">Clear the full log?</string>
+    <string name="title_confirm_clear_log_deleted_dialog">Delete answers to deleted/hidden questions?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Delete answers to this question?</string>
+    <plurals name="msg_confirm_clear_log">
+        <item quantity="one">%1$d answer will be removed from the log. You can undo this right after.</item>
+        <item quantity="other">%1$d answers will be removed from the log. You can undo this right after.</item>
+    </plurals>
     <string name="title_confirm_restore_built_in_questions_dialog">Restore built-in questions visibility?</string>
-<!--    <string name="title_export_permission_dialog">Enable writing to the storage in order to export the log to a file</string>-->
 
     <string name="q_text_feelings">What do I feel right now?</string>
     <string name="q_text_gratitude">Who can I thank?</string>
     <string name="q_text_do_body">What can I do for my body?</string>
+    <string name="q_text_do_mind">What can I do for my mind?</string>
     <string name="q_text_do_close">What can I do for my loved ones?</string>
     <string name="q_text_do_others">What can I do for other people?</string>
-    <string name="q_text_insincerity">With whom I was not myself?</string><!--deprecated-->
-    <string name="q_text_preach">With whom I was clever today?</string><!--deprecated-->
-    <string name="q_text_lie">What is my insincerity?</string><!--deprecated-->
-    <string name="q_text_irresponsibility">What is my irresponsibility?</string><!--deprecated-->
 
-    <string name="q_description_feelings" />
-    <string name="q_description_gratitude" />
-    <string name="q_description_do_body" />
-    <string name="q_description_do_close" />
-    <string name="q_description_do_others" />
-    <string name="q_description_insincerity" /><!--deprecated-->
-    <string name="q_description_preach" /><!--deprecated-->
-    <string name="q_description_lie" /><!--deprecated-->
-    <string name="q_description_irresponsibility" /><!--deprecated-->
+    <string name="kicker_feelings_built_in">Feelings · Built-in</string>
+    <string name="kicker_built_in">Built-in</string>
 
     <string name="msg_question_text_empty">Text must not be empty</string>
-    <string name="msg_question_create_success">The question has been created</string>
-    <string name="msg_question_create_error">Error while creating the question</string>
-    <string name="msg_question_edit_success">The question has been changed</string>
-    <string name="msg_question_edit_error">Error while changing the question</string>
-    <string name="msg_question_delete_success">The question has been deleted</string>
-    <string name="msg_question_delete_error">Error while deleting the question</string>
-    <string name="msg_question_hide_success">The question has been hidden</string>
-    <string name="msg_question_hide_error">Error while hiding the question</string>
     <string name="msg_answer_text_empty">Enter an answer</string>
     <string name="msg_answer_added_success">The answer has been saved to the log</string>
-    <string name="msg_answer_added_error">Error while saving the answer</string>
     <string name="msg_answer_updated_success">The answer has been updated</string>
-    <string name="msg_answer_updated_error">Error while updating the answer</string>
-    <string name="msg_clear_log_full_success">Answer log has been cleared</string>
-    <string name="msg_clear_log_deleted_success">Answers to deleted/hidden questions have been deleted</string>
-    <string name="msg_clear_log_by_question_success">Answers to the question have been deleted</string>
-    <string name="msg_change_language_restart">Please restart the app to fully apply the changes</string>
-    <string name="msg_date_format_success">Date format has been changed</string>
-    <string name="msg_time_format_success">Time format has been changed</string>
-    <string name="msg_restore_built_in_questions_success">Built-in questions have been restored</string>
     <string name="msg_answer_deleted_success">The answer has been deleted</string>
+    <string name="msg_restore_built_in_questions_success">Built-in questions have been restored</string>
 
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_edit">Edit</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_hide">Hide</string>
-    <string name="btn_show_log">Log</string>
+    <string name="btn_clear">Clear</string>
     <string name="btn_clear_log">Clear log</string>
     <string name="btn_restore">Restore</string>
     <string name="btn_clear_log_full">Clear all</string>
     <string name="btn_clear_log_deleted">Clear deleted</string>
-    <string name="btn_export_log">Export</string>
+    <string name="btn_export_log">Export to CSV</string>
     <string name="btn_settings">Settings</string>
-<!--    <string name="btn_permit">Permit</string>-->
 
     <string name="snackbar_undo">Undo</string>
-
-    <string name="popup_menu_description" translatable="false">Popup Menu</string>
 
     <string name="answer_log_empty_text">The log is empty</string>
 
@@ -118,4 +96,49 @@
     <string name="export_header_question">Question</string>
     <string name="export_header_answer">Answer</string>
 
+    <string name="feelings_dictionary_label">Feelings dictionary</string>
+    <string name="feelings_group_other">Neutral</string>
+    <plurals name="feelings_words_count">
+        <item quantity="one">%1$d word</item>
+        <item quantity="other">%1$d words</item>
+    </plurals>
+    <plurals name="feelings_groups_count">
+        <item quantity="one">%1$d group</item>
+        <item quantity="other">%1$d groups</item>
+    </plurals>
+
+    <plurals name="answers_count">
+        <item quantity="one">%1$d answer</item>
+        <item quantity="other">%1$d answers</item>
+    </plurals>
+    <plurals name="questions_count">
+        <item quantity="one">%1$d question</item>
+        <item quantity="other">%1$d questions</item>
+    </plurals>
+    <string name="card_meta_last_answer">%1$s · last %2$s</string>
+    <string name="log_newest_first">newest first</string>
+    <string name="log_by_question_summary">%1$s · %2$s</string>
+    <string name="log_full_summary">%1$s across %2$s · %3$s</string>
+    <string name="nav_drawer_summary">%1$s · %2$s</string>
+
+    <string name="relative_today">today</string>
+    <string name="relative_yesterday">yesterday</string>
+    <plurals name="relative_days_ago">
+        <item quantity="one">%1$d day ago</item>
+        <item quantity="other">%1$d days ago</item>
+    </plurals>
+
+    <string name="nav_drawer_item_questions">Questions</string>
+    <string name="nav_drawer_item_full_log">Full log</string>
+    <string name="nav_drawer_item_settings">Settings</string>
+
+    <string name="cd_open_drawer">Open navigation drawer</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_log">Log</string>
+    <string name="cd_edit">Edit</string>
+    <string name="cd_delete">Delete</string>
+    <string name="cd_hide">Hide</string>
+    <string name="cd_add_question">Add question</string>
+    <string name="cd_settings">Settings</string>
+    <string name="cd_more">More options</string>
 </resources>

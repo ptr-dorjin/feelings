@@ -1,20 +1,23 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
     namespace = "feelings.guide"
-    compileSdk = 34
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "feelings.guide"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 10
-        versionName = "2.3.1"
+        targetSdk = 37
+        versionCode = 11
+        versionName = "3.0.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "feelings.guide.HiltTestRunner"
     }
 
     buildTypes {
@@ -27,9 +30,7 @@ android {
         }
     }
     buildFeatures {
-        viewBinding = true
-    }
-    productFlavors {
+        compose = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -42,52 +43,75 @@ android {
     sourceSets["test"].java.srcDir("src/test/kotlin")
     sourceSets["androidTest"].java.srcDir("src/androidTest/kotlin")
 
+    // Only the device's system-language resources should ship in an install,
+    // instead of bundling every translated locale into one artifact.
     bundle {
         language {
-            enableSplit = false
+            enableSplit = true
+        }
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
 
 dependencies {
-    api(libs.androidx.core.ktx)
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
 
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    //Kotlin standard library
-    implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.preference.ktx)
-    implementation(libs.androidx.app.compat)
-    implementation(libs.androidx.card.view)
-    implementation(libs.androidx.recycler.view)
-    implementation(libs.androidx.constraint.layout)
-    implementation(libs.androidx.vector.drawable)
-    implementation(libs.androidx.nav.runtime.ktx)
-    implementation(libs.androidx.nav.fragment.ktx)
-    implementation(libs.androidx.nav.ui.ktx)
-    implementation(libs.android.material)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.kotlinx.coroutines.android)
+
     implementation(libs.opencsv) {
         exclude("commons-logging")
     }
-    // to workaround the 64K reference limit
-    implementation(libs.androidx.multidex)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.kotlin.junit)
     testImplementation(libs.androidx.junit)
-    testImplementation(libs.truth) //todo replace?
+    testImplementation(libs.truth)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.kotlin.test)
     androidTestImplementation(libs.kotlin.junit)
     androidTestImplementation(libs.androidx.junit.ktx)
     androidTestImplementation(libs.androidx.rules)
-    androidTestImplementation(libs.truth) { //todo replace?
+    androidTestImplementation(libs.truth) {
         exclude("com.google.guava", "listenablefuture")
     }
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.espresso.contrib)
-    androidTestImplementation(libs.androidx.nav.testing)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     androidTestImplementation(libs.hamcrest)
     androidTestImplementation(libs.hamcrest.library)
+    androidTestImplementation(libs.androidx.room.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler)
 }

@@ -1,91 +1,72 @@
 package feelings.guide.ui.ts04
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.espresso.Espresso.onView
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidTest
 import feelings.guide.R
-import feelings.guide.ui.question.QuestionListActivity
-import feelings.guide.ui.util.*
-import org.hamcrest.Matchers.not
-import org.junit.Before
-import org.junit.Rule
+import feelings.guide.ui.BaseComposeUiTest
+import feelings.guide.ui.addUserQuestion
+import feelings.guide.ui.checkNoQuestion
+import feelings.guide.ui.checkQuestion
+import feelings.guide.ui.checkSaveDisabledInQuestionSheet
+import feelings.guide.ui.deleteUserQuestion
+import feelings.guide.ui.randomAlphanumericString
+import feelings.guide.ui.waitUntilExists
+import feelings.guide.ui.waitUntilGone
 import org.junit.Test
+import org.junit.runner.RunWith
 
-@LargeTest
-class AddUserQuestionUITest {
-    private lateinit var context: Context
-
-    @get:Rule
-    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
-
-    @Before
-    fun before() {
-        context = getApplicationContext()
-    }
+@HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
+class AddUserQuestionUITest : BaseComposeUiTest() {
 
     @Test
     fun addUserQuestion_appearsInList() {
-        // given
-        val question = "Test add user question appears in the list?"
-
-        // when
-        addUserQuestion(question)
-
-        // then
-        checkQuestion(question)
-
-        // clean up the question
-        deleteUserQuestion(question)
+        val question = "Test add user question appears in the list ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
+        composeRule.checkQuestion(question)
+        composeRule.deleteUserQuestion(question)
     }
 
     @Test
     fun emptyText_saveBtnIsDisabled() {
-        // when
-        onView(withId(R.id.questionFab)).perform(click())
-
-        // then
-        onView(withText(R.string.btn_save)).check(matches(not(isEnabled())))
+        composeRule.onNodeWithContentDescription(composeRule.activity.getString(R.string.cd_add_question)).performClick()
+        composeRule.waitUntilExists("questionSheetTextField")
+        composeRule.checkSaveDisabledInQuestionSheet()
     }
 
     @Test
     fun blankText_saveBtnIsDisabled() {
-        // when
-        val question = "   "
-        addUserQuestion(question)
+        val blank = "   "
+        composeRule.onNodeWithContentDescription(composeRule.activity.getString(R.string.cd_add_question)).performClick()
+        composeRule.waitUntilExists("questionSheetTextField")
+        composeRule.onNodeWithTag("questionSheetTextField").performTextInput(blank)
 
-        // then
-        onView(withText(R.string.btn_save)).check(matches(not(isEnabled())))
-        onView(withText(R.string.btn_cancel)).perform(click())
-        checkNoQuestion(question)
+        composeRule.checkSaveDisabledInQuestionSheet()
+
+        composeRule.onNodeWithText(composeRule.activity.getString(R.string.btn_cancel)).performClick()
+        composeRule.checkNoQuestion(blank)
     }
 
+    /**
+     * The redesign uses a Material3 ModalBottomSheet (mockup 09) instead of an AlertDialog, and
+     * standard bottom-sheet behavior is to dismiss on scrim tap or back press — unlike the legacy
+     * dialog, which intentionally stayed open. That's a deliberate consequence of the new
+     * component, not a regression, so it's covered directly rather than porting the old
+     * "popup is not closed" expectation.
+     */
     @Test
-    fun tapOutsideAddQuestionDialog_popupIsNotClosed() {
-        // given
-        onView(withId(R.id.questionFab)).perform(click())
+    fun pressBackOnAddQuestionSheet_sheetIsDismissed() {
+        composeRule.onNodeWithContentDescription(composeRule.activity.getString(R.string.cd_add_question)).performClick()
+        composeRule.waitUntilExists("questionSheetTextField")
 
-        // when
-        onView(withId(R.id.questionTextEdit)).perform(clickXY(0, -500))
-
-        // then
-        onView(withId(R.id.questionTextEdit)).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun pressBackOnAddQuestionDialog_popupIsNotClosed() {
-        // given
-        onView(withId(R.id.questionFab)).perform(click())
-
-        // when
         pressBack()
 
-        // then
-        onView(withId(R.id.questionTextEdit)).check(matches(isDisplayed()))
+        composeRule.waitUntilGone("questionSheetTextField")
     }
 }

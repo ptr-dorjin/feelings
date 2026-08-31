@@ -1,237 +1,199 @@
 package feelings.guide.ui.ts07
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.espresso.Espresso.onView
+import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidTest
 import feelings.guide.R
-import feelings.guide.randomAlphanumericString
-import feelings.guide.ui.question.QuestionListActivity
-import feelings.guide.ui.util.*
-import org.junit.Before
-import org.junit.Rule
+import feelings.guide.ui.BaseComposeUiTest
+import feelings.guide.ui.addUserQuestion
+import feelings.guide.ui.answerFeelingsRandom
+import feelings.guide.ui.answerQuestion
+import feelings.guide.ui.checkNoSnackbar
+import feelings.guide.ui.checkSnackbar
+import feelings.guide.ui.deleteUserQuestion
+import feelings.guide.ui.editAnswer
+import feelings.guide.ui.openEditAnswer
+import feelings.guide.ui.openFullLog
+import feelings.guide.ui.openLogByQuestion
+import feelings.guide.ui.randomAlphanumericString
+import feelings.guide.ui.waitUntilTextExists
 import org.junit.Test
+import org.junit.runner.RunWith
 
-@LargeTest
-class EditAnswerUITest {
-    private lateinit var context: Context
+@HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
+class EditAnswerUITest : BaseComposeUiTest() {
 
-    @get:Rule
-    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
+    @Test
+    fun openEditAnswerForFeelings_fullLog() {
+        val answer = composeRule.answerFeelingsRandom()
 
-    @Before
-    fun before() {
-        context = getApplicationContext()
+        composeRule.openFullLog()
+        composeRule.openEditAnswer(answer)
+
+        composeRule.onNodeWithTag("answerTextField").assertTextEquals(answer)
+        composeRule.onNodeWithTag("feelingsGroup_${composeRule.activity.getString(R.string.anger)}").assertExists()
     }
 
     @Test
-    fun openOnEditAnswerForFeelings_fullLog() {
-        // given
-        val answer = answerFeelingsRandom()
+    fun openEditAnswerForFeelings_questionLog() {
+        val answer = composeRule.answerFeelingsRandom()
 
-        // when
-        openFullLog()
-        openEditAnswerInLogFull(answer)
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_feelings))
+        composeRule.openEditAnswer(answer)
 
-        // then
-        onView(withId(R.id.answerText)).check(matches(withText(answer)))
-        onView(first(withId(R.id.labelFeelingsGroup))).check(matches(isDisplayed()))
+        composeRule.onNodeWithTag("answerTextField").assertTextEquals(answer)
+        composeRule.onNodeWithTag("feelingsGroup_${composeRule.activity.getString(R.string.anger)}").assertExists()
     }
 
     @Test
-    fun openOnEditAnswerForFeelings_questionLog() {
-        // given
-        val answer = answerFeelingsRandom()
+    fun openEditAnswerForUserQuestion_fullLog() {
+        val question = "Test open edit answer user question full log ${randomAlphanumericString()}?"
+        val answer = "Test open edit answer user question full log ${randomAlphanumericString()}."
+        composeRule.addUserQuestion(question)
+        composeRule.answerQuestion(question, answer)
 
-        // when
-        openLogByQuestion(R.string.q_text_feelings)
-        openEditAnswerInLogByQuestion(answer)
+        composeRule.openFullLog()
+        composeRule.openEditAnswer(answer)
 
-        // then
-        onView(withId(R.id.answerText)).check(matches(withText(answer)))
-        onView(first(withId(R.id.labelFeelingsGroup))).check(matches(isDisplayed()))
-    }
+        composeRule.onNodeWithTag("answerTextField").assertTextEquals(answer)
 
-    @Test
-    fun openOnEditAnswerForUserQuestion_fullLog() {
-        // given
-        val question = "Test open on edit answer for user question - full log?"
-        val answer = "Test open on edit answer for user question - full log."
-        addUserQuestion(question)
-        answerQuestion(question, answer)
-
-        // when
-        openFullLog()
-        openEditAnswerInLogFull(answer)
-
-        // then
-        onView(withId(R.id.answerText)).check(matches(withText(answer)))
-
-        // clean up
+        // The non-feelings answer field auto-focuses on open, showing the IME; the first back
+        // press only dismisses that keyboard rather than navigating (standard Android behavior).
+        closeSoftKeyboard()
         pressBack()
-        pressBack() //should be only one back. remove after NavGraph is added
-        deleteUserQuestion(question, true)
+        pressBack()
+        composeRule.deleteUserQuestion(question, hasAnswers = true)
     }
 
     @Test
-    fun openOnEditAnswerForUserQuestion_questionLog() {
-        // given
-        val question = "Test open on edit answer for user question - question log?"
-        val answer = "Test open on edit answer for user question - question log."
-        addUserQuestion(question)
-        answerQuestion(question, answer)
+    fun openEditAnswerForUserQuestion_questionLog() {
+        val question = "Test open edit answer user question question log ${randomAlphanumericString()}?"
+        val answer = "Test open edit answer user question question log ${randomAlphanumericString()}."
+        composeRule.addUserQuestion(question)
+        composeRule.answerQuestion(question, answer)
 
-        // when
-        openLogByQuestion(question)
-        openEditAnswerInLogByQuestion(answer)
+        composeRule.openLogByQuestion(question)
+        composeRule.openEditAnswer(answer)
 
-        // then
-        onView(withId(R.id.answerText)).check(matches(withText(answer)))
+        composeRule.onNodeWithTag("answerTextField").assertTextEquals(answer)
 
-        // clean up
+        closeSoftKeyboard()
         pressBack()
-        pressBack() //should be only one back. remove after NavGraph is added
-        deleteUserQuestion(question, true)
+        pressBack()
+        composeRule.deleteUserQuestion(question, hasAnswers = true)
     }
 
     @Test
     fun saveEditAnswerForFeelings_fullLog() {
-        // given
-        val answer = answerFeelingsRandom()
+        val answer = composeRule.answerFeelingsRandom()
         val new = randomAlphanumericString()
 
-        // when
-        openFullLog()
-        editAnswerInLogFull(answer, new)
+        composeRule.openFullLog()
+        composeRule.editAnswer(answer, new)
 
-        // then
-        checkSnackbar(R.string.msg_answer_updated_success)
-        onView(withText(new)).check(matches(isDisplayed()))
+        composeRule.checkSnackbar(R.string.msg_answer_updated_success)
+        composeRule.waitUntilTextExists(new)
     }
 
     @Test
     fun saveEditAnswerForFeelings_questionLog() {
-        // given
-        val answer = answerFeelingsRandom()
+        val answer = composeRule.answerFeelingsRandom()
         val new = randomAlphanumericString()
 
-        // when
-        openLogByQuestion(R.string.q_text_feelings)
-        editAnswerInLogByQuestion(answer, new)
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_feelings))
+        composeRule.editAnswer(answer, new)
 
-        // then
-        checkSnackbar(R.string.msg_answer_updated_success)
-        onView(withText(new)).check(matches(isDisplayed()))
+        composeRule.checkSnackbar(R.string.msg_answer_updated_success)
+        composeRule.waitUntilTextExists(new)
     }
 
     @Test
     fun saveEditAnswerForUserQuestion_fullLog() {
-        // given
-        val question = "Test save edit answer for user question - full log?"
-        val answer = "Test save edit answer for user question - full log."
-        addUserQuestion(question)
-        answerQuestion(question, answer)
-        val new = "Test save edit answer for user question - full log - updated."
+        val question = "Test save edit answer user question full log ${randomAlphanumericString()}?"
+        val answer = "Test save edit answer user question full log ${randomAlphanumericString()}."
+        composeRule.addUserQuestion(question)
+        composeRule.answerQuestion(question, answer)
+        val new = "Test save edit answer user question full log - updated ${randomAlphanumericString()}."
 
-        // when
-        openFullLog()
-        editAnswerInLogFull(answer, new)
+        composeRule.openFullLog()
+        composeRule.editAnswer(answer, new)
 
-        // then
-        checkSnackbar(R.string.msg_answer_updated_success)
-        onView(withText(new)).check(matches(isDisplayed()))
+        composeRule.checkSnackbar(R.string.msg_answer_updated_success)
+        composeRule.waitUntilTextExists(new)
 
-        // clean up
         pressBack()
-        deleteUserQuestion(question, true)
+        composeRule.deleteUserQuestion(question, hasAnswers = true)
     }
 
     @Test
     fun saveEditAnswerForUserQuestion_questionLog() {
-        // given
-        val question = "Test save edit answer for user question - question log?"
-        val answer = "Test save edit answer for user question - question log."
-        addUserQuestion(question)
-        answerQuestion(question, answer)
-        val new = "Test save edit answer for user question - question log - updated."
+        val question = "Test save edit answer user question question log ${randomAlphanumericString()}?"
+        val answer = "Test save edit answer user question question log ${randomAlphanumericString()}."
+        composeRule.addUserQuestion(question)
+        composeRule.answerQuestion(question, answer)
+        val new = "Test save edit answer user question question log - updated ${randomAlphanumericString()}."
 
-        // when
-        openLogByQuestion(question)
-        editAnswerInLogByQuestion(answer, new)
+        composeRule.openLogByQuestion(question)
+        composeRule.editAnswer(answer, new)
 
-        // then
-        checkSnackbar(R.string.msg_answer_updated_success)
-        onView(withText(new)).check(matches(isDisplayed()))
+        composeRule.checkSnackbar(R.string.msg_answer_updated_success)
+        composeRule.waitUntilTextExists(new)
 
-        // clean up
         pressBack()
-        deleteUserQuestion(question, true)
-    }
-
-    @Test
-    fun pressUpOnEditAnswerForFeelings_fullLog() {
-        // given
-        val answer = answerFeelingsRandom()
-        openFullLog()
-        openEditAnswerInLogFull(answer)
-
-        // todo fix navigation up
-        // when
-        //onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click())
-
-        // then
-        onView(withText(answer)).check(matches(isDisplayed()))
-        checkNoSnackbar(R.string.msg_answer_updated_success)
-    }
-
-    @Test
-    fun pressUpOnEditAnswerForFeelings_questionLog() {
-        // given
-        val answer = answerFeelingsRandom()
-        openLogByQuestion(R.string.q_text_feelings)
-        openEditAnswerInLogByQuestion(answer)
-
-        // todo fix navigation up
-        // when
-        //onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click())
-
-        // then
-        onView(withText(answer)).check(matches(isDisplayed()))
-        checkNoSnackbar(R.string.msg_answer_updated_success)
+        composeRule.deleteUserQuestion(question, hasAnswers = true)
     }
 
     @Test
     fun pressBackOnEditAnswerForFeelings_fullLog() {
-        // given
-        val answer = answerFeelingsRandom()
-        openFullLog()
-        openEditAnswerInLogFull(answer)
+        val answer = composeRule.answerFeelingsRandom()
+        composeRule.openFullLog()
+        composeRule.openEditAnswer(answer)
 
-        // when
         pressBack()
 
-        // then
-        onView(withText(answer)).check(matches(isDisplayed()))
-        checkNoSnackbar(R.string.msg_answer_updated_success)
+        composeRule.waitUntilTextExists(answer)
+        composeRule.checkNoSnackbar(R.string.msg_answer_updated_success)
     }
 
     @Test
     fun pressBackOnEditAnswerForFeelings_questionLog() {
-        // given
-        val answer = answerFeelingsRandom()
-        openLogByQuestion(R.string.q_text_feelings)
-        openEditAnswerInLogByQuestion(answer)
+        val answer = composeRule.answerFeelingsRandom()
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_feelings))
+        composeRule.openEditAnswer(answer)
 
-        // when
         pressBack()
 
-        // then
-        onView(withText(answer)).check(matches(isDisplayed()))
-        checkNoSnackbar(R.string.msg_answer_updated_success)
+        composeRule.waitUntilTextExists(answer)
+        composeRule.checkNoSnackbar(R.string.msg_answer_updated_success)
     }
 
+    @Test
+    fun pressUpOnEditAnswerForFeelings_fullLog() {
+        val answer = composeRule.answerFeelingsRandom()
+        composeRule.openFullLog()
+        composeRule.openEditAnswer(answer)
+
+        composeRule.onNodeWithContentDescription(composeRule.activity.getString(R.string.cd_back)).performClick()
+
+        composeRule.waitUntilTextExists(answer)
+        composeRule.checkNoSnackbar(R.string.msg_answer_updated_success)
+    }
+
+    @Test
+    fun pressUpOnEditAnswerForFeelings_questionLog() {
+        val answer = composeRule.answerFeelingsRandom()
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_feelings))
+        composeRule.openEditAnswer(answer)
+
+        composeRule.onNodeWithContentDescription(composeRule.activity.getString(R.string.cd_back)).performClick()
+
+        composeRule.waitUntilTextExists(answer)
+        composeRule.checkNoSnackbar(R.string.msg_answer_updated_success)
+    }
 }

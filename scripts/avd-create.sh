@@ -11,13 +11,17 @@ declare -a api_versions=(
     "android-33"
     "android-34"
     "android-35"
+    "android-36"
 )
 
 # 1. Download images
+# Uses the plain "default" (AOSP, no bundled Google apps) image, not "google_apis": the app has
+# no Play Services dependency, and the bundled GMS/YouTube/Photos/Dialer/Calendar apps in the
+# google_apis image otherwise churn in the background and are a common source of system-wide ANRs.
 for api in "${api_versions[@]}"
 do
-    echo "Downloading image 'system-images;$api;google_apis;x86_64'"
-    $SDK_MANAGER "system-images;$api;google_apis;x86_64"
+    echo "Downloading image 'system-images;$api;default;x86_64'"
+    $SDK_MANAGER "system-images;$api;default;x86_64"
 done
 
 # 2. Accept licences
@@ -27,8 +31,8 @@ $SDK_MANAGER --licenses
 for api in "${api_versions[@]}"
 do
     echo "Creating virtual device $api"
-    $AVD_MANAGER --silent create avd --force --name $api --abi google_apis/x86_64 \
-      --package "system-images;$api;google_apis;x86_64" --device "pixel"
+    $AVD_MANAGER --silent create avd --force --name $api --abi default/x86_64 \
+      --package "system-images;$api;default;x86_64" --device "pixel"
     echo "Done"
 done
 

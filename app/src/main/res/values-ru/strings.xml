@@ -1,81 +1,77 @@
 <resources>
+    <string name="title_questions_screen">Вопросы</string>
     <string name="title_answer_activity">Ответ</string>
     <string name="title_answer_log_activity">Журнал</string>
+    <string name="title_full_log_activity">Весь журнал</string>
     <string name="title_settings_activity">Настройки</string>
 
     <string name="title_settings_category_interface">Интерфейс</string>
     <string name="title_settings_category_log">Журнал</string>
     <string name="title_settings_category_builtin_questions">Встроенные вопросы</string>
-    <string name="title_settings_language">Язык</string>
+    <string name="title_settings_theme">Тема</string>
     <string name="title_settings_restore_built_in_questions">Восстановить встроенные вопросы</string>
     <string name="title_settings_date_format">Формат даты</string>
     <string name="title_settings_time_format">Формат времени</string>
+    <string name="settings_theme_dark">Тёмная</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_system">Системная</string>
+    <string name="settings_built_in_all_visible">Все встроенные вопросы видимы</string>
+    <plurals name="settings_built_in_hidden_count">
+        <item quantity="one">%1$d встроенный вопрос скрыт</item>
+        <item quantity="few">%1$d встроенных вопроса скрыто</item>
+        <item quantity="many">%1$d встроенных вопросов скрыто</item>
+        <item quantity="other">%1$d встроенных вопросов скрыто</item>
+    </plurals>
 
-    <string name="title_edit_question_dialog">Введите вопрос</string>
+    <string name="title_new_question_sheet">Новый вопрос</string>
+    <string name="title_edit_question_sheet">Изменить вопрос</string>
+    <string name="msg_question_answers_free_text_hint">Ответы на свои вопросы вводятся в свободной форме.</string>
+
     <string name="title_confirm_delete_question_dialog">Удалить вопрос?</string>
+    <string name="msg_confirm_delete_question_dialog">Он будет удалён из списка. Ответы на него останутся в общем журнале, если вы не очистите их здесь.</string>
+    <string name="checkbox_also_delete_answers">Также удалить его ответы</string>
+
     <string name="title_confirm_hide_question_dialog">Скрыть вопрос?</string>
-    <string name="title_confirm_clear_log_full_dialog">Удалить все ответы из журнала?</string>
+    <string name="title_confirm_clear_log_full_dialog">Очистить весь журнал?</string>
     <string name="title_confirm_clear_log_deleted_dialog">Удалить ответы на удаленные/скрытые вопросы из журнала?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Удалить ответы на этот вопрос?</string>
+    <plurals name="msg_confirm_clear_log">
+        <item quantity="one">%1$d ответ будет удалён из журнала. Это можно будет отменить сразу после.</item>
+        <item quantity="few">%1$d ответа будет удалено из журнала. Это можно будет отменить сразу после.</item>
+        <item quantity="many">%1$d ответов будет удалено из журнала. Это можно будет отменить сразу после.</item>
+        <item quantity="other">%1$d ответов будет удалено из журнала. Это можно будет отменить сразу после.</item>
+    </plurals>
     <string name="title_confirm_restore_built_in_questions_dialog">Восстановить видимость встроенных вопросов?</string>
-<!--    <string name="title_export_permission_dialog">Разрешите приложению запись на карту памяти для экспорта журнала в файл</string>-->
 
     <string name="q_text_feelings">Что я сейчас чувствую?</string>
     <string name="q_text_gratitude">Кого я могу поблагодарить?</string>
     <string name="q_text_do_body">Что я могу сделать для своего тела?</string>
+    <string name="q_text_do_mind">Что я могу сделать для своего разума?</string>
     <string name="q_text_do_close">Что я могу сделать для своих близких?</string>
     <string name="q_text_do_others">Что я могу сделать для других людей?</string>
-    <string name="q_text_insincerity">С кем я был не собой?</string><!--deprecated-->
-    <string name="q_text_preach">С кем я «поумничал» сегодня?</string><!--deprecated-->
-    <string name="q_text_lie">В чем моя неискренность?</string><!--deprecated-->
-    <string name="q_text_irresponsibility">В чем моя безответственность?</string><!--deprecated-->
 
-    <string name="q_description_feelings" />
-    <string name="q_description_gratitude" />
-    <string name="q_description_do_body" />
-    <string name="q_description_do_close" />
-    <string name="q_description_do_others" />
-    <string name="q_description_insincerity" /><!--deprecated-->
-    <string name="q_description_preach" /><!--deprecated-->
-    <string name="q_description_lie" /><!--deprecated-->
-    <string name="q_description_irresponsibility" /><!--deprecated-->
+    <string name="kicker_feelings_built_in">Чувства · Встроенный</string>
+    <string name="kicker_built_in">Встроенный</string>
 
     <string name="msg_question_text_empty">Текст не должен быть пустым</string>
-    <string name="msg_question_create_success">Вопрос создан</string>
-    <string name="msg_question_create_error">Ошибка при создании вопроса</string>
-    <string name="msg_question_edit_success">Вопрос изменен</string>
-    <string name="msg_question_edit_error">Ошибка при изменении вопроса</string>
-    <string name="msg_question_delete_success">Вопрос удален</string>
-    <string name="msg_question_delete_error">Ошибка при удалении вопроса</string>
-    <string name="msg_question_hide_success">Вопрос скрыт</string>
-    <string name="msg_question_hide_error">Ошибка при скрытии вопроса</string>
     <string name="msg_answer_text_empty">Введите ответ</string>
     <string name="msg_answer_added_success">Ответ сохранен в журнал</string>
-    <string name="msg_answer_added_error">Ошибка при сохранении ответа</string>
     <string name="msg_answer_updated_success">Ответ обновлен</string>
-    <string name="msg_answer_updated_error">Ошибка при обновлении ответа</string>
-    <string name="msg_clear_log_full_success">Журнал очищен</string>
-    <string name="msg_clear_log_deleted_success">Ответы на удаленные/скрытые вопросов удалены</string>
-    <string name="msg_clear_log_by_question_success">Ответы на вопрос удалены</string>
-    <string name="msg_change_language_restart">Пожалуйста, перезапустите приложение, чтобы изменения полностью вступили в силу</string>
-    <string name="msg_date_format_success">Формат даты изменен</string>
-    <string name="msg_time_format_success">Формат времени изменен</string>
-    <string name="msg_restore_built_in_questions_success">Встроенные вопросы восстановлены</string>
     <string name="msg_answer_deleted_success">Ответ удален</string>
+    <string name="msg_restore_built_in_questions_success">Встроенные вопросы восстановлены</string>
 
     <string name="btn_save">Сохранить</string>
     <string name="btn_cancel">Отмена</string>
     <string name="btn_edit">Редактировать</string>
     <string name="btn_delete">Удалить</string>
     <string name="btn_hide">Скрыть</string>
-    <string name="btn_show_log">Журнал</string>
+    <string name="btn_clear">Очистить</string>
     <string name="btn_clear_log">Очистить журнал</string>
     <string name="btn_restore">Восстановить</string>
     <string name="btn_clear_log_full">Очистить все</string>
     <string name="btn_clear_log_deleted">Очистить удаленные</string>
-    <string name="btn_export_log">Экспорт</string>
+    <string name="btn_export_log">Экспорт в CSV</string>
     <string name="btn_settings">Настройки</string>
-<!--    <string name="btn_permit">Разрешить</string>-->
 
     <string name="snackbar_undo">Отмена</string>
 
@@ -87,4 +83,60 @@
     <string name="export_header_date_time">Дата и время</string>
     <string name="export_header_question">Вопрос</string>
     <string name="export_header_answer">Ответ</string>
+
+    <string name="feelings_dictionary_label">Словарь чувств</string>
+    <string name="feelings_group_other">Нейтральные</string>
+    <plurals name="feelings_words_count">
+        <item quantity="one">%1$d слово</item>
+        <item quantity="few">%1$d слова</item>
+        <item quantity="many">%1$d слов</item>
+        <item quantity="other">%1$d слов</item>
+    </plurals>
+    <plurals name="feelings_groups_count">
+        <item quantity="one">%1$d группа</item>
+        <item quantity="few">%1$d группы</item>
+        <item quantity="many">%1$d групп</item>
+        <item quantity="other">%1$d групп</item>
+    </plurals>
+
+    <plurals name="answers_count">
+        <item quantity="one">%1$d ответ</item>
+        <item quantity="few">%1$d ответа</item>
+        <item quantity="many">%1$d ответов</item>
+        <item quantity="other">%1$d ответов</item>
+    </plurals>
+    <plurals name="questions_count">
+        <item quantity="one">%1$d вопрос</item>
+        <item quantity="few">%1$d вопроса</item>
+        <item quantity="many">%1$d вопросов</item>
+        <item quantity="other">%1$d вопросов</item>
+    </plurals>
+    <string name="card_meta_last_answer">%1$s · последний %2$s</string>
+    <string name="log_newest_first">сначала новые</string>
+    <string name="log_by_question_summary">%1$s · %2$s</string>
+    <string name="log_full_summary">%1$s из %2$s · %3$s</string>
+    <string name="nav_drawer_summary">%1$s · %2$s</string>
+
+    <string name="relative_today">сегодня</string>
+    <string name="relative_yesterday">вчера</string>
+    <plurals name="relative_days_ago">
+        <item quantity="one">%1$d день назад</item>
+        <item quantity="few">%1$d дня назад</item>
+        <item quantity="many">%1$d дней назад</item>
+        <item quantity="other">%1$d дней назад</item>
+    </plurals>
+
+    <string name="nav_drawer_item_questions">Вопросы</string>
+    <string name="nav_drawer_item_full_log">Весь журнал</string>
+    <string name="nav_drawer_item_settings">Настройки</string>
+
+    <string name="cd_open_drawer">Открыть меню</string>
+    <string name="cd_back">Назад</string>
+    <string name="cd_log">Журнал</string>
+    <string name="cd_edit">Изменить</string>
+    <string name="cd_delete">Удалить</string>
+    <string name="cd_hide">Скрыть</string>
+    <string name="cd_add_question">Добавить вопрос</string>
+    <string name="cd_settings">Настройки</string>
+    <string name="cd_more">Ещё</string>
 </resources>

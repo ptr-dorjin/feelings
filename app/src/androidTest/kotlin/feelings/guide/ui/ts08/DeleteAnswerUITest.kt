@@ -1,92 +1,68 @@
 package feelings.guide.ui.ts08
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidTest
 import feelings.guide.R
-import feelings.guide.ui.log.AnswerLogActivity
-import feelings.guide.ui.question.QuestionListActivity
-import feelings.guide.ui.util.*
-import org.junit.Before
-import org.junit.Rule
+import feelings.guide.ui.BaseComposeUiTest
+import feelings.guide.ui.answerFeelingsRandom
+import feelings.guide.ui.checkLastAnswerInLog
+import feelings.guide.ui.checkNoAnswerInLog
+import feelings.guide.ui.checkSnackbar
+import feelings.guide.ui.deleteAnswer
+import feelings.guide.ui.openFullLog
+import feelings.guide.ui.openLogByQuestion
+import feelings.guide.ui.undoAnswerDeletion
+import feelings.guide.ui.waitUntilTextExists
 import org.junit.Test
+import org.junit.runner.RunWith
 
-
-@LargeTest
-class DeleteAnswerUITest {
-    private lateinit var context: Context
-
-    @get:Rule
-    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
-
-    @get:Rule
-    var answerLogRule = ActivityTestRule(AnswerLogActivity::class.java)
-
-    @Before
-    fun before() {
-        context = getApplicationContext()
-    }
+@HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
+class DeleteAnswerUITest : BaseComposeUiTest() {
 
     @Test
     fun deleteAnswer_fullLog_deletesFromList() {
-        // given
-        val answer = answerFeelingsRandom()
-        openFullLog()
+        val answer = composeRule.answerFeelingsRandom()
+        composeRule.openFullLog()
 
-        // when
-        deleteAnswerInLogFull(answer)
+        composeRule.deleteAnswer(answer)
 
-        // then
-        checkSnackbar(R.string.msg_answer_deleted_success)
-        checkNoAnswerInLogFull(answer)
+        composeRule.checkSnackbar(R.string.msg_answer_deleted_success)
+        composeRule.checkNoAnswerInLog(answer)
     }
 
     @Test
     fun undoAnswerDeletion_fullLog_returnsAnswerToList() {
-        // given
-        val answer = answerFeelingsRandom()
-        openFullLog()
-        deleteAnswerInLogFull(answer)
+        val answer = composeRule.answerFeelingsRandom()
+        composeRule.openFullLog()
+        composeRule.deleteAnswer(answer)
 
-        // when
-        waitForSnackbar()
-        onView(withText(R.string.snackbar_undo)).perform(click())
+        composeRule.waitUntilTextExists(composeRule.activity.getString(R.string.snackbar_undo))
+        composeRule.undoAnswerDeletion()
 
-        // then
-        onView(withText(answer)).check(matches(isDisplayed()))
+        composeRule.checkLastAnswerInLog(answer)
     }
 
     @Test
     fun deleteAnswer_questionLog_deletesFromList() {
-        // given
-        val answer = answerFeelingsRandom()
-        openLogByQuestion(R.string.q_text_feelings)
-        // when
-        deleteAnswerInLogByQuestion(answer)
+        val answer = composeRule.answerFeelingsRandom()
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_feelings))
 
-        // then
-        checkSnackbar(R.string.msg_answer_deleted_success)
-        checkNoAnswerInLogByQuestion(answer)
+        composeRule.deleteAnswer(answer)
+
+        composeRule.checkSnackbar(R.string.msg_answer_deleted_success)
+        composeRule.checkNoAnswerInLog(answer)
     }
 
     @Test
     fun undoAnswerDeletion_questionLog_returnsAnswerToList() {
-        // given
-        val answer = answerFeelingsRandom()
-        openLogByQuestion(R.string.q_text_feelings)
-        deleteAnswerInLogByQuestion(answer)
+        val answer = composeRule.answerFeelingsRandom()
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_feelings))
+        composeRule.deleteAnswer(answer)
 
-        // when
-        waitForSnackbar()
-        onView(withText(R.string.snackbar_undo)).perform(click())
+        composeRule.waitUntilTextExists(composeRule.activity.getString(R.string.snackbar_undo))
+        composeRule.undoAnswerDeletion()
 
-        // then
-        onView(withText(answer)).check(matches(isDisplayed()))
+        composeRule.checkLastAnswerInLog(answer)
     }
 }

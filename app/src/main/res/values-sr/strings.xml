@@ -1,85 +1,77 @@
 <resources>
+    <string name="title_questions_screen">Pitanja</string>
     <string name="title_answer_activity">Odgovori</string>
     <string name="title_answer_log_activity">Dnevnik</string>
+    <string name="title_full_log_activity">Ceo dnevnik</string>
     <string name="title_settings_activity">Podešavanja</string>
 
     <string name="title_settings_category_interface">Interfejs</string>
     <string name="title_settings_category_log">Dnevnik</string>
     <string name="title_settings_category_builtin_questions">Ugrađena pitanja</string>
-    <string name="title_settings_language">Language</string>
+    <string name="title_settings_theme">Tema</string>
     <string name="title_settings_restore_built_in_questions">Vrati ugrađena pitanja</string>
     <string name="title_settings_date_format">Format datuma</string>
     <string name="title_settings_time_format">Format vremena</string>
+    <string name="settings_theme_dark">Tamna</string>
+    <string name="settings_theme_light">Svetla</string>
+    <string name="settings_theme_system">Sistemska</string>
+    <string name="settings_built_in_all_visible">Sva ugrađena pitanja su vidljiva</string>
+    <plurals name="settings_built_in_hidden_count">
+        <item quantity="one">%1$d ugrađeno pitanje je skriveno</item>
+        <item quantity="few">%1$d ugrađena pitanja su skrivena</item>
+        <item quantity="other">%1$d ugrađenih pitanja je skriveno</item>
+    </plurals>
 
-    <string name="title_edit_question_dialog">Unesi pitanje</string>
+    <string name="title_new_question_sheet">Novo pitanje</string>
+    <string name="title_edit_question_sheet">Izmeni pitanje</string>
+    <string name="msg_question_answers_free_text_hint">Odgovori na sopstvena pitanja su slobodan tekst.</string>
+
     <string name="title_confirm_delete_question_dialog">Obriši pitanje?</string>
-    <string name="title_confirm_hide_question_dialog">Sakrij pitanja?</string>
-    <string name="title_confirm_clear_log_full_dialog">Obriši sve odgovore iz dnevnika?</string>
+    <string name="msg_confirm_delete_question_dialog">Biće uklonjeno sa liste. Njegovi odgovori ostaju u dnevniku osim ako ih ovde ne obrišete.</string>
+    <string name="checkbox_also_delete_answers">Takođe obriši njegove odgovore</string>
+
+    <string name="title_confirm_hide_question_dialog">Sakrij pitanje?</string>
+    <string name="title_confirm_clear_log_full_dialog">Obriši ceo dnevnik?</string>
     <string name="title_confirm_clear_log_deleted_dialog">Obriši odgovore za obrisana/skrivena pitanja iz dnevnika?</string>
     <string name="title_confirm_clear_log_by_question_dialog">Obriši sve odgovore za ovo pitanje?</string>
+    <plurals name="msg_confirm_clear_log">
+        <item quantity="one">%1$d odgovor će biti uklonjen iz dnevnika. To možete odmah poništiti.</item>
+        <item quantity="few">%1$d odgovora će biti uklonjeno iz dnevnika. To možete odmah poništiti.</item>
+        <item quantity="other">%1$d odgovora će biti uklonjeno iz dnevnika. To možete odmah poništiti.</item>
+    </plurals>
     <string name="title_confirm_restore_built_in_questions_dialog">Vrati vidljivost ugrađenih pitanja?</string>
-<!--    <string name="title_export_permission_dialog">Enable writing to the storage in order to export the log to a file</string>-->
 
     <string name="q_text_feelings">Šta sada osjećam?</string>
     <string name="q_text_gratitude">Kome se mogu zahvaliti?</string>
     <string name="q_text_do_body">Šta mogu uraditi za svoje tijelo?</string>
+    <string name="q_text_do_mind">Šta mogu uraditi za svoj um?</string>
     <string name="q_text_do_close">Šta mogu uraditi za svoje voljene?</string>
     <string name="q_text_do_others">Šta mogu uraditi za druge ljude?</string>
-    <string name="q_text_insincerity">Sa kim nisam bio sav svoj?</string><!--deprecated-->
-    <string name="q_text_preach">Sa kim sam bio pametan danas?</string><!--deprecated-->
-    <string name="q_text_lie">Šta je moja neiskrenost?</string><!--deprecated-->
-    <string name="q_text_irresponsibility">Šta je moja odgovornost?</string><!--deprecated-->
 
-    <string name="q_description_feelings" />
-    <string name="q_description_gratitude" />
-    <string name="q_description_do_body" />
-    <string name="q_description_do_close" />
-    <string name="q_description_do_others" />
-    <string name="q_description_insincerity" /><!--deprecated-->
-    <string name="q_description_preach" /><!--deprecated-->
-    <string name="q_description_lie" /><!--deprecated-->
-    <string name="q_description_irresponsibility" /><!--deprecated-->
+    <string name="kicker_feelings_built_in">Osećanja · Ugrađeno</string>
+    <string name="kicker_built_in">Ugrađeno</string>
 
     <string name="msg_question_text_empty">Tekst ne smije biti prazan</string>
-    <string name="msg_question_create_success">Pitanje je kreirano</string>
-    <string name="msg_question_create_error">Problem prilikom kreiranja pitanja</string>
-    <string name="msg_question_edit_success">Pitanje je promjenjeno</string>
-    <string name="msg_question_edit_error">Greška prilikom mjenjanja pitanja</string>
-    <string name="msg_question_delete_success">Pitanje je obrisano</string>
-    <string name="msg_question_delete_error">Greška prilikom brisanja pitanja</string>
-    <string name="msg_question_hide_success">Pitanje je sakriveno</string>
-    <string name="msg_question_hide_error">Greška prilikom skrivanja pitanja</string>
     <string name="msg_answer_text_empty">Unesi odgovor</string>
     <string name="msg_answer_added_success">Odgovor je sačuvan u dnevnik</string>
-    <string name="msg_answer_added_error">Greška prilikom čuvanja odgovora</string>
     <string name="msg_answer_updated_success">Odgovor je ažuriran</string>
-    <string name="msg_answer_updated_error">Greška prilikom ažuriranja odgovora</string>
-    <string name="msg_clear_log_full_success">Dnevnik odgovora je obrisan</string>
-    <string name="msg_clear_log_deleted_success">Odogovori na obrisana/skrivena pitanja su obrisani</string>
-    <string name="msg_clear_log_by_question_success">Odgovori na pitanje su obrisani</string>
-    <string name="msg_change_language_restart">Ponovo pokrenite aplikaciju da biste u potpunosti primijenili promjene</string>
-    <string name="msg_date_format_success">Format datuma je promjenjen</string>
-    <string name="msg_time_format_success">Format vremena je promjenjen</string>
-    <string name="msg_restore_built_in_questions_success">Ugrađena pitanja su vraćena</string>
     <string name="msg_answer_deleted_success">Odgovor je obrisan</string>
+    <string name="msg_restore_built_in_questions_success">Ugrađena pitanja su vraćena</string>
 
     <string name="btn_save">Sačuvaj</string>
     <string name="btn_cancel">Otkaži</string>
     <string name="btn_edit">Izmjeni</string>
     <string name="btn_delete">Obriši</string>
     <string name="btn_hide">Sakrij</string>
-    <string name="btn_show_log">Dnevnik</string>
+    <string name="btn_clear">Obriši</string>
     <string name="btn_clear_log">Obriši dnevnik</string>
     <string name="btn_restore">Povrat</string>
     <string name="btn_clear_log_full">Obriši sve</string>
     <string name="btn_clear_log_deleted">Obriši izbrisano</string>
-    <string name="btn_export_log">Izvoz</string>
+    <string name="btn_export_log">Izvoz u CSV</string>
     <string name="btn_settings">Podešavanja</string>
-<!--    <string name="btn_permit">Permit</string>-->
 
     <string name="snackbar_undo">Poništi</string>
-
-    <string name="popup_menu_description" translatable="false">Skočni izbornik</string>
 
     <string name="answer_log_empty_text">Dnevnik je prazan</string>
 
@@ -90,4 +82,54 @@
     <string name="export_header_question">Pitanje</string>
     <string name="export_header_answer">Odgovor</string>
 
+    <string name="feelings_dictionary_label">Rečnik osećanja</string>
+    <string name="feelings_group_other">Neutralno</string>
+    <plurals name="feelings_words_count">
+        <item quantity="one">%1$d reč</item>
+        <item quantity="few">%1$d reči</item>
+        <item quantity="other">%1$d reči</item>
+    </plurals>
+    <plurals name="feelings_groups_count">
+        <item quantity="one">%1$d grupa</item>
+        <item quantity="few">%1$d grupe</item>
+        <item quantity="other">%1$d grupa</item>
+    </plurals>
+
+    <plurals name="answers_count">
+        <item quantity="one">%1$d odgovor</item>
+        <item quantity="few">%1$d odgovora</item>
+        <item quantity="other">%1$d odgovora</item>
+    </plurals>
+    <plurals name="questions_count">
+        <item quantity="one">%1$d pitanje</item>
+        <item quantity="few">%1$d pitanja</item>
+        <item quantity="other">%1$d pitanja</item>
+    </plurals>
+    <string name="card_meta_last_answer">%1$s · poslednji %2$s</string>
+    <string name="log_newest_first">najnoviji prvo</string>
+    <string name="log_by_question_summary">%1$s · %2$s</string>
+    <string name="log_full_summary">%1$s iz %2$s · %3$s</string>
+    <string name="nav_drawer_summary">%1$s · %2$s</string>
+
+    <string name="relative_today">danas</string>
+    <string name="relative_yesterday">juče</string>
+    <plurals name="relative_days_ago">
+        <item quantity="one">pre %1$d dan</item>
+        <item quantity="few">pre %1$d dana</item>
+        <item quantity="other">pre %1$d dana</item>
+    </plurals>
+
+    <string name="nav_drawer_item_questions">Pitanja</string>
+    <string name="nav_drawer_item_full_log">Ceo dnevnik</string>
+    <string name="nav_drawer_item_settings">Podešavanja</string>
+
+    <string name="cd_open_drawer">Otvori meni</string>
+    <string name="cd_back">Nazad</string>
+    <string name="cd_log">Dnevnik</string>
+    <string name="cd_edit">Izmeni</string>
+    <string name="cd_delete">Obriši</string>
+    <string name="cd_hide">Sakrij</string>
+    <string name="cd_add_question">Dodaj pitanje</string>
+    <string name="cd_settings">Podešavanja</string>
+    <string name="cd_more">Više opcija</string>
 </resources>

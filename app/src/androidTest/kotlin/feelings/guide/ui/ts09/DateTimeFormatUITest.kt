@@ -1,92 +1,81 @@
 package feelings.guide.ui.ts09
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.espresso.Espresso.*
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import androidx.test.rule.ActivityTestRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import feelings.guide.R
-import feelings.guide.ui.question.QuestionListActivity
-import feelings.guide.ui.util.answerFeelingsRandom
-import feelings.guide.ui.util.clearLogFull
-import feelings.guide.ui.util.first
-import feelings.guide.ui.util.openFullLog
-import feelings.guide.ui.util.openLogByQuestion
-import org.hamcrest.Matchers.matchesPattern
-import org.junit.After
+import feelings.guide.ui.MainActivity
+import feelings.guide.ui.answerFeelingsRandom
+import feelings.guide.ui.changeDateAndTimeFormat
+import feelings.guide.ui.firstLogRowDateTime
+import feelings.guide.ui.openFullLog
+import feelings.guide.ui.openLogByQuestion
+import feelings.guide.ui.waitUntilTextExists
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
-import java.util.*
+import java.util.LinkedHashSet
 
 private val dateFormats = mapOf(
-    "d MMM yyyy" to "\\d{1,2} [\\p{L}.]{3,4} \\d{4}",
-    "MMM d yyyy" to "[\\p{L}.]{3,4} \\d{1,2} \\d{4}",
-    "dd.MM.yyyy" to "\\d{2}\\.\\d{2}\\.\\d{4}",
-    "MM/dd/yyyy" to "\\d{2}/\\d{2}/\\d{4}",
-    "yyyy-MM-dd" to "\\d{4}-\\d{2}-\\d{2}"
+    "d MMM yyyy" to Regex("\\d{1,2} \\p{L}{3,4} \\d{4}"),
+    "MMM d yyyy" to Regex("\\p{L}{3,4} \\d{1,2} \\d{4}"),
+    "dd.MM.yyyy" to Regex("\\d{2}\\.\\d{2}\\.\\d{4}"),
+    "MM/dd/yyyy" to Regex("\\d{2}/\\d{2}/\\d{4}"),
+    "yyyy-MM-dd" to Regex("\\d{4}-\\d{2}-\\d{2}"),
 )
 private val timeFormats = mapOf(
-    "HH:mm" to "\\d{2}:\\d{2}",
-    "hh:mm a" to "\\d{2}:\\d{2} [\\p{L} ]*",
-    "h:mm a" to "\\d{1,2}:\\d{2} [\\p{L} ]*"
+    "HH:mm" to Regex("\\d{2}:\\d{2}"),
+    "hh:mm a" to Regex("\\d{2}:\\d{2} ?[\\p{L}.]*"),
+    "h:mm a" to Regex("\\d{1,2}:\\d{2} ?[\\p{L}.]*"),
 )
 
+/**
+ * @HiltAndroidTest doesn't compose well with JUnit's @Parameterized constructor-injection runner
+ * via BaseComposeUiTest's field-rule pattern, so this test wires the same two rules directly.
+ */
+@HiltAndroidTest
 @RunWith(Parameterized::class)
-@LargeTest
 class DateTimeFormatUITest(private val dateFormat: String, private val timeFormat: String) {
-    private lateinit var context: Context
 
-    @get:Rule
-    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
+    val composeRule = createAndroidComposeRule<MainActivity>()
 
     @Before
-    fun before() {
-        context = getApplicationContext()
-        answerFeelingsRandom()
+    fun setUp() {
+        hiltRule.inject()
+        composeRule.answerFeelingsRandom()
     }
 
     @Test
     fun dateTimeFormatIsChanged_fullLogGetsUpdated() {
-        // when
-        changeDateAndTimeFormat()
+        composeRule.changeDateAndTimeFormat(dateFormat, timeFormat)
 
-        // then
-        pressBack()
-        openFullLog()
-        val dateTimePattern = "${dateFormats[dateFormat]}, ${timeFormats[timeFormat]}"
-        onView(first(withId(R.id.logFullDateTime)))
-            .check(matches(withText(matchesPattern(dateTimePattern))))
+        composeRule.openFullLog()
+        composeRule.waitUntilTextExists(composeRule.activity.getString(R.string.title_full_log_activity))
+
+        val actual = composeRule.firstLogRowDateTime()
+        val expected = "${dateFormats.getValue(dateFormat).pattern} · ${timeFormats.getValue(timeFormat).pattern}"
+        assertThat(actual).matches(expected)
     }
 
     @Test
     fun dateTimeFormatIsChanged_questionLogGetsUpdated() {
-        // when
-        changeDateAndTimeFormat()
+        composeRule.changeDateAndTimeFormat(dateFormat, timeFormat)
 
-        // then
-        pressBack()
-        openLogByQuestion(R.string.q_text_feelings)
-        val dateTimePattern = "${dateFormats[dateFormat]}, ${timeFormats[timeFormat]}"
-        onView(first(withId(R.id.logByQuestionDateTime)))
-            .check(matches(withText(matchesPattern(dateTimePattern))))
-    }
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_feelings))
+        composeRule.waitUntilTextExists(composeRule.activity.getString(R.string.title_answer_log_activity))
 
-    private fun changeDateAndTimeFormat() {
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-        onView(withText(R.string.btn_settings)).perform(click())
-        onView(withText(R.string.title_settings_date_format)).perform(click())
-        onView(withText(dateFormat)).perform(click())
-        onView(withText(R.string.title_settings_time_format)).perform(click())
-        onView(withText(timeFormat)).perform(click())
+        val actual = composeRule.firstLogRowDateTime()
+        val expected = "${dateFormats.getValue(dateFormat).pattern} · ${timeFormats.getValue(timeFormat).pattern}"
+        assertThat(actual).matches(expected)
     }
 
     companion object {
@@ -94,9 +83,7 @@ class DateTimeFormatUITest(private val dateFormat: String, private val timeForma
         @Parameters(name = "{index}: should match pattern {0}, {1}")
         fun data(): Iterable<Array<String>> {
             val data = LinkedHashSet<Array<String>>()
-            dateFormats.keys.forEach { dateFormat ->
-                data.add(arrayOf(dateFormat, timeFormats.keys.first()))
-            }
+            dateFormats.keys.forEach { dateFormat -> data.add(arrayOf(dateFormat, timeFormats.keys.first())) }
             timeFormats.keys.toList().subList(1, timeFormats.size).forEach { timeFormat ->
                 data.add(arrayOf(dateFormats.keys.first(), timeFormat))
             }

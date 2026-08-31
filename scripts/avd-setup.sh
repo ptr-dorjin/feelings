@@ -17,6 +17,26 @@ for device in "${filtered_devices[@]}"; do
         echo "hw.keyboard=yes" >> $config_file
     fi
 
+    # Enable GPU acceleration - avdmanager's default (hw.gpu.enabled=no) forces software
+    # rendering, which is slow enough to trigger system-wide ANRs (launcher, SystemUI, etc).
+    echo "Setting hw.gpu.enabled=yes, hw.gpu.mode=host"
+    sed 's/hw.gpu.enabled *=.*/hw.gpu.enabled=yes/' -i $config_file
+    if (! grep -P "hw.gpu.enabled *= *yes" < $config_file); then
+        echo "hw.gpu.enabled=yes" >> $config_file
+    fi
+    sed 's/hw.gpu.mode *=.*/hw.gpu.mode=host/' -i $config_file
+    if (! grep -P "hw.gpu.mode *= *host" < $config_file); then
+        echo "hw.gpu.mode=host" >> $config_file
+    fi
+
+    # Bump RAM - the 2G default is too tight once background processes pile up, causing
+    # memory pressure that also shows up as system-wide ANRs.
+    echo "Setting hw.ramSize=4G"
+    sed 's/hw.ramSize *=.*/hw.ramSize=4G/' -i $config_file
+    if (! grep -P "hw.ramSize *= *4G" < $config_file); then
+        echo "hw.ramSize=4G" >> $config_file
+    fi
+
     start_device $device true
 
     # Switch animation off

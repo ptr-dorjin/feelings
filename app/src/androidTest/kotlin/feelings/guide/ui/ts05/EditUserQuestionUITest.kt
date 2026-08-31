@@ -1,192 +1,133 @@
 package feelings.guide.ui.ts05
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.espresso.Espresso.onView
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextReplacement
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidTest
 import feelings.guide.R
-import feelings.guide.ui.question.QuestionListActivity
-import feelings.guide.ui.util.*
-import org.hamcrest.Matchers
-import org.junit.Before
-import org.junit.Rule
+import feelings.guide.ui.BaseComposeUiTest
+import feelings.guide.ui.addUserQuestion
+import feelings.guide.ui.answerQuestion
+import feelings.guide.ui.checkQuestion
+import feelings.guide.ui.deleteUserQuestion
+import feelings.guide.ui.editUserQuestion
+import feelings.guide.ui.openAnswerScreen
+import feelings.guide.ui.openEditQuestionDialog
+import feelings.guide.ui.openFullLog
+import feelings.guide.ui.openLogByQuestion
+import feelings.guide.ui.randomAlphanumericString
+import feelings.guide.ui.scrollToQuestion
+import feelings.guide.ui.textOfFirstWithTag
+import feelings.guide.ui.textOfTag
+import feelings.guide.ui.waitUntilBackOnQuestionsScreen
+import feelings.guide.ui.waitUntilGone
+import feelings.guide.ui.waitUntilTextExists
 import org.junit.Test
+import org.junit.runner.RunWith
 
-@LargeTest
-class EditUserQuestionUITest {
-    private lateinit var context: Context
-
-    @get:Rule
-    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
-
-    @Before
-    fun before() {
-        context = getApplicationContext()
-    }
+@HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
+class EditUserQuestionUITest : BaseComposeUiTest() {
 
     @Test
     fun editQuestion_isUpdatedOnQuestionList() {
-        // given
-        val old = "Test edit question is updated on question list - old?"
-        addUserQuestion(old)
+        val old = "Test edit question - old ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(old)
 
-        // when
-        val updated = "Test edit question is updated on question list - updated?"
-        editUserQuestion(old, updated)
+        val updated = "Test edit question - updated ${randomAlphanumericString()}?"
+        composeRule.editUserQuestion(old, updated)
 
-        // then
-        checkQuestion(updated)
-
-        // clean up
-        deleteUserQuestion(updated)
+        composeRule.checkQuestion(updated)
+        composeRule.deleteUserQuestion(updated)
     }
 
     @Test
-    fun editQuestion_isUpdatedOnAnswerDialog() {
-        // given
-        val old = "Test edit question is updated on answer dialog - old?"
-        addUserQuestion(old)
-        val updated = "Test edit question is updated on answer dialog - updated?"
-        editUserQuestion(old, updated)
+    fun editQuestion_isUpdatedOnAnswerScreen() {
+        val old = "Test edit question updated on answer screen - old ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(old)
+        val updated = "Test edit question updated on answer screen - updated ${randomAlphanumericString()}?"
+        composeRule.editUserQuestion(old, updated)
 
-        // when
-        scrollToQuestion(updated)
-        onView(withText(updated)).perform(click())
+        composeRule.openAnswerScreen(updated)
 
-        // then
-        onView(withId(R.id.questionTextOnAnswer))
-            .check(matches(withText(updated)))
+        assertThat(composeRule.textOfTag("answerQuestionHeadline")).isEqualTo(updated)
 
-        // clean up
+        // The non-feelings answer field auto-focuses on open, showing the IME; the first back
+        // press only dismisses that keyboard rather than navigating (standard Android behavior).
+        closeSoftKeyboard()
         pressBack()
-        deleteUserQuestion(updated)
+        composeRule.waitUntilBackOnQuestionsScreen()
+        composeRule.deleteUserQuestion(updated)
     }
 
     @Test
-    fun editQuestion_isUpdatedInQuestionLog() {
-        // given
-        val old = "Test edit question is updated in log - old?"
-        addUserQuestion(old)
-        val updated = "Test edit question is updated in log - updated?"
-        editUserQuestion(old, updated)
-        answerQuestion(updated, "Test answer")
+    fun editQuestion_isUpdatedInLogs() {
+        val old = "Test edit question updated in log - old ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(old)
+        val updated = "Test edit question updated in log - updated ${randomAlphanumericString()}?"
+        composeRule.editUserQuestion(old, updated)
+        composeRule.answerQuestion(updated, "Test answer")
 
-        // when
-        openLogByQuestion(updated)
+        composeRule.openLogByQuestion(updated)
+        composeRule.waitUntilTextExists(updated)
+        assertThat(composeRule.textOfTag("logHeaderQuestionText")).isEqualTo(updated)
 
-        // then it's updated in question log
-        onView(withId(R.id.logByQuestionText))
-            .check(matches(withText(updated)))
-
-        // when
         pressBack()
-        openFullLog()
+        composeRule.openFullLog()
+        composeRule.waitUntilTextExists(updated)
+        assertThat(composeRule.textOfFirstWithTag("logRowQuestionText")).isEqualTo(updated)
 
-        // then it's updated in full log
-        onView(first(withId(R.id.logFullQuestionText)))
-            .check(matches(withText(updated)))
-
-        // clean up
         pressBack()
-        deleteUserQuestion(updated, true)
+        composeRule.deleteUserQuestion(updated, hasAnswers = true)
     }
 
     @Test
-    fun ediQuestionCancelled_isNotUpdated() {
-        // given
-        val old = "Test edit question cancelled is not updated?"
-        addUserQuestion(old)
+    fun editQuestionCancelled_isNotUpdated() {
+        val old = "Test edit question cancelled is not updated ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(old)
 
-        // when
-        openEditQuestionDialog(old)
-        onView(withId(R.id.questionTextEdit))
-            .perform(
-                replaceText("Test edit question cancelled is not updated - new?"),
-                closeSoftKeyboard()
-            )
-        onView(withText(R.string.btn_cancel)).perform(click())
+        composeRule.openEditQuestionDialog(old)
+        composeRule.onNodeWithTag("questionSheetTextField")
+            .performTextReplacement("Test edit question cancelled is not updated - new?")
+        composeRule.onNodeWithText(composeRule.activity.getString(R.string.btn_cancel)).performClick()
 
-        // then
-        checkQuestion(old)
-
-        // clean up
-        deleteUserQuestion(old)
+        composeRule.checkQuestion(old)
+        composeRule.deleteUserQuestion(old)
     }
 
+    /**
+     * The redesign's bottom sheet dismisses on back press by default (standard Material3
+     * ModalBottomSheet behavior) rather than staying open like the legacy AlertDialog — see the
+     * equivalent note in AddUserQuestionUITest.
+     */
     @Test
-    fun tapOutsideEditQuestionDialog_popupIsNotClosed() {
-        // given
-        val question = "Test tap outside edit question dialog - popup is not closed?"
-        addUserQuestion(question)
-        openEditQuestionDialog(question)
+    fun pressBackOnEditQuestionSheet_sheetIsDismissed() {
+        val question = "Test press back on edit question sheet ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
+        composeRule.openEditQuestionDialog(question)
 
-        // when
-        onView(withId(R.id.questionTextEdit))
-            .perform(closeSoftKeyboard())
-            .perform(clickXY(0, -600))
-
-        // then
-        onView(withId(R.id.questionTextEdit))
-            .check(matches(isDisplayed()))
-
-        // clean up
-        onView(withText(R.string.btn_cancel)).perform(click())
-        deleteUserQuestion(question)
-    }
-
-    @Test
-    fun pressBackOnAddQuestionDialog_popupIsNotClosed() {
-        // given
-        val question = "Test press back on add question dialog - popup is not closed?"
-        addUserQuestion(question)
-        openEditQuestionDialog(question)
-
-        // when
         pressBack()
 
-        // then
-        onView(withId(R.id.questionTextEdit))
-            .check(matches(isDisplayed()))
-
-        // clean up
-        onView(withText(R.string.btn_cancel)).perform(click())
-        deleteUserQuestion(question)
+        composeRule.waitUntilGone("questionSheetTextField")
+        composeRule.deleteUserQuestion(question)
     }
 
     @Test
-    fun popupMenuForFeelings_doesNotHaveEditMenu() {
-        // when
-        onView(
-            Matchers.allOf(
-                withId(R.id.popupMenu),
-                hasSibling(withText(R.string.q_text_feelings))
-            )
-        )
-            .perform(click())
-
-        // then
-        onView(withText(R.string.btn_edit)).check(doesNotExist())
+    fun feelingsQuestion_hasNoEditIcon() {
+        val question = composeRule.activity.getString(R.string.q_text_feelings)
+        composeRule.scrollToQuestion(question)
+        composeRule.onNodeWithTag("questionEdit_$question").assertDoesNotExist()
     }
 
     @Test
-    fun popupMenuForBuiltInQuestion_doesNotHaveEditMenu() {
-        // when
-        onView(
-            Matchers.allOf(
-                withId(R.id.popupMenu),
-                hasSibling(withText(R.string.q_text_do_body))
-            )
-        )
-            .perform(click())
-
-        // then
-        onView(withText(R.string.btn_edit)).check(doesNotExist())
+    fun builtInQuestion_hasNoEditIcon() {
+        val question = composeRule.activity.getString(R.string.q_text_do_body)
+        composeRule.scrollToQuestion(question)
+        composeRule.onNodeWithTag("questionEdit_$question").assertDoesNotExist()
     }
-
 }

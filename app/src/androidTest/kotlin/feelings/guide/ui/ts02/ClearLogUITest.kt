@@ -1,176 +1,102 @@
 package feelings.guide.ui.ts02
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidTest
 import feelings.guide.R
-import feelings.guide.ui.question.QuestionListActivity
-import feelings.guide.ui.util.*
-import org.junit.Before
-import org.junit.Rule
+import feelings.guide.ui.BaseComposeUiTest
+import feelings.guide.ui.addUserQuestion
+import feelings.guide.ui.answerBuiltInQuestion
+import feelings.guide.ui.answerFeelings
+import feelings.guide.ui.answerQuestion
+import feelings.guide.ui.checkNoAnswerInLog
+import feelings.guide.ui.clearLog
+import feelings.guide.ui.deleteUserQuestion
+import feelings.guide.ui.openFullLog
+import feelings.guide.ui.openLogByQuestion
+import feelings.guide.ui.randomAlphanumericString
 import org.junit.Test
+import org.junit.runner.RunWith
 
-@LargeTest
-class ClearLogUITest {
-    private lateinit var context: Context
-
-    @get:Rule
-    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
-
-    @Before
-    fun before() {
-        context = getApplicationContext()
-    }
-
-    @Test
-    fun clearLogFromQuestionList_feelings() {
-        // given
-        val feeling = context.resources.getStringArray(R.array.anger_array)[1]
-        answerFeelings(R.string.anger, feeling)
-
-        // when
-        clearLogFromQuestionList(R.string.q_text_feelings)
-
-        // then
-        openLogByQuestion(R.string.q_text_feelings)
-        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
-    }
+/**
+ * The legacy suite also covered a "clear log from the question list" quick action via a per-card
+ * popup menu; the redesigned card only exposes Log/Edit/Delete(or Hide) icons (mockup 01), so
+ * clearing a question's log now only happens from within that question's own log screen — the
+ * "FromQuestionLog" scenarios below cover the same ground.
+ */
+@HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
+class ClearLogUITest : BaseComposeUiTest() {
 
     @Test
     fun clearLogFromQuestionLog_feelings() {
-        // given
-        val feeling = context.resources.getStringArray(R.array.anger_array)[1]
-        answerFeelings(R.string.anger, feeling)
+        val feeling = composeRule.activity.resources.getStringArray(R.array.anger_array)[1]
+        composeRule.answerFeelings(R.string.anger, feeling)
 
-        // when
-        openLogByQuestion(R.string.q_text_feelings)
-        clearLogFromQuestionLog()
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_feelings))
+        composeRule.clearLog()
 
-        // then
-        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
+        composeRule.checkNoAnswerInLog(feeling)
     }
 
     @Test
     fun clearLogFull_feelings() {
-        // given
-        val feeling = context.resources.getStringArray(R.array.anger_array)[1]
-        answerFeelings(R.string.anger, feeling)
+        val feeling = composeRule.activity.resources.getStringArray(R.array.anger_array)[1]
+        composeRule.answerFeelings(R.string.anger, feeling)
 
-        // when
-        openFullLog()
-        clearLogFull()
+        composeRule.openFullLog()
+        composeRule.clearLog()
 
-        // then
-        onView(withId(R.id.logFullAnswer)).check(doesNotExist())
-    }
-
-    @Test
-    fun clearLogFromQuestionList_builtIn() {
-        // given
-        answerBuiltInQuestion(
-            R.string.q_text_do_others,
-            "Test clear log from question list."
-        )
-
-        // when
-        clearLogFromQuestionList(R.string.q_text_do_others)
-
-        // then
-        openLogByQuestion(R.string.q_text_do_others)
-        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
+        composeRule.checkNoAnswerInLog(feeling)
     }
 
     @Test
     fun clearLogFromQuestionLog_builtIn() {
-        // given
-        answerBuiltInQuestion(
-            R.string.q_text_do_body,
-            "Test clear log from question log.",
-        )
+        val answer = "Test clear log from question log ${randomAlphanumericString()}."
+        composeRule.answerBuiltInQuestion(R.string.q_text_do_body, answer)
 
-        // when
-        openLogByQuestion(R.string.q_text_do_body)
-        clearLogFromQuestionLog()
+        composeRule.openLogByQuestion(composeRule.activity.getString(R.string.q_text_do_body))
+        composeRule.clearLog()
 
-        // then
-        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
+        composeRule.checkNoAnswerInLog(answer)
     }
 
     @Test
     fun clearLogFull_builtIn() {
-        // given
-        answerBuiltInQuestion(
-            R.string.q_text_gratitude,
-            "Test clear log full.",
-        )
+        val answer = "Test clear log full ${randomAlphanumericString()}."
+        composeRule.answerBuiltInQuestion(R.string.q_text_gratitude, answer)
 
-        // when
-        openFullLog()
-        clearLogFull()
+        composeRule.openFullLog()
+        composeRule.clearLog()
 
-        // then
-        onView(withId(R.id.logFullAnswer)).check(doesNotExist())
-    }
-
-    @Test
-    fun clearLogFromQuestionList_userQuestion() {
-        // given
-        val question = "Test clear log from question list for user question?"
-        addUserQuestion(question)
-        answerQuestion(question, "Test answer.")
-
-        // when
-        clearLogFromQuestionList(question)
-
-        // then
-        openLogByQuestion(question)
-        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
-
-        // clean up user question
-        pressBack()
-        deleteUserQuestion(question)
+        composeRule.checkNoAnswerInLog(answer)
     }
 
     @Test
     fun clearLogFromQuestionLog_userQuestion() {
-        // given
-        val question = "Test clear log from question log for user question?"
-        addUserQuestion(question)
-        answerQuestion(question, "Test answer.")
+        val question = "Test clear log from question log user question ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
+        composeRule.answerQuestion(question, "Test answer.")
 
-        // when
-        openLogByQuestion(question)
-        clearLogFromQuestionLog()
+        composeRule.openLogByQuestion(question)
+        composeRule.clearLog()
+        composeRule.checkNoAnswerInLog("Test answer.")
 
-        // then
-        onView(withId(R.id.logByQuestionAnswer)).check(doesNotExist())
-
-        // clean up user question
         pressBack()
-        deleteUserQuestion(question)
+        composeRule.deleteUserQuestion(question)
     }
 
     @Test
     fun clearLogFull_userQuestion() {
-        // given
-        val question = "Test clear log full for user question?"
-        addUserQuestion(question)
-        answerQuestion(question, "Test answer.")
+        val question = "Test clear log full user question ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
+        composeRule.answerQuestion(question, "Test answer.")
 
-        // when
-        openFullLog()
-        clearLogFull()
+        composeRule.openFullLog()
+        composeRule.clearLog()
+        composeRule.checkNoAnswerInLog("Test answer.")
 
-        // then
-        onView(withId(R.id.logFullAnswer)).check(doesNotExist())
-
-        // clean up user question
         pressBack()
-        deleteUserQuestion(question)
+        composeRule.deleteUserQuestion(question)
     }
 }

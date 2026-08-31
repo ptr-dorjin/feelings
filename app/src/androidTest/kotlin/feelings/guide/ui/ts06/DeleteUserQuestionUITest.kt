@@ -1,132 +1,102 @@
 package feelings.guide.ui.ts06
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
-import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import dagger.hilt.android.testing.HiltAndroidTest
 import feelings.guide.R
-import feelings.guide.ui.question.QuestionListActivity
-import feelings.guide.ui.util.*
-import org.hamcrest.Matchers.allOf
-import org.junit.Before
-import org.junit.Rule
+import feelings.guide.ui.BaseComposeUiTest
+import feelings.guide.ui.addUserQuestion
+import feelings.guide.ui.answerQuestion
+import feelings.guide.ui.checkLastAnswerInLog
+import feelings.guide.ui.checkNoAnswerInLog
+import feelings.guide.ui.checkNoQuestion
+import feelings.guide.ui.checkQuestion
+import feelings.guide.ui.clearDeletedAnswers
+import feelings.guide.ui.deleteUserQuestion
+import feelings.guide.ui.openFullLog
+import feelings.guide.ui.randomAlphanumericString
+import feelings.guide.ui.scrollToQuestion
 import org.junit.Test
+import org.junit.runner.RunWith
 
-@LargeTest
-class DeleteUserQuestionUITest {
-    private lateinit var context: Context
-
-    @get:Rule
-    var activityRule = ActivityTestRule(QuestionListActivity::class.java)
-
-    @Before
-    fun before() {
-        context = getApplicationContext()
-    }
+@HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
+class DeleteUserQuestionUITest : BaseComposeUiTest() {
 
     @Test
     fun deleteQuestion_deletesFromList() {
-        // given
-        val question = "Test delete question - deletes from list?"
-        addUserQuestion(question)
-
-        // when
-        deleteUserQuestion(question)
-
-        // then
-        checkNoQuestion(question)
+        val question = "Test delete question deletes from list ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
+        composeRule.deleteUserQuestion(question)
+        composeRule.checkNoQuestion(question)
     }
 
     @Test
     fun deleteQuestionWithAnswers_deletesAnswer() {
-        // given
-        val question = "Test delete question with answers - deletes answer?"
-        addUserQuestion(question)
-        val answer = "Test delete question with answers - delete answer."
-        answerQuestion(question, answer)
+        val question = "Test delete question with answers ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
+        val answer = "Test delete question with answers - delete answer ${randomAlphanumericString()}."
+        composeRule.answerQuestion(question, answer)
 
-        // when
-        deleteUserQuestion(question, true, clearAnswers = true)
+        composeRule.deleteUserQuestion(question, hasAnswers = true, clearAnswers = true)
 
-        // then
-        openFullLog()
-        checkNoAnswerInLogFull(answer)
+        composeRule.openFullLog()
+        composeRule.checkNoAnswerInLog(answer)
     }
 
     @Test
     fun deleteQuestionWithoutAnswers_doesNotDeleteAnswer() {
-        // given
-        val question = "Test delete question without answers - does not delete answer?"
-        addUserQuestion(question)
-        val answer = "Test delete question without answers - does not delete answer."
-        answerQuestion(question, answer)
+        val question = "Test delete question without answers ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
+        val answer = "Test delete question without answers - keeps answer ${randomAlphanumericString()}."
+        composeRule.answerQuestion(question, answer)
 
-        // when
-        deleteUserQuestion(question, true, clearAnswers = false)
+        composeRule.deleteUserQuestion(question, hasAnswers = true, clearAnswers = false)
 
-        // then
-        openFullLog()
-        checkLastAnswerInLogFull(answer)
+        composeRule.openFullLog()
+        composeRule.checkLastAnswerInLog(answer)
     }
 
     @Test
     fun deleteAnswersForDeletedQuestions_answerIsDeleted() {
-        // given
-        val question = "Test delete answers for deleted questions - answer is deleted?"
-        addUserQuestion(question)
-        val answer = "Test delete answers for deleted questions - answer is deleted."
-        answerQuestion(question, answer)
-        deleteUserQuestion(question, true, clearAnswers = false)
+        val question = "Test delete answers for deleted questions ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
+        val answer = "Test delete answers for deleted questions - answer ${randomAlphanumericString()}."
+        composeRule.answerQuestion(question, answer)
+        composeRule.deleteUserQuestion(question, hasAnswers = true, clearAnswers = false)
 
-        // when
-        openFullLog()
-        clearLogHiddenDeleted()
+        composeRule.openFullLog()
+        composeRule.clearDeletedAnswers()
 
-        // then
-        checkNoAnswerInLogFull(answer)
+        composeRule.checkNoAnswerInLog(answer)
     }
 
     @Test
     fun deleteCancelled_questionIsStillOnTheList() {
-        // given
-        val question = "Test delete cancelled - question is still on the list?"
-        addUserQuestion(question)
+        val question = "Test delete cancelled - question is still on the list ${randomAlphanumericString()}?"
+        composeRule.addUserQuestion(question)
 
-        // when
-        scrollToQuestion(question)
-        onView(allOf(withId(R.id.popupMenu), hasSibling(withText(question))))
-            .perform(click())
-        onView(withText(R.string.btn_delete)).perform(click())
-        onView(withText(R.string.btn_cancel)).perform(click())
+        composeRule.scrollToQuestion(question)
+        composeRule.onNodeWithTag("questionDelete_$question").performClick()
+        composeRule.onNodeWithText(composeRule.activity.getString(R.string.btn_cancel)).performClick()
 
-        // then
-        checkQuestion(question)
-
-        // clean up
-        deleteUserQuestion(question)
+        composeRule.checkQuestion(question)
+        composeRule.deleteUserQuestion(question)
     }
 
     @Test
-    fun popupMenuForFeelings_doesNotHaveDeleteMenu() {
-        // when
-        onView(allOf(withId(R.id.popupMenu), hasSibling(withText(R.string.q_text_feelings))))
-            .perform(click())
-
-        // then
-        onView(withText(R.string.btn_delete)).check(doesNotExist())
+    fun feelingsQuestion_hasNoDeleteIcon() {
+        val question = composeRule.activity.getString(R.string.q_text_feelings)
+        composeRule.scrollToQuestion(question)
+        composeRule.onNodeWithTag("questionDelete_$question").assertDoesNotExist()
     }
 
     @Test
-    fun popupMenuForBuiltInQuestion_doesNotHaveDeleteMenu() {
-        // when
-        onView(allOf(withId(R.id.popupMenu), hasSibling(withText(R.string.q_text_do_body))))
-            .perform(click())
-
-        // then
-        onView(withText(R.string.btn_delete)).check(doesNotExist())
+    fun builtInQuestion_hasNoDeleteIcon() {
+        val question = composeRule.activity.getString(R.string.q_text_do_body)
+        composeRule.scrollToQuestion(question)
+        composeRule.onNodeWithTag("questionDelete_$question").assertDoesNotExist()
     }
 }

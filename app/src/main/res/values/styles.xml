@@ -1,21 +1,7 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="Theme.FeelingsGuide" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary</item>
-        <item name="colorAccent">@color/primary</item>
-        <item name="colorSecondary">@color/primary</item>
-        <item name="colorSecondaryVariant">@color/primary</item>
-        <item name="colorOnSecondary">@color/white</item>
-    </style>
-
-    <style name="EditTextTheme" parent="Theme.FeelingsGuide">
-        <!-- Used for the bottom line when not selected / focused -->
-        <item name="colorControlNormal">@color/grey</item>
-        <item name="colorControlActivated">@color/grey</item>
-        <item name="colorControlHighlight">@color/grey</item>
-    </style>
+    <!-- A single-Activity Compose app only needs a bare platform window theme;
+         all real theming (colors, typography, shapes) comes from FeelingsGuideTheme in Compose. -->
+    <style name="Theme.FeelingsGuide" parent="android:Theme.DeviceDefault.NoActionBar" />
 
 </resources>
