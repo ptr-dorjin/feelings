@@ -23,6 +23,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -43,7 +44,7 @@ android {
     sourceSets["test"].java.srcDir("src/test/kotlin")
     sourceSets["androidTest"].java.srcDir("src/androidTest/kotlin")
 
-    // Only the device's system-language resources should ship in an install,
+    // Only the device's system-language resources should ship in an installation,
     // instead of bundling every translated locale into one artifact.
     bundle {
         language {
