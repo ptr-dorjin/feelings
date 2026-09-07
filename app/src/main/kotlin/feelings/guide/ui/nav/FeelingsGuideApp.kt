@@ -24,11 +24,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -55,10 +55,10 @@ fun FeelingsGuideApp() {
 
     val appSnackbarViewModel: AppSnackbarViewModel = hiltViewModel()
     val appSnackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
+    val resources = LocalResources.current
     LaunchedEffect(Unit) {
         appSnackbarViewModel.snackbarEventBus.events.collect { messageRes ->
-            appSnackbarHostState.showSnackbar(context.getString(messageRes))
+            appSnackbarHostState.showSnackbar(resources.getString(messageRes))
         }
     }
 
@@ -120,8 +120,12 @@ fun FeelingsGuideApp() {
         Scaffold(
             snackbarHost = { SnackbarHost(appSnackbarHostState) },
             contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0),
+        ) { padding ->
+        NavHost(
+            navController = navController,
+            startDestination = Routes.QUESTIONS,
+            modifier = Modifier.padding(padding),
         ) {
-        NavHost(navController = navController, startDestination = Routes.QUESTIONS) {
             composable(Routes.QUESTIONS) {
                 QuestionListScreen(
                     onOpenDrawer = { scope.launch { drawerState.open() } },

@@ -10,15 +10,18 @@ for device in "${filtered_devices[@]}"; do
     printf "\n====================== %s ======================\n" $device
     start_device $device false
 
-    echo "Running tests"
+    # Install fresh into this session rather than relying on a previous app-install.sh run
+    # having persisted the app via the emulator's own snapshot save - see kill_device for why
+    # that isn't reliable across separate script invocations.
+    if install_apks; then
+        echo "Running tests"
 
-    echo "Logging to: ${LOGS}/test-run-${device}-${TIMESTAMP}.log"
-    if ($ADB shell pm list instrumentation | grep feelings.guide.test); then
-        $ADB </dev/null shell am instrument -w -e package feelings.guide \
-            feelings.guide.test/androidx.test.runner.AndroidJUnitRunner \
+        echo "Logging to: ${LOGS}/test-run-${device}-${TIMESTAMP}.log"
+        $ADB -s $DEVICE_SERIAL </dev/null shell am instrument -w -e package feelings.guide \
+            feelings.guide.test/feelings.guide.HiltTestRunner \
             2>&1 | tee ${LOGS}/test-run-${device}-${TIMESTAMP}.log
     else
-        echo "Could not find feelings.guide.test"
+        echo "Skipping tests on $device: install failed"
     fi
 
     kill_device $device

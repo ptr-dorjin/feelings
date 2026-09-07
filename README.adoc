@@ -37,9 +37,11 @@ NOTE: Turn off all virtual devices before running the scripts, since `avd` can o
 ** turns off keyboard auto-correction - **have to do that manually** on each device for now.
 Didn't find a way to do it programmatically
 
-- `app-install.sh` installs the app on all virtual devices.
+- `app-install.sh` installs the app on all virtual devices and leaves it there. Useful for
+manually poking at a device; not a prerequisite for the next step, which installs fresh itself.
 
-- `run-tests-on-all-devices.sh` runs UI tests on each virtual device sequentially.
+- `run-tests-on-all-devices.sh` installs the app fresh and runs UI tests on each virtual device
+sequentially.
 
 - `app-uninstall.sh` uninstalls the app from all virtual devices to test fresh install.
 

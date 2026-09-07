@@ -9,14 +9,14 @@ for device in "${filtered_devices[@]}"; do
 
     echo "Uninstalling"
 
-    if ($ADB shell pm list packages | grep feelings.guide); then
-        $ADB </dev/null uninstall feelings.guide
+    if ($ADB -s $DEVICE_SERIAL shell pm list packages | grep feelings.guide); then
+        $ADB -s $DEVICE_SERIAL </dev/null uninstall feelings.guide
     else
         echo "Could not find feelings.guide"
     fi
 
-    if ($ADB shell pm list packages | grep feelings.guide.test); then
-        $ADB </dev/null uninstall feelings.guide.test
+    if ($ADB -s $DEVICE_SERIAL shell pm list packages | grep feelings.guide.test); then
+        $ADB -s $DEVICE_SERIAL </dev/null uninstall feelings.guide.test
     else
         echo "Could not find feelings.guide.test"
     fi

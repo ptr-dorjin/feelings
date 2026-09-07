@@ -45,7 +45,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import feelings.guide.R
 import feelings.guide.data.AnswerEntity
 import feelings.guide.export.LogExporter
@@ -65,6 +65,8 @@ fun LogScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val answerDeletedMessage = stringResource(R.string.msg_answer_deleted_success)
+    val undoActionLabel = stringResource(R.string.snackbar_undo)
 
     var showMenu by remember { mutableStateOf(false) }
     var showClearDialog by remember { mutableStateOf(false) }
@@ -155,8 +157,8 @@ fun LogScreen(
                                 viewModel.deleteAnswer(row.answer)
                                 scope.launch {
                                     val result = snackbarHostState.showSnackbar(
-                                        message = context.getString(R.string.msg_answer_deleted_success),
-                                        actionLabel = context.getString(R.string.snackbar_undo),
+                                        message = answerDeletedMessage,
+                                        actionLabel = undoActionLabel,
                                         duration = SnackbarDuration.Long,
                                     )
                                     if (result == androidx.compose.material3.SnackbarResult.ActionPerformed) {

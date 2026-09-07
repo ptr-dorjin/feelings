@@ -106,7 +106,8 @@ fun ComposeRule.addUserQuestion(question: String) {
     waitUntilExists("questionSheetTextField")
     onNodeWithTag("questionSheetTextField").performTextInput(question)
     onNodeWithTag("questionSheetSaveButton").performClick()
-    waitUntilGone("questionSheetTextField")
+    // Sheet dismiss is an animation that can outrun the default timeout under load.
+    waitUntilGone("questionSheetTextField", timeoutMillis = 8000)
     // The sheet closing only confirms the dismiss animation ran, not that the Room write has
     // propagated back through the Flow into the LazyColumn yet.
     waitAndScrollToQuestion(question)
@@ -122,7 +123,8 @@ fun ComposeRule.editUserQuestion(old: String, new: String) {
     openEditQuestionDialog(old)
     onNodeWithTag("questionSheetTextField").performTextReplacement(new)
     onNodeWithTag("questionSheetSaveButton").performClick()
-    waitUntilGone("questionSheetTextField")
+    // See addUserQuestion: the sheet's dismiss animation can occasionally outrun the default budget.
+    waitUntilGone("questionSheetTextField", timeoutMillis = 8000)
     waitAndScrollToQuestion(new)
 }
 
